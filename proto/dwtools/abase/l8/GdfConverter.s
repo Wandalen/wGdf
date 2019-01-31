@@ -66,31 +66,31 @@ function unform()
 {
   let encoder = this;
 
-  debugger; xxx
+  // debugger; xxx
 
   _.arrayRemoveOnceStrictly( encoder.Elements, encoder );
 
   encoder.in.forEach( ( e, k ) =>
   {
-    _.arrayRemoveOnceStrictly( encoder.InMap[ e ] );
+    _.arrayRemoveOnceStrictly( encoder.InMap[ e ], encoder );
   });
   debugger;
 
   encoder.out.forEach( ( e, k ) =>
   {
     debugger;
-    _.arrayRemoveOnceStrictly( encoder.OutMap[ e ] );
+    _.arrayRemoveOnceStrictly( encoder.OutMap[ e ], encoder );
   });
 
   encoder.ext.forEach( ( e, k ) =>
   {
     debugger;
-    _.arrayRemoveOnceStrictly( encoder.OutMap[ e ] );
+    _.arrayRemoveOnceStrictly( encoder.ExtMap[ e ], encoder );
   });
 
   encoder.inOut.forEach( ( e, k ) =>
   {
-    _.arrayRemoveOnceStrictly( encoder.InOutMap[ e ] );
+    _.arrayRemoveOnceStrictly( encoder.InOutMap[ e ], encoder );
   });
 
 }

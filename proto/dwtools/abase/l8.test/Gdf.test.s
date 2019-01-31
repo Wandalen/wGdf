@@ -557,6 +557,32 @@ function yml( test )
 
 }
 
+//
+
+function finit( test )
+{
+  let self = this;
+
+  var encoder = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'yml' });
+  test.identical( encoder.length, 1 );
+  encoder = encoder[ 0 ].encoder;
+  test.identical( encoder.inOut, [ 'structure-string' ] )
+
+  test.is( _.arrayHas( _.Gdf.Elements, encoder ) );
+  test.is( _.arrayHas( _.Gdf.InMap[ 'structure' ], encoder ) );
+  test.is( _.arrayHas( _.Gdf.OutMap[ 'string' ], encoder ) );
+  test.is( _.arrayHas( _.Gdf.ExtMap[ 'yml' ], encoder ) );
+  test.is( _.arrayHas( _.Gdf.InOutMap[ 'structure-string' ], encoder ) );
+
+  encoder.finit();
+
+  test.is( !_.arrayHas( _.Gdf.Elements, encoder ) );
+  test.is( !_.arrayHas( _.Gdf.InMap[ 'structure' ], encoder ) );
+  test.is( !_.arrayHas( _.Gdf.OutMap[ 'string' ], encoder ) );
+  test.is( !_.arrayHas( _.Gdf.ExtMap[ 'yml' ], encoder ) );
+  test.is( !_.arrayHas( _.Gdf.InOutMap[ 'structure-string' ], encoder ) );
+}
+
 // --
 // declare
 // --
@@ -574,7 +600,9 @@ var Self =
     cson,
     js,
     bson,
-    yml
+    yml,
+
+    finit
   },
 
 };
