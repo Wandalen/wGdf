@@ -120,55 +120,55 @@ let readJsStructure =
 
 //
 
-let readJsNode =
-{
-
-  implicit : 0,
-  ext : [ 'js','s','ss','jstruct', 'jslike' ],
-  in : [ 'string' ],
-  out : [ 'structure' ],
-
-  onEncode : function( op )
-  {
-    op.out.data = require( _.fileProvider.path.nativize( op.envMap.filePath ) );
-    op.out.format = 'structure';
-  },
-
-}
-
+// let readJsNode =
+// {
 //
-
-let readJsSmart =
-{
-
-  ext : [ 'js','s','ss','jstruct', 'jslike' ],
-  in : [ 'string' ],
-  out : [ 'structure' ],
-
-  onEncode : function( op )
-  {
-
-    // qqq
-    // if( typeof process !== 'undefined' && typeof require !== 'undefined' )
-    // if( _.FileProvider.HardDrive && op.envMap.provider instanceof _.FileProvider.HardDrive )
-    // {
-    //   op.out.data = require( _.fileProvider.path.nativize( op.envMap.filePath ) );
-    //   op.out.format = 'structure';
-    //   return;
-    // }
-
-    op.out.data = _.exec
-    ({
-      code : op.in.data,
-      filePath : op.envMap.filePath,
-      prependingReturn : 1,
-    });
-
-    op.out.format = 'structure';
-
-  },
-
-}
+//   implicit : 0,
+//   ext : [ 'js','s','ss','jstruct', 'jslike' ],
+//   in : [ 'string' ],
+//   out : [ 'structure' ],
+//
+//   onEncode : function( op )
+//   {
+//     op.out.data = require( _.fileProvider.path.nativize( op.envMap.filePath ) );
+//     op.out.format = 'structure';
+//   },
+//
+// }
+//
+// //
+//
+// let readJsSmart =
+// {
+//
+//   ext : [ 'js','s','ss','jstruct', 'jslike' ],
+//   in : [ 'string' ],
+//   out : [ 'structure' ],
+//
+//   onEncode : function( op )
+//   {
+//
+//     // qqq
+//     // if( typeof process !== 'undefined' && typeof require !== 'undefined' )
+//     // if( _.FileProvider.HardDrive && op.envMap.provider instanceof _.FileProvider.HardDrive )
+//     // {
+//     //   op.out.data = require( _.fileProvider.path.nativize( op.envMap.filePath ) );
+//     //   op.out.format = 'structure';
+//     //   return;
+//     // }
+//
+//     op.out.data = _.exec
+//     ({
+//       code : op.in.data,
+//       filePath : op.envMap.filePath,
+//       prependingReturn : 1,
+//     });
+//
+//     op.out.format = 'structure';
+//
+//   },
+//
+// }
 
 //
 
@@ -350,7 +350,7 @@ writeBson =
 // --
 
 _.Gdf([ readJson, writeJsonMin, writeJsonFine ]);
-_.Gdf([ readJsStructure, readJsNode, readJsSmart, writeJsStrcuture ]);
+_.Gdf([ readJsStructure, /*readJsNode, readJsSmart,*/ writeJsStrcuture ]);
 _.Gdf([ readYml, writeYml ]);
 _.Gdf([ readCoffee, writeCoffee ]);
 _.Gdf([ readBson, writeBson ]);
