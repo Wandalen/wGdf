@@ -100,7 +100,7 @@ let writeJsonFine =
 let readJsStructure =
 {
 
-  implicit : 0,
+  forConfig : 0,
   ext : [ 'js','s','ss','jstruct', 'jslike' ],
   in : [ 'string' ],
   out : [ 'structure' ],
@@ -123,7 +123,7 @@ let readJsStructure =
 // let readJsNode =
 // {
 //
-//   implicit : 0,
+//   forConfig : 0,
 //   ext : [ 'js','s','ss','jstruct', 'jslike' ],
 //   in : [ 'string' ],
 //   out : [ 'structure' ],
