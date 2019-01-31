@@ -53,7 +53,7 @@ let readJson =
     }
 
     // op.out.data = _.jsonParse( op.in.data );
-    op.out.encoding = 'structure';
+    op.out.format = 'structure';
 
   },
 
@@ -62,14 +62,15 @@ let readJson =
 let writeJsonMin =
 {
 
-  ext : [ 'json', 'json.min' ],
+  ext : [ 'json.min', 'json' ],
+  shortName : 'json.min',
   in : [ 'structure' ],
   out : [ 'string' ],
 
   onEncode : function( op )
   {
     op.out.data = JSON.stringify( op.in.data );
-    op.out.encoding = 'string';
+    op.out.format = 'string';
   }
 
 }
@@ -78,7 +79,8 @@ let writeJsonFine =
 {
 
   default : 1,
-  ext : [ 'json', 'json.fine' ],
+  shortName : 'json.fine',
+  ext : [ 'json.fine', 'json' ],
   in : [ 'structure' ],
   out : [ 'string' ],
 
@@ -86,7 +88,7 @@ let writeJsonFine =
   {
     op.out.data = _.cloneData({ src : op.in.data });
     op.out.data = _.toJson( op.out.data, { cloning : 0 } );
-    op.out.encoding = 'string';
+    op.out.format = 'string';
   }
 
 }
@@ -105,13 +107,13 @@ let readJsStructure =
 
   onEncode : function( op )
   {
-    op.out.encoding = 'string';
+    op.out.format = 'string';
   },
 
   onEncode : function( op )
   {
     op.out.data = _.exec({ code : op.in.data, filePath : op.envMap.filePath, prependingReturn : 1 });
-    op.out.encoding = 'structure';
+    op.out.format = 'structure';
   },
 
 }
@@ -129,7 +131,7 @@ let readJsNode =
   onEncode : function( op )
   {
     op.out.data = require( _.fileProvider.path.nativize( op.envMap.filePath ) );
-    op.out.encoding = 'structure';
+    op.out.format = 'structure';
   },
 
 }
@@ -146,11 +148,12 @@ let readJsSmart =
   onEncode : function( op )
   {
 
+    // qqq
     // if( typeof process !== 'undefined' && typeof require !== 'undefined' )
     // if( _.FileProvider.HardDrive && op.envMap.provider instanceof _.FileProvider.HardDrive )
     // {
     //   op.out.data = require( _.fileProvider.path.nativize( op.envMap.filePath ) );
-    //   op.out.encoding = 'structure';
+    //   op.out.format = 'structure';
     //   return;
     // }
 
@@ -161,7 +164,7 @@ let readJsSmart =
       prependingReturn : 1,
     });
 
-    op.out.encoding = 'structure';
+    op.out.format = 'structure';
 
   },
 
@@ -179,7 +182,7 @@ let writeJsStrcuture =
   onEncode : function( e )
   {
     op.out.data = _.toJs( op.in.data );
-    op.out.encoding = 'string';
+    op.out.format = 'string';
   }
 
 }
@@ -209,10 +212,10 @@ readCoffee =
   onEncode : function( op )
   {
     // _.assert( _.strIs( op.in.data ), 'Expects string' );
-    // _.assert( op.in.encoding === 'string', 'Expects string' );
+    // _.assert( op.in.format === 'string', 'Expects string' );
     // _.assert( _.strIs( op.envMap.filePath ) || op.envMap.filePath === null );
     op.out.data = Coffee.eval( op.in.data, { filename : op.envMap.filePath } );
-    op.out.encoding = 'structure';
+    op.out.format = 'structure';
   },
 
 }
@@ -272,7 +275,7 @@ readYml =
   onEncode : function( op )
   {
     op.out.data = Yaml.load( op.in.data, { filename : op.envMap.filePath } );
-    op.out.encoding = 'structure';
+    op.out.format = 'structure';
   },
 
 }
@@ -289,7 +292,7 @@ writeYml =
   onEncode : function( op )
   {
     op.out.data = Yaml.dump( op.in.data );
-    op.out.encoding = 'string';
+    op.out.format = 'string';
   },
 
 }
@@ -320,7 +323,7 @@ readBson =
   {
     _.assert( _.bufferNodeIs( op.in.data ) );
     op.out.data = Bson.deserialize( op.in.data );
-    op.out.encoding = 'structure';
+    op.out.format = 'structure';
   },
 
 }
@@ -337,7 +340,7 @@ writeBson =
   onEncode : function( op )
   {
     op.out.data = Bson.serialize( op.in.data );
-    op.out.encoding = 'buffer.node';
+    op.out.format = 'buffer.node';
   },
 
 }

@@ -53,8 +53,8 @@ function encode_body( o )
 
   o = _.assertRoutineOptions( encode, arguments );
 
-  if( o.encoding === null )
-  o.encoding = selected.in;
+  if( o.format === null )
+  o.format = selected.in;
 
   let result = selected.encoder.encode.body.call( selected.encoder, o );
 

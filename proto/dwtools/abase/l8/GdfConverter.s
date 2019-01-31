@@ -182,13 +182,13 @@ function encode_body( o )
 
   op.in = Object.create( null );
   op.in.data = o.data;
-  op.in.encoding = o.encoding || encoder.in;
-  if( _.arrayIs( op.in.encoding ) )
-  op.in.encoding = op.in.encoding.length === 1 ? op.in.encoding[ 0 ] : undefined;
+  op.in.format = o.format || encoder.in;
+  if( _.arrayIs( op.in.format ) )
+  op.in.format = op.in.format.length === 1 ? op.in.format[ 0 ] : undefined;
 
   op.out = Object.create( null );
   op.out.data = undefined;
-  op.out.encoding = undefined;
+  op.out.format = undefined;
 
   /* */
 
@@ -196,26 +196,26 @@ function encode_body( o )
   {
 
     _.assert( _.objectIs( op.envMap ) )
-    _.assert( _.strIs( op.in.encoding ), 'Not clear which input encoding is' );
-    _.assert( _.arrayHas( encoder.in, op.in.encoding ), () => 'Unknown encoding ' + op.in.encoding );
+    _.assert( _.strIs( op.in.format ), 'Not clear which input format is' );
+    _.assert( _.arrayHas( encoder.in, op.in.format ), () => 'Unknown format ' + op.in.format );
 
     debugger;
     encoder.onEncode( op );
     debugger;
 
-    op.out.encoding = op.out.encoding || encoder.out;
-    if( _.arrayIs( op.out.encoding ) )
-    op.out.encoding = op.out.encoding.length === 1 ? op.out.encoding[ 0 ] : undefined;
+    op.out.format = op.out.format || encoder.out;
+    if( _.arrayIs( op.out.format ) )
+    op.out.format = op.out.format.length === 1 ? op.out.format[ 0 ] : undefined;
 
-    _.assert( _.strIs( op.out.encoding ), 'Output should have encoding' );
-    _.assert( _.arrayHas( encoder.out, op.out.encoding ), () => 'Strange output encoding ' + o.out.encoding );
+    _.assert( _.strIs( op.out.format ), 'Output should have format' );
+    _.assert( _.arrayHas( encoder.out, op.out.format ), () => 'Strange output format ' + o.out.format );
 
   }
   catch( err )
   {
     debugger;
-    op.out.encoding = undefined;
-    throw _.err( 'Error encoding ' + _.toStr( op.in.encoding ) + ' by encoder ' + encoder.name + '\n', err );
+    op.out.format = undefined;
+    throw _.err( 'Error format ' + _.toStr( op.in.format ) + ' by encoder ' + encoder.name + '\n', err );
   }
 
   /* */
@@ -226,7 +226,7 @@ function encode_body( o )
 encode_body.defaults =
 {
   data : null,
-  encoding : null,
+  format : null,
   envMap : null,
 }
 
@@ -295,6 +295,7 @@ let Composes =
 {
 
   name : null,
+  shortName : null,
 
   ext : null,
   in : null,
@@ -303,7 +304,7 @@ let Composes =
 
   onEncode : null,
   default : 0,
-  implicit : 1,
+  forConfig : 1,
 
 }
 

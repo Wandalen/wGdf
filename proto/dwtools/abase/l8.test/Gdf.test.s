@@ -57,21 +57,21 @@ function trivial( test )
 
   test.case = 'select';
   var src = 'val : 13';
-  var encoders = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'cson', default : 1 });
-  test.identical( encoders.length, 1 );
+  var converters = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'cson', default : 1 });
+  test.identical( converters.length, 1 );
 
   /* */
 
   test.case = 'encode with encoder';
-  var dst = encoders[ 0 ].encode({ data : src, encoding : 'string' });
-  var expected = { data : { val : 13 }, encoding : 'structure' }
+  var dst = converters[ 0 ].encode({ data : src, format : 'string' });
+  var expected = { data : { val : 13 }, format : 'structure' }
   test.identical( dst, expected );
 
   /* */
 
   test.case = 'encode without encoder';
-  var dst = encoders[ 0 ].encode({ data : src });
-  var expected = { data : { val : 13 }, encoding : 'structure' }
+  var dst = converters[ 0 ].encode({ data : src });
+  var expected = { data : { val : 13 }, format : 'structure' }
   test.identical( dst, expected );
 
 }
@@ -103,11 +103,11 @@ function json( test )
     let src = SamplesSimple[ s ];
 
     var serialized = serialize.encode({ data : src });
-    test.identical( serialized.encoding, 'string' );
+    test.identical( serialized.format, 'string' );
 
     var deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
-    test.identical( deserialized.encoding, 'structure' );
+    test.identical( deserialized.format, 'structure' );
   }
   test.close( 'simple' );
 
@@ -120,11 +120,11 @@ function json( test )
     let src = SamplesPrimitive[ s ];
 
     var serialized = serialize.encode({ data : src });
-    test.identical( serialized.encoding, 'string' );
+    test.identical( serialized.format, 'string' );
 
     var deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
-    test.identical( deserialized.encoding, 'structure' );
+    test.identical( deserialized.format, 'structure' );
   }
   test.close( 'primitive' );
 
@@ -137,11 +137,11 @@ function json( test )
   //   let src = SamplesComplicated[ s ];
   //
   //   var serialized = serialize.encode({ data : src });
-  //   test.identical( serialized.encoding, 'string' );
+  //   test.identical( serialized.format, 'string' );
   //
   //   var deserialized = deserialize.encode({ data : serialized.data });
   //   test.identical( deserialized.data, src );
-  //   test.identical( deserialized.encoding, 'structure' );
+  //   test.identical( deserialized.format, 'structure' );
   // }
   // test.close( 'complicated' );
 
@@ -176,11 +176,11 @@ function cson( test )
     let src = SamplesSimple[ s ];
 
     var serialized = serialize.encode({ data : src });
-    test.identical( serialized.encoding, 'string' );
+    test.identical( serialized.format, 'string' );
 
     var deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
-    test.identical( deserialized.encoding, 'structure' );
+    test.identical( deserialized.format, 'structure' );
   }
   test.close( 'simple' );
 
@@ -193,11 +193,11 @@ function cson( test )
     let src = SamplesPrimitive[ s ];
 
     var serialized = serialize.encode({ data : src });
-    test.identical( serialized.encoding, 'string' );
+    test.identical( serialized.format, 'string' );
 
     var deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
-    test.identical( deserialized.encoding, 'structure' );
+    test.identical( deserialized.format, 'structure' );
   }
   test.close( 'primitive' );
 
@@ -210,11 +210,11 @@ function cson( test )
     let src = SamplesComplicated[ s ];
 
     var serialized = serialize.encode({ data : src });
-    test.identical( serialized.encoding, 'string' );
+    test.identical( serialized.format, 'string' );
 
     var deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
-    test.identical( deserialized.encoding, 'structure' );
+    test.identical( deserialized.format, 'structure' );
   }
   test.close( 'complicated' );
 
