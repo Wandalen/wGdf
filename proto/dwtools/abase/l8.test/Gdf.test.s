@@ -559,6 +559,96 @@ function yml( test )
 
 //
 
+function select( test )
+{
+  let self = this;
+
+  test.case = 'all'
+  var got = _.Gdf.Select({});
+  test.is( got.length === _.Gdf.Elements.length );
+
+  test.case = 'in'
+  var got = _.Gdf.Select({ in : 'structure' });
+  test.is( got.length );
+
+  test.case = 'out'
+  var got = _.Gdf.Select({ out : 'string' });
+  test.is( got.length );
+
+  test.case = 'not existing'
+
+  var got = _.Gdf.Select({ in : 'not existing'});
+  test.is( !got.length );
+
+  var got = _.Gdf.Select({ out : 'not existing'});
+  test.is( !got.length );
+
+  var got = _.Gdf.Select({ ext : 'not existing' });
+  test.is( !got.length );
+
+  test.case = 'default';
+
+  var got = _.Gdf.Select({ in : 'structure', out : 'string' });
+  test.is( got.length > 1 );
+  var got = _.Gdf.Select({ in : 'structure', out : 'string', default : 1 });
+  test.is( got.length === 1 );
+  test.identical( got[ 0 ].shortName, 'json.fine' );
+
+  test.case = 'shortName';
+
+  var got = _.Gdf.Select({ shortName : 'json.fine', out : 'string' });
+  test.is( got.length === 1 );
+  test.identical( got[ 0 ].shortName, 'json.fine' );
+
+  if( !Config.debug )
+  return;
+
+  test.case = 'not supported value'
+
+  test.shouldThrowErrorSync( () => _.Gdf.Select() );
+  test.shouldThrowErrorSync( () => _.Gdf.Select({ ext : [ 'json.fine', 'json' ] }) );
+
+}
+
+//
+
+function register( test )
+{
+  let self = this;
+
+  var converter =
+  {
+    ext : [ 'ext' ],
+    in : [ 'string' ],
+    out : [ 'number' ],
+
+    onEncode : function( op )
+    {
+      _.assert( _.strIs( op.in.data ) );
+      op.out.data = Number.parseFloat( op.in.data );
+      op.out.format = 'number';
+    }
+  }
+
+  converter = _.Gdf( converter );
+
+  test.is( _.arrayHas( _.Gdf.Elements, converter ) );
+  test.is( _.arrayHas( _.Gdf.InMap[ 'string' ], converter ) );
+  test.is( _.arrayHas( _.Gdf.OutMap[ 'number' ], converter ) );
+  test.is( _.arrayHas( _.Gdf.ExtMap[ 'ext' ], converter ) );
+  test.is( _.arrayHas( _.Gdf.InOutMap[ 'string-number' ], converter ) );
+
+  converter.finit();
+
+  test.is( !_.arrayHas( _.Gdf.Elements, converter ) );
+  test.is( !_.arrayHas( _.Gdf.InMap[ 'string' ], converter ) );
+  test.is( !_.arrayHas( _.Gdf.OutMap[ 'number' ], converter ) );
+  test.is( !_.arrayHas( _.Gdf.ExtMap[ 'ext' ], converter ) );
+  test.is( !_.arrayHas( _.Gdf.InOutMap[ 'string-number' ], converter ) );
+}
+
+//
+
 function finit( test )
 {
   let self = this;
@@ -602,6 +692,8 @@ var Self =
     bson,
     yml,
 
+    select,
+    register,
     finit
   },
 

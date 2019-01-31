@@ -375,6 +375,7 @@ if( typeof module !== 'undefined' )
 {
   require( './GdfCurrent.s' );
   require( './GdfFormats.s' );
+  require( './OldEncoders.s' );
 }
 
 })();
