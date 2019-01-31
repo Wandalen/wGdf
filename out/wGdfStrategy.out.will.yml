@@ -1,0 +1,328 @@
+format: willfile-1.0.0
+about:
+  name: wGdfStrategy
+  description: >-
+    Collection of strategies to convert complex data structures from one GDF (
+    generic data format ) to another GDF. You may use the module to serialize
+    complex data structure to string or deserialize string back to the original
+    data structure. Generic data format ( GDF ) is a format of data structure
+    designed without taking into account none unique feature of data so that it
+    is applicable to any kind of data.
+  version: 0.3.0
+  enabled: 1
+  interpreters:
+    - nodejs >= 6.0.0
+    - chrome >= 60.0.0
+    - firefox >= 60.0.0
+  keywords:
+    - wTools
+execution:
+  scripts:
+    test: wtest staging
+    docgen: wdocgen staging
+path:
+  proto:
+    path: ./proto
+  in:
+    path: .
+  out:
+    path: out
+  out.debug:
+    path: ./out.debug
+    criterion:
+      debug: 1
+  out.release:
+    path: ./out.release
+    criterion:
+      debug: 0
+  repository:
+    path: 'git+https://github.com/Wandalen/wGdfStrategy.git'
+  bugs:
+    path: 'https://github.com/Wandalen/wGdfStrategy/issues'
+  exportedDir.0:
+    path: ./proto
+    criterion:
+      default: 1
+      debug: 1
+      raw: 1
+      proto: 1
+      export: 1
+      tar: 1
+      public: 1
+  baseDir:
+    path: ..
+  exportedFiles.0:
+    path:
+      - .
+      - ./dwtools
+      - ./dwtools/Tools.s
+      - ./dwtools/abase
+      - ./dwtools/abase/l8
+      - ./dwtools/abase/l8/GdfConverter.s
+      - ./dwtools/abase/l8/GdfCurrent.s
+      - ./dwtools/abase/l8/GdfFormats.s
+      - ./dwtools/abase/l8/OldEncoders.s
+      - ./dwtools/abase/l8.test
+      - ./dwtools/abase/l8.test/Gdf.test.s
+      - ./dwtools/amid
+      - ./dwtools/atop
+    criterion:
+      default: 1
+      debug: 1
+      raw: 1
+      proto: 1
+      export: 1
+      tar: 1
+      public: 1
+  exportedTerminals.0:
+    path:
+      - ./dwtools/Tools.s
+      - ./dwtools/abase/l8/GdfConverter.s
+      - ./dwtools/abase/l8/GdfCurrent.s
+      - ./dwtools/abase/l8/GdfFormats.s
+      - ./dwtools/abase/l8/OldEncoders.s
+      - ./dwtools/abase/l8.test/Gdf.test.s
+    criterion:
+      default: 1
+      debug: 1
+      raw: 1
+      proto: 1
+      export: 1
+      tar: 1
+      public: 1
+submodule: {}
+reflector:
+  reflect.proto.0:
+    filePath:
+      ./proto: ./out.release
+    srcFilter:
+      filePath:
+        ./proto: ./out.release
+      maskAll:
+        excludeAny:
+          - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
+          - !<tag:yaml.org,2002:js/regexp> /\.unique$/
+          - !<tag:yaml.org,2002:js/regexp> /\.git$/
+          - !<tag:yaml.org,2002:js/regexp> /\.svn$/
+          - !<tag:yaml.org,2002:js/regexp> /\.hg$/
+          - !<tag:yaml.org,2002:js/regexp> /\.DS_Store$/
+          - !<tag:yaml.org,2002:js/regexp> /(^|\/)-/
+          - !<tag:yaml.org,2002:js/regexp> /\.debug($|\.|\/)/i
+          - !<tag:yaml.org,2002:js/regexp> /\.test($|\.|\/)/i
+          - !<tag:yaml.org,2002:js/regexp> /\.experiment($|\.|\/)/i
+      prefixPath: .
+    criterion:
+      debug: 0
+    inherit:
+      - predefined.*
+  reflect.proto.1:
+    filePath:
+      ./proto: ./out.debug
+    srcFilter:
+      filePath:
+        ./proto: ./out.debug
+      maskAll:
+        excludeAny:
+          - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
+          - !<tag:yaml.org,2002:js/regexp> /\.unique$/
+          - !<tag:yaml.org,2002:js/regexp> /\.git$/
+          - !<tag:yaml.org,2002:js/regexp> /\.svn$/
+          - !<tag:yaml.org,2002:js/regexp> /\.hg$/
+          - !<tag:yaml.org,2002:js/regexp> /\.DS_Store$/
+          - !<tag:yaml.org,2002:js/regexp> /(^|\/)-/
+          - !<tag:yaml.org,2002:js/regexp> /\.release($|\.|\/)/i
+      prefixPath: .
+    criterion:
+      debug: 1
+    inherit:
+      - predefined.*
+  reflect.submodules:
+    srcFilter:
+      maskAll:
+        excludeAny:
+          - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
+          - !<tag:yaml.org,2002:js/regexp> /\.unique$/
+          - !<tag:yaml.org,2002:js/regexp> /\.git$/
+          - !<tag:yaml.org,2002:js/regexp> /\.svn$/
+          - !<tag:yaml.org,2002:js/regexp> /\.hg$/
+          - !<tag:yaml.org,2002:js/regexp> /\.DS_Store$/
+          - !<tag:yaml.org,2002:js/regexp> /(^|\/)-/
+          - !<tag:yaml.org,2002:js/regexp> /\.release($|\.|\/)/i
+      prefixPath: .
+    criterion:
+      debug: 1
+    inherit:
+      - predefined.*
+  exported.0:
+    filePath: ./proto
+    srcFilter:
+      filePath: ./proto
+      prefixPath: .
+  exportedFiles.0:
+    recursive: 0
+    filePath:
+      ./dwtools/Tools.s: true
+      ./dwtools/abase/l8/GdfConverter.s: true
+      ./dwtools/abase/l8/GdfCurrent.s: true
+      ./dwtools/abase/l8/GdfFormats.s: true
+      ./dwtools/abase/l8/OldEncoders.s: true
+      ./dwtools/abase/l8.test/Gdf.test.s: true
+    srcFilter:
+      filePath:
+        ./dwtools/Tools.s: true
+        ./dwtools/abase/l8/GdfConverter.s: true
+        ./dwtools/abase/l8/GdfCurrent.s: true
+        ./dwtools/abase/l8/GdfFormats.s: true
+        ./dwtools/abase/l8/OldEncoders.s: true
+        ./dwtools/abase/l8.test/Gdf.test.s: true
+      basePath: .
+      prefixPath: proto
+step:
+  clean.out.0:
+    criterion:
+      debug: 0
+    opts:
+      filePath: 'path::out.debug'
+    inherit:
+      - predefined.delete
+  clean.out.1:
+    criterion:
+      debug: 1
+    opts:
+      filePath: 'path::out.debug'
+    inherit:
+      - predefined.delete
+  reflect.proto.0:
+    criterion:
+      debug: 0
+      raw: 0
+    opts:
+      reflector: 'reflector::reflect.proto.*=1'
+    inherit:
+      - predefined.reflect
+  reflect.proto.1:
+    criterion:
+      debug: 1
+      raw: 0
+    opts:
+      reflector: 'reflector::reflect.proto.*=1'
+    inherit:
+      - predefined.reflect
+  reflect.proto.2:
+    criterion:
+      debug: 0
+      raw: 1
+    opts:
+      reflector: 'reflector::reflect.proto.*=1'
+    inherit:
+      - predefined.reflect
+  reflect.proto.3:
+    criterion:
+      debug: 1
+      raw: 1
+    opts:
+      reflector: 'reflector::reflect.proto.*=1'
+    inherit:
+      - predefined.reflect
+  reflect.submodules.0:
+    criterion:
+      debug: 1
+      raw: 0
+    opts:
+      reflector: 'reflector::reflect.submodules*=1'
+    inherit:
+      - predefined.reflect
+  reflect.submodules.1:
+    criterion:
+      debug: 1
+      raw: 1
+    opts:
+      reflector: 'reflector::reflect.submodules*=1'
+    inherit:
+      - predefined.reflect
+  export.proto:
+    criterion:
+      debug: 1
+      proto: 1
+    opts:
+      export: 'path::proto'
+      tar: 0
+    inherit:
+      - predefined.export
+build:
+  debug.raw:
+    criterion:
+      default: 1
+      debug: 1
+      raw: 1
+    steps:
+      - 'step::clean.out*=1'
+      - 'step::reflect.proto.*=1'
+  debug.compiled:
+    criterion:
+      debug: 1
+      raw: 0
+    steps:
+      - 'step::clean.out*=1'
+      - 'step::reflect.proto.*=1'
+  release.raw:
+    criterion:
+      debug: 0
+      raw: 1
+    steps:
+      - 'step::clean.out*=1'
+      - 'step::reflect.proto.*=1'
+  release.compiled:
+    criterion:
+      debug: 0
+      raw: 0
+    steps:
+      - 'step::clean.out*=1'
+      - 'step::reflect.proto.*=1'
+  all:
+    steps:
+      - 'build::debug.raw'
+      - 'build::release.compiled'
+  proto.export:
+    criterion:
+      default: 1
+      debug: 1
+      raw: 1
+      proto: 1
+      export: 1
+      tar: 1
+      public: 1
+    steps:
+      - 'build::debug.raw'
+      - 'step::export.proto'
+exported:
+  proto.export:
+    version: 0.3.0
+    criterion:
+      default: 1
+      debug: 1
+      raw: 1
+      proto: 1
+      export: 1
+      tar: 1
+      public: 1
+    exportedReflector: 'reflector::exported.0'
+    exportedFilesReflector: 'reflector::exportedFiles.0'
+    exportedDirPath: 'path::exportedDir.0'
+    exportedFilesPath: 'path::exportedFiles.0'
+    exportedTerminalsPath:
+      path:
+        - ./dwtools/Tools.s
+        - ./dwtools/abase/l8/GdfConverter.s
+        - ./dwtools/abase/l8/GdfCurrent.s
+        - ./dwtools/abase/l8/GdfFormats.s
+        - ./dwtools/abase/l8/OldEncoders.s
+        - ./dwtools/abase/l8.test/Gdf.test.s
+      criterion:
+        default: 1
+        debug: 1
+        raw: 1
+        proto: 1
+        export: 1
+        tar: 1
+        public: 1
