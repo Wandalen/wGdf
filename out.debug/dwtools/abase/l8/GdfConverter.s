@@ -3,7 +3,7 @@
 'use strict';
 
 /**
- * Collection of strategies to convert complex data structures from one GDF ( generic data format ) to another GDF. You may use the module ot serialize complex data structure to string or deserialize string back to original data structure. Generic data format ( GDF ) is format of data structure designed without taking into account none unigue feature of data, so it could be used for any kind of data.Collection of strategies to convert complex data structures from one GDF ( generic data format ) to another GDF. You may use the module to serialize complex data structure to string or deserialize string back to the original data structure. Generic data format ( GDF ) is a format of data structure designed without taking into account none unique feature of data so that it is applicable to any kind of data.
+ * Collection of strategies to convert complex data structures from one GDF ( generic data format ) to another GDF. You may use the module to serialize complex data structure to string or deserialize string back to the original data structure. Generic data format ( GDF ) is a format of data structure designed with taking into account none unique feature of data so that it is applicable to any kind of data.
   @module Tools/base/GdfConverter
 */
 
