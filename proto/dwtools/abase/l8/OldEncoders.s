@@ -234,6 +234,7 @@ function _base64FromUtf8Slow( string )
 let base64FromUtf8 =
 {
   shortName : 'base64FromUtf8',
+  default : 1,
 
   ext : [ 'base64' ],
   in : [ 'string/utf8' ],
@@ -281,6 +282,7 @@ function _base64ToUtf8Slow( base64 )
 let base64ToUtf8 =
 {
   shortName : 'base64ToUtf8',
+  default : 1,
 
   ext : [ 'utf8' ],
   in : [ 'string/base64' ],
