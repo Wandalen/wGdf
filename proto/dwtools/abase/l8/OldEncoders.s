@@ -2,12 +2,41 @@
 
 'use strict';
 
-var _global = _global_;
-var _ = _global_.wTools;
+/**
+ * @file EncoderStrategyStandanrd.s.
+ */
 
+if( typeof module !== 'undefined' )
+{
+
+  let _ = require( '../../Tools.s' );
+
+}
+
+let _global = _global_;
+let _ = _global_.wTools;
+let Self = _global_.wTools;
+
+
+// --
 // base64
+// --
 
-function base64ToBuffer( base64, chunkSize )
+let base64ToBuffer =
+{
+  ext : [ 'base64' ],
+  in : [ 'string/base64' ],
+  out : [ 'buffer.bytes' ],
+
+  onEncode : function( op )
+  {
+    _.assert( _.strIs( op.in.data ) );
+    op.out.data = _base64ToBuffer( op.in.data, op.envMap.chunkSize )
+    op.out.format = 'buffer.bytes';
+  },
+}
+
+function _base64ToBuffer( base64, chunkSize )
 {
 
   function base64ToWrdBits6( chr )
@@ -56,7 +85,21 @@ function base64ToBuffer( base64, chunkSize )
 
 //
 
-function base64FromBuffer( byteBuffer )
+let base64FromBuffer =
+{
+  ext : [ 'base64' ],
+  in : [ 'buffer.bytes' ],
+  out : [ 'string/base64' ],
+
+  onEncode : function( op )
+  {
+    _.assert( _.bufferBytesIs( op.in.data ) );
+    op.out.data = _base64FromBuffer( op.in.data )
+    op.out.format = 'string/base64';
+  },
+}
+
+function _base64FromBuffer( byteBuffer )
 {
 
   function wrdBits6ToBase64( wrdBits6 )
@@ -111,16 +154,76 @@ function base64FromBuffer( byteBuffer )
 
 //
 
-function base64ToBlob( base64Data, mime )
+let base64ToBlob =
+{
+  ext : [ 'blob' ],
+  in : [ 'string/base64' ],
+  out : [ 'blob' ],
+
+  onEncode : function( op )
+  {
+    _.assert( _.strIs( op.in.data ) );
+    op.out.data = _base64ToBlob( op.in.data, op.envMap.mime )
+    op.out.format = 'blob';
+  },
+}
+
+function _base64ToBlob( base64Data, mime )
 {
   var mime = mime || 'application/octet-stream';
-  var buffer = _.base64ToBuffer( base64Data );;
+  var buffer = _base64ToBuffer( base64Data );
   return new Blob( buffer, { type: mime } );
 }
 
-//
+//Vova : added opposite version of base64ToBlob, is it needed?
 
-function base64FromUtf8Slow( string )
+// let base64FromBlob = null;
+// if( _.workerIs() )
+// base64FromBlob =
+// {
+//   ext : [ 'base64' ],
+//   in : [ 'blob' ],
+//   out : [ 'string/base64' ],
+
+//   onEncode : function( op )
+//   {
+//     op.out.data = _base64FromBlob( op.in.data )
+//     op.out.format = 'string/base64';
+//   },
+// }
+
+// function _base64FromBlob( blob )
+// {
+//   if( !_.workerIs() )
+//   return blob;
+
+//   let reader = new FileReaderSync();
+//   let result = reader.readAsText( blob );
+//   result = _base64FromUtf8( result );
+//   return result;
+// }
+
+// --
+// utf8
+// --
+
+let base64FromUtf8Slow =
+{
+  shortName : 'base64FromUtf8Slow',
+
+  ext : [ 'base64' ],
+  in : [ 'string/utf8' ],
+  out : [ 'string/base64' ],
+
+  onEncode : function( op )
+  {
+    _.assert( _.strIs( op.in.data ) );
+    op.out.data = _base64FromUtf8Slow( op.in.data )
+    op.out.format = 'string/base64';
+  },
+}
+
+function _base64FromUtf8Slow( string )
 {
   var base64 = btoa( unescape( encodeURIComponent( string ) ) );
   return base64;
@@ -128,16 +231,95 @@ function base64FromUtf8Slow( string )
 
 //
 
-function base64FromUtf8( string )
+let base64FromUtf8 =
 {
-  var buffer = _.utf8ToBuffer( string );
-  var result = _.base64FromBuffer( buffer );
+  shortName : 'base64FromUtf8',
+  default : 1,
+
+  ext : [ 'base64' ],
+  in : [ 'string/utf8' ],
+  out : [ 'string/base64' ],
+
+  onEncode : function( op )
+  {
+    _.assert( _.strIs( op.in.data ) );
+    op.out.data = _base64FromUtf8( op.in.data )
+    op.out.format = 'string/base64';
+  },
+}
+
+function _base64FromUtf8( string )
+{
+  var buffer = _utf8ToBuffer( string );
+  var result = _base64FromBuffer( buffer );
   return result;
 }
 
 //
 
-function utf8FromBuffer( byteBuffer )
+let base64ToUtf8Slow =
+{
+  ext : [ 'utf8' ],
+  in : [ 'string/base64' ],
+  out : [ 'string/utf8' ],
+
+  onEncode : function( op )
+  {
+    _.assert( _.strIs( op.in.data ) );
+    op.out.data = _base64ToUtf8Slow( op.in.data )
+    op.out.format = 'string/utf8';
+  },
+}
+
+function _base64ToUtf8Slow( base64 )
+{
+  var result = atob( base64 )
+  return result;
+}
+
+//
+
+let base64ToUtf8 =
+{
+  shortName : 'base64ToUtf8',
+  default : 1,
+
+  ext : [ 'utf8' ],
+  in : [ 'string/base64' ],
+  out : [ 'string/utf8' ],
+
+  onEncode : function( op )
+  {
+    _.assert( _.strIs( op.in.data ) );
+    op.out.data = _base64ToUtf8( op.in.data )
+    op.out.format = 'string/utf8';
+  },
+}
+
+function _base64ToUtf8( base64 )
+{
+  var buffer = _base64ToBuffer( base64 );
+  let result = _utf8FromBuffer( buffer );
+  return result;
+}
+
+//
+
+let utf8FromBuffer =
+{
+  ext : [ 'utf8' ],
+  in : [ 'buffer.bytes' ],
+  out : [ 'string/utf8' ],
+
+  onEncode : function( op )
+  {
+    _.assert( _.bufferBytesIs( op.in.data ) );
+    op.out.data = _utf8FromBuffer( op.in.data )
+    op.out.format = 'string/utf8';
+  },
+}
+
+function _utf8FromBuffer( byteBuffer )
 {
   var result = '';
 
@@ -165,9 +347,24 @@ function utf8FromBuffer( byteBuffer )
   return result;
 }
 
+
 //
 
-function utf8ToBuffer( str )
+let utf8ToBuffer =
+{
+  ext : [ 'bytes', 'buffer' ],
+  in : [ 'string/utf8' ],
+  out : [ 'buffer.bytes' ],
+
+  onEncode : function( op )
+  {
+    _.assert( _.strIs( op.in.data ) );
+    op.out.data = _utf8ToBuffer( op.in.data )
+    op.out.format = 'buffer.bytes';
+  },
+}
+
+function _utf8ToBuffer( str )
 {
 
   var chr, nStrLen = str.length, size = 0;
@@ -246,22 +443,35 @@ var Proto =
 
   // base64
 
-  base64ToBuffer: base64ToBuffer,
-  base64FromBuffer: base64FromBuffer,
-  base64ToBlob: base64ToBlob,
+  base64ToBuffer: _base64ToBuffer,
+  base64FromBuffer: _base64FromBuffer,
+  base64ToBlob: _base64ToBlob,
+  // base64FromBlob: _base64FromBlob,
 
-  base64FromUtf8Slow: base64FromUtf8Slow,
-  base64FromUtf8: base64FromUtf8,
+  base64FromUtf8Slow: _base64FromUtf8Slow,
+  base64FromUtf8: _base64FromUtf8,
+  base64ToUtf8Slow : _base64ToUtf8Slow,
+  base64ToUtf8: _base64ToUtf8,
 
   // utf8
 
-  utf8FromBuffer: utf8FromBuffer,
-  utf8ToBuffer: utf8ToBuffer,
+  utf8FromBuffer: _utf8FromBuffer,
+  utf8ToBuffer: _utf8ToBuffer,
 
 }
 
-var Self = _.encode = _.encode || Object.create( null );
+Self = _.encode = _.encode || Object.create( null );
 _.mapExtend( _.encode,Proto );
+
+
+// --
+// register
+// --
+
+_.Gdf([ base64ToBuffer, base64FromBuffer ]);
+_.Gdf([ base64ToBlob ]);
+_.Gdf([ base64FromUtf8Slow, base64ToUtf8Slow, base64FromUtf8, base64ToUtf8 ]);
+_.Gdf([ utf8FromBuffer, utf8ToBuffer ]);
 
 // --
 // export
