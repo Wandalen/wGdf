@@ -171,9 +171,37 @@ let base64ToBlob =
 function _base64ToBlob( base64Data, mime )
 {
   var mime = mime || 'application/octet-stream';
-  var buffer = _.base64ToBuffer( base64Data );;
+  var buffer = _base64ToBuffer( base64Data );
   return new Blob( buffer, { type: mime } );
 }
+
+//Vova : added opposite version of base64ToBlob, is it needed?
+
+// let base64FromBlob = null;
+// if( _.workerIs() )
+// base64FromBlob =
+// {
+//   ext : [ 'base64' ],
+//   in : [ 'blob' ],
+//   out : [ 'string/base64' ],
+
+//   onEncode : function( op )
+//   {
+//     op.out.data = _base64FromBlob( op.in.data )
+//     op.out.format = 'string/base64';
+//   },
+// }
+
+// function _base64FromBlob( blob )
+// {
+//   if( !_.workerIs() )
+//   return blob;
+
+//   let reader = new FileReaderSync();
+//   let result = reader.readAsText( blob );
+//   result = _base64FromUtf8( result );
+//   return result;
+// }
 
 // --
 // utf8
@@ -221,8 +249,55 @@ let base64FromUtf8 =
 
 function _base64FromUtf8( string )
 {
-  var buffer = _.utf8ToBuffer( string );
-  var result = _.base64FromBuffer( buffer );
+  var buffer = _utf8ToBuffer( string );
+  var result = _base64FromBuffer( buffer );
+  return result;
+}
+
+//
+
+let base64ToUtf8Slow =
+{
+  ext : [ 'utf8' ],
+  in : [ 'string/base64' ],
+  out : [ 'string/utf8' ],
+
+  onEncode : function( op )
+  {
+    _.assert( _.strIs( op.in.data ) );
+    op.out.data = _base64ToUtf8Slow( op.in.data )
+    op.out.format = 'string/utf8';
+  },
+}
+
+function _base64ToUtf8Slow( base64 )
+{
+  var result = atob( base64 )
+  return result;
+}
+
+//
+
+let base64ToUtf8 =
+{
+  shortName : 'base64ToUtf8',
+
+  ext : [ 'utf8' ],
+  in : [ 'string/base64' ],
+  out : [ 'string/utf8' ],
+
+  onEncode : function( op )
+  {
+    _.assert( _.strIs( op.in.data ) );
+    op.out.data = _base64ToUtf8( op.in.data )
+    op.out.format = 'string/utf8';
+  },
+}
+
+function _base64ToUtf8( base64 )
+{
+  var buffer = _base64ToBuffer( base64 );
+  let result = _utf8FromBuffer( buffer );
   return result;
 }
 
@@ -369,14 +444,17 @@ var Proto =
   base64ToBuffer: _base64ToBuffer,
   base64FromBuffer: _base64FromBuffer,
   base64ToBlob: _base64ToBlob,
+  // base64FromBlob: _base64FromBlob,
 
   base64FromUtf8Slow: _base64FromUtf8Slow,
   base64FromUtf8: _base64FromUtf8,
+  base64ToUtf8Slow : _base64ToUtf8Slow,
+  base64ToUtf8: _base64ToUtf8,
 
   // utf8
 
-  utf8FromBuffer: utf8FromBuffer,
-  utf8ToBuffer: utf8ToBuffer,
+  utf8FromBuffer: _utf8FromBuffer,
+  utf8ToBuffer: _utf8ToBuffer,
 
 }
 
@@ -388,8 +466,9 @@ _.mapExtend( _.encode,Proto );
 // register
 // --
 
-_.Gdf([ base64ToBuffer, base64FromBuffer, base64ToBlob ]);
-_.Gdf([ base64FromUtf8Slow, base64FromUtf8 ]);
+_.Gdf([ base64ToBuffer, base64FromBuffer ]);
+_.Gdf([ base64ToBlob ]);
+_.Gdf([ base64FromUtf8Slow, base64ToUtf8Slow, base64FromUtf8, base64ToUtf8 ]);
 _.Gdf([ utf8FromBuffer, utf8ToBuffer ]);
 
 // --
