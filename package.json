@@ -24,6 +24,7 @@
   "dependencies": {
     "wTools": "",
     "wCopyable": "",
+    "wroutinefundamentals": "",
     "coffee-script": "",
     "js2coffee": "",
     "js-yaml": "",
