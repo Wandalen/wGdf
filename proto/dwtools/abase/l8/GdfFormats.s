@@ -59,22 +59,6 @@ let readJson =
 
 }
 
-let writeJson =
-{
-
-  ext : [ 'json' ],
-  shortName : 'json',
-  in : [ 'structure' ],
-  out : [ 'string' ],
-
-  onEncode : function( op )
-  {
-    op.out.data = JSON.stringify( op.in.data );
-    op.out.format = 'string';
-  }
-
-}
-
 let writeJsonMin =
 {
 
@@ -128,8 +112,7 @@ readJsStructure =
 {
 
   forConfig : 0,
-  ext : [ 'js','s','ss','jstruct', 'jslike' ],
-  shortName : 'js.structure',
+  ext : [ 'js.structure', 'js','s','ss','jstruct', 'jslike' ],
   in : [ 'string' ],
   out : [ 'structure' ],
 
@@ -203,8 +186,7 @@ readJsStructure =
 let writeJsStrcuture =
 {
 
-  ext : [ 'js','s','ss','jstruct', 'jslike' ],
-  shortName : 'js.structure',
+  ext : [ 'js.structure','js','s','ss','jstruct', 'jslike' ],
   in : [ 'structure' ],
   out : [ 'string' ],
 
@@ -379,7 +361,7 @@ writeBson =
 // register
 // --
 
-_.Gdf([ readJson, writeJson, writeJsonMin, writeJsonFine ]);
+_.Gdf([ readJson, writeJsonMin, writeJsonFine ]);
 _.Gdf([ readJsStructure, /*readJsNode, readJsSmart,*/ writeJsStrcuture ]);
 _.Gdf([ readYml, writeYml ]);
 _.Gdf([ readCoffee, writeCoffee ]);
