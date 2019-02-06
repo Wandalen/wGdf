@@ -200,9 +200,9 @@ function encode_body( o )
     _.assert( _.strIs( op.in.format ), 'Not clear which input format is' );
     _.assert( _.arrayHas( encoder.in, op.in.format ), () => 'Unknown format ' + op.in.format );
 
-    debugger;
+    // debugger;
     encoder.onEncode( op );
-    debugger;
+    // debugger;
 
     op.out.format = op.out.format || encoder.out;
     if( _.arrayIs( op.out.format ) )
