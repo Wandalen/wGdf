@@ -97,7 +97,18 @@ let writeJsonFine =
 // js
 // --
 
-let readJsStructure =
+let ExternalFundamentals;
+try
+{
+  ExternalFundamentals = _.include( 'wExternalFundamentals' );
+}
+catch( err )
+{
+}
+
+let readJsStructure = null;
+if( ExternalFundamentals )
+readJsStructure =
 {
 
   forConfig : 0,
@@ -179,7 +190,7 @@ let writeJsStrcuture =
   in : [ 'structure' ],
   out : [ 'string' ],
 
-  onEncode : function( e )
+  onEncode : function( op )
   {
     op.out.data = _.toJs( op.in.data );
     op.out.format = 'string';
@@ -316,7 +327,7 @@ readBson =
 {
 
   ext : [ 'bson' ],
-  in : [ 'string' ],
+  in : [ 'buffer.node' ],
   out : [ 'structure' ],
 
   onEncode : function( op )
@@ -335,10 +346,11 @@ writeBson =
 
   ext : [ 'bson' ],
   in : [ 'structure' ],
-  out : [ 'string' ],
+  out : [ 'buffer.node' ],
 
   onEncode : function( op )
   {
+    _.assert( _.mapIs( op.in.data ) );
     op.out.data = Bson.serialize( op.in.data );
     op.out.format = 'buffer.node';
   },

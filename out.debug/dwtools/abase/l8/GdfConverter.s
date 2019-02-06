@@ -17,6 +17,7 @@ if( typeof module !== 'undefined' )
   let _ = require( '../../Tools.s' );
 
   _.include( 'wCopyable' );
+  _.include( 'wRoutineFundamentals' );
 
 }
 
@@ -66,31 +67,31 @@ function unform()
 {
   let encoder = this;
 
-  debugger; xxx
+  // debugger; xxx
 
   _.arrayRemoveOnceStrictly( encoder.Elements, encoder );
 
   encoder.in.forEach( ( e, k ) =>
   {
-    _.arrayRemoveOnceStrictly( encoder.InMap[ e ] );
+    _.arrayRemoveOnceStrictly( encoder.InMap[ e ], encoder );
   });
   debugger;
 
   encoder.out.forEach( ( e, k ) =>
   {
     debugger;
-    _.arrayRemoveOnceStrictly( encoder.OutMap[ e ] );
+    _.arrayRemoveOnceStrictly( encoder.OutMap[ e ], encoder );
   });
 
   encoder.ext.forEach( ( e, k ) =>
   {
     debugger;
-    _.arrayRemoveOnceStrictly( encoder.OutMap[ e ] );
+    _.arrayRemoveOnceStrictly( encoder.ExtMap[ e ], encoder );
   });
 
   encoder.inOut.forEach( ( e, k ) =>
   {
-    _.arrayRemoveOnceStrictly( encoder.InOutMap[ e ] );
+    _.arrayRemoveOnceStrictly( encoder.InOutMap[ e ], encoder );
   });
 
 }
@@ -141,9 +142,9 @@ function form()
   /* - */
 
   _.assert( _.strIs( encoder.name ) );
-  _.assert( _.strsAre( encoder.in ) );
-  _.assert( _.strsAre( encoder.out ) );
-  _.assert( _.strsAre( encoder.ext ) );
+  _.assert( _.strsAreAll( encoder.in ) );
+  _.assert( _.strsAreAll( encoder.out ) );
+  _.assert( _.strsAreAll( encoder.ext ) );
 
   _.assert( encoder.in.length >= 1 );
   _.assert( encoder.out.length >= 1 );
@@ -375,6 +376,7 @@ if( typeof module !== 'undefined' )
 {
   require( './GdfCurrent.s' );
   require( './GdfFormats.s' );
+  require( './OldEncoders.s' );
 }
 
 })();

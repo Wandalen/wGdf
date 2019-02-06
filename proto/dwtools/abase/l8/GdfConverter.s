@@ -17,6 +17,7 @@ if( typeof module !== 'undefined' )
   let _ = require( '../../Tools.s' );
 
   _.include( 'wCopyable' );
+  _.include( 'wRoutineFundamentals' );
 
 }
 
@@ -141,9 +142,9 @@ function form()
   /* - */
 
   _.assert( _.strIs( encoder.name ) );
-  _.assert( _.strsAre( encoder.in ) );
-  _.assert( _.strsAre( encoder.out ) );
-  _.assert( _.strsAre( encoder.ext ) );
+  _.assert( _.strsAreAll( encoder.in ) );
+  _.assert( _.strsAreAll( encoder.out ) );
+  _.assert( _.strsAreAll( encoder.ext ) );
 
   _.assert( encoder.in.length >= 1 );
   _.assert( encoder.out.length >= 1 );
