@@ -90,7 +90,7 @@ function json( test )
 
   test.case = 'select json.fine';
 
-  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'json', default : 1 });
+  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'json.fine' });
   test.identical( serialize.length, 1 );
   serialize = serialize[ 0 ];
   test.identical( serialize.shortName, 'json.fine' );
@@ -183,7 +183,7 @@ function json( test )
 
   test.case = 'select json.min';
 
-  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'json.min', default : 1 });
+  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'json', default : 1 });
   test.identical( serialize.length, 1 );
   serialize = serialize[ 0 ];
   test.identical( serialize.shortName, 'json.min' );

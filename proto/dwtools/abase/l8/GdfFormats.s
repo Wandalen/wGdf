@@ -61,7 +61,7 @@ let readJson =
 
 let writeJsonMin =
 {
-
+  default : 1,
   ext : [ 'json.min', 'json' ],
   shortName : 'json.min',
   in : [ 'structure' ],
@@ -78,7 +78,6 @@ let writeJsonMin =
 let writeJsonFine =
 {
 
-  default : 1,
   shortName : 'json.fine',
   ext : [ 'json.fine', 'json' ],
   in : [ 'structure' ],
