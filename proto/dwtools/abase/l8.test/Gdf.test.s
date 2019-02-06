@@ -82,6 +82,10 @@ function json( test )
 {
   var self = this;
 
+  var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'json', default : 1 });
+  test.identical( deserialize.length, 1 );
+  deserialize = deserialize[ 0 ];
+
   /* json.fine */
 
   test.case = 'select json.fine';
@@ -89,10 +93,7 @@ function json( test )
   var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'json', default : 1 });
   test.identical( serialize.length, 1 );
   serialize = serialize[ 0 ];
-
-  var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'json', default : 1 });
-  test.identical( deserialize.length, 1 );
-  deserialize = deserialize[ 0 ];
+  test.identical( serialize.shortName, 'json.fine' );
 
   /* */
 
@@ -130,20 +131,52 @@ function json( test )
 
   /* */
 
-  // test.open( 'complicated' );
-  // for( let s in SamplesComplicated )
-  // {
-  //   test.case = s;
-  //   let src = SamplesComplicated[ s ];
-  //
-  //   var serialized = serialize.encode({ data : src });
-  //   test.identical( serialized.format, 'string' );
-  //
-  //   var deserialized = deserialize.encode({ data : serialized.data });
-  //   test.identical( deserialized.data, src );
-  //   test.identical( deserialized.format, 'structure' );
-  // }
-  // test.close( 'complicated' );
+  test.open( 'complicated' );
+
+  test.case = 'all complicated together';
+  var serialized = serialize.encode({ data : SamplesComplicated });
+  test.identical( serialized.format, 'string' );
+  test.is( _.strIs( serialized.data ) );
+  test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) );
+
+  test.case = 'typed array';
+  var src = { typed :  new Uint16Array([ 1,2,3 ]) }
+  var serialized = serialize.encode({ data : src });
+  test.identical( serialized.format, 'string' );
+  test.is( _.strIs( serialized.data ) );
+  test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) );
+
+  test.case = 'regexp';
+  var src = { regexp :  /.regexp/g }
+  var serialized = serialize.encode({ data : src });
+  test.identical( serialized.format, 'string' );
+  test.is( _.strIs( serialized.data ) );
+  test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) );
+
+  test.case = 'infinity';
+  var src = { infinity : -Infinity }
+  var serialized = serialize.encode({ data : src });
+  test.identical( serialized.format, 'string' );
+  test.is( _.strIs( serialized.data ) );
+  test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) );
+
+  test.case = 'NaN';
+  var src = { nan : NaN }
+  var serialized = serialize.encode({ data : src });
+  test.identical( serialized.format, 'string' );
+  test.is( _.strIs( serialized.data ) );
+  test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) );
+
+  test.case = 'date';
+  var src = { date : new Date() }
+  var serialized = serialize.encode({ data : src });
+  test.identical( serialized.format, 'string' );
+  test.is( _.strIs( serialized.data ) );
+  var deserialized = deserialize.encode({ data : serialized.data })
+  var expected = { date : src.date.toJSON() }
+  test.identical( deserialized.data, expected );
+
+  test.close( 'complicated' );
 
 
   /* json.min */
@@ -188,6 +221,84 @@ function json( test )
     test.identical( deserialized.format, 'structure' );
   }
   test.close( 'primitive' );
+
+  /* */
+
+  test.open( 'complicated' );
+
+  test.case = 'all complicated together';
+  var serialized = serialize.encode({ data : SamplesComplicated });
+  test.identical( serialized.format, 'string' );
+  test.is( _.strIs( serialized.data ) );
+  var deserialized = deserialize.encode({ data : serialized.data });
+  var expected =
+  {
+    'regexp' : {},
+    'infinity' : null,
+    'nan' : null,
+    'date' : SamplesComplicated.date.toJSON()
+  }
+  test.identical( deserialized.data, expected );
+  test.identical( deserialized.format, 'structure' );
+
+  test.case = 'typed array';
+  var src = { typed :  new Uint16Array([ 1,2,3 ]) }
+  var serialized = serialize.encode({ data : src });
+  test.identical( serialized.format, 'string' );
+  test.is( _.strIs( serialized.data ) );
+  var deserialized = deserialize.encode({ data : serialized.data });
+  var expected =
+  {
+    typed : { '0' : 1, '1' : 2, '2' : 3 }
+  }
+  test.identical( deserialized.data, expected );
+
+  test.case = 'regexp';
+  var src = { regexp :  /.regexp/g }
+  var serialized = serialize.encode({ data : src });
+  test.identical( serialized.format, 'string' );
+  test.is( _.strIs( serialized.data ) );
+  var deserialized = deserialize.encode({ data : serialized.data });
+  var expected =
+  {
+    regexp : {}
+  }
+  test.identical( deserialized.data, expected );
+
+  test.case = 'infinity';
+  var src = { infinity : -Infinity }
+  var serialized = serialize.encode({ data : src });
+  test.identical( serialized.format, 'string' );
+  test.is( _.strIs( serialized.data ) );
+  var deserialized = deserialize.encode({ data : serialized.data });
+  var expected =
+  {
+    infinity : null
+  }
+  test.identical( deserialized.data, expected );
+
+  test.case = 'NaN';
+  var src = { nan : NaN }
+  var serialized = serialize.encode({ data : src });
+  test.identical( serialized.format, 'string' );
+  test.is( _.strIs( serialized.data ) );
+  var deserialized = deserialize.encode({ data : serialized.data });
+  var expected =
+  {
+    nan : null
+  }
+  test.identical( deserialized.data, expected );
+
+  test.case = 'date';
+  var src = { date : new Date() }
+  var serialized = serialize.encode({ data : src });
+  test.identical( serialized.format, 'string' );
+  test.is( _.strIs( serialized.data ) );
+  var deserialized = deserialize.encode({ data : serialized.data })
+  var expected = { date : src.date.toJSON() }
+  test.identical( deserialized.data, expected );
+
+  test.close( 'complicated' );
 
 }
 
