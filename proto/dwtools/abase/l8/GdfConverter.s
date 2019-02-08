@@ -235,6 +235,43 @@ let encode = _.routineFromPreAndBody( encode_pre, encode_body );
 
 //
 
+/**
+ * Searches for converters.
+ * Finds converters that match the specified selector.
+ * Converter is selected if all fields selector are equal with appropriate properties of the converter.
+ *
+ * @param {Object} selector a map with one or several rules that should be met by the converter
+ *
+ * Possible selector properties are :
+ * @param {String} [selector.in] Input format of the converter
+ * @param {String} [selector.out] Output format of the converter
+ * @param {String} [selector.ext] File extension of the converter
+ * @param {Boolean|Number} [selector.default] Selects default converter for provided in,out and ext
+ *
+ * @example
+ * //returns converters that accept string as input
+ * let converters = _.Gdf.Select({ in : 'string' });
+ * console.log( converters )
+ *
+ * @example
+ * //returns converters that accept string and return structure( object )
+ * let converters = _.Gdf.Select({ in : 'string', out : 'structure' });
+ * console.log( converters )
+ *
+ * * @example
+ * //returns default json converter that encodes structure to string
+ * let converters = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'json', default : 1 });
+ * console.log( converters[ 0 ] )
+ *
+ * @returns {Array} Returns array with selected converters or empty array if nothing found.
+ * @throws {Error} If more than one argument is provided
+ * @throws {Error} If selector is not an Object
+ * @throws {Error} If selector has unknown field
+ * @method Select
+ * @memberof Tools/base/GdfConverter
+ * @static
+ */
+
 function Select( selector )
 {
   _.assert( arguments.length === 1 );
