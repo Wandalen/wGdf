@@ -8,7 +8,7 @@ about:
     data structure. Generic data format ( GDF ) is a format of data structure
     designed with taking into account none unique feature of data so that it is
     applicable to any kind of data.
-  version: 0.3.7
+  version: 0.3.10
   enabled: 1
   interpreters:
     - nodejs >= 6.0.0
@@ -28,11 +28,11 @@ path:
   out:
     path: out
   out.debug:
-    path: ./out.debug
+    path: ./out/debug
     criterion:
       debug: 1
   out.release:
-    path: ./out.release
+    path: ./out/release
     criterion:
       debug: 0
   repository:
@@ -51,19 +51,19 @@ path:
       public: 1
   exportedFiles.proto.export:
     path:
-      - .
-      - ./dwtools
-      - ./dwtools/Tools.s
-      - ./dwtools/abase
-      - ./dwtools/abase/l8
-      - ./dwtools/abase/l8/GdfConverter.s
-      - ./dwtools/abase/l8/GdfCurrent.s
-      - ./dwtools/abase/l8/GdfFormats.s
-      - ./dwtools/abase/l8/OldEncoders.s
-      - ./dwtools/abase/l8.test
-      - ./dwtools/abase/l8.test/Gdf.test.s
-      - ./dwtools/amid
-      - ./dwtools/atop
+      - proto
+      - proto/dwtools
+      - proto/dwtools/Tools.s
+      - proto/dwtools/abase
+      - proto/dwtools/abase/l8
+      - proto/dwtools/abase/l8/GdfConverter.s
+      - proto/dwtools/abase/l8/GdfCurrent.s
+      - proto/dwtools/abase/l8/GdfFormats.s
+      - proto/dwtools/abase/l8/OldEncoders.s
+      - proto/dwtools/abase/l8.test
+      - proto/dwtools/abase/l8.test/Gdf.test.s
+      - proto/dwtools/amid
+      - proto/dwtools/atop
     criterion:
       default: 1
       debug: 1
@@ -77,7 +77,7 @@ reflector:
   reflect.proto.:
     srcFilter:
       filePath:
-        ./proto: ./out.release
+        ./proto: ./out/release
       maskAll:
         excludeAny:
           - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
@@ -98,7 +98,7 @@ reflector:
   reflect.proto.debug:
     srcFilter:
       filePath:
-        ./proto: ./out.debug
+        ./proto: ./out/debug
       maskAll:
         excludeAny:
           - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
@@ -149,18 +149,18 @@ reflector:
     srcFilter:
       filePath:
         .: true
-        ./dwtools: true
-        ./dwtools/Tools.s: true
-        ./dwtools/abase: true
-        ./dwtools/abase/l8: true
-        ./dwtools/abase/l8/GdfConverter.s: true
-        ./dwtools/abase/l8/GdfCurrent.s: true
-        ./dwtools/abase/l8/GdfFormats.s: true
-        ./dwtools/abase/l8/OldEncoders.s: true
-        ./dwtools/abase/l8.test: true
-        ./dwtools/abase/l8.test/Gdf.test.s: true
-        ./dwtools/amid: true
-        ./dwtools/atop: true
+        dwtools: true
+        dwtools/Tools.s: true
+        dwtools/abase: true
+        dwtools/abase/l8: true
+        dwtools/abase/l8/GdfConverter.s: true
+        dwtools/abase/l8/GdfCurrent.s: true
+        dwtools/abase/l8/GdfFormats.s: true
+        dwtools/abase/l8/OldEncoders.s: true
+        dwtools/abase/l8.test: true
+        dwtools/abase/l8.test/Gdf.test.s: true
+        dwtools/amid: true
+        dwtools/atop: true
       basePath: .
       prefixPath: proto
     criterion:
@@ -291,7 +291,7 @@ build:
       - 'step::export.proto'
 exported:
   proto.export:
-    version: 0.3.7
+    version: 0.3.10
     criterion:
       default: 1
       debug: 1
