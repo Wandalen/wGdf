@@ -49,6 +49,392 @@ let SamplesComplicated =
 // test
 // --
 
+//
+
+function Primitive1( test, o )
+{
+  let samples =
+  {
+    boolean : true,
+    undefined : undefined,
+    number : 23,
+    string : 'something',
+  }
+
+  let results = {};
+
+  for( let k in samples )
+  {
+    test.case = o.name + ': ' + k;
+    let src = {};
+    src[ k ] = samples[ k ];
+
+    let serialized = o.serialize( src );
+    test.identical( serialized.format, o.serializeFormat );
+
+    let deserialized = o.deserialize( serialized.data );
+    test.identical( deserialized.format, o.serializeFormat );
+
+    results[ k ] = test.identical( deserialized.data, src );
+  }
+
+  console.log( o.name, _.toStr( result, { levels : 1 } ))
+
+  return results;
+}
+
+//
+
+function Primitive2( test, o )
+{
+  let samples =
+  {
+    boolean : true,
+    undefined : undefined,
+    number : 23,
+    string : 'something',
+    null : null,
+    infinity : +Infinity,
+    nan : NaN,
+    symbol : Symbol.for( 'key' ),
+    date : new Date(),
+  }
+
+  if( typeof BigInt !== 'undefined' )
+  samples.bigInt = BigInt( 23 );
+
+  let results = {};
+
+  for( let k in samples )
+  {
+    test.case = o.name + ': ' + k;
+    let src = {};
+    src[ k ] = samples[ k ];
+
+    let serialized = o.serialize( src );
+    test.identical( serialized.format, o.serializeFormat );
+
+    let deserialized = o.deserialize( serialized.data );
+    test.identical( deserialized.format, o.serializeFormat );
+
+    results[ k ] = test.identical( deserialized.data, src );
+  }
+
+  console.log( o.name, _.toStr( result, { levels : 1 } ))
+
+  return results;
+}
+
+//
+
+function RexExp1( test, o )
+{
+  let samples =
+  {
+    1 : /ab|cd/,
+    2 : /a[bc]d/,
+    3 : /ab{1,}bc/,
+    4 : /(?i)abc/
+  }
+
+  let results = {};
+
+  for( let k in samples )
+  {
+    test.case = o.name + ': ' + samples[ k ].toString();
+    let src = {};
+    src[ k ] = samples[ k ];
+
+    let serialized = o.serialize( src );
+    test.identical( serialized.format, o.serializeFormat );
+
+    let deserialized = o.deserialize( serialized.data );
+    test.identical( deserialized.format, o.serializeFormat );
+
+    results[ k ] = test.identical( deserialized.data, src );
+  }
+
+  console.log( o.name, _.toStr( result, { levels : 1 } ))
+
+  return results;
+}
+
+//
+
+function RexExp2( test, o )
+{
+  let samples =
+  {
+    0 : /ab|cd/,
+    1 : /a[bc]d/,
+    2 : /ab{1,}bc/,
+    3 : /(?i)abc/,
+    4 : /(?s)a.{4,5}b/,
+    5 : /.regexp/g,
+    6 : /aBc/i,
+    7 : /^\d+/gm,
+    8 : /(?(?=regex)then|else)/,
+    9 : /^a.*c$/g,
+    10 : /[a-z]/m,
+    11 : /^[A-Za-z0-9]$/
+  }
+
+  let results = {};
+
+  for( let k in samples )
+  {
+    test.case = o.name + ': ' + samples[ k ].toString();
+    let src = {};
+    src[ k ] = samples[ k ];
+
+    let serialized = o.serialize( src );
+    test.identical( serialized.format, o.serializeFormat );
+
+    let deserialized = o.deserialize( serialized.data );
+    test.identical( deserialized.format, o.serializeFormat );
+
+    results[ k ] = test.identical( deserialized.data, src );
+  }
+
+  console.log( o.name, _.toStr( result, { levels : 1 } ))
+
+  return results;
+}
+
+//
+
+function Buffer1( test, o )
+{
+  let samples =
+  {
+    raw : new ArrayBuffer([ 99,100,101 ]),
+    bytes : new Uint8Array([ 99,100,101 ]),
+  }
+
+  if( typeof Buffer !== 'undefined' )
+  samples.node = Buffer.from([ 99,100,101 ]);
+
+  let results = {};
+  let positive = 0;
+
+  for( let k in samples )
+  {
+    test.case = o.name + ': ' + k;
+    let src = {};
+    src[ k ] = samples[ k ];
+
+    let serialized = o.serialize( src );
+    test.identical( serialized.format, o.serializeFormat );
+
+    let deserialized = o.deserialize( serialized.data );
+    test.identical( deserialized.format, o.serializeFormat );
+
+    results[ k ] = _.entityIdentical( deserialized.data, src );
+
+    if( results[ k ] )
+    positive += 1;
+  }
+
+  test.will = 'at least one buffer is supported';
+  test.is( positive );
+
+  console.log( o.name, _.toStr( result, { levels : 1 } ))
+
+  return results;
+}
+
+function Buffer2( test, o )
+{
+  let samples =
+  {
+    raw : new ArrayBuffer([ 99,100,101 ]),
+    bytes : new Uint8Array([ 99,100,101 ]),
+  }
+
+  if( typeof Buffer !== 'undefined' )
+  samples.node = Buffer.from([ 99,100,101 ]);
+
+  let results = {};
+  let positive = 0;
+
+  for( let k in samples )
+  {
+    test.case = o.name + ': ' + k;
+    let src = {};
+    src[ k ] = samples[ k ];
+
+    let serialized = o.serialize( src );
+    test.identical( serialized.format, o.serializeFormat );
+
+    let deserialized = o.deserialize( serialized.data );
+    test.identical( deserialized.format, o.serializeFormat );
+
+    results[ k ] = _.entityIdentical( deserialized.data, src );
+
+    if( results[ k ] )
+    positive += 1;
+  }
+
+  test.will = 'at least one buffer is supported';
+  test.is( positive > 0 );
+  test.will = 'buffer raw must be supported';
+  test.is( results.raw );
+
+  console.log( o.name, _.toStr( result, { levels : 1 } ))
+
+  return results;
+}
+
+//
+
+function Buffer3( test, o )
+{
+  let samples =
+  {
+    raw : new ArrayBuffer([ 99,100,101 ]),
+    bytes : new Uint8Array([ 99,100,101 ]),
+  }
+
+  if( typeof Buffer !== 'undefined' )
+  samples.node = Buffer.from([ 99,100,101 ]);
+
+  let results = {};
+  let positive = 0;
+
+  for( let k in samples )
+  {
+    test.case = o.name + ': ' + k;
+    let src = {};
+    src[ k ] = samples[ k ];
+
+    let serialized = o.serialize( src );
+    test.identical( serialized.format, o.serializeFormat );
+
+    let deserialized = o.deserialize( serialized.data );
+    test.identical( deserialized.format, o.serializeFormat );
+
+    results[ k ] = test.identical( deserialized.data, src );
+
+    if( results[ k ] )
+    positive += 1;
+  }
+
+  test.will = 'all buffers must be supported';
+  test.is( positive === _.mapOwnKeys( samples ) );
+
+  console.log( o.name, _.toStr( result, { levels : 1 } ))
+
+  return results;
+}
+
+//
+
+function Complex1( test, o )
+{
+  let withPrimitives =
+  {
+    boolean : true,
+    undefined : undefined,
+    number : 23,
+    string : 'something',
+  }
+
+  let withArraysAndMaps =
+  {
+    map : { a : '1', dir : { b : 2 }, c : [ 1,2,3 ] },
+    array : [ { a : '1', dir : { b : 2 }, c : [ 1,2,3 ] } ],
+  }
+
+  let withRegexps =
+  {
+    1 : /ab|cd/,
+    2 : /a[bc]d/,
+    3 : /ab{1,}bc/,
+    4 : /(?i)abc/
+  }
+
+  let withPrimitives2 =
+  {
+    boolean : true,
+    undefined : undefined,
+    number : 23,
+    string : 'something',
+    null : null,
+    infinity : +Infinity,
+    nan : NaN,
+    symbol : Symbol.for( 'key' )
+  }
+
+  let samples =
+  {
+    withPrimitives : withPrimitives,
+    withPrimitives2 : withPrimitives2,
+    withArraysAndMaps : withArraysAndMaps,
+    withRegexps : withRegexps,
+  }
+
+  let results = {};
+
+  for( let k in samples )
+  {
+    test.case = o.name + ': ' + samples[ k ].toString();
+    let src = {};
+    src[ k ] = samples[ k ];
+
+    let serialized = o.serialize( src );
+    test.identical( serialized.format, o.serializeFormat );
+
+    let deserialized = o.deserialize( serialized.data );
+    test.identical( deserialized.format, o.serializeFormat );
+
+    results[ k ] = test.identical( deserialized.data, src );
+  }
+
+  console.log( o.name, _.toStr( result, { levels : 1 } ))
+
+  return results;
+}
+
+//
+
+function Complex2( test, o )
+{
+  let withRecursion =
+  {
+    map : { a : '1', dir : { b : 2 }, c : [ 1,2,3 ] },
+    array : [ { a : '1', dir : { b : 2 }, c : [ 1,2,3 ] } ],
+  }
+  withRecursion.self = withRecursion;
+
+  let samples =
+  {
+    withRecursion : withRecursion,
+  }
+
+  let results = {};
+
+  for( let k in samples )
+  {
+    test.case = o.name + ': ' + samples[ k ].toString();
+    let src = {};
+    src[ k ] = samples[ k ];
+
+    let serialized = o.serialize( src );
+    test.identical( serialized.format, o.serializeFormat );
+
+    let deserialized = o.deserialize( serialized.data );
+    test.identical( deserialized.format, o.serializeFormat );
+
+    results[ k ] = test.identical( deserialized.data, src );
+  }
+
+  console.log( o.name, _.toStr( result, { levels : 1 } ))
+
+  return results;
+}
+
+//
+
 function trivial( test )
 {
   var self = this;
