@@ -357,6 +357,55 @@ writeBson =
 }
 
 // --
+// cbor
+// --
+
+let Cbor;
+try
+{
+  Cbor = require( 'cbor' );
+}
+catch( err )
+{
+}
+
+let readCbor = null;
+if( Cbor )
+readCbor =
+{
+
+  ext : [ 'cbor' ],
+  in : [ 'buffer.node' ],
+  out : [ 'structure' ],
+
+  onEncode : function( op )
+  {
+    _.assert( _.bufferNodeIs( op.in.data ) );
+    op.out.data = Cbor.decodeFirstSync( op.in.data );
+    op.out.format = 'structure';
+  },
+
+}
+
+let writeCbor = null;
+if( Cbor )
+writeCbor =
+{
+
+  ext : [ 'cbor' ],
+  in : [ 'structure' ],
+  out : [ 'buffer.node' ],
+
+  onEncode : function( op )
+  {
+    _.assert( _.mapIs( op.in.data ) );
+    op.out.data = Cbor.encode( op.in.data );
+    op.out.format = 'buffer.node';
+  },
+
+}
+
+// --
 // register
 // --
 
@@ -365,6 +414,7 @@ _.Gdf([ readJsStructure, /*readJsNode, readJsSmart,*/ writeJsStrcuture ]);
 _.Gdf([ readYml, writeYml ]);
 _.Gdf([ readCoffee, writeCoffee ]);
 _.Gdf([ readBson, writeBson ]);
+_.Gdf([ readCbor, writeCbor ]);
 
 // --
 // export

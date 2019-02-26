@@ -28,7 +28,8 @@
     "coffee-script": "",
     "js2coffee": "",
     "js-yaml": "",
-    "bson": ""
+    "bson": "",
+    "cbor": ""
   },
   "devDependencies": {
     "wTesting": ""
