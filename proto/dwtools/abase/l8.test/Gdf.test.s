@@ -1986,6 +1986,126 @@ function ymlSupportedTypes( test )
 
 //
 
+function perfomance( test )
+{
+  let src = require( './asset/generated.s' );
+  let times = 10000;
+
+  // /* bson */
+
+  // var serialize = _.Gdf.Select({ in : 'structure', out : 'buffer.node', ext : 'bson' });
+  // test.identical( serialize.length, 1 );
+  // serialize = serialize[ 0 ];
+
+  // var deserialize = _.Gdf.Select({ in : 'buffer.node', out : 'structure', ext : 'bson' });
+  // test.identical( deserialize.length, 1 );
+  // deserialize = deserialize[ 0 ];
+
+  // run();
+
+  // /* yaml */
+
+  // var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'yml' });
+  // test.identical( serialize.length, 1 );
+  // serialize = serialize[ 0 ];
+
+  // var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'yml' });
+  // test.identical( deserialize.length, 1 );
+  // deserialize = deserialize[ 0 ];
+
+  // run();
+
+  // /* cson */
+
+  // var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'cson' });
+  // test.identical( serialize.length, 1 );
+  // serialize = serialize[ 0 ];
+
+  // var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'cson' });
+  // test.identical( deserialize.length, 1 );
+  // deserialize = deserialize[ 0 ];
+
+  // run();
+
+  /* cbor */
+
+  // var serialize = _.Gdf.Select({ in : 'structure', out : 'buffer.node', ext : 'cbor' });
+  // test.identical( serialize.length, 1 );
+  // serialize = serialize[ 0 ];
+
+  // var deserialize = _.Gdf.Select({ in : 'buffer.node', out : 'structure', ext : 'cbor' });
+  // test.identical( deserialize.length, 1 );
+  // deserialize = deserialize[ 0 ];
+
+  // run();
+
+
+  /* js */
+
+  // var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'js' });
+  // test.identical( serialize.length, 1 );
+  // serialize = serialize[ 0 ];
+
+  // var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'js' });
+  // test.identical( deserialize.length, 1 );
+  // deserialize = deserialize[ 0 ];
+
+  // run();
+
+  /* json.fine */
+
+  // var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'json.fine' });
+  // test.identical( serialize.length, 1 );
+  // serialize = serialize[ 0 ];
+  // test.identical( serialize.shortName, 'json.fine' );
+
+  // var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'json', default : 1 });
+  // test.identical( deserialize.length, 1 );
+  // deserialize = deserialize[ 0 ];
+
+  // run();
+
+  /* json.min */
+
+  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'json', default : 1 });
+  test.identical( serialize.length, 1 );
+  serialize = serialize[ 0 ];
+  test.identical( serialize.shortName, 'json.min' );
+
+  var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'json', default : 1 });
+  test.identical( deserialize.length, 1 );
+  deserialize = deserialize[ 0 ];
+
+  run();
+
+  /*  */
+
+  function run()
+  {
+    let serialized;
+    let deserialized;
+
+    var t0 = _.timeNow();
+    for( let i = 0; i < times; i++ )
+    {
+      serialized = serialize.encode({ data : src });
+    }
+    var spent = _.timeSpent( 'write , ' + times + ' times: ' + serialize.name + ' : ', t0 );
+    console.log( spent );
+
+    var t0 = _.timeNow();
+    for( let i = 0; i < times; i++ )
+    {
+      deserialized = deserialize.encode({ data : serialized.data });
+    }
+    var spent = _.timeSpent( 'read , ' + times + ' times: ' + deserialize.name + ' : ', t0 );
+    console.log( spent );
+  }
+
+}
+
+//
+
 function select( test )
 {
   let self = this;
@@ -2134,6 +2254,10 @@ var Self =
     // bsonSupportedTypes,
     // cborSupportedTypes,
     // ymlSupportedTypes,
+
+    //
+
+    // perfomance,
 
     //
 
