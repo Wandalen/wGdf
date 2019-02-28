@@ -45,9 +45,531 @@ let SamplesComplicated =
 
 }
 
+function Primitive1( test, o )
+{
+  let samples =
+  {
+    boolean : true,
+    number : 23,
+    string : 'something',
+  }
+
+  let results = {};
+
+  for( let k in samples )
+  {
+    test.case = test.name + '.Primitive1: ' + k;
+    let src = {};
+    src[ k ] = samples[ k ];
+
+    results[ k ] = false;
+
+    try
+    {
+      let serialized = o.serialize.encode({ data : src });
+      test.identical( serialized.format, o.serializeFormat );
+
+      let deserialized = o.deserialize.encode({ data : serialized.data });
+      test.identical( deserialized.format, o.deserializeFormat );
+
+      results[ k ] = test.identical( deserialized.data, src );
+    }
+    catch( err )
+    {
+      _.errLogOnce( err );
+    }
+  }
+
+  console.log( test.name + '.Primitive1: ', _.toStr( results, { levels : 1 } ) )
+
+  for( let k in results )
+  if( !results[ k ] )
+  return false;
+
+  return true;
+}
+
+//
+
+function Primitive2( test, o )
+{
+  let samples =
+  {
+    null : null,
+    '+infinity' : +Infinity,
+    '-infinity' : -Infinity,
+    nan : NaN,
+  }
+
+  let results = {};
+
+  for( let k in samples )
+  {
+    test.case = test.name + '.Primitive2: ' + k;
+    let src = {};
+    src[ k ] = samples[ k ];
+
+    results[ k ] = false;
+
+    try
+    {
+      let serialized = o.serialize.encode({ data : src });
+      test.identical( serialized.format, o.serializeFormat );
+
+      let deserialized = o.deserialize.encode({ data : serialized.data });
+      test.identical( deserialized.format, o.deserializeFormat );
+      results[ k ] = test.identical( deserialized.data, src );
+    }
+    catch( err )
+    {
+      _.errLogOnce( err );
+    }
+  }
+
+  console.log( test.name + '.Primitive2: ', _.toStr( results, { levels : 1 } ))
+
+  for( let k in results )
+  if( !results[ k ] )
+  return false;
+
+  return true;
+}
+
+//
+
+function Primitive3( test, o )
+{
+  let samples =
+  {
+    '+0' : +0,
+    '-0' : -0,
+    'undefined' : undefined,
+    date : new Date()
+  }
+
+  if( typeof BigInt !== 'undefined' )
+  samples.bigInt = BigInt( 23 );
+
+  let results = {};
+
+  for( let k in samples )
+  {
+    test.case = test.name + '.Primitive3: ' + k;
+    let src = {};
+    src[ k ] = samples[ k ];
+
+    results[ k ] = false;
+
+    try
+    {
+      let serialized = o.serialize.encode({ data : src });
+      test.identical( serialized.format, o.serializeFormat );
+
+      let deserialized = o.deserialize.encode({ data : serialized.data });
+      test.identical( deserialized.format, o.deserializeFormat );
+      results[ k ] = test.identical( deserialized.data, src );
+    }
+    catch( err )
+    {
+      _.errLogOnce( err );
+    }
+  }
+
+  console.log( test.name + '.Primitive3: ', _.toStr( results, { levels : 1 } ))
+
+  for( let k in results )
+  if( !results[ k ] )
+  return false;
+
+  return true;
+}
+
+//
+
+function RegExp1( test, o )
+{
+  let samples =
+  {
+    1 : /ab|cd/,
+    2 : /a[bc]d/,
+    3 : /ab{1,}bc/,
+    4 : /\.js$/,
+    5 : /.regexp/
+  }
+
+  let results = {};
+
+  for( let k in samples )
+  {
+    test.case = test.name + '.RegExp1: ' + samples[ k ].toString();
+    let src = {};
+    src[ k ] = samples[ k ];
+
+    results[ samples[ k ].toString() ] = false;
+
+    try
+    {
+      let serialized = o.serialize.encode({ data : src });
+      test.identical( serialized.format, o.serializeFormat );
+
+      let deserialized = o.deserialize.encode({ data : serialized.data });
+      test.identical( deserialized.format, o.deserializeFormat );
+
+      results[ samples[ k ].toString() ] = test.identical( deserialized.data, src );
+    }
+    catch( err )
+    {
+      _.errLogOnce( err );
+    }
+  }
+
+  console.log( test.name + '.RegExp1: ', _.toStr( results, { levels : 1 } ))
+
+  for( let k in results )
+  if( !results[ k ] )
+  return false;
+
+  return true;
+}
+
+//
+
+function RegExp2( test, o )
+{
+  let samples =
+  {
+    0 : /ab|cd/,
+    1 : /a[bc]d/,
+    3 : /ab{1,}bc/,
+    4 : /.regexp/g,
+    5 : /aBc/i,
+    6 : /^\d+/gm,
+    7 : /^a.*c$/g,
+    8 : /[a-z]/m,
+    9 : /^[A-Za-z0-9]$/
+  }
+
+  let results = {};
+
+  for( let k in samples )
+  {
+    test.case = test.name + '.RegExp2: ' + samples[ k ].toString();
+    let src = {};
+    src[ k ] = samples[ k ];
+
+    results[ samples[ k ].toString() ] = false;
+
+    try
+    {
+      let serialized = o.serialize.encode({ data : src });
+      test.identical( serialized.format, o.serializeFormat );
+
+      let deserialized = o.deserialize.encode({ data : serialized.data });
+      test.identical( deserialized.format, o.deserializeFormat );
+
+      results[ samples[ k ].toString() ] = test.identical( deserialized.data, src );
+    }
+    catch( err )
+    {
+      _.errLogOnce( err );
+    }
+  }
+
+  console.log( test.name + '.RegExp2: ', _.toStr( results, { levels : 1 } ))
+
+  for( let k in results )
+  if( !results[ k ] )
+  return false;
+
+  return true;
+}
+
+//
+
+function Buffer1( test, o )
+{
+  let samples =
+  {
+    raw : new ArrayBuffer([ 99,100,101 ]),
+    bytes : new Uint8Array([ 99,100,101 ]),
+  }
+
+  if( typeof Buffer !== 'undefined' )
+  samples.node = Buffer.from([ 99,100,101 ]);
+
+  let results = {};
+  let positive = 0;
+
+  for( let k in samples )
+  {
+    test.case = test.name + '.Buffer1: ' + k;
+    let src = {};
+    src[ k ] = samples[ k ];
+
+    results[ k ] = false;
+
+    try
+    {
+      let serialized = o.serialize.encode({ data : src });
+      test.identical( serialized.format, o.serializeFormat );
+
+      let deserialized = o.deserialize.encode({ data : serialized.data });
+      test.identical( deserialized.format, o.deserializeFormat );
+
+      results[ k ] = test.identical( deserialized.data, src );
+    }
+    catch( err )
+    {
+      _.errLogOnce( err );
+    }
+
+    if( results[ k ] )
+    positive += 1;
+  }
+
+  test.will = 'at least one buffer is supported';
+  test.is( positive );
+
+  console.log( test.name + '.Buffer1: ', _.toStr( results, { levels : 1 } ))
+
+  if( !positive )
+  return false;
+
+  return true;
+}
+
+function Buffer2( test, o )
+{
+  let samples =
+  {
+    raw : new ArrayBuffer([ 99,100,101 ]),
+  }
+
+  let results = {};
+  let positive = 0;
+
+  for( let k in samples )
+  {
+    test.case = test.name + '.Buffer1: ' + k;
+    let src = {};
+    src[ k ] = samples[ k ];
+
+    results[ k ] = false;
+
+    try
+    {
+      let serialized = o.serialize.encode({ data : src });
+      test.identical( serialized.format, o.serializeFormat );
+
+      let deserialized = o.deserialize.encode({ data : serialized.data });
+      test.identical( deserialized.format, o.deserializeFormat );
+
+      results[ k ] = test.identical( deserialized.data, src );
+    }
+    catch( err )
+    {
+      _.errLogOnce( err );
+    }
+
+    if( results[ k ] )
+    positive += 1;
+  }
+
+  test.will = 'at least one buffer is supported';
+  test.is( positive > 0 );
+  test.will = 'buffer raw must be supported';
+  test.is( results.raw );
+
+  console.log( test.name + '.Buffer2: ', _.toStr( results, { levels : 1 } ))
+
+  for( let k in results )
+  if( !results[ k ] )
+  return false;
+
+  return true;
+}
+
+//
+
+function Buffer3( test, o )
+{
+  let samples =
+  {
+    raw : new ArrayBuffer([ 99,100,101 ]),
+    bytes : new Uint8Array([ 99,100,101 ]),
+  }
+
+  if( typeof Buffer !== 'undefined' )
+  samples.node = Buffer.from([ 99,100,101 ]);
+
+  let results = {};
+  let positive = 0;
+
+  for( let k in samples )
+  {
+    test.case = test.name + '.Buffer3: ' + k;
+    let src = {};
+    src[ k ] = samples[ k ];
+
+    results[ k ] = false;
+
+    try
+    {
+      let serialized = o.serialize.encode({ data : src });
+      test.identical( serialized.format, o.serializeFormat );
+
+      let deserialized = o.deserialize.encode({ data : serialized.data });
+      test.identical( deserialized.format, o.deserializeFormat );
+
+      results[ k ] = test.identical( deserialized.data, src );
+    }
+    catch( err )
+    {
+      _.errLogOnce( err );
+    }
+
+    if( results[ k ] )
+    positive += 1;
+  }
+
+  test.will = 'all buffers must be supported';
+  test.is( positive === _.mapOwnKeys( samples ) );
+
+  console.log( test.name + '.Buffer3: ', _.toStr( results, { levels : 1 } ))
+
+  for( let k in results )
+  if( !results[ k ] )
+  return false;
+
+  return true;
+}
+
+//
+
+function Complex1( test, o )
+{
+  let withArray =
+  {
+    array : [ 'a', 23,  false ],
+  }
+
+  let withNestedArray =
+  {
+    array : [ [ 'a', 23 ], [ [ {}, false ] ] ],
+  }
+
+  let withNestedMap =
+  {
+    map : { a : '1', dir : { b : 2 }, c : { a : { b : 1 } } }
+  }
+
+  let withArrayAndMap =
+  {
+    map : { a : '1', dir : { b : 2 }, c : [ 1,2,3 ] },
+    array : [ { a : '1', dir : { b : 2 }, c : [ 1,2,3 ] } ],
+  }
+
+  //
+
+  let samples =
+  {
+    mapWithArray : withArray,
+    mapWithNestedArrays : withNestedArray,
+    mapWithNestedMaps : withNestedMap,
+    mapWithArrayAndMap : withArrayAndMap
+  }
+
+  let results = {};
+
+  for( let k in samples )
+  {
+    test.case = test.name + '.Complex1: ' + k;
+    let src = samples[ k ];
+
+    results[ k ] = false;
+
+    try
+    {
+      let serialized = o.serialize.encode({ data : src });
+      test.identical( serialized.format, o.serializeFormat );
+
+      let deserialized = o.deserialize.encode({ data : serialized.data });
+      test.identical( deserialized.format, o.deserializeFormat );
+
+      results[ k ] = test.identical( deserialized.data, src );
+
+    }
+    catch( err )
+    {
+      _.errLogOnce( err );
+    }
+  }
+
+  console.log( test.name + '.Complex1: ', _.toStr( results, { levels : 1 } ))
+
+  for( let k in results )
+  if( !results[ k ] )
+  return false;
+
+  return true;
+}
+
+//
+
+function Complex2( test, o )
+{
+  let recursion =
+  {
+    map : { a : '1', dir : { b : 2 }, c : [ 1,2,3 ] },
+    array : [ { a : '1', dir : { b : 2 }, c : [ 1,2,3 ] } ],
+  }
+  recursion.self = recursion;
+
+  let samples =
+  {
+    recursion : recursion,
+  }
+
+  let results = {};
+
+  for( let k in samples )
+  {
+    test.case = test.name + '.Complex2: ' + k;
+    let src = samples[ k ];
+
+    results[ k ] = false;
+
+    try
+    {
+      let serialized = o.serialize.encode({ data : src });
+      test.identical( serialized.format, o.serializeFormat );
+
+      let deserialized = o.deserialize.encode({ data : serialized.data });
+      test.identical( deserialized.format, o.deserializeFormat );
+
+      results[ k ] = test.identical( deserialized.data, src );
+    }
+    catch( err )
+    {
+      _.errLogOnce( err );
+    }
+
+  }
+
+  console.log( test.name + '.Complex2: ', _.toStr( results, { levels : 1 } ))
+
+  for( let k in results )
+  if( !results[ k ] )
+  return false;
+
+  return true;
+}
+
 // --
 // test
 // --
+
+//
 
 function trivial( test )
 {
@@ -735,6 +1257,116 @@ function bson( test )
 
 //
 
+function cbor( test )
+{
+  var self = this;
+
+  /* */
+
+  test.case = 'select';
+
+  var serialize = _.Gdf.Select({ in : 'structure', out : 'buffer.node', ext : 'cbor' });
+  test.identical( serialize.length, 1 );
+  serialize = serialize[ 0 ];
+
+  var deserialize = _.Gdf.Select({ in : 'buffer.node', out : 'structure', ext : 'cbor' });
+  test.identical( deserialize.length, 1 );
+  deserialize = deserialize[ 0 ];
+
+  /* */
+
+  test.open( 'simple' );
+  for( let s in SamplesSimple )
+  {
+    test.case = s;
+    let src = SamplesSimple[ s ];
+
+    if( !_.mapIs( src ) )
+    src = { [ s ] : src };
+
+    var serialized = serialize.encode({ data : src });
+    test.identical( serialized.format, 'buffer.node' );
+    test.is( _.bufferNodeIs( serialized.data ) );
+
+    var deserialized = deserialize.encode({ data : serialized.data });
+    test.identical( deserialized.data, src );
+    test.identical( deserialized.format, 'structure' );
+  }
+  test.close( 'simple' );
+
+  test.case = 'all simple together';
+  var serialized = serialize.encode({ data : SamplesSimple });
+  test.identical( serialized.format, 'buffer.node' );
+  test.is( _.bufferNodeIs( serialized.data ) );
+
+  var deserialized = deserialize.encode({ data : serialized.data });
+  test.identical( deserialized.data, SamplesSimple );
+  test.identical( deserialized.format, 'structure' );
+
+  /* */
+
+  test.open( 'primitive' );
+  for( let s in SamplesPrimitive )
+  {
+    test.case = s;
+    let src = SamplesPrimitive[ s ];
+
+    if( !_.mapIs( src ) )
+    src = { [ s ] : src };
+
+    var serialized = serialize.encode({ data : src });
+    test.identical( serialized.format, 'buffer.node' );
+
+    var deserialized = deserialize.encode({ data : serialized.data });
+    test.identical( deserialized.data, src );
+    test.identical( deserialized.format, 'structure' );
+  }
+  test.close( 'primitive' );
+
+  test.case = 'all primitive together';
+  var serialized = serialize.encode({ data : SamplesPrimitive });
+  test.identical( serialized.format, 'buffer.node' );
+  test.is( _.bufferNodeIs( serialized.data ) );
+
+  var deserialized = deserialize.encode({ data : serialized.data });
+  test.identical( deserialized.data, SamplesPrimitive );
+  test.identical( deserialized.format, 'structure' );
+
+  /* */
+
+  test.open( 'complicated' );
+  for( let s in SamplesComplicated )
+  {
+    test.case = s;
+    let src = SamplesComplicated[ s ];
+
+    if( !_.mapIs( src ) )
+    src = { [ s ] : src };
+
+    var serialized = serialize.encode({ data : src });
+    test.identical( serialized.format, 'buffer.node' );
+
+    var deserialized = deserialize.encode({ data : serialized.data });
+    test.identical( deserialized.data, src );
+    test.identical( deserialized.format, 'structure' );
+  }
+  test.close( 'complicated' );
+
+  test.case = 'all complicated together';
+  var serialized = serialize.encode({ data : SamplesComplicated });
+  test.identical( serialized.format, 'buffer.node' );
+  test.is( _.bufferNodeIs( serialized.data ) );
+
+  var deserialized = deserialize.encode({ data : serialized.data });
+  test.identical( deserialized.data, SamplesComplicated );
+  test.identical( deserialized.format, 'structure' );
+
+  /* */
+
+}
+
+//
+
 function yml( test )
 {
   var self = this;
@@ -925,6 +1557,555 @@ function utf8( test )
 
 //
 
+function jsonFineSupportedTypes( test )
+{
+  var self = this;
+
+  /* json.fine */
+
+  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'json.fine' });
+  test.identical( serialize.length, 1 );
+  serialize = serialize[ 0 ];
+  test.identical( serialize.shortName, 'json.fine' );
+
+  /* json */
+
+  var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'json', default : 1 });
+  test.identical( deserialize.length, 1 );
+  deserialize = deserialize[ 0 ];
+
+  let options =
+  {
+    serialize : serialize,
+    deserialize : deserialize,
+    serializeFormat : 'string',
+    deserializeFormat : 'structure'
+  }
+
+  var gotPrimitive1 = Primitive1( test, options );
+  var gotPrimitive2 = Primitive2( test, options );
+  var gotPrimitive3 = Primitive3( test, options );
+  var gotRegExp1 = RegExp1( test, options );
+  var gotRegExp2 = RegExp2( test, options );
+  var gotBuffer1 = Buffer1( test, options );
+  var gotBuffer2 = Buffer2( test, options );
+  var gotBuffer3 = Buffer3( test, options );
+  var gotComplex1 = Complex1( test, options );
+  var gotComplex2 = Complex2( test, options );
+
+
+  test.case = 'json.fine supports Primitive1'
+  test.is( gotPrimitive1 )
+  test.case = 'json.fine supports Primitive2'
+  test.is( gotPrimitive2 )
+  test.case = 'json.fine supports Primitive3'
+  test.is( gotPrimitive3 )
+  test.case = 'json.fine supports RegExp1'
+  test.is( gotRegExp1 )
+  test.case = 'json.fine supports RegExp2'
+  test.is( gotRegExp2 )
+  test.case = 'json.fine supports Buffer1'
+  test.is( gotBuffer1 )
+  test.case = 'json.fine supports Buffer2'
+  test.is( gotBuffer2 )
+  test.case = 'json.fine supports Buffer3'
+  test.is( gotBuffer3 )
+  test.case = 'json.fine supports Complex1'
+  test.is( gotComplex1 )
+  test.case = 'json.fine supports Complex2'
+  test.is( gotComplex2 )
+
+}
+
+//
+
+function jsonMinSupportedTypes( test )
+{
+  var self = this;
+
+  /* json.min */
+
+  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'json', default : 1 });
+  test.identical( serialize.length, 1 );
+  serialize = serialize[ 0 ];
+  test.identical( serialize.shortName, 'json.min' );
+
+  /* json */
+
+  var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'json', default : 1 });
+  test.identical( deserialize.length, 1 );
+  deserialize = deserialize[ 0 ];
+
+  let options =
+  {
+    serialize : serialize,
+    deserialize : deserialize,
+    serializeFormat : 'string',
+    deserializeFormat : 'structure'
+  }
+
+  var gotPrimitive1 = Primitive1( test, options );
+  var gotPrimitive2 = Primitive2( test, options );
+  var gotPrimitive3 = Primitive3( test, options );
+  var gotRegExp1 = RegExp1( test, options );
+  var gotRegExp2 = RegExp2( test, options );
+  var gotBuffer1 = Buffer1( test, options );
+  var gotBuffer2 = Buffer2( test, options );
+  var gotBuffer3 = Buffer3( test, options );
+  var gotComplex1 = Complex1( test, options );
+  var gotComplex2 = Complex2( test, options );
+
+
+  test.case = 'json.min supports Primitive1'
+  test.is( gotPrimitive1 )
+  test.case = 'json.min supports Primitive2'
+  test.is( gotPrimitive2 )
+  test.case = 'json.min supports Primitive3'
+  test.is( gotPrimitive3 )
+  test.case = 'json.min supports RegExp1'
+  test.is( gotRegExp1 )
+  test.case = 'json.min supports RegExp2'
+  test.is( gotRegExp2 )
+  test.case = 'json.min supports Buffer1'
+  test.is( gotBuffer1 )
+  test.case = 'json.min supports Buffer2'
+  test.is( gotBuffer2 )
+  test.case = 'json.min supports Buffer3'
+  test.is( gotBuffer3 )
+  test.case = 'json.min supports Complex1'
+  test.is( gotComplex1 )
+  test.case = 'json.min supports Complex2'
+  test.is( gotComplex2 )
+
+}
+
+//
+
+function csonSupportedTypes( test )
+{
+  var self = this;
+
+  /* */
+
+  test.case = 'select';
+
+  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'cson' });
+  test.identical( serialize.length, 1 );
+  serialize = serialize[ 0 ];
+
+  var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'cson' });
+  test.identical( deserialize.length, 1 );
+  deserialize = deserialize[ 0 ];
+
+  let options =
+  {
+    serialize : serialize,
+    deserialize : deserialize,
+    serializeFormat : 'string',
+    deserializeFormat : 'structure'
+  }
+
+  var gotPrimitive1 = Primitive1( test, options );
+  var gotPrimitive2 = Primitive2( test, options );
+  var gotPrimitive3 = Primitive3( test, options );
+  var gotRegExp1 = RegExp1( test, options );
+  var gotRegExp2 = RegExp2( test, options );
+  var gotBuffer1 = Buffer1( test, options );
+  var gotBuffer2 = Buffer2( test, options );
+  var gotBuffer3 = Buffer3( test, options );
+  var gotComplex1 = Complex1( test, options );
+  var gotComplex2 = Complex2( test, options );
+
+
+  test.case = 'cson supports Primitive1'
+  test.is( gotPrimitive1 )
+  test.case = 'cson supports Primitive2'
+  test.is( gotPrimitive2 )
+  test.case = 'cson supports Primitive3'
+  test.is( gotPrimitive3 )
+  test.case = 'cson supports RegExp1'
+  test.is( gotRegExp1 )
+  test.case = 'cson supports RegExp2'
+  test.is( gotRegExp2 )
+  test.case = 'cson supports Buffer1'
+  test.is( gotBuffer1 )
+  test.case = 'cson supports Buffer2'
+  test.is( gotBuffer2 )
+  test.case = 'cson supports Buffer3'
+  test.is( gotBuffer3 )
+  test.case = 'cson supports Complex1'
+  test.is( gotComplex1 )
+  test.case = 'cson supports Complex2'
+  test.is( gotComplex2 )
+
+}
+
+//
+
+function jsSupportedTypes( test )
+{
+  var self = this;
+
+  /* */
+
+  test.case = 'select';
+
+  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'js' });
+  test.identical( serialize.length, 1 );
+  serialize = serialize[ 0 ];
+
+  var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'js' });
+  test.identical( deserialize.length, 1 );
+  deserialize = deserialize[ 0 ];
+
+  let options =
+  {
+    serialize : serialize,
+    deserialize : deserialize,
+    serializeFormat : 'string',
+    deserializeFormat : 'structure'
+  }
+
+  var gotPrimitive1 = Primitive1( test, options );
+  var gotPrimitive2 = Primitive2( test, options );
+  var gotPrimitive3 = Primitive3( test, options );
+  var gotRegExp1 = RegExp1( test, options );
+  var gotRegExp2 = RegExp2( test, options );
+  var gotBuffer1 = Buffer1( test, options );
+  var gotBuffer2 = Buffer2( test, options );
+  var gotBuffer3 = Buffer3( test, options );
+  var gotComplex1 = Complex1( test, options );
+  var gotComplex2 = Complex2( test, options );
+
+
+  test.case = 'js supports Primitive1'
+  test.is( gotPrimitive1 )
+  test.case = 'js supports Primitive2'
+  test.is( gotPrimitive2 )
+  test.case = 'js supports Primitive3'
+  test.is( gotPrimitive3 )
+  test.case = 'js supports RegExp1'
+  test.is( gotRegExp1 )
+  test.case = 'js supports RegExp2'
+  test.is( gotRegExp2 )
+  test.case = 'js supports Buffer1'
+  test.is( gotBuffer1 )
+  test.case = 'js supports Buffer2'
+  test.is( gotBuffer2 )
+  test.case = 'js supports Buffer3'
+  test.is( gotBuffer3 )
+  test.case = 'js supports Complex1'
+  test.is( gotComplex1 )
+  test.case = 'js supports Complex2'
+  test.is( gotComplex2 )
+
+}
+
+//
+
+function bsonSupportedTypes( test )
+{
+  var self = this;
+
+  /* */
+
+  test.case = 'select';
+
+  var serialize = _.Gdf.Select({ in : 'structure', out : 'buffer.node', ext : 'bson' });
+  test.identical( serialize.length, 1 );
+  serialize = serialize[ 0 ];
+
+  var deserialize = _.Gdf.Select({ in : 'buffer.node', out : 'structure', ext : 'bson' });
+  test.identical( deserialize.length, 1 );
+  deserialize = deserialize[ 0 ];
+
+  let options =
+  {
+    serialize : serialize,
+    deserialize : deserialize,
+    serializeFormat : 'buffer.node',
+    deserializeFormat : 'structure'
+  }
+
+  var gotPrimitive1 = Primitive1( test, options );
+  var gotPrimitive2 = Primitive2( test, options );
+  var gotPrimitive3 = Primitive3( test, options );
+  var gotRegExp1 = RegExp1( test, options );
+  var gotRegExp2 = RegExp2( test, options );
+  var gotBuffer1 = Buffer1( test, options );
+  var gotBuffer2 = Buffer2( test, options );
+  var gotBuffer3 = Buffer3( test, options );
+  var gotComplex1 = Complex1( test, options );
+  var gotComplex2 = Complex2( test, options );
+
+
+  test.case = 'bson supports Primitive1'
+  test.is( gotPrimitive1 )
+  test.case = 'bson supports Primitive2'
+  test.is( gotPrimitive2 )
+  test.case = 'bson supports Primitive3'
+  test.is( gotPrimitive3 )
+  test.case = 'bson supports RegExp1'
+  test.is( gotRegExp1 )
+  test.case = 'bson supports RegExp2'
+  test.is( gotRegExp2 )
+  test.case = 'bson supports Buffer1'
+  test.is( gotBuffer1 )
+  test.case = 'bson supports Buffer2'
+  test.is( gotBuffer2 )
+  test.case = 'bson supports Buffer3'
+  test.is( gotBuffer3 )
+  test.case = 'bson supports Complex1'
+  test.is( gotComplex1 )
+  test.case = 'bson supports Complex2'
+  test.is( gotComplex2 )
+
+}
+
+//
+
+function cborSupportedTypes( test )
+{
+  var self = this;
+
+  /* */
+
+  test.case = 'select';
+
+  var serialize = _.Gdf.Select({ in : 'structure', out : 'buffer.node', ext : 'cbor' });
+  test.identical( serialize.length, 1 );
+  serialize = serialize[ 0 ];
+
+  var deserialize = _.Gdf.Select({ in : 'buffer.node', out : 'structure', ext : 'cbor' });
+  test.identical( deserialize.length, 1 );
+  deserialize = deserialize[ 0 ];
+
+  let options =
+  {
+    serialize : serialize,
+    deserialize : deserialize,
+    serializeFormat : 'buffer.node',
+    deserializeFormat : 'structure'
+  }
+
+  var gotPrimitive1 = Primitive1( test, options );
+  var gotPrimitive2 = Primitive2( test, options );
+  var gotPrimitive3 = Primitive3( test, options );
+  var gotRegExp1 = RegExp1( test, options );
+  var gotRegExp2 = RegExp2( test, options );
+  var gotBuffer1 = Buffer1( test, options );
+  var gotBuffer2 = Buffer2( test, options );
+  var gotBuffer3 = Buffer3( test, options );
+  var gotComplex1 = Complex1( test, options );
+  var gotComplex2 = Complex2( test, options );
+
+
+  test.case = 'cbor supports Primitive1'
+  test.is( gotPrimitive1 )
+  test.case = 'cbor supports Primitive2'
+  test.is( gotPrimitive2 )
+  test.case = 'cbor supports Primitive3'
+  test.is( gotPrimitive3 )
+  test.case = 'cbor supports RegExp1'
+  test.is( gotRegExp1 )
+  test.case = 'cbor supports RegExp2'
+  test.is( gotRegExp2 )
+  test.case = 'cbor supports Buffer1'
+  test.is( gotBuffer1 )
+  test.case = 'cbor supports Buffer2'
+  test.is( gotBuffer2 )
+  test.case = 'cbor supports Buffer3'
+  test.is( gotBuffer3 )
+  test.case = 'cbor supports Complex1'
+  test.is( gotComplex1 )
+  test.case = 'cbor supports Complex2'
+  test.is( gotComplex2 )
+
+}
+
+//
+
+function ymlSupportedTypes( test )
+{
+  var self = this;
+
+  /* */
+
+  test.case = 'select';
+
+  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'yml' });
+  test.identical( serialize.length, 1 );
+  serialize = serialize[ 0 ];
+
+  var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'yml' });
+  test.identical( deserialize.length, 1 );
+  deserialize = deserialize[ 0 ];
+
+  let options =
+  {
+    serialize : serialize,
+    deserialize : deserialize,
+    serializeFormat : 'string',
+    deserializeFormat : 'structure'
+  }
+
+  var gotPrimitive1 = Primitive1( test, options );
+  var gotPrimitive2 = Primitive2( test, options );
+  var gotPrimitive3 = Primitive3( test, options );
+  var gotRegExp1 = RegExp1( test, options );
+  var gotRegExp2 = RegExp2( test, options );
+  var gotBuffer1 = Buffer1( test, options );
+  var gotBuffer2 = Buffer2( test, options );
+  var gotBuffer3 = Buffer3( test, options );
+  var gotComplex1 = Complex1( test, options );
+  var gotComplex2 = Complex2( test, options );
+
+
+  test.case = 'yml supports Primitive1'
+  test.is( gotPrimitive1 )
+  test.case = 'yml supports Primitive2'
+  test.is( gotPrimitive2 )
+  test.case = 'yml supports Primitive3'
+  test.is( gotPrimitive3 )
+  test.case = 'yml supports RegExp1'
+  test.is( gotRegExp1 )
+  test.case = 'yml supports RegExp2'
+  test.is( gotRegExp2 )
+  test.case = 'yml supports Buffer1'
+  test.is( gotBuffer1 )
+  test.case = 'yml supports Buffer2'
+  test.is( gotBuffer2 )
+  test.case = 'yml supports Buffer3'
+  test.is( gotBuffer3 )
+  test.case = 'yml supports Complex1'
+  test.is( gotComplex1 )
+  test.case = 'yml supports Complex2'
+  test.is( gotComplex2 )
+
+}
+
+//
+
+function perfomance( test )
+{
+  let src = require( './asset/generated.s' );
+  let times = 10000;
+
+  // /* bson */
+
+  // var serialize = _.Gdf.Select({ in : 'structure', out : 'buffer.node', ext : 'bson' });
+  // test.identical( serialize.length, 1 );
+  // serialize = serialize[ 0 ];
+
+  // var deserialize = _.Gdf.Select({ in : 'buffer.node', out : 'structure', ext : 'bson' });
+  // test.identical( deserialize.length, 1 );
+  // deserialize = deserialize[ 0 ];
+
+  // run();
+
+  // /* yaml */
+
+  // var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'yml' });
+  // test.identical( serialize.length, 1 );
+  // serialize = serialize[ 0 ];
+
+  // var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'yml' });
+  // test.identical( deserialize.length, 1 );
+  // deserialize = deserialize[ 0 ];
+
+  // run();
+
+  // /* cson */
+
+  // var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'cson' });
+  // test.identical( serialize.length, 1 );
+  // serialize = serialize[ 0 ];
+
+  // var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'cson' });
+  // test.identical( deserialize.length, 1 );
+  // deserialize = deserialize[ 0 ];
+
+  // run();
+
+  /* cbor */
+
+  // var serialize = _.Gdf.Select({ in : 'structure', out : 'buffer.node', ext : 'cbor' });
+  // test.identical( serialize.length, 1 );
+  // serialize = serialize[ 0 ];
+
+  // var deserialize = _.Gdf.Select({ in : 'buffer.node', out : 'structure', ext : 'cbor' });
+  // test.identical( deserialize.length, 1 );
+  // deserialize = deserialize[ 0 ];
+
+  // run();
+
+
+  /* js */
+
+  // var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'js' });
+  // test.identical( serialize.length, 1 );
+  // serialize = serialize[ 0 ];
+
+  // var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'js' });
+  // test.identical( deserialize.length, 1 );
+  // deserialize = deserialize[ 0 ];
+
+  // run();
+
+  /* json.fine */
+
+  // var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'json.fine' });
+  // test.identical( serialize.length, 1 );
+  // serialize = serialize[ 0 ];
+  // test.identical( serialize.shortName, 'json.fine' );
+
+  // var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'json', default : 1 });
+  // test.identical( deserialize.length, 1 );
+  // deserialize = deserialize[ 0 ];
+
+  // run();
+
+  /* json.min */
+
+  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'json', default : 1 });
+  test.identical( serialize.length, 1 );
+  serialize = serialize[ 0 ];
+  test.identical( serialize.shortName, 'json.min' );
+
+  var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'json', default : 1 });
+  test.identical( deserialize.length, 1 );
+  deserialize = deserialize[ 0 ];
+
+  run();
+
+  /*  */
+
+  function run()
+  {
+    let serialized;
+    let deserialized;
+
+    var t0 = _.timeNow();
+    for( let i = 0; i < times; i++ )
+    {
+      serialized = serialize.encode({ data : src });
+    }
+    var spent = _.timeSpent( 'write , ' + times + ' times: ' + serialize.name + ' : ', t0 );
+    console.log( spent );
+
+    var t0 = _.timeNow();
+    for( let i = 0; i < times; i++ )
+    {
+      deserialized = deserialize.encode({ data : serialized.data });
+    }
+    var spent = _.timeSpent( 'read , ' + times + ' times: ' + deserialize.name + ' : ', t0 );
+    console.log( spent );
+  }
+
+}
+
+//
+
 function select( test )
 {
   let self = this;
@@ -1058,10 +2239,27 @@ var Self =
     cson,
     js,
     bson,
+    cbor,
     yml,
 
     base64,
     utf8,
+
+    //
+
+    // jsonFineSupportedTypes,
+    // jsonMinSupportedTypes,
+    // csonSupportedTypes,
+    // jsSupportedTypes,
+    // bsonSupportedTypes,
+    // cborSupportedTypes,
+    // ymlSupportedTypes,
+
+    //
+
+    // perfomance,
+
+    //
 
     select,
     register,

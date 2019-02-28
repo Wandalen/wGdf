@@ -8,7 +8,7 @@ about:
     data structure. Generic data format ( GDF ) is a format of data structure
     designed with taking into account none unique feature of data so that it is
     applicable to any kind of data.
-  version: 0.3.10
+  version: 0.3.11
   enabled: 1
   interpreters:
     - nodejs >= 6.0.0
@@ -21,10 +21,10 @@ execution:
     test: wtest staging
     docgen: wdocgen staging
 path:
-  proto:
-    path: ./proto
   in:
-    path: .
+    path: ..
+  temp:
+    path: out
   out:
     path: out
   out.debug:
@@ -35,6 +35,8 @@ path:
     path: ./out/release
     criterion:
       debug: 0
+  proto:
+    path: ./proto
   repository:
     path: 'git+https://github.com/Wandalen/wGdfStrategy.git'
   bugs:
@@ -62,6 +64,8 @@ path:
       - proto/dwtools/abase/l8/OldEncoders.s
       - proto/dwtools/abase/l8.test
       - proto/dwtools/abase/l8.test/Gdf.test.s
+      - proto/dwtools/abase/l8.test/asset
+      - proto/dwtools/abase/l8.test/asset/generated.s
       - proto/dwtools/amid
       - proto/dwtools/atop
     criterion:
@@ -75,9 +79,9 @@ path:
 submodule: {}
 reflector:
   reflect.proto.:
-    srcFilter:
+    src:
       filePath:
-        ./proto: ./out/release
+        proto: out/release
       maskAll:
         excludeAny:
           - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
@@ -96,9 +100,9 @@ reflector:
     inherit:
       - predefined.*
   reflect.proto.debug:
-    srcFilter:
+    src:
       filePath:
-        ./proto: ./out/debug
+        proto: out/debug
       maskAll:
         excludeAny:
           - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
@@ -115,7 +119,7 @@ reflector:
     inherit:
       - predefined.*
   reflect.submodules:
-    srcFilter:
+    src:
       maskAll:
         excludeAny:
           - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
@@ -132,9 +136,9 @@ reflector:
     inherit:
       - predefined.*
   exported.proto.export:
-    srcFilter:
+    src:
       filePath:
-        ./proto: true
+        proto: true
       prefixPath: .
     criterion:
       default: 1
@@ -146,7 +150,7 @@ reflector:
       public: 1
   exportedFiles.proto.export:
     recursive: 0
-    srcFilter:
+    src:
       filePath:
         .: true
         dwtools: true
@@ -159,6 +163,8 @@ reflector:
         dwtools/abase/l8/OldEncoders.s: true
         dwtools/abase/l8.test: true
         dwtools/abase/l8.test/Gdf.test.s: true
+        dwtools/abase/l8.test/asset: true
+        dwtools/abase/l8.test/asset/generated.s: true
         dwtools/amid: true
         dwtools/atop: true
       basePath: .
@@ -291,7 +297,7 @@ build:
       - 'step::export.proto'
 exported:
   proto.export:
-    version: 0.3.10
+    version: 0.3.11
     criterion:
       default: 1
       debug: 1
