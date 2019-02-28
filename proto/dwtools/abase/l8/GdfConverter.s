@@ -238,7 +238,7 @@ let encode = _.routineFromPreAndBody( encode_pre, encode_body );
 /**
  * Searches for converters.
  * Finds converters that match the specified selector.
- * Converter is selected if all fields selector are equal with appropriate properties of the converter.
+ * Converter is selected if all fields of selector are equal with appropriate properties of the converter.
  *
  * @param {Object} selector a map with one or several rules that should be met by the converter
  *
