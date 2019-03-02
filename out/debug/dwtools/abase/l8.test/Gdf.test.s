@@ -1,4 +1,4 @@
-( function _EncoderStrategy_test_s_( ) {
+( function _Gdf_test_s_( ) {
 
 'use strict';
 
@@ -44,6 +44,31 @@ let SamplesComplicated =
   date : new Date(),
 
 }
+
+//
+
+/*
+qqq :
+- please, use lower case for names of routines
+- add routines to context of the test
+- add static structure supported
+
+let supported =
+{
+  'yaml' :
+  {
+    complex : 1,
+    primitive : 2,
+    ...
+  }
+  ...
+}
+
+- compare structure with outcomes of testing, fail if not consistent with expection
+- merge OldEncoders.s into GdfFormats.s
+- implement other discussed problems
+
+*/
 
 function Primitive1( test, o )
 {
@@ -338,6 +363,8 @@ function Buffer1( test, o )
   return true;
 }
 
+//
+
 function Buffer2( test, o )
 {
   let samples =
@@ -584,14 +611,14 @@ function trivial( test )
 
   /* */
 
-  test.case = 'encode with encoder';
+  test.case = 'encode with converter';
   var dst = converters[ 0 ].encode({ data : src, format : 'string' });
   var expected = { data : { val : 13 }, format : 'structure' }
   test.identical( dst, expected );
 
   /* */
 
-  test.case = 'encode without encoder';
+  test.case = 'encode without converter';
   var dst = converters[ 0 ].encode({ data : src });
   var expected = { data : { val : 13 }, format : 'structure' }
   test.identical( dst, expected );
@@ -1593,7 +1620,6 @@ function jsonFineSupportedTypes( test )
   var gotComplex1 = Complex1( test, options );
   var gotComplex2 = Complex2( test, options );
 
-
   test.case = 'json.fine supports Primitive1'
   test.is( gotPrimitive1 )
   test.case = 'json.fine supports Primitive2'
@@ -2200,24 +2226,24 @@ function finit( test )
 {
   let self = this;
 
-  var encoder = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'yml' });
-  test.identical( encoder.length, 1 );
-  encoder = encoder[ 0 ].encoder;
-  test.identical( encoder.inOut, [ 'structure-string' ] )
+  var converter = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'yml' });
+  test.identical( converter.length, 1 );
+  converter = converter[ 0 ].converter;
+  test.identical( converter.inOut, [ 'structure-string' ] )
 
-  test.is( _.arrayHas( _.Gdf.Elements, encoder ) );
-  test.is( _.arrayHas( _.Gdf.InMap[ 'structure' ], encoder ) );
-  test.is( _.arrayHas( _.Gdf.OutMap[ 'string' ], encoder ) );
-  test.is( _.arrayHas( _.Gdf.ExtMap[ 'yml' ], encoder ) );
-  test.is( _.arrayHas( _.Gdf.InOutMap[ 'structure-string' ], encoder ) );
+  test.is( _.arrayHas( _.Gdf.Elements, converter ) );
+  test.is( _.arrayHas( _.Gdf.InMap[ 'structure' ], converter ) );
+  test.is( _.arrayHas( _.Gdf.OutMap[ 'string' ], converter ) );
+  test.is( _.arrayHas( _.Gdf.ExtMap[ 'yml' ], converter ) );
+  test.is( _.arrayHas( _.Gdf.InOutMap[ 'structure-string' ], converter ) );
 
-  encoder.finit();
+  converter.finit();
 
-  test.is( !_.arrayHas( _.Gdf.Elements, encoder ) );
-  test.is( !_.arrayHas( _.Gdf.InMap[ 'structure' ], encoder ) );
-  test.is( !_.arrayHas( _.Gdf.OutMap[ 'string' ], encoder ) );
-  test.is( !_.arrayHas( _.Gdf.ExtMap[ 'yml' ], encoder ) );
-  test.is( !_.arrayHas( _.Gdf.InOutMap[ 'structure-string' ], encoder ) );
+  test.is( !_.arrayHas( _.Gdf.Elements, converter ) );
+  test.is( !_.arrayHas( _.Gdf.InMap[ 'structure' ], converter ) );
+  test.is( !_.arrayHas( _.Gdf.OutMap[ 'string' ], converter ) );
+  test.is( !_.arrayHas( _.Gdf.ExtMap[ 'yml' ], converter ) );
+  test.is( !_.arrayHas( _.Gdf.InOutMap[ 'structure-string' ], converter ) );
 }
 
 // --
