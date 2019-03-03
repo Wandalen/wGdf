@@ -70,7 +70,7 @@ let supported =
 
 */
 
-function Primitive1( test, o )
+function primitive1( test, o )
 {
   let samples =
   {
@@ -92,12 +92,12 @@ function Primitive1( test, o )
     try
     {
       let serialized = o.serialize.encode({ data : src });
-      test.identical( serialized.format, o.serializeFormat );
+      // test.identical( serialized.format, o.serializeFormat );
 
       let deserialized = o.deserialize.encode({ data : serialized.data });
-      test.identical( deserialized.format, o.deserializeFormat );
+      // test.identical( deserialized.format, o.deserializeFormat );
 
-      results[ k ] = test.identical( deserialized.data, src );
+      results[ k ] = _.entityIdentical( deserialized.data, src );
     }
     catch( err )
     {
@@ -109,14 +109,14 @@ function Primitive1( test, o )
 
   for( let k in results )
   if( !results[ k ] )
-  return false;
+  return;
 
-  return true;
+  o.result.primitive += 1;
 }
 
 //
 
-function Primitive2( test, o )
+function primitive2( test, o )
 {
   let samples =
   {
@@ -139,11 +139,11 @@ function Primitive2( test, o )
     try
     {
       let serialized = o.serialize.encode({ data : src });
-      test.identical( serialized.format, o.serializeFormat );
+      // test.identical( serialized.format, o.serializeFormat );
 
       let deserialized = o.deserialize.encode({ data : serialized.data });
-      test.identical( deserialized.format, o.deserializeFormat );
-      results[ k ] = test.identical( deserialized.data, src );
+      // test.identical( deserialized.format, o.deserializeFormat );
+      results[ k ] = _.entityIdentical( deserialized.data, src );
     }
     catch( err )
     {
@@ -155,14 +155,14 @@ function Primitive2( test, o )
 
   for( let k in results )
   if( !results[ k ] )
-  return false;
+  return;
 
-  return true;
+  o.result.primitive += 1;
 }
 
 //
 
-function Primitive3( test, o )
+function primitive3( test, o )
 {
   let samples =
   {
@@ -188,11 +188,11 @@ function Primitive3( test, o )
     try
     {
       let serialized = o.serialize.encode({ data : src });
-      test.identical( serialized.format, o.serializeFormat );
+      // test.identical( serialized.format, o.serializeFormat );
 
       let deserialized = o.deserialize.encode({ data : serialized.data });
-      test.identical( deserialized.format, o.deserializeFormat );
-      results[ k ] = test.identical( deserialized.data, src );
+      // test.identical( deserialized.format, o.deserializeFormat );
+      results[ k ] = _.entityIdentical( deserialized.data, src );
     }
     catch( err )
     {
@@ -204,14 +204,14 @@ function Primitive3( test, o )
 
   for( let k in results )
   if( !results[ k ] )
-  return false;
+  return;
 
-  return true;
+  o.result.primitive += 1;
 }
 
 //
 
-function RegExp1( test, o )
+function regExp1( test, o )
 {
   let samples =
   {
@@ -235,12 +235,12 @@ function RegExp1( test, o )
     try
     {
       let serialized = o.serialize.encode({ data : src });
-      test.identical( serialized.format, o.serializeFormat );
+      // test.identical( serialized.format, o.serializeFormat );
 
       let deserialized = o.deserialize.encode({ data : serialized.data });
-      test.identical( deserialized.format, o.deserializeFormat );
+      // test.identical( deserialized.format, o.deserializeFormat );
 
-      results[ samples[ k ].toString() ] = test.identical( deserialized.data, src );
+      results[ samples[ k ].toString() ] = _.entityIdentical( deserialized.data, src );
     }
     catch( err )
     {
@@ -252,26 +252,25 @@ function RegExp1( test, o )
 
   for( let k in results )
   if( !results[ k ] )
-  return false;
+  return;
 
-  return true;
+  o.result.regexp += 1;
 }
 
 //
 
-function RegExp2( test, o )
+function regExp2( test, o )
 {
   let samples =
   {
-    0 : /ab|cd/,
-    1 : /a[bc]d/,
-    3 : /ab{1,}bc/,
-    4 : /.regexp/g,
-    5 : /aBc/i,
-    6 : /^\d+/gm,
-    7 : /^a.*c$/g,
-    8 : /[a-z]/m,
-    9 : /^[A-Za-z0-9]$/
+    0 : /^(?:(?!ab|cd).)+$/gm,
+    1 : /\/\*[\s\S]*?\*\/|\/\/.*/g,
+    2 : /^[1-9]+[0-9]*$/gm,
+    3 : /aBc/i,
+    4 : /^\d+/gm,
+    5 : /^a.*c$/g,
+    6 : /[a-z]/m,
+    7 : /^[A-Za-z0-9]$/
   }
 
   let results = {};
@@ -287,12 +286,12 @@ function RegExp2( test, o )
     try
     {
       let serialized = o.serialize.encode({ data : src });
-      test.identical( serialized.format, o.serializeFormat );
+      // test.identical( serialized.format, o.serializeFormat );
 
       let deserialized = o.deserialize.encode({ data : serialized.data });
-      test.identical( deserialized.format, o.deserializeFormat );
+      // test.identical( deserialized.format, o.deserializeFormat );
 
-      results[ samples[ k ].toString() ] = test.identical( deserialized.data, src );
+      results[ samples[ k ].toString() ] = _.entityIdentical( deserialized.data, src );
     }
     catch( err )
     {
@@ -304,14 +303,14 @@ function RegExp2( test, o )
 
   for( let k in results )
   if( !results[ k ] )
-  return false;
+  return;
 
-  return true;
+  o.result.regexp += 1;
 }
 
 //
 
-function Buffer1( test, o )
+function buffer1( test, o )
 {
   let samples =
   {
@@ -336,12 +335,12 @@ function Buffer1( test, o )
     try
     {
       let serialized = o.serialize.encode({ data : src });
-      test.identical( serialized.format, o.serializeFormat );
+      // test.identical( serialized.format, o.serializeFormat );
 
       let deserialized = o.deserialize.encode({ data : serialized.data });
-      test.identical( deserialized.format, o.deserializeFormat );
+      // test.identical( deserialized.format, o.deserializeFormat );
 
-      results[ k ] = test.identical( deserialized.data, src );
+      results[ k ] = _.entityIdentical( deserialized.data, src );
     }
     catch( err )
     {
@@ -352,20 +351,18 @@ function Buffer1( test, o )
     positive += 1;
   }
 
-  test.will = 'at least one buffer is supported';
-  test.is( positive );
+  // test.will = 'at least one buffer is supported';
+  // test.is( positive );
 
   console.log( test.name + '.Buffer1: ', _.toStr( results, { levels : 1 } ))
 
-  if( !positive )
-  return false;
-
-  return true;
+  if( positive )
+  o.result.buffer += 1;
 }
 
 //
 
-function Buffer2( test, o )
+function buffer2( test, o )
 {
   let samples =
   {
@@ -386,12 +383,12 @@ function Buffer2( test, o )
     try
     {
       let serialized = o.serialize.encode({ data : src });
-      test.identical( serialized.format, o.serializeFormat );
+      // test.identical( serialized.format, o.serializeFormat );
 
       let deserialized = o.deserialize.encode({ data : serialized.data });
-      test.identical( deserialized.format, o.deserializeFormat );
+      // test.identical( deserialized.format, o.deserializeFormat );
 
-      results[ k ] = test.identical( deserialized.data, src );
+      results[ k ] = _.entityIdentical( deserialized.data, src );
     }
     catch( err )
     {
@@ -402,23 +399,20 @@ function Buffer2( test, o )
     positive += 1;
   }
 
-  test.will = 'at least one buffer is supported';
-  test.is( positive > 0 );
-  test.will = 'buffer raw must be supported';
-  test.is( results.raw );
+  // test.will = 'at least one buffer is supported';
+  // test.is( positive > 0 );
+  // test.will = 'buffer raw must be supported';
+  // test.is( results.raw );
 
   console.log( test.name + '.Buffer2: ', _.toStr( results, { levels : 1 } ))
 
-  for( let k in results )
-  if( !results[ k ] )
-  return false;
-
-  return true;
+  if( results.raw )
+  o.result.buffer += 1;
 }
 
 //
 
-function Buffer3( test, o )
+function buffer3( test, o )
 {
   let samples =
   {
@@ -443,12 +437,12 @@ function Buffer3( test, o )
     try
     {
       let serialized = o.serialize.encode({ data : src });
-      test.identical( serialized.format, o.serializeFormat );
+      // test.identical( serialized.format, o.serializeFormat );
 
       let deserialized = o.deserialize.encode({ data : serialized.data });
-      test.identical( deserialized.format, o.deserializeFormat );
+      // test.identical( deserialized.format, o.deserializeFormat );
 
-      results[ k ] = test.identical( deserialized.data, src );
+      results[ k ] = _.entityIdentical( deserialized.data, src );
     }
     catch( err )
     {
@@ -459,21 +453,19 @@ function Buffer3( test, o )
     positive += 1;
   }
 
-  test.will = 'all buffers must be supported';
-  test.is( positive === _.mapOwnKeys( samples ) );
+  let allSupported = positive === _.mapOwnKeys( samples );
+  // test.will = 'all buffers must be supported';
+  // test.is( allSupported );
 
   console.log( test.name + '.Buffer3: ', _.toStr( results, { levels : 1 } ))
 
-  for( let k in results )
-  if( !results[ k ] )
-  return false;
-
-  return true;
+  if( allSupported )
+  o.result.buffer += 1;
 }
 
 //
 
-function Complex1( test, o )
+function complex1( test, o )
 {
   let withArray =
   {
@@ -518,12 +510,12 @@ function Complex1( test, o )
     try
     {
       let serialized = o.serialize.encode({ data : src });
-      test.identical( serialized.format, o.serializeFormat );
+      // test.identical( serialized.format, o.serializeFormat );
 
       let deserialized = o.deserialize.encode({ data : serialized.data });
-      test.identical( deserialized.format, o.deserializeFormat );
+      // test.identical( deserialized.format, o.deserializeFormat );
 
-      results[ k ] = test.identical( deserialized.data, src );
+      results[ k ] = _.entityIdentical( deserialized.data, src );
 
     }
     catch( err )
@@ -536,14 +528,14 @@ function Complex1( test, o )
 
   for( let k in results )
   if( !results[ k ] )
-  return false;
+  return;
 
-  return true;
+  o.result.complex += 1;
 }
 
 //
 
-function Complex2( test, o )
+function complex2( test, o )
 {
   let recursion =
   {
@@ -569,12 +561,12 @@ function Complex2( test, o )
     try
     {
       let serialized = o.serialize.encode({ data : src });
-      test.identical( serialized.format, o.serializeFormat );
+      // test.identical( serialized.format, o.serializeFormat );
 
       let deserialized = o.deserialize.encode({ data : serialized.data });
-      test.identical( deserialized.format, o.deserializeFormat );
+      // test.identical( deserialized.format, o.deserializeFormat );
 
-      results[ k ] = test.identical( deserialized.data, src );
+      results[ k ] = _.entityIdentical( deserialized.data, src );
     }
     catch( err )
     {
@@ -587,9 +579,9 @@ function Complex2( test, o )
 
   for( let k in results )
   if( !results[ k ] )
-  return false;
+  return;
 
-  return true;
+  o.result.complex += 1;
 }
 
 // --
@@ -1601,45 +1593,35 @@ function jsonFineSupportedTypes( test )
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
-  let options =
+  let result = 
   {
+    primitive : 0,
+    regexp : 0,
+    buffer : 0,
+    complex : 0
+  }
+  
+  let options =
+  { 
+    result : result,
     serialize : serialize,
     deserialize : deserialize,
-    serializeFormat : 'string',
-    deserializeFormat : 'structure'
   }
+  
+  self.primitive1( test, options );
+  self.primitive2( test, options );
+  self.primitive3( test, options );
+  self.regExp1( test, options );
+  self.regExp2( test, options );
+  self.buffer1( test, options );
+  self.buffer2( test, options );
+  self.buffer3( test, options );
+  self.complex1( test, options );
+  self.complex2( test, options );
 
-  var gotPrimitive1 = Primitive1( test, options );
-  var gotPrimitive2 = Primitive2( test, options );
-  var gotPrimitive3 = Primitive3( test, options );
-  var gotRegExp1 = RegExp1( test, options );
-  var gotRegExp2 = RegExp2( test, options );
-  var gotBuffer1 = Buffer1( test, options );
-  var gotBuffer2 = Buffer2( test, options );
-  var gotBuffer3 = Buffer3( test, options );
-  var gotComplex1 = Complex1( test, options );
-  var gotComplex2 = Complex2( test, options );
+  test.identical( result, _.Gdf.Supported[ 'json.fine' ] );
 
-  test.case = 'json.fine supports Primitive1'
-  test.is( gotPrimitive1 )
-  test.case = 'json.fine supports Primitive2'
-  test.is( gotPrimitive2 )
-  test.case = 'json.fine supports Primitive3'
-  test.is( gotPrimitive3 )
-  test.case = 'json.fine supports RegExp1'
-  test.is( gotRegExp1 )
-  test.case = 'json.fine supports RegExp2'
-  test.is( gotRegExp2 )
-  test.case = 'json.fine supports Buffer1'
-  test.is( gotBuffer1 )
-  test.case = 'json.fine supports Buffer2'
-  test.is( gotBuffer2 )
-  test.case = 'json.fine supports Buffer3'
-  test.is( gotBuffer3 )
-  test.case = 'json.fine supports Complex1'
-  test.is( gotComplex1 )
-  test.case = 'json.fine supports Complex2'
-  test.is( gotComplex2 )
+  
 
 }
 
@@ -1662,46 +1644,33 @@ function jsonMinSupportedTypes( test )
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
-  let options =
+  let result = 
   {
+    primitive : 0,
+    regexp : 0,
+    buffer : 0,
+    complex : 0
+  }
+  
+  let options =
+  { 
+    result : result,
     serialize : serialize,
     deserialize : deserialize,
-    serializeFormat : 'string',
-    deserializeFormat : 'structure'
   }
+  
+  self.primitive1( test, options );
+  self.primitive2( test, options );
+  self.primitive3( test, options );
+  self.regExp1( test, options );
+  self.regExp2( test, options );
+  self.buffer1( test, options );
+  self.buffer2( test, options );
+  self.buffer3( test, options );
+  self.complex1( test, options );
+  self.complex2( test, options );
 
-  var gotPrimitive1 = Primitive1( test, options );
-  var gotPrimitive2 = Primitive2( test, options );
-  var gotPrimitive3 = Primitive3( test, options );
-  var gotRegExp1 = RegExp1( test, options );
-  var gotRegExp2 = RegExp2( test, options );
-  var gotBuffer1 = Buffer1( test, options );
-  var gotBuffer2 = Buffer2( test, options );
-  var gotBuffer3 = Buffer3( test, options );
-  var gotComplex1 = Complex1( test, options );
-  var gotComplex2 = Complex2( test, options );
-
-
-  test.case = 'json.min supports Primitive1'
-  test.is( gotPrimitive1 )
-  test.case = 'json.min supports Primitive2'
-  test.is( gotPrimitive2 )
-  test.case = 'json.min supports Primitive3'
-  test.is( gotPrimitive3 )
-  test.case = 'json.min supports RegExp1'
-  test.is( gotRegExp1 )
-  test.case = 'json.min supports RegExp2'
-  test.is( gotRegExp2 )
-  test.case = 'json.min supports Buffer1'
-  test.is( gotBuffer1 )
-  test.case = 'json.min supports Buffer2'
-  test.is( gotBuffer2 )
-  test.case = 'json.min supports Buffer3'
-  test.is( gotBuffer3 )
-  test.case = 'json.min supports Complex1'
-  test.is( gotComplex1 )
-  test.case = 'json.min supports Complex2'
-  test.is( gotComplex2 )
+  test.identical( result, _.Gdf.Supported[ 'json.min' ] );
 
 }
 
@@ -1723,46 +1692,33 @@ function csonSupportedTypes( test )
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
-  let options =
+  let result = 
   {
+    primitive : 0,
+    regexp : 0,
+    buffer : 0,
+    complex : 0
+  }
+  
+  let options =
+  { 
+    result : result,
     serialize : serialize,
     deserialize : deserialize,
-    serializeFormat : 'string',
-    deserializeFormat : 'structure'
   }
+  
+  self.primitive1( test, options );
+  self.primitive2( test, options );
+  self.primitive3( test, options );
+  self.regExp1( test, options );
+  self.regExp2( test, options );
+  self.buffer1( test, options );
+  self.buffer2( test, options );
+  self.buffer3( test, options );
+  self.complex1( test, options );
+  self.complex2( test, options );
 
-  var gotPrimitive1 = Primitive1( test, options );
-  var gotPrimitive2 = Primitive2( test, options );
-  var gotPrimitive3 = Primitive3( test, options );
-  var gotRegExp1 = RegExp1( test, options );
-  var gotRegExp2 = RegExp2( test, options );
-  var gotBuffer1 = Buffer1( test, options );
-  var gotBuffer2 = Buffer2( test, options );
-  var gotBuffer3 = Buffer3( test, options );
-  var gotComplex1 = Complex1( test, options );
-  var gotComplex2 = Complex2( test, options );
-
-
-  test.case = 'cson supports Primitive1'
-  test.is( gotPrimitive1 )
-  test.case = 'cson supports Primitive2'
-  test.is( gotPrimitive2 )
-  test.case = 'cson supports Primitive3'
-  test.is( gotPrimitive3 )
-  test.case = 'cson supports RegExp1'
-  test.is( gotRegExp1 )
-  test.case = 'cson supports RegExp2'
-  test.is( gotRegExp2 )
-  test.case = 'cson supports Buffer1'
-  test.is( gotBuffer1 )
-  test.case = 'cson supports Buffer2'
-  test.is( gotBuffer2 )
-  test.case = 'cson supports Buffer3'
-  test.is( gotBuffer3 )
-  test.case = 'cson supports Complex1'
-  test.is( gotComplex1 )
-  test.case = 'cson supports Complex2'
-  test.is( gotComplex2 )
+  test.identical( result, _.Gdf.Supported[ 'cson' ] );
 
 }
 
@@ -1784,46 +1740,33 @@ function jsSupportedTypes( test )
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
-  let options =
+  let result = 
   {
+    primitive : 0,
+    regexp : 0,
+    buffer : 0,
+    complex : 0
+  }
+  
+  let options =
+  { 
+    result : result,
     serialize : serialize,
     deserialize : deserialize,
-    serializeFormat : 'string',
-    deserializeFormat : 'structure'
   }
+  
+  self.primitive1( test, options );
+  self.primitive2( test, options );
+  self.primitive3( test, options );
+  self.regExp1( test, options );
+  self.regExp2( test, options );
+  self.buffer1( test, options );
+  self.buffer2( test, options );
+  self.buffer3( test, options );
+  self.complex1( test, options );
+  self.complex2( test, options );
 
-  var gotPrimitive1 = Primitive1( test, options );
-  var gotPrimitive2 = Primitive2( test, options );
-  var gotPrimitive3 = Primitive3( test, options );
-  var gotRegExp1 = RegExp1( test, options );
-  var gotRegExp2 = RegExp2( test, options );
-  var gotBuffer1 = Buffer1( test, options );
-  var gotBuffer2 = Buffer2( test, options );
-  var gotBuffer3 = Buffer3( test, options );
-  var gotComplex1 = Complex1( test, options );
-  var gotComplex2 = Complex2( test, options );
-
-
-  test.case = 'js supports Primitive1'
-  test.is( gotPrimitive1 )
-  test.case = 'js supports Primitive2'
-  test.is( gotPrimitive2 )
-  test.case = 'js supports Primitive3'
-  test.is( gotPrimitive3 )
-  test.case = 'js supports RegExp1'
-  test.is( gotRegExp1 )
-  test.case = 'js supports RegExp2'
-  test.is( gotRegExp2 )
-  test.case = 'js supports Buffer1'
-  test.is( gotBuffer1 )
-  test.case = 'js supports Buffer2'
-  test.is( gotBuffer2 )
-  test.case = 'js supports Buffer3'
-  test.is( gotBuffer3 )
-  test.case = 'js supports Complex1'
-  test.is( gotComplex1 )
-  test.case = 'js supports Complex2'
-  test.is( gotComplex2 )
+  test.identical( result, _.Gdf.Supported[ 'js' ] );
 
 }
 
@@ -1845,46 +1788,33 @@ function bsonSupportedTypes( test )
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
-  let options =
+  let result = 
   {
+    primitive : 0,
+    regexp : 0,
+    buffer : 0,
+    complex : 0
+  }
+  
+  let options =
+  { 
+    result : result,
     serialize : serialize,
     deserialize : deserialize,
-    serializeFormat : 'buffer.node',
-    deserializeFormat : 'structure'
   }
+  
+  self.primitive1( test, options );
+  self.primitive2( test, options );
+  self.primitive3( test, options );
+  self.regExp1( test, options );
+  self.regExp2( test, options );
+  self.buffer1( test, options );
+  self.buffer2( test, options );
+  self.buffer3( test, options );
+  self.complex1( test, options );
+  self.complex2( test, options );
 
-  var gotPrimitive1 = Primitive1( test, options );
-  var gotPrimitive2 = Primitive2( test, options );
-  var gotPrimitive3 = Primitive3( test, options );
-  var gotRegExp1 = RegExp1( test, options );
-  var gotRegExp2 = RegExp2( test, options );
-  var gotBuffer1 = Buffer1( test, options );
-  var gotBuffer2 = Buffer2( test, options );
-  var gotBuffer3 = Buffer3( test, options );
-  var gotComplex1 = Complex1( test, options );
-  var gotComplex2 = Complex2( test, options );
-
-
-  test.case = 'bson supports Primitive1'
-  test.is( gotPrimitive1 )
-  test.case = 'bson supports Primitive2'
-  test.is( gotPrimitive2 )
-  test.case = 'bson supports Primitive3'
-  test.is( gotPrimitive3 )
-  test.case = 'bson supports RegExp1'
-  test.is( gotRegExp1 )
-  test.case = 'bson supports RegExp2'
-  test.is( gotRegExp2 )
-  test.case = 'bson supports Buffer1'
-  test.is( gotBuffer1 )
-  test.case = 'bson supports Buffer2'
-  test.is( gotBuffer2 )
-  test.case = 'bson supports Buffer3'
-  test.is( gotBuffer3 )
-  test.case = 'bson supports Complex1'
-  test.is( gotComplex1 )
-  test.case = 'bson supports Complex2'
-  test.is( gotComplex2 )
+  test.identical( result, _.Gdf.Supported[ 'bson' ] );
 
 }
 
@@ -1906,46 +1836,33 @@ function cborSupportedTypes( test )
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
-  let options =
+  let result = 
   {
+    primitive : 0,
+    regexp : 0,
+    buffer : 0,
+    complex : 0
+  }
+  
+  let options =
+  { 
+    result : result,
     serialize : serialize,
     deserialize : deserialize,
-    serializeFormat : 'buffer.node',
-    deserializeFormat : 'structure'
   }
+  
+  self.primitive1( test, options );
+  self.primitive2( test, options );
+  self.primitive3( test, options );
+  self.regExp1( test, options );
+  self.regExp2( test, options );
+  self.buffer1( test, options );
+  self.buffer2( test, options );
+  self.buffer3( test, options );
+  self.complex1( test, options );
+  self.complex2( test, options );
 
-  var gotPrimitive1 = Primitive1( test, options );
-  var gotPrimitive2 = Primitive2( test, options );
-  var gotPrimitive3 = Primitive3( test, options );
-  var gotRegExp1 = RegExp1( test, options );
-  var gotRegExp2 = RegExp2( test, options );
-  var gotBuffer1 = Buffer1( test, options );
-  var gotBuffer2 = Buffer2( test, options );
-  var gotBuffer3 = Buffer3( test, options );
-  var gotComplex1 = Complex1( test, options );
-  var gotComplex2 = Complex2( test, options );
-
-
-  test.case = 'cbor supports Primitive1'
-  test.is( gotPrimitive1 )
-  test.case = 'cbor supports Primitive2'
-  test.is( gotPrimitive2 )
-  test.case = 'cbor supports Primitive3'
-  test.is( gotPrimitive3 )
-  test.case = 'cbor supports RegExp1'
-  test.is( gotRegExp1 )
-  test.case = 'cbor supports RegExp2'
-  test.is( gotRegExp2 )
-  test.case = 'cbor supports Buffer1'
-  test.is( gotBuffer1 )
-  test.case = 'cbor supports Buffer2'
-  test.is( gotBuffer2 )
-  test.case = 'cbor supports Buffer3'
-  test.is( gotBuffer3 )
-  test.case = 'cbor supports Complex1'
-  test.is( gotComplex1 )
-  test.case = 'cbor supports Complex2'
-  test.is( gotComplex2 )
+  test.identical( result, _.Gdf.Supported[ 'cbor' ] );
 
 }
 
@@ -1967,46 +1884,33 @@ function ymlSupportedTypes( test )
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
-  let options =
+  let result = 
   {
+    primitive : 0,
+    regexp : 0,
+    buffer : 0,
+    complex : 0
+  }
+  
+  let options =
+  { 
+    result : result,
     serialize : serialize,
     deserialize : deserialize,
-    serializeFormat : 'string',
-    deserializeFormat : 'structure'
   }
+  
+  self.primitive1( test, options );
+  self.primitive2( test, options );
+  self.primitive3( test, options );
+  self.regExp1( test, options );
+  self.regExp2( test, options );
+  self.buffer1( test, options );
+  self.buffer2( test, options );
+  self.buffer3( test, options );
+  self.complex1( test, options );
+  self.complex2( test, options );
 
-  var gotPrimitive1 = Primitive1( test, options );
-  var gotPrimitive2 = Primitive2( test, options );
-  var gotPrimitive3 = Primitive3( test, options );
-  var gotRegExp1 = RegExp1( test, options );
-  var gotRegExp2 = RegExp2( test, options );
-  var gotBuffer1 = Buffer1( test, options );
-  var gotBuffer2 = Buffer2( test, options );
-  var gotBuffer3 = Buffer3( test, options );
-  var gotComplex1 = Complex1( test, options );
-  var gotComplex2 = Complex2( test, options );
-
-
-  test.case = 'yml supports Primitive1'
-  test.is( gotPrimitive1 )
-  test.case = 'yml supports Primitive2'
-  test.is( gotPrimitive2 )
-  test.case = 'yml supports Primitive3'
-  test.is( gotPrimitive3 )
-  test.case = 'yml supports RegExp1'
-  test.is( gotRegExp1 )
-  test.case = 'yml supports RegExp2'
-  test.is( gotRegExp2 )
-  test.case = 'yml supports Buffer1'
-  test.is( gotBuffer1 )
-  test.case = 'yml supports Buffer2'
-  test.is( gotBuffer2 )
-  test.case = 'yml supports Buffer3'
-  test.is( gotBuffer3 )
-  test.case = 'yml supports Complex1'
-  test.is( gotComplex1 )
-  test.case = 'yml supports Complex2'
-  test.is( gotComplex2 )
+  test.identical( result, _.Gdf.Supported[ 'yaml' ] );
 
 }
 
@@ -2256,6 +2160,20 @@ var Self =
   name : 'Tools/base/EncoderStrategy',
   silencing : 1,
 
+  context : 
+  {
+    primitive1,
+    primitive2,
+    primitive3,
+    regExp1,
+    regExp2,
+    buffer1,
+    buffer2,
+    buffer3,
+    complex1,
+    complex2
+  },
+
   tests :
   {
     trivial,
@@ -2273,13 +2191,13 @@ var Self =
 
     //
 
-    // jsonFineSupportedTypes,
-    // jsonMinSupportedTypes,
-    // csonSupportedTypes,
-    // jsSupportedTypes,
-    // bsonSupportedTypes,
-    // cborSupportedTypes,
-    // ymlSupportedTypes,
+    jsonFineSupportedTypes,
+    jsonMinSupportedTypes,
+    csonSupportedTypes,
+    jsSupportedTypes,
+    bsonSupportedTypes,
+    cborSupportedTypes,
+    ymlSupportedTypes,
 
     //
 

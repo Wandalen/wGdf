@@ -11,6 +11,7 @@ src data file  - 'proto/dwtools/abase/l8.test/asset/generated.s'
 |    json( min )   	|     10000     	|     0.481s
 
 
+
 | Write transformer 	| Runs 	| Time 	|
 |:-----------:	|:---------:	|:------:
 |    Bson     	|     10000     	|    1.635s
@@ -20,3 +21,17 @@ src data file  - 'proto/dwtools/abase/l8.test/asset/generated.s'
 |    Js     	|     10000     	|    33.468s
 |    json.fine   	|     10000     	|     52.473s
 |    json.min   	|     10000     	|      0.443s
+
+
+
+| Write transformer 	| Level1 	| Level2 	| Level3 
+|:-----------:	|:---------:	|:------:   |:------:   
+|    Bson     	|       |         |           |
+|    Yaml     	|       |         |           |
+|    Cson     	|       |         |           |
+|    Cbor     	|       |         |           |
+|    Js     	|       |         |           |
+|    json.fine   	|       |         |           |
+|    json.min   	|       |         |           |
+
+
