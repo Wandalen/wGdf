@@ -328,51 +328,51 @@ let InMap = Object.create( null );
 let OutMap = Object.create( null );
 let ExtMap = Object.create( null );
 let InOutMap = Object.create( null );
-let Supported = 
+let Supported =
 {
-  'bson' : 
+  'bson' :
   {
     primitive : 2,
     regexp : 2,
     buffer : 0,
     complex : 1
   },
-  'yaml' : 
+  'yaml' :
   {
     primitive : 2,
     regexp : 2,
     buffer : 1,
     complex : 2
   },
-  'cbor' : 
+  'cbor' :
   {
     primitive : 2,
     regexp : 1,
     buffer : 1,
     complex : 1
   },
-  'js' : 
+  'js' :
   {
     primitive : 3,
     regexp : 2,
     buffer : 3,
     complex : 2
   },
-  'cson' : 
+  'cson' :
   {
     primitive : 1,
     regexp : 2,
     buffer : 2,
     complex : 1
   },
-  'json.fine' : 
+  'json.fine' :
   {
     primitive : 1,
     regexp : 0,
     buffer : 0,
     complex : 1
   },
-  'json.min' : 
+  'json.min' :
   {
     primitive : 1,
     regexp : 0,

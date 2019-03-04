@@ -1593,21 +1593,21 @@ function jsonFineSupportedTypes( test )
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
-  let result = 
+  let result =
   {
     primitive : 0,
     regexp : 0,
     buffer : 0,
     complex : 0
   }
-  
+
   let options =
-  { 
+  {
     result : result,
     serialize : serialize,
     deserialize : deserialize,
   }
-  
+
   self.primitive1( test, options );
   self.primitive2( test, options );
   self.primitive3( test, options );
@@ -1621,7 +1621,7 @@ function jsonFineSupportedTypes( test )
 
   test.identical( result, _.Gdf.Supported[ 'json.fine' ] );
 
-  
+
 
 }
 
@@ -1644,21 +1644,21 @@ function jsonMinSupportedTypes( test )
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
-  let result = 
+  let result =
   {
     primitive : 0,
     regexp : 0,
     buffer : 0,
     complex : 0
   }
-  
+
   let options =
-  { 
+  {
     result : result,
     serialize : serialize,
     deserialize : deserialize,
   }
-  
+
   self.primitive1( test, options );
   self.primitive2( test, options );
   self.primitive3( test, options );
@@ -1692,21 +1692,21 @@ function csonSupportedTypes( test )
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
-  let result = 
+  let result =
   {
     primitive : 0,
     regexp : 0,
     buffer : 0,
     complex : 0
   }
-  
+
   let options =
-  { 
+  {
     result : result,
     serialize : serialize,
     deserialize : deserialize,
   }
-  
+
   self.primitive1( test, options );
   self.primitive2( test, options );
   self.primitive3( test, options );
@@ -1740,21 +1740,21 @@ function jsSupportedTypes( test )
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
-  let result = 
+  let result =
   {
     primitive : 0,
     regexp : 0,
     buffer : 0,
     complex : 0
   }
-  
+
   let options =
-  { 
+  {
     result : result,
     serialize : serialize,
     deserialize : deserialize,
   }
-  
+
   self.primitive1( test, options );
   self.primitive2( test, options );
   self.primitive3( test, options );
@@ -1788,21 +1788,21 @@ function bsonSupportedTypes( test )
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
-  let result = 
+  let result =
   {
     primitive : 0,
     regexp : 0,
     buffer : 0,
     complex : 0
   }
-  
+
   let options =
-  { 
+  {
     result : result,
     serialize : serialize,
     deserialize : deserialize,
   }
-  
+
   self.primitive1( test, options );
   self.primitive2( test, options );
   self.primitive3( test, options );
@@ -1836,21 +1836,21 @@ function cborSupportedTypes( test )
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
-  let result = 
+  let result =
   {
     primitive : 0,
     regexp : 0,
     buffer : 0,
     complex : 0
   }
-  
+
   let options =
-  { 
+  {
     result : result,
     serialize : serialize,
     deserialize : deserialize,
   }
-  
+
   self.primitive1( test, options );
   self.primitive2( test, options );
   self.primitive3( test, options );
@@ -1884,21 +1884,21 @@ function ymlSupportedTypes( test )
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
-  let result = 
+  let result =
   {
     primitive : 0,
     regexp : 0,
     buffer : 0,
     complex : 0
   }
-  
+
   let options =
-  { 
+  {
     result : result,
     serialize : serialize,
     deserialize : deserialize,
   }
-  
+
   self.primitive1( test, options );
   self.primitive2( test, options );
   self.primitive3( test, options );
@@ -2160,7 +2160,7 @@ var Self =
   name : 'Tools/base/EncoderStrategy',
   silencing : 1,
 
-  context : 
+  context :
   {
     primitive1,
     primitive2,
