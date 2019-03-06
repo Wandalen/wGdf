@@ -315,6 +315,7 @@ let Bson;
 try
 {
   Bson = require( 'bson' );
+  Bson.setInternalBufferSize( 1024 * 1024 * 150 );
 }
 catch( err )
 {
