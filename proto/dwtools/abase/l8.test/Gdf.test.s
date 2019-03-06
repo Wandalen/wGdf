@@ -45,6 +45,231 @@ let SamplesComplicated =
 
 }
 
+let Supported =
+{
+  'bson' :
+  {
+    primitive : 2,
+    regexp : 2,
+    buffer : 0,
+    complex : 1
+  },
+  'yaml' :
+  {
+    primitive : 2,
+    regexp : 2,
+    buffer : 1,
+    complex : 2
+  },
+  'cbor' :
+  {
+    primitive : 2,
+    regexp : 1,
+    buffer : 1,
+    complex : 1
+  },
+  'js' :
+  {
+    primitive : 3,
+    regexp : 2,
+    buffer : 3,
+    complex : 2
+  },
+  'cson' :
+  {
+    primitive : 1,
+    regexp : 2,
+    buffer : 2,
+    complex : 1
+  },
+  'json.fine' :
+  {
+    primitive : 1,
+    regexp : 0,
+    buffer : 0,
+    complex : 1
+  },
+  'json.min' :
+  {
+    primitive : 1,
+    regexp : 0,
+    buffer : 0,
+    complex : 1
+  }
+}
+
+//
+
+function diagnosticsStructureGenerate( o )
+{
+  _.assert( arguments.length === 1 )
+  _.routineOptions( diagnosticsStructureGenerate, o );
+  _.assert( _.numberIs( o.breadth ) );
+  _.assert( _.numberIs( o.depth ) );
+
+  let structure = Object.create( null );
+
+  for( let b = 0; b < o.breadth; b++ )
+  {
+    structure[ b ] = singleLevelMake();
+  }
+
+  // var buffer = _.bufferBytesFrom( JSON.stringify( structure ) );
+  // console.log( _.strMetricFormatBytes( buffer.byteLength ) )
+
+  return structure;
+
+  /*  */
+
+  function singleLevelMake()
+  {
+    let singleLevel = Object.create( null );
+
+    if( o.boolean )
+    singleLevel[ 'boolean' ] = true;
+
+    if( o.number )
+    singleLevel[ 'number' ] = 0;
+
+    if( o.signedNumber )
+    {
+      singleLevel[ '-0' ] = -0;
+      singleLevel[ '+0' ] = +0;
+    }
+
+    if( o.string )
+    singleLevel[ 'string' ] = 'string';
+
+    if( o.null )
+    singleLevel[ 'null' ] = null;
+
+    if( o.infinity )
+    {
+      singleLevel[ '+infinity' ] = +Infinity;
+      singleLevel[ '-infinity' ] = -Infinity;
+    }
+
+    if( o.nan )
+    singleLevel[ 'nan' ] = NaN;
+
+    if( o.undefined )
+    singleLevel[ 'undefined' ] = undefined;
+
+    if( o.date )
+    singleLevel[ 'date' ] = new Date();
+
+    if( o.bigInt )
+    if( typeof BigInt !== 'undefined' )
+    singleLevel[ 'bigInt' ] = BigInt( 1 );
+
+    if( o.regexp )
+    {
+      singleLevel[ 'regexp1'] = /ab|cd/,
+      singleLevel[ 'regexp2'] = /a[bc]d/,
+      singleLevel[ 'regexp3'] = /ab{1,}bc/,
+      singleLevel[ 'regexp4'] = /\.js$/,
+      singleLevel[ 'regexp5'] = /.regexp/
+    }
+
+    if( o.regexpComplex )
+    {
+      singleLevel[ 'complexRegexp0' ] = /^(?:(?!ab|cd).)+$/gm,
+      singleLevel[ 'complexRegexp1' ] = /\/\*[\s\S]*?\*\/|\/\/.*/g,
+      singleLevel[ 'complexRegexp2' ] = /^[1-9]+[0-9]*$/gm,
+      singleLevel[ 'complexRegexp3' ] = /aBc/i,
+      singleLevel[ 'complexRegexp4' ] = /^\d+/gm,
+      singleLevel[ 'complexRegexp5' ] = /^a.*c$/g,
+      singleLevel[ 'complexRegexp6' ] = /[a-z]/m,
+      singleLevel[ 'complexRegexp7' ] = /^[A-Za-z0-9]$/
+    }
+
+    if( o.bufferNode )
+    if( typeof Buffer !== 'undefined' )
+    singleLevel[ 'bufferNode'] = Buffer.from([ 99,100,101 ]);
+
+    if( o.bufferRaw )
+    singleLevel[ 'bufferRaw'] = new ArrayBuffer([ 99,100,101 ]);
+
+    if( o.bufferBytes )
+    singleLevel[ 'bufferBytes'] = new Uint8Array([ 99,100,101 ]);
+
+    if( o.map )
+    singleLevel[ 'map' ] = { a : 'string', b : 1, c : true  };
+
+    if( o.mapComplex )
+    singleLevel[ 'mapComplex' ] = { a : '1', dir : { b : 2 }, c : [ 1,2,3 ] };
+
+    if( o.array )
+    singleLevel[ 'array' ] = [ 'string', 1,  true ];
+
+    if( o.arrayComplex )
+    singleLevel[ 'arrayComplex' ] = [ { a : '1', dir : { b : 2 }, c : [ 1,2,3 ] } ]
+
+    if( o.recursion )
+    {
+      //
+    }
+
+    if( !o.depth )
+    return singleLevel;
+
+    /**/
+
+    let currentLevel = singleLevel;
+    let srcMap = _.mapExtend( null, singleLevel );
+
+    for( let d = 0; d < o.depth; d++ )
+    {
+      let level = 'level' + d;
+      currentLevel[ level ] = _.mapExtend( null, srcMap );
+      currentLevel = currentLevel[ level ];
+    }
+
+    return singleLevel;
+  }
+
+}
+
+diagnosticsStructureGenerate.defaults =
+{
+  depth : null,
+  breadth : null,
+  size : null,
+
+  /**/
+
+  boolean : null,
+  number : null,
+  signedNumber : null,
+  string : null,
+  null : null,
+  infinity : null,
+  nan : null,
+  undefined : null,
+  date : null,
+  bigInt : null,
+
+  /**/
+
+  regexp : null,
+  regexpComplex : null,
+
+  /**/
+
+  bufferNode : null,
+  bufferRaw : null,
+  bufferBytes : null,
+
+  /**/
+
+  array : null,
+  arrayComplex : null,
+  map : null,
+  mapComplex : null
+
+}
+
+
 //
 
 /*
@@ -1619,7 +1844,7 @@ function jsonFineSupportedTypes( test )
   self.complex1( test, options );
   self.complex2( test, options );
 
-  test.identical( result, _.Gdf.Supported[ 'json.fine' ] );
+  test.identical( result, self.Supported[ 'json.fine' ] );
 
 
 
@@ -1670,7 +1895,7 @@ function jsonMinSupportedTypes( test )
   self.complex1( test, options );
   self.complex2( test, options );
 
-  test.identical( result, _.Gdf.Supported[ 'json.min' ] );
+  test.identical( result, self.Supported[ 'json.min' ] );
 
 }
 
@@ -1718,7 +1943,7 @@ function csonSupportedTypes( test )
   self.complex1( test, options );
   self.complex2( test, options );
 
-  test.identical( result, _.Gdf.Supported[ 'cson' ] );
+  test.identical( result, self.Supported[ 'cson' ] );
 
 }
 
@@ -1766,7 +1991,7 @@ function jsSupportedTypes( test )
   self.complex1( test, options );
   self.complex2( test, options );
 
-  test.identical( result, _.Gdf.Supported[ 'js' ] );
+  test.identical( result, self.Supported[ 'js' ] );
 
 }
 
@@ -1814,7 +2039,7 @@ function bsonSupportedTypes( test )
   self.complex1( test, options );
   self.complex2( test, options );
 
-  test.identical( result, _.Gdf.Supported[ 'bson' ] );
+  test.identical( result, self.Supported[ 'bson' ] );
 
 }
 
@@ -1862,7 +2087,7 @@ function cborSupportedTypes( test )
   self.complex1( test, options );
   self.complex2( test, options );
 
-  test.identical( result, _.Gdf.Supported[ 'cbor' ] );
+  test.identical( result, self.Supported[ 'cbor' ] );
 
 }
 
@@ -1910,7 +2135,7 @@ function ymlSupportedTypes( test )
   self.complex1( test, options );
   self.complex2( test, options );
 
-  test.identical( result, _.Gdf.Supported[ 'yaml' ] );
+  test.identical( result, self.Supported[ 'yaml' ] );
 
 }
 
@@ -1918,121 +2143,194 @@ function ymlSupportedTypes( test )
 
 function perfomance( test )
 {
-  let src = require( './asset/generated.s' );
-  let times = 10000;
+  let self = this;
 
-  // /* bson */
+  let commonTypes =
+  {
+    string : 1,
+    number : 1,
+    map : 1,
+    array : 1,
+    boolean : 1,
+    null : 1,
 
-  // var serialize = _.Gdf.Select({ in : 'structure', out : 'buffer.node', ext : 'bson' });
-  // test.identical( serialize.length, 1 );
-  // serialize = serialize[ 0 ];
+    mapComplex : 1,
+    arrayComplex : 1
+  }
 
-  // var deserialize = _.Gdf.Select({ in : 'buffer.node', out : 'structure', ext : 'bson' });
-  // test.identical( deserialize.length, 1 );
-  // deserialize = deserialize[ 0 ];
+  let src1kb = self.diagnosticsStructureGenerate( _.mapExtend( { depth : 5, breadth : 1 }, commonTypes ));
+  let src1mb = self.diagnosticsStructureGenerate( _.mapExtend( { depth : 50, breadth : 100 }, commonTypes ));
+  let src10mb = self.diagnosticsStructureGenerate( _.mapExtend( { depth : 100, breadth : 450 }, commonTypes ));
 
-  // run();
+  let readResults = [];
+  let writeResults = [];
 
-  // /* yaml */
+  /* bson */
 
-  // var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'yml' });
-  // test.identical( serialize.length, 1 );
-  // serialize = serialize[ 0 ];
+  var serialize = _.Gdf.Select({ in : 'structure', out : 'buffer.node', ext : 'bson' });
+  serialize = serialize[ 0 ];
 
-  // var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'yml' });
-  // test.identical( deserialize.length, 1 );
-  // deserialize = deserialize[ 0 ];
+  var deserialize = _.Gdf.Select({ in : 'buffer.node', out : 'structure', ext : 'bson' });
+  deserialize = deserialize[ 0 ];
 
-  // run();
+  run( [ src1kb, src1mb, src10mb ] , [ '1kb', '1Mb', '10Mb' ] );
 
-  // /* cson */
+  /* yaml */
 
-  // var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'cson' });
-  // test.identical( serialize.length, 1 );
-  // serialize = serialize[ 0 ];
+  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'yml' });
+  serialize = serialize[ 0 ];
 
-  // var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'cson' });
-  // test.identical( deserialize.length, 1 );
-  // deserialize = deserialize[ 0 ];
+  var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'yml' });
+  deserialize = deserialize[ 0 ];
 
-  // run();
+  run( [ src1kb, src1mb, src10mb ] , [ '1kb', '1Mb', '10Mb' ] );
+
+  /* cson */
+
+  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'cson' });
+  serialize = serialize[ 0 ];
+
+  var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'cson' });
+  deserialize = deserialize[ 0 ];
+
+  run( [ src1kb, src1mb ] , [ '1kb', '1Mb' ] );
 
   /* cbor */
 
-  // var serialize = _.Gdf.Select({ in : 'structure', out : 'buffer.node', ext : 'cbor' });
-  // test.identical( serialize.length, 1 );
-  // serialize = serialize[ 0 ];
+  var serialize = _.Gdf.Select({ in : 'structure', out : 'buffer.node', ext : 'cbor' });
+  serialize = serialize[ 0 ];
 
-  // var deserialize = _.Gdf.Select({ in : 'buffer.node', out : 'structure', ext : 'cbor' });
-  // test.identical( deserialize.length, 1 );
-  // deserialize = deserialize[ 0 ];
+  var deserialize = _.Gdf.Select({ in : 'buffer.node', out : 'structure', ext : 'cbor' });
+  deserialize = deserialize[ 0 ];
 
-  // run();
-
+  run( [ src1kb, src1mb ] , [ '1kb', '1Mb' ] );
 
   /* js */
 
-  // var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'js' });
-  // test.identical( serialize.length, 1 );
-  // serialize = serialize[ 0 ];
+  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'js' });
+  serialize = serialize[ 0 ];
 
-  // var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'js' });
-  // test.identical( deserialize.length, 1 );
-  // deserialize = deserialize[ 0 ];
+  var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'js' });
+  deserialize = deserialize[ 0 ];
 
-  // run();
+  run( [ src1kb, src1mb, src10mb ] , [ '1kb', '1Mb', '10Mb' ] );
 
   /* json.fine */
 
-  // var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'json.fine' });
-  // test.identical( serialize.length, 1 );
-  // serialize = serialize[ 0 ];
-  // test.identical( serialize.shortName, 'json.fine' );
+  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'json.fine' });
+  serialize = serialize[ 0 ];
 
-  // var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'json', default : 1 });
-  // test.identical( deserialize.length, 1 );
-  // deserialize = deserialize[ 0 ];
+  var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'json', default : 1 });
+  deserialize = deserialize[ 0 ];
 
-  // run();
+  run( [ src1kb, src1mb, src10mb ] , [ '1kb', '1Mb', '10Mb' ] );
 
   /* json.min */
 
   var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'json', default : 1 });
-  test.identical( serialize.length, 1 );
   serialize = serialize[ 0 ];
-  test.identical( serialize.shortName, 'json.min' );
 
   var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'json', default : 1 });
-  test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
-  run();
+  run( [ src1kb, src1mb, src10mb ] , [ '1kb', '1Mb', '10Mb' ] );
+
+  /* write results */
+
+  var o =
+  {
+    data : writeResults,
+    head : [ 'Write Transformer', '1kb - Time', '1kb - Out size', '1mb - Time', '1mb - Out size', '10mb - Time', '10mb - Out size' ],
+    colWidths :
+    {
+      0 : 30,
+    },
+    colWidth : 15
+  }
+  var output = _.strTable( o );
+  console.log( output );
+
+  /* read results */
+
+  var o =
+  {
+    data : readResults,
+    head : [ 'Read Transformer', '1kb - Time', '1Mb - Time', '10Mb - Time' ],
+    colWidths :
+    {
+      0 : 30,
+    },
+    colWidth : 15
+  }
+  var output = _.strTable( o );
+  console.log( output );
+
+  test.identical( 1,1 )
 
   /*  */
 
-  function run()
+  function run( srcs, srcSizes )
   {
     let serialized;
     let deserialized;
+    let src;
+    let srcSize;
 
-    var t0 = _.timeNow();
-    for( let i = 0; i < times; i++ )
-    {
-      serialized = serialize.encode({ data : src });
-    }
-    var spent = _.timeSpent( 'write , ' + times + ' times: ' + serialize.name + ' : ', t0 );
-    console.log( spent );
+    console.log( '\n',  serialize.ext, ':', '\n' );
 
-    var t0 = _.timeNow();
-    for( let i = 0; i < times; i++ )
+    let write = [ serialize.ext ];
+    let read = [ serialize.ext ];
+
+    readResults.push( read );
+    writeResults.push( write );
+
+    for( var i = 0; i < srcs.length; i++ )
     {
-      deserialized = deserialize.encode({ data : serialized.data });
+      src = srcs[ i ];
+      srcSize = srcSizes[ i ];
+
+      console.log( '\nSrc: ', srcSize );
+
+      try
+      {
+        var t0 = _.timeNow();
+        serialized = serialize.encode({ data : src });
+        var spent = _.timeSpent( t0 );
+        console.log( 'write: ', spent );
+
+        let buffer = _.bufferBytesFrom( serialized.data );
+        let size = _.strMetricFormatBytes( buffer.byteLength );
+
+        console.log( serialize.ext, 'serialized size:', size );
+
+        write.push( spent, size );
+      }
+      catch( err )
+      {
+        console.log( err )
+        write.push( 'Err', 'Err' );
+      }
+
+      try
+      {
+        var t0 = _.timeNow();
+        deserialized = deserialize.encode({ data : serialized.data });
+        var spent = _.timeSpent( t0 );
+        console.log( 'read: ', spent );
+
+        read.push( spent );
+      }
+      catch( err )
+      {
+        console.log( err )
+        read.push( 'Err' );
+      }
+
     }
-    var spent = _.timeSpent( 'read , ' + times + ' times: ' + deserialize.name + ' : ', t0 );
-    console.log( spent );
   }
-
 }
+
+perfomance.experimental = 1;
 
 //
 
@@ -2171,7 +2469,11 @@ var Self =
     buffer2,
     buffer3,
     complex1,
-    complex2
+    complex2,
+
+    Supported,
+
+    diagnosticsStructureGenerate
   },
 
   tests :
@@ -2201,7 +2503,7 @@ var Self =
 
     //
 
-    // perfomance,
+    perfomance,
 
     //
 
