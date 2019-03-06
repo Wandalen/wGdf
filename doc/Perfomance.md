@@ -3,8 +3,8 @@
       ├──────────────────────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
       │             bson             │    0.001s     │    1.7 kb     │    0.112s     │    1.4 Mb     │    1.007s     │    12.4 Mb    │
       │             yml              │    0.002s     │    1.3 kb     │    0.203s     │    2.9 Mb     │    4.339s     │    45.7 Mb    │
-      │             cson             │    0.031s     │    2.8 kb     │    10.370s    │    9.1 Mb     │    Hangs      │   Hangs       │
-      │             cbor             │    0.005s     │    860.0 b    │      Err      │      Err      │    Hangs      │   Hangs       │
+      │             cson             │    0.031s     │    2.8 kb     │    10.370s    │    9.1 Mb     │    timeOut    │   timeOut     │
+      │             cbor             │    0.005s     │    860.0 b    │      Err      │      Err      │    timeOut    │   timeOut     │
       │              js              │    0.001s     │    3.2 kb     │    1.326s     │    7.7 Mb     │    11.646s    │   118.5 Mb    │
       │          json.fine           │    0.004s     │    3.2 kb     │    2.005s     │    7.7 Mb     │    18.433s    │   118.5 Mb    │
       │             json             │    0.000s     │    1.3 kb     │    0.013s     │    1.1 Mb     │    0.124s     │    10.0 Mb    │
@@ -14,9 +14,26 @@
       ├──────────────────────────────┼───────────────┼───────────────┼───────────────┤
       │             bson             │    0.001s     │    0.117s     │    0.487s     │
       │             yml              │    0.002s     │    0.085s     │    0.712s     │
-      │             cson             │    0.024s     │    24.570s    │    -          │
-      │             cbor             │    0.002s     │    0.000s     │    -          │
+      │             cson             │    0.024s     │    24.570s    │    timeOut    │
+      │             cbor             │    0.002s     │    0.000s     │    timeOut    │
       │              js              │    0.000s     │    0.111s     │    1.478s     │
       │          json.fine           │    0.000s     │    0.021s     │    0.448s     │
       │             json             │    0.000s     │    0.015s     │    0.129s     │
       └──────────────────────────────┴───────────────┴───────────────┴───────────────┘
+
+### Src structure info:
+
+#### Types used :
+*  string
+*  number
+*  map
+*  array
+*  boolean
+*  null
+*  nested map
+*  nested array
+
+#### Sizes :
+* 1kb - depth : 5, breadth : 1
+* 1Mb - depth : 50, breadth : 100
+* 10Mb - depth : 100, breadth : 450
