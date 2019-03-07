@@ -474,16 +474,10 @@ writeCbor =
   onEncode : function( op )
   {
     _.assert( _.mapIs( op.in.data ) );
-    try
-    {
-      op.out.data = Cbor.encode( op.in.data );
-    }
-    catch( err )
-    {
-      let encoder = new Cbor.Encoder({ highWaterMark: 1024 * 1024 * 150 });
-      encoder.write( op.in.data );
-      op.out.data = encoder.read();
-    }
+
+    let encoder = new Cbor.Encoder({ highWaterMark: 1 << 30 });
+    encoder.write( op.in.data );
+    op.out.data = encoder.read();
 
     _.assert( _.bufferNodeIs( op.out.data ) );
 
