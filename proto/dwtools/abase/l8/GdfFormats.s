@@ -407,6 +407,112 @@ writeCbor =
 }
 
 // --
+// Msgpack-lite
+// --
+
+let MsgpackLite;
+try
+{
+  MsgpackLite = require( 'msgpack-lite' );
+}
+catch( err )
+{
+}
+
+let readMsgpackLite = null;
+if( MsgpackLite )
+readMsgpackLite =
+{
+
+  ext : [ 'msgpack.lite' ],
+  in : [ 'buffer.node' ],
+  out : [ 'structure' ],
+
+  onEncode : function( op )
+  {
+    _.assert( _.bufferNodeIs( op.in.data ) );
+    op.out.data = MsgpackLite.decode( op.in.data );
+    op.out.format = 'structure';
+  },
+
+}
+
+let writeMsgpackLite = null;
+if( MsgpackLite )
+writeMsgpackLite =
+{
+
+  ext : [ 'msgpack.lite' ],
+  in : [ 'structure' ],
+  out : [ 'buffer.node' ],
+
+  onEncode : function( op )
+  {
+    _.assert( _.mapIs( op.in.data ) );
+    op.out.data = MsgpackLite.encode( op.in.data );
+    op.out.format = 'buffer.node';
+  },
+
+}
+
+// --
+// Msgpack-wtp
+// --
+
+let MsgpackWtp;
+try
+{
+  MsgpackWtp = require( 'what-the-pack' );
+}
+catch( err )
+{
+}
+
+let readMsgpackWtp = null;
+if( MsgpackWtp )
+readMsgpackWtp =
+{
+
+  ext : [ 'msgpack.wtp' ],
+  in : [ 'buffer.node' ],
+  out : [ 'structure' ],
+
+  onEncode : function( op )
+  {
+    _.assert( _.bufferNodeIs( op.in.data ) );
+
+    if( !MsgpackWtp.decode )
+    MsgpackWtp = MsgpackWtp.initialize( 2**27 ); //134 MB
+
+    op.out.data = MsgpackWtp.decode( op.in.data );
+    op.out.format = 'structure';
+  },
+
+}
+
+let writeMsgpackWtp = null;
+if( MsgpackWtp )
+writeMsgpackWtp =
+{
+
+  ext : [ 'msgpack.wtp' ],
+  in : [ 'structure' ],
+  out : [ 'buffer.node' ],
+
+  onEncode : function( op )
+  {
+    _.assert( _.mapIs( op.in.data ) );
+
+    if( !MsgpackWtp.encode )
+    MsgpackWtp = MsgpackWtp.initialize( 2**27 ); //134 MB
+
+    op.out.data = MsgpackWtp.encode( op.in.data );
+    op.out.format = 'buffer.node';
+  },
+
+}
+
+// --
 // base64
 // --
 
@@ -861,6 +967,7 @@ _.Gdf([ readYml, writeYml ]);
 _.Gdf([ readCoffee, writeCoffee ]);
 _.Gdf([ readBson, writeBson ]);
 _.Gdf([ readCbor, writeCbor ]);
+_.Gdf([ readMsgpackLite, writeMsgpackLite, readMsgpackWtp, writeMsgpackWtp ]);
 
 _.Gdf([ base64ToBuffer, base64FromBuffer ]);
 _.Gdf([ base64ToBlob ]);

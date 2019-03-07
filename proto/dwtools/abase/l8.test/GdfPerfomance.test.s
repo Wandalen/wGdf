@@ -229,6 +229,18 @@ let converters =
   {
     serialize : { in : 'structure', out : 'string', ext : 'yml' },
     deserialize : { in : 'string', out : 'structure', ext : 'yml' }
+  },
+
+  'msgpack.lite' :
+  {
+    serialize : { in : 'structure', out : 'buffer.node', ext : 'msgpack.lite' },
+    deserialize : { in : 'buffer.node', out : 'structure', ext : 'msgpack.lite' }
+  },
+
+  'msgpack.wtp' :
+  {
+    serialize : { in : 'structure', out : 'buffer.node', ext : 'msgpack.wtp' },
+    deserialize : { in : 'buffer.node', out : 'structure', ext : 'msgpack.wtp' }
   }
 }
 
