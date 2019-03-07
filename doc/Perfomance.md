@@ -1,5 +1,8 @@
 # Perfomance
 
+The test used three structures of different size: 1kb, 1Mb, 100Mb. Each structure consists of JSON-compatible data types, nested maps and arrays.
+Depth and breadth of the structure increase with size.
+
 ### 1Kb
 
     ┌───────────────┬───────────────┬───────────────┬───────────────┐
@@ -41,3 +44,9 @@
     │     cbor      │   36.8 Mb     │    9.278s     │    10.639s    │
     │      yml      │   270.4 Mb    │    48.830s    │    2.417s     │
     └───────────────┴───────────────┴───────────────┴───────────────┘
+
+> "Out size" - size of the encoded data.
+
+> "Write time" - encoding time.
+
+> "Read time" - decoding time.
