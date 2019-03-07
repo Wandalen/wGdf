@@ -340,6 +340,8 @@ let Composes =
   out : null,
   inOut : null,
 
+  supported : null,
+
   onEncode : null,
   default : 0,
   forConfig : 1,

@@ -45,59 +45,6 @@ let SamplesComplicated =
 
 }
 
-let Supported =
-{
-  'bson' :
-  {
-    primitive : 2,
-    regexp : 2,
-    buffer : 0,
-    complex : 1
-  },
-  'yml' :
-  {
-    primitive : 3,
-    regexp : 2,
-    buffer : 1,
-    complex : 2
-  },
-  'cbor' :
-  {
-    primitive : 3,
-    regexp : 1,
-    buffer : 1,
-    complex : 1
-  },
-  'js' :
-  {
-    primitive : 3,
-    regexp : 2,
-    buffer : 3,
-    complex : 2
-  },
-  'cson' :
-  {
-    primitive : 1,
-    regexp : 2,
-    buffer : 2,
-    complex : 1
-  },
-  'json.fine' :
-  {
-    primitive : 1,
-    regexp : 0,
-    buffer : 0,
-    complex : 1
-  },
-  'json' :
-  {
-    primitive : 1,
-    regexp : 0,
-    buffer : 0,
-    complex : 1
-  }
-}
-
 //
 
 let Converters =
@@ -182,15 +129,15 @@ let supported =
 
 */
 
-function _typesCheck( test, o, o2 )
+function converterTypesCheck( test, o, o2 )
 {
   let self = this;
 
   let samples = o2.samples;
   let currentLevel = o2.currentLevel;
   let name = o2.name;
-  _.assert( self.Supported[ o.serialize.ext ], o.serialize.ext );
-  let expectedLevel = self.Supported[ o.serialize.ext ][ name ];
+  _.assert( o.serialize.supported, o.serialize.ext );
+  let expectedLevel = o.serialize.supported[ name ];
 
   let prefix = test.name + ' / ' + o.serialize.ext + ' / ' + name + currentLevel;
 
@@ -281,7 +228,7 @@ function primitive1( test, o )
     currentLevel : 1
   }
 
-  self._typesCheck( test, o, o2 )
+  self.converterTypesCheck( test, o, o2 )
 }
 
 //
@@ -305,7 +252,7 @@ function primitive2( test, o )
     currentLevel : 2
   }
 
-  self._typesCheck( test, o, o2 )
+  self.converterTypesCheck( test, o, o2 )
 }
 
 //
@@ -334,7 +281,7 @@ function primitive3( test, o )
 
   debugger
 
-  self._typesCheck( test, o, o2 )
+  self.converterTypesCheck( test, o, o2 )
 }
 
 //
@@ -359,7 +306,7 @@ function regExp1( test, o )
     currentLevel : 1
   }
 
-  self._typesCheck( test, o, o2 )
+  self.converterTypesCheck( test, o, o2 )
 }
 
 //
@@ -387,7 +334,7 @@ function regExp2( test, o )
     currentLevel : 2
   }
 
-  self._typesCheck( test, o, o2 )
+  self.converterTypesCheck( test, o, o2 )
 }
 
 //
@@ -413,7 +360,7 @@ function buffer1( test, o )
     atLeastOne : 1
   }
 
-  self._typesCheck( test, o, o2 );
+  self.converterTypesCheck( test, o, o2 );
 }
 
 //
@@ -434,7 +381,7 @@ function buffer2( test, o )
     currentLevel : 2,
   }
 
-  self._typesCheck( test, o, o2 );
+  self.converterTypesCheck( test, o, o2 );
 }
 
 //
@@ -459,7 +406,7 @@ function buffer3( test, o )
     currentLevel : 3,
   }
 
-  self._typesCheck( test, o, o2 );
+  self.converterTypesCheck( test, o, o2 );
 }
 
 //
@@ -506,7 +453,7 @@ function complex1( test, o )
     currentLevel : 1,
   }
 
-  self._typesCheck( test, o, o2 );
+  self.converterTypesCheck( test, o, o2 );
 }
 
 //
@@ -535,7 +482,7 @@ function complex2( test, o )
     currentLevel : 2,
   }
 
-  self._typesCheck( test, o, o2 );
+  self.converterTypesCheck( test, o, o2 );
 }
 
 // --
@@ -1536,9 +1483,9 @@ function supportedTypes( test )
 
   let data = [];
 
-  for( let c in self.Converters )
+  for( let c in Converters )
   {
-    let converter = self.Converters[ c ];
+    let converter = Converters[ c ];
 
     // if( converter.serialize.ext !== 'cbor' )
     // continue;
@@ -1580,7 +1527,7 @@ function supportedTypes( test )
     self.complex1( test, options );
     self.complex2( test, options );
 
-    test.contains( self.Supported[ serialize.ext ], options.result );
+    test.contains( serialize.supported, options.result );
 
     let r = options.result;
 
@@ -1725,7 +1672,7 @@ var Self =
 
   context :
   {
-    _typesCheck,
+    converterTypesCheck,
 
     primitive1,
     primitive2,
@@ -1737,9 +1684,6 @@ var Self =
     buffer3,
     complex1,
     complex2,
-
-    Converters,
-    Supported,
   },
 
   tests :
