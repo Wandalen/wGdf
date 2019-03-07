@@ -246,7 +246,8 @@ function perfomance( test )
   let ready = new _.Consequence().take( null );
 
   for( var c in self.converters )
-  ready.finally( () => execute( self.converters[ c ] ) );
+  ready.finally( _.routineSeal( self, execute, [ self.converters[ c ] ] ) );
+
 
   return ready;
 
