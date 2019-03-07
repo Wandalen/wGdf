@@ -328,58 +328,6 @@ let InMap = Object.create( null );
 let OutMap = Object.create( null );
 let ExtMap = Object.create( null );
 let InOutMap = Object.create( null );
-let Supported =
-{
-  'bson' :
-  {
-    primitive : 2,
-    regexp : 2,
-    buffer : 0,
-    complex : 1
-  },
-  'yaml' :
-  {
-    primitive : 2,
-    regexp : 2,
-    buffer : 1,
-    complex : 2
-  },
-  'cbor' :
-  {
-    primitive : 2,
-    regexp : 1,
-    buffer : 1,
-    complex : 1
-  },
-  'js' :
-  {
-    primitive : 3,
-    regexp : 2,
-    buffer : 3,
-    complex : 2
-  },
-  'cson' :
-  {
-    primitive : 1,
-    regexp : 2,
-    buffer : 2,
-    complex : 1
-  },
-  'json.fine' :
-  {
-    primitive : 1,
-    regexp : 0,
-    buffer : 0,
-    complex : 1
-  },
-  'json.min' :
-  {
-    primitive : 1,
-    regexp : 0,
-    buffer : 0,
-    complex : 1
-  }
-}
 
 let Composes =
 {
@@ -391,6 +339,8 @@ let Composes =
   in : null,
   out : null,
   inOut : null,
+
+  supported : null,
 
   onEncode : null,
   default : 0,
@@ -415,9 +365,7 @@ let Statics =
   InMap,
   OutMap,
   ExtMap,
-  InOutMap,
-
-  Supported
+  InOutMap
 
 }
 

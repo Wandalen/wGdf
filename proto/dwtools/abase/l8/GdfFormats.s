@@ -21,12 +21,22 @@ let Self = _global_.wTools;
 // json
 // --
 
+let jsonSupported =
+{
+  primitive : 1,
+  regexp : 0,
+  buffer : 0,
+  complex : 1
+}
+
 let readJson =
 {
 
   ext : [ 'json' ],
   in : [ 'string' ],
   out : [ 'structure' ],
+
+  supported : jsonSupported,
 
   onEncode : function( op )
   {
@@ -67,6 +77,8 @@ let writeJsonMin =
   in : [ 'structure' ],
   out : [ 'string' ],
 
+  supported : jsonSupported,
+
   onEncode : function( op )
   {
     op.out.data = JSON.stringify( op.in.data );
@@ -82,6 +94,8 @@ let writeJsonFine =
   ext : [ 'json.fine', 'json' ],
   in : [ 'structure' ],
   out : [ 'string' ],
+
+  supported : jsonSupported,
 
   onEncode : function( op )
   {
@@ -105,6 +119,14 @@ catch( err )
 {
 }
 
+let jsSupported =
+{
+  primitive : 3,
+  regexp : 2,
+  buffer : 3,
+  complex : 2
+}
+
 let readJsStructure = null;
 if( ExternalFundamentals )
 readJsStructure =
@@ -114,6 +136,8 @@ readJsStructure =
   ext : [ 'js.structure', 'js','s','ss','jstruct', 'jslike' ],
   in : [ 'string' ],
   out : [ 'structure' ],
+
+  supported : jsSupported,
 
   onEncode : function( op )
   {
@@ -189,6 +213,8 @@ let writeJsStrcuture =
   in : [ 'structure' ],
   out : [ 'string' ],
 
+  supported : jsSupported,
+
   onEncode : function( op )
   {
     op.out.data = _.toJs( op.in.data );
@@ -210,6 +236,14 @@ catch( err )
 {
 }
 
+let csonSupported =
+{
+  primitive : 1,
+  regexp : 2,
+  buffer : 2,
+  complex : 1
+}
+
 let readCoffee = null;
 if( Coffee )
 readCoffee =
@@ -218,6 +252,8 @@ readCoffee =
   ext : [ 'coffee', 'cson' ],
   in : [ 'string' ],
   out : [ 'structure' ],
+
+  supported : csonSupported,
 
   onEncode : function( op )
   {
@@ -250,6 +286,8 @@ writeCoffee =
   in : [ 'structure' ],
   out : [ 'string' ],
 
+  supported : csonSupported,
+
   onEncode : function( op )
   {
     let data = _.toStr( op.in.data, { jsLike : 1, keyWrapper : '' } );
@@ -273,6 +311,14 @@ catch( err )
 {
 }
 
+let ymlSupported =
+{
+  primitive : 3,
+  regexp : 2,
+  buffer : 1,
+  complex : 2
+}
+
 let readYml = null;
 if( Yaml )
 readYml =
@@ -281,6 +327,8 @@ readYml =
   ext : [ 'yaml','yml' ],
   in : [ 'string' ],
   out : [ 'structure' ],
+
+  supported : ymlSupported,
 
   onEncode : function( op )
   {
@@ -299,6 +347,8 @@ writeYml =
   in : [ 'structure' ],
   out : [ 'string' ],
 
+  supported : ymlSupported,
+
   onEncode : function( op )
   {
     op.out.data = Yaml.dump( op.in.data );
@@ -315,9 +365,18 @@ let Bson;
 try
 {
   Bson = require( 'bson' );
+  Bson.setInternalBufferSize( 1 << 30 );
 }
 catch( err )
 {
+}
+
+let bsonSupported =
+{
+  primitive : 2,
+  regexp : 2,
+  buffer : 0,
+  complex : 1
 }
 
 let readBson = null;
@@ -328,6 +387,8 @@ readBson =
   ext : [ 'bson' ],
   in : [ 'buffer.node' ],
   out : [ 'structure' ],
+
+  supported : bsonSupported,
 
   onEncode : function( op )
   {
@@ -346,6 +407,8 @@ writeBson =
   ext : [ 'bson' ],
   in : [ 'structure' ],
   out : [ 'buffer.node' ],
+
+  supported : bsonSupported,
 
   onEncode : function( op )
   {
@@ -369,6 +432,14 @@ catch( err )
 {
 }
 
+let cborSupported =
+{
+  primitive : 3,
+  regexp : 1,
+  buffer : 1,
+  complex : 1
+}
+
 let readCbor = null;
 if( Cbor )
 readCbor =
@@ -377,6 +448,8 @@ readCbor =
   ext : [ 'cbor' ],
   in : [ 'buffer.node' ],
   out : [ 'structure' ],
+
+  supported : cborSupported,
 
   onEncode : function( op )
   {
@@ -396,10 +469,124 @@ writeCbor =
   in : [ 'structure' ],
   out : [ 'buffer.node' ],
 
+  supported : cborSupported,
+
   onEncode : function( op )
   {
     _.assert( _.mapIs( op.in.data ) );
-    op.out.data = Cbor.encode( op.in.data );
+
+    let encoder = new Cbor.Encoder({ highWaterMark: 1 << 30 });
+    encoder.write( op.in.data );
+    op.out.data = encoder.read();
+
+    _.assert( _.bufferNodeIs( op.out.data ) );
+
+    op.out.format = 'buffer.node';
+  },
+
+}
+
+// --
+// Msgpack-lite
+// --
+
+let MsgpackLite;
+try
+{
+  MsgpackLite = require( 'msgpack-lite' );
+}
+catch( err )
+{
+}
+
+let readMsgpackLite = null;
+if( MsgpackLite )
+readMsgpackLite =
+{
+
+  ext : [ 'msgpack.lite' ],
+  in : [ 'buffer.node' ],
+  out : [ 'structure' ],
+
+  onEncode : function( op )
+  {
+    _.assert( _.bufferNodeIs( op.in.data ) );
+    op.out.data = MsgpackLite.decode( op.in.data );
+    op.out.format = 'structure';
+  },
+
+}
+
+let writeMsgpackLite = null;
+if( MsgpackLite )
+writeMsgpackLite =
+{
+
+  ext : [ 'msgpack.lite' ],
+  in : [ 'structure' ],
+  out : [ 'buffer.node' ],
+
+  onEncode : function( op )
+  {
+    _.assert( _.mapIs( op.in.data ) );
+    op.out.data = MsgpackLite.encode( op.in.data );
+    op.out.format = 'buffer.node';
+  },
+
+}
+
+// --
+// Msgpack-wtp
+// --
+
+let MsgpackWtp;
+try
+{
+  MsgpackWtp = require( 'what-the-pack' );
+}
+catch( err )
+{
+}
+
+let readMsgpackWtp = null;
+if( MsgpackWtp )
+readMsgpackWtp =
+{
+
+  ext : [ 'msgpack.wtp' ],
+  in : [ 'buffer.node' ],
+  out : [ 'structure' ],
+
+  onEncode : function( op )
+  {
+    _.assert( _.bufferNodeIs( op.in.data ) );
+
+    if( !MsgpackWtp.decode )
+    MsgpackWtp = MsgpackWtp.initialize( 2**27 ); //134 MB
+
+    op.out.data = MsgpackWtp.decode( op.in.data );
+    op.out.format = 'structure';
+  },
+
+}
+
+let writeMsgpackWtp = null;
+if( MsgpackWtp )
+writeMsgpackWtp =
+{
+
+  ext : [ 'msgpack.wtp' ],
+  in : [ 'structure' ],
+  out : [ 'buffer.node' ],
+
+  onEncode : function( op )
+  {
+    _.assert( _.mapIs( op.in.data ) );
+
+    if( !MsgpackWtp.encode )
+    MsgpackWtp = MsgpackWtp.initialize( 2**27 ); //134 MB
+
+    op.out.data = MsgpackWtp.encode( op.in.data );
     op.out.format = 'buffer.node';
   },
 
@@ -860,6 +1047,7 @@ _.Gdf([ readYml, writeYml ]);
 _.Gdf([ readCoffee, writeCoffee ]);
 _.Gdf([ readBson, writeBson ]);
 _.Gdf([ readCbor, writeCbor ]);
+_.Gdf([ readMsgpackLite, writeMsgpackLite, readMsgpackWtp, writeMsgpackWtp ]);
 
 _.Gdf([ base64ToBuffer, base64FromBuffer ]);
 _.Gdf([ base64ToBlob ]);
