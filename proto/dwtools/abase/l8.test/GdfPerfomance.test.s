@@ -117,6 +117,9 @@ function testApp()
     var deserialize = _.Gdf.Select( o.deserialize );
     deserialize = deserialize[ 0 ];
 
+    _.assert( serialize );
+    _.assert( deserialize );
+
     console.log( '\n', '-> ', serialize.ext, ' <-', '\n' );
 
     for( var i in srcs )
