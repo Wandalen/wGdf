@@ -22,17 +22,20 @@
     "url": "https://github.com/Wandalen/wGdfStrategy/issues"
   },
   "dependencies": {
-    "wTools": "",
-    "wCopyable": "",
-    "wroutinefundamentals": "",
-    "coffee-script": "",
-    "js2coffee": "",
-    "js-yaml": "",
     "bson": "",
-    "cbor": ""
+    "cbor": "",
+    "coffee-script": "",
+    "js-yaml": "",
+    "js2coffee": "",
+    "msgpack-lite": "",
+    "wCopyable": "",
+    "wTools": "",
+    "what-the-pack": "",
+    "wroutinefundamentals": ""
   },
   "devDependencies": {
-    "wTesting": ""
+    "wTesting": "",
+    "cli-table2": ""
   },
   "keywords": [
     "wTools"
