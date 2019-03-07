@@ -64,8 +64,7 @@ path:
       - proto/dwtools/abase/l8/OldEncoders.s
       - proto/dwtools/abase/l8.test
       - proto/dwtools/abase/l8.test/Gdf.test.s
-      - proto/dwtools/abase/l8.test/asset
-      - proto/dwtools/abase/l8.test/asset/generated.s
+      - proto/dwtools/abase/l8.test/GdfPerfomance.test.s
       - proto/dwtools/amid
       - proto/dwtools/atop
     criterion:
@@ -166,8 +165,7 @@ reflector:
         dwtools/abase/l8/OldEncoders.s: true
         dwtools/abase/l8.test: true
         dwtools/abase/l8.test/Gdf.test.s: true
-        dwtools/abase/l8.test/asset: true
-        dwtools/abase/l8.test/asset/generated.s: true
+        dwtools/abase/l8.test/GdfPerfomance.test.s: true
         dwtools/amid: true
         dwtools/atop: true
       basePath: .
