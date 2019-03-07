@@ -8,6 +8,7 @@ if( typeof module !== 'undefined' )
   var _ = require( '../../Tools.s' );
   require( '../l8/GdfConverter.s' );
   _.include( 'wTesting' );
+  _.include( 'wFiles' );
 
 }
 
@@ -18,10 +19,58 @@ var _ = _global_.wTools;
 // context
 // --
 
-
 function onSuiteBegin()
 {
+  var self = this;
+  self.testSuitePath = _.path.dirTempOpen( _.path.join( __dirname, '../..'  ), 'wGdfStrategy' );
+
+  self.results = Object.create( null );
+}
+
+//
+
+function onSuiteEnd()
+{
   let self = this;
+  let results = self.results;
+
+  _.fileProvider.filesDelete( self.testSuitePath );
+
+  let data = {};
+
+  for( var converter in results )
+  {
+    let resultsOfConverter = results[ converter ];
+    for( var size in resultsOfConverter )
+    {
+      if( !data[ size ] )
+      data[ size ] = [];
+      data[ size ].push( resultsOfConverter[ size ] )
+    }
+  }
+
+  for( let i in data )
+  {
+    var o =
+    {
+      data : data[ i ],
+      head : [ 'Converter', 'Out size', 'Write time', 'Read time' ],
+      colWidth : 15
+    }
+    var output = _.strTable( o );
+
+    console.log( i, '\n' );
+    console.log( output );
+  }
+
+}
+
+//
+
+function testApp()
+{
+  let _ = require( '../../../Tools.s' );
+  require( '../../../abase/l8/GdfConverter.s' );
 
   let commonTypes =
   {
@@ -37,480 +86,206 @@ function onSuiteBegin()
   }
 
   var o1 = _.mapExtend( { depth : 1, breadth : 1 }, commonTypes );
-  self.diagnosticsStructureGenerate( o1 );
-
   var o2 = _.mapExtend( { depth : 20, breadth : 90 }, commonTypes );
-  self.diagnosticsStructureGenerate( o2 );
-
   var o3 = _.mapExtend( { depth : 150, breadth : 1100 }, commonTypes );
-  self.diagnosticsStructureGenerate( o3 );
 
-  let src1kb = o1.structure;
-  let src1mb = o2.structure;
-  let src100mb = o3.structure;
+  _.diagnosticsStructureGenerate( o1 );
+  _.diagnosticsStructureGenerate( o2 );
+  _.diagnosticsStructureGenerate( o3 );
 
-  self.srcs = { '1kb' : src1kb, '1Mb' : src1mb, '100Mb' : src100mb };
-  self.results = { '1kb' : [], '1Mb' : [], '100Mb' : [] };
-}
-
-//
-
-function onSuiteEnd()
-{
-  let self = this;
-  let results = self.results;
-
-  for( var i in results )
+  let srcs =
   {
-    var o =
-    {
-      data : results[ i ],
-      head : [ 'Converter', 'Out size', 'Write time', 'Read time' ],
-      colWidth : 15
-    }
-    var output = _.strTable( o );
+    '1Kb' : o1.structure,
+    '1Mb' : o2.structure,
+    '100Mb' : o3.structure
+  };
 
-    console.log( i, '\n' );
-    console.log( output );
-  }
+  let results = {};
 
-}
-
-//
-
-function run( serialize, deserialize, test )
-{
-  let self = this;
-
-  let results = self.results;
-  let srcs = self.srcs;
-
-  console.log( '\n',  serialize.ext, ':', '\n' );
-
-  for( var i in srcs )
+  process.on( 'message', ( o ) =>
   {
-    let serialized;
-    let deserialized;
-
-    let src = srcs[ i ];
-    let srcSize = i;
-    let result = [ serialize.ext, '-', '-', '-' ];
-
-    results[ i ].push( result );
-
-    console.log( '\nSrc: ', srcSize );
-
-    try
-    {
-      var t0 = _.timeNow();
-      serialized = serialize.encode({ data : src });
-      var spent = _.timeSpent( t0 );
-      console.log( 'write: ', spent );
-
-      let buffer = _.bufferBytesFrom( serialized.data );
-      let size = _.strMetricFormatBytes( buffer.byteLength );
-
-      console.log( serialize.ext, 'serialized size:', size );
-
-      result[ 1 ] = size;
-      result[ 2 ] = spent;
-
-      test.identical( 1,1 );
-    }
-    catch( err )
-    {
-      _.errLogOnce( err );
-
-      test.will = 'should not throw error';
-      test.identical( 0, 1 );
-
-      result[ 1 ] = 'Err';
-      result[ 2 ] = 'Err';
-      result[ 3 ] = 'Err';
-
-      continue;
-    }
-
-    try
-    {
-      var t0 = _.timeNow();
-      deserialized = deserialize.encode({ data : serialized.data });
-      var spent = _.timeSpent( t0 );
-      console.log( 'read: ', spent );
-
-      result[ 3 ] = spent;
-
-      test.identical( 1,1 );
-
-    }
-    catch( err )
-    {
-      _.errLogOnce( err );
-
-      test.will = 'should not throw error';
-      test.identical( 0, 1 );
-
-      result[ 3 ] = 'Err';
-    }
-
-
-  }
-}
-
-//
-
-function entitySize( src )
-{
-  _.assert( arguments.length === 1, 'Expects single argument' );
-
-  if( _.strIs( src ) )
-  {
-    if( src.length )
-    return _.bufferBytesFrom( src ).byteLength;
-    return src.length;
-  }
-
-  if( _.numberIs( src ) )
-  return 8;
-
-  if( !_.definedIs( src ) )
-  return 8;
-
-  if( _.boolIs( src ) || _.dateIs( src ) )
-  return 8;
-
-  if( _.numberIs( src.byteLength ) )
-  return src.byteLength;
-
-  if( _.regexpIs( src ) )
-  return entitySize( src.source ) + src.flags.length * 2;
-
-  if( _.longIs( src ) )
-  {
-    let result = 0;
-    for( let i = 0; i < src.length; i++ )
-    {
-      result += entitySize( src[ i ] );
-      if( isNaN( result ) )
-      break;
-    }
-    return result;
-  }
-
-  if( _.mapIs( src ) )
-  {
-    let result = 0;
-    for( let k in src )
-    {
-      result += entitySize( k );
-      result += entitySize( src[ k ] );
-      if( isNaN( result ) )
-      break;
-    }
-    return result;
-  }
-
-  return NaN;
-}
-
-//
-
-function diagnosticsStructureGenerate( o )
-{
-  _.assert( arguments.length === 1 )
-  _.routineOptions( diagnosticsStructureGenerate, o );
-  _.assert( _.numberIs( o.breadth ) );
-  _.assert( _.numberIs( o.depth ) );
+    run( o );
+  })
 
   /*  */
 
-  o.structure = Object.create( null );
-
-  for( let b = 0; b < o.breadth; b++ )
+  function run( o )
   {
-    o.structure[ b ] = singleLevelMake();
+    var serialize = _.Gdf.Select( o.serialize );
+    serialize = serialize[ 0 ];
+
+    var deserialize = _.Gdf.Select( o.deserialize );
+    deserialize = deserialize[ 0 ];
+
+    console.log( '\n', '-> ', serialize.ext, ' <-', '\n' );
+
+    for( var i in srcs )
+    {
+      let serialized;
+      let deserialized;
+
+      let src = srcs[ i ];
+      let srcSize = i;
+      let result = results[ i ] = [ serialize.ext, '-', '-', '-' ];
+
+      console.log( '\nSrc: ', srcSize );
+
+      try
+      {
+        var t0 = _.timeNow();
+        serialized = serialize.encode({ data : src });
+        var spent = _.timeSpent( t0 );
+        var size =  _.strMetricFormatBytes( _.entitySize( serialized.data ) );
+
+        console.log( 'write: ', spent );
+        console.log( serialize.ext, 'out size:', size );
+
+        result[ 1 ] = size;
+        result[ 2 ] = spent;
+
+        process.send({ converter : serialize.ext, results : results });
+
+      }
+      catch( err )
+      {
+        _.errLogOnce( err );
+
+        result[ 1 ] = 'Err';
+        result[ 2 ] = 'Err';
+        result[ 3 ] = 'Err';
+
+        process.send({ converter : serialize.ext, results : results });
+
+        continue;
+      }
+
+      try
+      {
+        var t0 = _.timeNow();
+        deserialized = deserialize.encode({ data : serialized.data });
+        var spent = _.timeSpent( t0 );
+        console.log( 'read: ', spent );
+
+        result[ 3 ] = spent;
+
+        process.send({ converter : serialize.ext, results : results });
+
+      }
+      catch( err )
+      {
+        _.errLogOnce( err );
+        result[ 3 ] = 'Err';
+
+        process.send({ converter : serialize.ext, results : results });
+      }
+
+    }
+
+    process.exit();
   }
+}
 
-  o.size = entitySize( o.structure );
+//
 
-  console.log( 'entitySize:', _.strMetricFormatBytes( o.size ) );
+let converters =
+{
+  'bson' :
+  {
+    serialize : { in : 'structure', out : 'buffer.node', ext : 'bson' },
+    deserialize : { in : 'buffer.node', out : 'structure', ext : 'bson' }
+  },
 
-  return o;
+  'json.fine' :
+  {
+    serialize : { in : 'structure', out : 'string', ext : 'json.fine' },
+    deserialize : { in : 'string', out : 'structure', ext : 'json', default : 1 }
+  },
+
+  'json.min' :
+  {
+    serialize : { in : 'structure', out : 'string', ext : 'json', default : 1 },
+    deserialize : { in : 'string', out : 'structure', ext : 'json', default : 1 }
+  },
+
+  'cson' :
+  {
+    serialize : { in : 'structure', out : 'string', ext : 'cson' },
+    deserialize : { in : 'string', out : 'structure', ext : 'cson' }
+  },
+
+  'js' :
+  {
+    serialize : { in : 'structure', out : 'string', ext : 'js' },
+    deserialize : { in : 'string', out : 'structure', ext : 'js' }
+  },
+
+  'cbor' :
+  {
+    serialize : { in : 'structure', out : 'buffer.node', ext : 'cbor' },
+    deserialize : { in : 'buffer.node', out : 'structure', ext : 'cbor' }
+  },
+
+  'yml' :
+  {
+    serialize : { in : 'structure', out : 'string', ext : 'yml' },
+    deserialize : { in : 'string', out : 'structure', ext : 'yml' }
+  }
+}
+
+//
+
+function perfomance( test )
+{
+  let self = this;
+
+  var routinePath = _.path.join( self.testSuitePath, test.name );
+  var testAppPath = _.fileProvider.path.nativize( _.path.join( routinePath, 'testApp.js' ) );
+  var testAppCode = testApp.toString() + '\ntestApp();';
+  _.fileProvider.fileWrite( testAppPath, testAppCode );
+
+  let ready = new _.Consequence().take( null );
+
+  for( var c in self.converters )
+  ready.finally( () => execute( self.converters[ c ] ) );
+
+  return ready;
 
   /*  */
 
-  function singleLevelMake()
+  function execute( converter )
   {
-    let singleLevel = Object.create( null );
-
-    if( o.boolean )
-    singleLevel[ 'boolean' ] = true;
-
-    if( o.number )
-    singleLevel[ 'number' ] = 0;
-
-    if( o.signedNumber )
+    let o =
     {
-      singleLevel[ '-0' ] = -0;
-      singleLevel[ '+0' ] = +0;
+      execPath : _.path.nativize( testAppPath ),
+      maximumMemory : 1,
+      mode : 'spawn',
+      ipc : 1,
+      timeOut : 5 * 60000,
+      stdio : 'pipe',
+      outputPiping : 1,
     }
 
-    if( o.string )
-    singleLevel[ 'string' ] = _.strDup( 'a', o.stringSize || o.fieldSize );
+    let con = _.shellNode( o );
 
-    if( o.null )
-    singleLevel[ 'null' ] = null;
+    o.process.send( converter );
 
-    if( o.infinity )
+    o.process.on( 'message', ( data ) =>
     {
-      singleLevel[ '+infinity' ] = +Infinity;
-      singleLevel[ '-infinity' ] = -Infinity;
-    }
+      self.results[ data.converter ] = data.results;
+    })
 
-    if( o.nan )
-    singleLevel[ 'nan' ] = NaN;
-
-    if( o.undefined )
-    singleLevel[ 'undefined' ] = undefined;
-
-    if( o.date )
-    singleLevel[ 'date' ] = new Date();
-
-    if( o.bigInt )
-    if( typeof BigInt !== 'undefined' )
-    singleLevel[ 'bigInt' ] = BigInt( 1 );
-
-    if( o.regexp )
+    con.finally( ( err, got ) =>
     {
-      singleLevel[ 'regexp1'] = /ab|cd/,
-      singleLevel[ 'regexp2'] = /a[bc]d/,
-      singleLevel[ 'regexp3'] = /ab{1,}bc/,
-      singleLevel[ 'regexp4'] = /\.js$/,
-      singleLevel[ 'regexp5'] = /.regexp/
-    }
+      test.is( !err )
+      return null;
+    })
 
-    if( o.regexpComplex )
-    {
-      singleLevel[ 'complexRegexp0' ] = /^(?:(?!ab|cd).)+$/gm,
-      singleLevel[ 'complexRegexp1' ] = /\/\*[\s\S]*?\*\/|\/\/.*/g,
-      singleLevel[ 'complexRegexp2' ] = /^[1-9]+[0-9]*$/gm,
-      singleLevel[ 'complexRegexp3' ] = /aBc/i,
-      singleLevel[ 'complexRegexp4' ] = /^\d+/gm,
-      singleLevel[ 'complexRegexp5' ] = /^a.*c$/g,
-      singleLevel[ 'complexRegexp6' ] = /[a-z]/m,
-      singleLevel[ 'complexRegexp7' ] = /^[A-Za-z0-9]$/
-    }
-
-    let bufferSrc = _.arrayFillTimes( [], o.bufferSize || o.fieldSize, 0 );
-
-    if( o.bufferNode )
-    if( typeof Buffer !== 'undefined' )
-    singleLevel[ 'bufferNode'] = Buffer.from( bufferSrc );
-
-    if( o.bufferRaw )
-    singleLevel[ 'bufferRaw'] = new ArrayBuffer( bufferSrc );
-
-    if( o.bufferBytes )
-    singleLevel[ 'bufferBytes'] = new Uint8Array( bufferSrc );
-
-    if( o.map )
-    singleLevel[ 'map' ] = { a : 'string', b : 1, c : true  };
-
-    if( o.mapComplex )
-    singleLevel[ 'mapComplex' ] = { a : '1', dir : { b : 2 }, c : [ 1,2,3 ] };
-
-    if( o.array )
-    singleLevel[ 'array' ] = _.arrayFillTimes( [], o.arraySize || o.fieldSize, 0 )
-
-    if( o.arrayComplex )
-    singleLevel[ 'arrayComplex' ] = [ { a : '1', dir : { b : 2 }, c : [ 1,2,3 ] } ]
-
-    if( o.recursion )
-    {
-      //
-    }
-
-    if( !o.depth )
-    return singleLevel;
-
-    /**/
-
-    let currentLevel = singleLevel;
-    let srcMap = _.mapExtend( null, singleLevel );
-
-    for( let d = 0; d < o.depth; d++ )
-    {
-      let level = 'level' + d;
-      currentLevel[ level ] = _.mapExtend( null, srcMap );
-      currentLevel = currentLevel[ level ];
-    }
-
-    return singleLevel;
+    return con;
   }
-
 }
 
-diagnosticsStructureGenerate.defaults =
-{
-  depth : null,
-  breadth : null,
-  size : null,
-
-  /**/
-
-  boolean : null,
-  number : null,
-  signedNumber : null,
-  string : null,
-  null : null,
-  infinity : null,
-  nan : null,
-  undefined : null,
-  date : null,
-  bigInt : null,
-
-  regexp : null,
-  regexpComplex : null,
-
-  bufferNode : null,
-  bufferRaw : null,
-  bufferBytes : null,
-
-  array : null,
-  arrayComplex : null,
-  map : null,
-  mapComplex : null,
-
-  /* */
-
-  stringSize : null,
-  bufferSize : null,
-  regexpSize : null,
-  arraySize : null,
-  mapSize : null,
-
-  fieldSize : 50
-
-}
-
-//
-
-function jsonFine( test )
-{
-  let self = this;
-
-  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'json.fine' });
-  serialize = serialize[ 0 ];
-
-  var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'json', default : 1 });
-  deserialize = deserialize[ 0 ];
-
-  self.run( serialize, deserialize, test );
-}
-
-jsonFine.timeOut = 5 * 60000;
-
-//
-
-function jsonMin( test )
-{
-  let self = this;
-
-  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'json', default : 1 });
-  serialize = serialize[ 0 ];
-
-  var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'json', default : 1 });
-  deserialize = deserialize[ 0 ];
-
-  self.run( serialize, deserialize, test );
-}
-
-jsonMin.timeOut = 5 * 60000;
-
-//
-
-function cson( test )
-{
-  let self = this;
-
-  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'cson' });
-  serialize = serialize[ 0 ];
-
-  var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'cson' });
-  deserialize = deserialize[ 0 ];
-
-  self.run( serialize, deserialize, test );
-}
-
-cson.timeOut = 5 * 60000;
-
-//
-
-function js( test )
-{
-  let self = this;
-
-  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'js' });
-  serialize = serialize[ 0 ];
-
-  var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'js' });
-  deserialize = deserialize[ 0 ];
-
-  self.run( serialize, deserialize, test );
-}
-
-js.timeOut = 5 * 60000;
-
-//
-
-function bson( test )
-{
-  let self = this;
-
-  var serialize = _.Gdf.Select({ in : 'structure', out : 'buffer.node', ext : 'bson' });
-  serialize = serialize[ 0 ];
-
-  var deserialize = _.Gdf.Select({ in : 'buffer.node', out : 'structure', ext : 'bson' });
-  deserialize = deserialize[ 0 ];
-
-  self.run( serialize, deserialize, test );
-}
-
-bson.timeOut = 5 * 60000;
-
-//
-
-function cbor( test )
-{
-  let self = this;
-
-  var serialize = _.Gdf.Select({ in : 'structure', out : 'buffer.node', ext : 'cbor' });
-  serialize = serialize[ 0 ];
-
-  var deserialize = _.Gdf.Select({ in : 'buffer.node', out : 'structure', ext : 'cbor' });
-  deserialize = deserialize[ 0 ];
-
-  self.run( serialize, deserialize, test );
-}
-
-cbor.timeOut = 5 * 60000;
-
-//
-
-function yml( test )
-{
-  let self = this;
-
-  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'yml' });
-  serialize = serialize[ 0 ];
-
-  var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'yml' });
-  deserialize = deserialize[ 0 ];
-
-  self.run( serialize, deserialize, test );
-}
-
-yml.timeOut = 5 * 60000;
+perfomance.experimental = 1;
+perfomance.timeOut = _.mapOwnKeys( converters ).length * 6 * 60000;
 
 
 // --
@@ -528,25 +303,14 @@ var Self =
 
   context :
   {
-    diagnosticsStructureGenerate,
-    entitySize,
-
-    run,
-
-    srcs : null,
+    testSuitePath : null,
     results : null,
+    converters : converters
   },
 
   tests :
   {
-    jsonFine,
-    jsonMin,
-    cson,
-    js,
-    bson,
-    cbor,
-    yml
-
+    perfomance
   },
 
 };
