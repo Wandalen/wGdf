@@ -41,13 +41,3 @@
     │     cbor      │   36.8 Mb     │    9.278s     │    10.639s    │
     │      yml      │   270.4 Mb    │    48.830s    │    2.417s     │
     └───────────────┴───────────────┴───────────────┴───────────────┘
-
-### Src structure info:
-*  string
-*  number
-*  map
-*  array
-*  boolean
-*  null
-*  nested map
-*  nested array
