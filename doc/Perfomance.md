@@ -32,7 +32,7 @@
     │     bson      │   110.3 Mb    │    5.375s     │    2.521s     │
     │   json.fine   │   643.2 Mb    │    88.777s    │    1.363s     │
     │     json      │    57.1 Mb    │    0.713s     │    0.783s     |
-    |     cson      │    Timeout    │    Timeout    │    8.747s     │
+    |     cson      │    Timeout    │    Timeout    │    Timeout    │
     │      js       │   643.2 Mb    │    53.193s    │    7.302s     │
     │     cbor      │      Err      │      Err      │      Err      │
     │      yml      │   270.4 Mb    │    48.830s    │    2.417s     │
