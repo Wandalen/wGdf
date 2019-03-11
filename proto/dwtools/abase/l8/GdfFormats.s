@@ -26,7 +26,7 @@ let jsonSupported =
   primitive : 1,
   regexp : 0,
   buffer : 0,
-  complex : 1
+  structure : 2
 }
 
 let readJson =
@@ -124,7 +124,7 @@ let jsSupported =
   primitive : 3,
   regexp : 2,
   buffer : 3,
-  complex : 2
+  structure : 2
 }
 
 let readJsStructure = null;
@@ -240,8 +240,8 @@ let csonSupported =
 {
   primitive : 1,
   regexp : 2,
-  buffer : 2,
-  complex : 1
+  buffer : 3,
+  structure : 2
 }
 
 let readCoffee = null;
@@ -316,7 +316,7 @@ let ymlSupported =
   primitive : 3,
   regexp : 2,
   buffer : 1,
-  complex : 2
+  structure : 3
 }
 
 let readYml = null;
@@ -376,7 +376,7 @@ let bsonSupported =
   primitive : 2,
   regexp : 2,
   buffer : 0,
-  complex : 1
+  structure : 2
 }
 
 let readBson = null;
@@ -437,7 +437,7 @@ let cborSupported =
   primitive : 3,
   regexp : 1,
   buffer : 1,
-  complex : 1
+  structure : 2
 }
 
 let readCbor = null;
