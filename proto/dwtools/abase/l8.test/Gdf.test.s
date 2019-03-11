@@ -1642,7 +1642,7 @@ function finit( test )
 
   var converter = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'yml' });
   test.identical( converter.length, 1 );
-  converter = converter[ 0 ].converter;
+  converter = converter[ 0 ].encoder;
   test.identical( converter.inOut, [ 'structure-string' ] )
 
   test.is( _.arrayHas( _.Gdf.Elements, converter ) );
