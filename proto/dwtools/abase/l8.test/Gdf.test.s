@@ -556,6 +556,96 @@ function trivial( test )
 
 //
 
+function select( test )
+{
+  let self = this;
+
+  test.case = 'all'
+  var got = _.Gdf.Select({});
+  test.is( got.length === _.Gdf.Elements.length );
+
+  test.case = 'in'
+  var got = _.Gdf.Select({ in : 'structure' });
+  test.is( got.length );
+
+  test.case = 'out'
+  var got = _.Gdf.Select({ out : 'string' });
+  test.is( got.length );
+
+  test.case = 'not existing'
+
+  var got = _.Gdf.Select({ in : 'not existing'});
+  test.is( !got.length );
+
+  var got = _.Gdf.Select({ out : 'not existing'});
+  test.is( !got.length );
+
+  var got = _.Gdf.Select({ ext : 'not existing' });
+  test.is( !got.length );
+
+  test.case = 'default';
+
+  var got = _.Gdf.Select({ in : 'structure', out : 'string' });
+  test.is( got.length > 1 );
+  var got = _.Gdf.Select({ in : 'structure', out : 'string', default : 1 });
+  test.is( got.length === 1 );
+  test.identical( got[ 0 ].shortName, 'json.min' );
+
+  // test.case = 'shortName';
+
+  // var got = _.Gdf.Select({ shortName : 'json.fine', out : 'string' });
+  // test.is( got.length === 1 );
+  // test.identical( got[ 0 ].shortName, 'json.fine' );
+
+  if( !Config.debug )
+  return;
+
+  test.case = 'not supported value'
+
+  test.shouldThrowErrorSync( () => _.Gdf.Select() );
+  test.shouldThrowErrorSync( () => _.Gdf.Select({ ext : [ 'json.fine', 'json' ] }) );
+
+}
+
+//
+
+function registerAndFinit( test )
+{
+  let self = this;
+
+  var converter =
+  {
+    ext : [ 'ext' ],
+    in : [ 'string' ],
+    out : [ 'number' ],
+
+    onEncode : function( op )
+    {
+      _.assert( _.strIs( op.in.data ) );
+      op.out.data = Number.parseFloat( op.in.data );
+      op.out.format = 'number';
+    }
+  }
+
+  converter = _.Gdf( converter );
+
+  test.is( _.arrayHas( _.Gdf.Elements, converter ) );
+  test.is( _.arrayHas( _.Gdf.InMap[ 'string' ], converter ) );
+  test.is( _.arrayHas( _.Gdf.OutMap[ 'number' ], converter ) );
+  test.is( _.arrayHas( _.Gdf.ExtMap[ 'ext' ], converter ) );
+  test.is( _.arrayHas( _.Gdf.InOutMap[ 'string-number' ], converter ) );
+
+  converter.finit();
+
+  test.is( !_.arrayHas( _.Gdf.Elements, converter ) );
+  test.is( !_.arrayHas( _.Gdf.InMap[ 'string' ], converter ) );
+  test.is( !_.arrayHas( _.Gdf.OutMap[ 'number' ], converter ) );
+  test.is( !_.arrayHas( _.Gdf.ExtMap[ 'ext' ], converter ) );
+  test.is( !_.arrayHas( _.Gdf.InOutMap[ 'string-number' ], converter ) );
+}
+
+//
+
 function json( test )
 {
   var self = this;
@@ -1585,122 +1675,6 @@ function supportedTypes( test )
   console.log( output );
 }
 
-//
-
-function select( test )
-{
-  let self = this;
-
-  test.case = 'all'
-  var got = _.Gdf.Select({});
-  test.is( got.length === _.Gdf.Elements.length );
-
-  test.case = 'in'
-  var got = _.Gdf.Select({ in : 'structure' });
-  test.is( got.length );
-
-  test.case = 'out'
-  var got = _.Gdf.Select({ out : 'string' });
-  test.is( got.length );
-
-  test.case = 'not existing'
-
-  var got = _.Gdf.Select({ in : 'not existing'});
-  test.is( !got.length );
-
-  var got = _.Gdf.Select({ out : 'not existing'});
-  test.is( !got.length );
-
-  var got = _.Gdf.Select({ ext : 'not existing' });
-  test.is( !got.length );
-
-  test.case = 'default';
-
-  var got = _.Gdf.Select({ in : 'structure', out : 'string' });
-  test.is( got.length > 1 );
-  var got = _.Gdf.Select({ in : 'structure', out : 'string', default : 1 });
-  test.is( got.length === 1 );
-  test.identical( got[ 0 ].shortName, 'json.min' );
-
-  // test.case = 'shortName';
-
-  // var got = _.Gdf.Select({ shortName : 'json.fine', out : 'string' });
-  // test.is( got.length === 1 );
-  // test.identical( got[ 0 ].shortName, 'json.fine' );
-
-  if( !Config.debug )
-  return;
-
-  test.case = 'not supported value'
-
-  test.shouldThrowErrorSync( () => _.Gdf.Select() );
-  test.shouldThrowErrorSync( () => _.Gdf.Select({ ext : [ 'json.fine', 'json' ] }) );
-
-}
-
-//
-
-function register( test )
-{
-  let self = this;
-
-  var converter =
-  {
-    ext : [ 'ext' ],
-    in : [ 'string' ],
-    out : [ 'number' ],
-
-    onEncode : function( op )
-    {
-      _.assert( _.strIs( op.in.data ) );
-      op.out.data = Number.parseFloat( op.in.data );
-      op.out.format = 'number';
-    }
-  }
-
-  converter = _.Gdf( converter );
-
-  test.is( _.arrayHas( _.Gdf.Elements, converter ) );
-  test.is( _.arrayHas( _.Gdf.InMap[ 'string' ], converter ) );
-  test.is( _.arrayHas( _.Gdf.OutMap[ 'number' ], converter ) );
-  test.is( _.arrayHas( _.Gdf.ExtMap[ 'ext' ], converter ) );
-  test.is( _.arrayHas( _.Gdf.InOutMap[ 'string-number' ], converter ) );
-
-  converter.finit();
-
-  test.is( !_.arrayHas( _.Gdf.Elements, converter ) );
-  test.is( !_.arrayHas( _.Gdf.InMap[ 'string' ], converter ) );
-  test.is( !_.arrayHas( _.Gdf.OutMap[ 'number' ], converter ) );
-  test.is( !_.arrayHas( _.Gdf.ExtMap[ 'ext' ], converter ) );
-  test.is( !_.arrayHas( _.Gdf.InOutMap[ 'string-number' ], converter ) );
-}
-
-//
-
-function finit( test )
-{
-  let self = this;
-
-  var converter = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'yml' });
-  test.identical( converter.length, 1 );
-  converter = converter[ 0 ].encoder;
-  test.identical( converter.inOut, [ 'structure-string' ] )
-
-  test.is( _.arrayHas( _.Gdf.Elements, converter ) );
-  test.is( _.arrayHas( _.Gdf.InMap[ 'structure' ], converter ) );
-  test.is( _.arrayHas( _.Gdf.OutMap[ 'string' ], converter ) );
-  test.is( _.arrayHas( _.Gdf.ExtMap[ 'yml' ], converter ) );
-  test.is( _.arrayHas( _.Gdf.InOutMap[ 'structure-string' ], converter ) );
-
-  converter.finit();
-
-  test.is( !_.arrayHas( _.Gdf.Elements, converter ) );
-  test.is( !_.arrayHas( _.Gdf.InMap[ 'structure' ], converter ) );
-  test.is( !_.arrayHas( _.Gdf.OutMap[ 'string' ], converter ) );
-  test.is( !_.arrayHas( _.Gdf.ExtMap[ 'yml' ], converter ) );
-  test.is( !_.arrayHas( _.Gdf.InOutMap[ 'structure-string' ], converter ) );
-}
-
 // --
 // declare
 // --
@@ -1730,7 +1704,13 @@ var Self =
 
   tests :
   {
+
     trivial,
+    select,
+    registerAndFinit,
+
+    //
+
     jsonFine,
     jsonMin,
     json,
@@ -1747,11 +1727,6 @@ var Self =
 
     supportedTypes,
 
-    //
-
-    select,
-    register,
-    finit
   },
 
 };
