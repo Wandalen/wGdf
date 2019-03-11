@@ -61,24 +61,10 @@ console.log( deserialized.data );
     │  msgpack.wtp  │   428.7 kb    │    0.039s     │    0.025s     │
     └───────────────┴───────────────┴───────────────┴───────────────┘
 
-### 100Mb Structure:
-
-    ┌───────────────┬───────────────┬───────────────┬───────────────┐
-    │   Converter   │   Out size    │  Write time   │   Read time   │
-    ├───────────────┼───────────────┼───────────────┼───────────────┤
-    │     bson      │   110.3 Mb    │    5.375s     │    2.521s     │
-    │   json.fine   │   643.2 Mb    │    88.777s    │    1.363s     │
-    │     json      │    57.1 Mb    │    0.713s     │    0.783s     |
-    |     cson      │    Timeout    │    Timeout    │    Timeout    │
-    │      js       │   643.2 Mb    │    53.193s    │    7.302s     │
-    │     cbor      │   36.8 Mb     │    9.278s     │    10.639s    │
-    │      yml      │   270.4 Mb    │    48.830s    │    2.417s     │
-    │  msgpack.lite │    36.9 Mb    │    1.137s     │    2.122s     │
-    │  msgpack.wtp  │    36.9 Mb    │    0.520s     │    1.126s     │
-    └───────────────┴───────────────┴───────────────┴───────────────┘
-
  [ More details about converters perfomance. ]( doc/Perfomance.md )
 
+## Supported types
+Information about data types supported by each converter can be found [here.]( doc/SupportedTypes.md )
 
 
 
