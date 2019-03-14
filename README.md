@@ -63,8 +63,9 @@ console.log( deserialized.data );
 
  [ More details about converters perfomance. ]( doc/Perfomance.md )
 
-## Supported types
-Information about data types supported by each converter can be found [here.]( doc/SupportedTypes.md )
+## Level of Support of Types
+
+Information about level of support of each data type by each converter an be found [here.]( doc/SupportedTypes.md )
 
 
 
