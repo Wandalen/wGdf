@@ -55,26 +55,16 @@ console.log( deserialized.data );
     │     json      │   663.1 kb    │    0.009s     │    0.008s     │
     │     cson      │    4.0 Mb     │    4.228s     │    8.747s     │
     │      js       │    1.9 Mb     │    0.597s     │    0.045s     │
-    │     cbor      │      Err      │      Err      │      Err      │
+    │     cbor      │   426.9 kb    │    0.143s     │    0.141s     │
     │      yml      │   765.4 kb    │    0.064s     │    0.051s     │
-    └───────────────┴───────────────┴───────────────┴───────────────┘
-
-### 100Mb Structure:
-
-    ┌───────────────┬───────────────┬───────────────┬───────────────┐
-    │   Converter   │   Out size    │  Write time   │   Read time   │
-    ├───────────────┼───────────────┼───────────────┼───────────────┤
-    │     bson      │   110.3 Mb    │    5.375s     │    2.521s     │
-    │   json.fine   │   643.2 Mb    │    88.777s    │    1.363s     │
-    │     json      │    57.1 Mb    │    0.713s     │    0.783s     |
-    |     cson      │    Timeout    │    Timeout    │    Timeout    │
-    │      js       │   643.2 Mb    │    53.193s    │    7.302s     │
-    │     cbor      │      Err      │      Err      │      Err      │
-    │      yml      │   270.4 Mb    │    48.830s    │    2.417s     │
+    │  msgpack.lite │   428.7 kb    │    0.025s     │    0.032s     │
+    │  msgpack.wtp  │   428.7 kb    │    0.039s     │    0.025s     │
     └───────────────┴───────────────┴───────────────┴───────────────┘
 
  [ More details about converters perfomance. ]( doc/Perfomance.md )
 
+## Supported types
+Information about data types supported by each converter can be found [here.]( doc/SupportedTypes.md )
 
 
 
