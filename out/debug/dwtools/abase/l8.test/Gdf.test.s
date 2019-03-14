@@ -139,24 +139,29 @@ function converterTypesCheck( test, o, o2 )
   _.assert( o.serialize.supported, o.serialize.ext );
   let expectedLevel = o.serialize.supported[ name ];
 
-  let prefix = test.name + ' / ' + o.serialize.ext + ' / ' + name + currentLevel;
+  let prefix = o.serialize.ext + ' / ' + name + currentLevel;
+
+  test.open( prefix );
 
   let results = {};
 
   for( let k in samples )
   {
-    test.case =  prefix + ' : ' + k;
+    test.case = k;
     let src = {};
     src[ k ] = samples[ k ];
 
     results[ k ] = false;
 
+    let serialized;
+    let deserialized;
+
     try
     {
-      let serialized = o.serialize.encode({ data : src });
+      serialized = o.serialize.encode({ data : src });
       // test.identical( serialized.format, o.serializeFormat );
 
-      let deserialized = o.deserialize.encode({ data : serialized.data });
+      deserialized = o.deserialize.encode({ data : serialized.data });
       // test.identical( deserialized.format, o.deserializeFormat );
 
       results[ k ] = _.entityIdentical( deserialized.data, src );
@@ -204,6 +209,8 @@ function converterTypesCheck( test, o, o2 )
   }
 
   o.checks[ name + currentLevel ] = results;
+
+  test.close( prefix );
 
   return o;
 }
@@ -411,14 +418,45 @@ function buffer3( test, o )
 
 //
 
-function complex1( test, o )
+function structure1( test, o )
 {
   let self = this;
 
-  let withArray =
+  let array =
   {
     array : [ 'a', 23,  false ],
   }
+
+  let map =
+  {
+    boolean : true,
+    number : 23,
+    string : 'a'
+  }
+
+  //
+
+  let samples =
+  {
+    array : array,
+    map : map,
+  }
+
+  let o2 =
+  {
+    name : 'structure',
+    samples : samples,
+    currentLevel : 1,
+  }
+
+  self.converterTypesCheck( test, o, o2 );
+}
+
+//
+
+function structure2( test, o )
+{
+  let self = this;
 
   let withNestedArray =
   {
@@ -440,7 +478,6 @@ function complex1( test, o )
 
   let samples =
   {
-    mapWithArray : withArray,
     mapWithNestedArrays : withNestedArray,
     mapWithNestedMaps : withNestedMap,
     mapWithArrayAndMap : withArrayAndMap
@@ -448,9 +485,9 @@ function complex1( test, o )
 
   let o2 =
   {
-    name : 'complex',
+    name : 'structure',
     samples : samples,
-    currentLevel : 1,
+    currentLevel : 2,
   }
 
   self.converterTypesCheck( test, o, o2 );
@@ -458,7 +495,7 @@ function complex1( test, o )
 
 //
 
-function complex2( test, o )
+function structure3( test, o )
 {
   let self = this;
 
@@ -474,12 +511,11 @@ function complex2( test, o )
     recursion : recursion,
   }
 
-
   let o2 =
   {
-    name : 'complex',
+    name : 'structure',
     samples : samples,
-    currentLevel : 2,
+    currentLevel : 3,
   }
 
   self.converterTypesCheck( test, o, o2 );
@@ -573,7 +609,7 @@ function select( test )
 
 //
 
-function register( test )
+function registerAndFinit( test )
 {
   let self = this;
 
@@ -606,32 +642,6 @@ function register( test )
   test.is( !_.arrayHas( _.Gdf.OutMap[ 'number' ], converter ) );
   test.is( !_.arrayHas( _.Gdf.ExtMap[ 'ext' ], converter ) );
   test.is( !_.arrayHas( _.Gdf.InOutMap[ 'string-number' ], converter ) );
-}
-
-//
-
-function finit( test )
-{
-  let self = this;
-
-  var converter = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'yml' });
-  test.identical( converter.length, 1 );
-  converter = converter[ 0 ].converter;
-  test.identical( converter.inOut, [ 'structure-string' ] )
-
-  test.is( _.arrayHas( _.Gdf.Elements, converter ) );
-  test.is( _.arrayHas( _.Gdf.InMap[ 'structure' ], converter ) );
-  test.is( _.arrayHas( _.Gdf.OutMap[ 'string' ], converter ) );
-  test.is( _.arrayHas( _.Gdf.ExtMap[ 'yml' ], converter ) );
-  test.is( _.arrayHas( _.Gdf.InOutMap[ 'structure-string' ], converter ) );
-
-  converter.finit();
-
-  test.is( !_.arrayHas( _.Gdf.Elements, converter ) );
-  test.is( !_.arrayHas( _.Gdf.InMap[ 'structure' ], converter ) );
-  test.is( !_.arrayHas( _.Gdf.OutMap[ 'string' ], converter ) );
-  test.is( !_.arrayHas( _.Gdf.ExtMap[ 'yml' ], converter ) );
-  test.is( !_.arrayHas( _.Gdf.InOutMap[ 'structure-string' ], converter ) );
 }
 
 //
@@ -1383,7 +1393,11 @@ function cbor( test )
     test.identical( serialized.format, 'buffer.node' );
 
     var deserialized = deserialize.encode({ data : serialized.data });
-    test.identical( deserialized.data, src );
+    let identical = _.entityIdentical( deserialized.data, src );
+    if( _.regexpIs( src[ s ] ) )
+    test.is( !identical );
+    else
+    test.is( identical );
     test.identical( deserialized.format, 'structure' );
   }
   test.close( 'complicated' );
@@ -1394,7 +1408,7 @@ function cbor( test )
   test.is( _.bufferNodeIs( serialized.data ) );
 
   var deserialized = deserialize.encode({ data : serialized.data });
-  test.identical( deserialized.data, SamplesComplicated );
+  test.notIdentical( deserialized.data, SamplesComplicated );
   test.identical( deserialized.format, 'structure' );
 
   /* */
@@ -1625,7 +1639,7 @@ function supportedTypes( test )
         primitive : 0,
         regexp : 0,
         buffer : 0,
-        complex : 0
+        structure : 0
       },
       serialize : serialize,
       deserialize : deserialize,
@@ -1640,20 +1654,21 @@ function supportedTypes( test )
     self.buffer1( test, options );
     self.buffer2( test, options );
     self.buffer3( test, options );
-    self.complex1( test, options );
-    self.complex2( test, options );
+    self.structure1( test, options );
+    self.structure2( test, options );
+    self.structure3( test, options );
 
     test.contains( serialize.supported, options.result );
 
     let r = options.result;
 
-    data.push( [ serialize.ext, r.primitive, r.regexp, r.buffer, r.complex ] )
+    data.push( [ serialize.ext, r.primitive, r.regexp, r.buffer, r.structure ] )
   }
 
   var o =
   {
     data : data,
-    head : [ 'Transformer','Primitive(0-3)','RegExp(0-2)','Buffer(0-3)','Complex(0-2)' ],
+    head : [ 'Transformer','Primitive(0-3)','RegExp(0-2)','Buffer(0-3)','Structure(0-3)' ],
     colWidth : 20
   }
   var output = _.strTable( o );
@@ -1682,8 +1697,9 @@ var Self =
     buffer1,
     buffer2,
     buffer3,
-    complex1,
-    complex2,
+    structure1,
+    structure2,
+    structure3,
   },
 
   tests :
@@ -1691,8 +1707,7 @@ var Self =
 
     trivial,
     select,
-    register,
-    finit,
+    registerAndFinit,
 
     //
 
