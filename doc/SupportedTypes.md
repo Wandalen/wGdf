@@ -1,4 +1,4 @@
-# Supported types
+# Levels of Support of Types
 
       ┌────────────────────┬────────────────────┬────────────────────┬────────────────────┬────────────────────┐
       │    Transformer     │   Primitive(0-3)   │    RegExp(0-2)     │    Buffer(0-3)     │   Structure(0-3)   │
