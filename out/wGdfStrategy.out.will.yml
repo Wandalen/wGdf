@@ -81,6 +81,7 @@ reflector:
     src:
       filePath:
         .: .
+      prefixPath: proto
       maskAll:
         excludeAny:
           - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
@@ -93,7 +94,6 @@ reflector:
           - !<tag:yaml.org,2002:js/regexp> /\.debug($|\.|\/)/i
           - !<tag:yaml.org,2002:js/regexp> /\.test($|\.|\/)/i
           - !<tag:yaml.org,2002:js/regexp> /\.experiment($|\.|\/)/i
-      prefixPath: proto
     dst:
       prefixPath: out/release
     criterion:
@@ -104,6 +104,7 @@ reflector:
     src:
       filePath:
         .: .
+      prefixPath: proto
       maskAll:
         excludeAny:
           - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
@@ -114,7 +115,6 @@ reflector:
           - !<tag:yaml.org,2002:js/regexp> /\.DS_Store$/
           - !<tag:yaml.org,2002:js/regexp> /(^|\/)-/
           - !<tag:yaml.org,2002:js/regexp> /\.release($|\.|\/)/i
-      prefixPath: proto
     dst:
       prefixPath: out/debug
     criterion:
@@ -140,7 +140,7 @@ reflector:
   exported.proto.export:
     src:
       filePath:
-        .: true
+        .: null
       prefixPath: proto
     criterion:
       default: 1
@@ -154,20 +154,20 @@ reflector:
     recursive: 0
     src:
       filePath:
-        .: true
-        dwtools: true
-        dwtools/Tools.s: true
-        dwtools/abase: true
-        dwtools/abase/l8: true
-        dwtools/abase/l8/GdfConverter.s: true
-        dwtools/abase/l8/GdfCurrent.s: true
-        dwtools/abase/l8/GdfFormats.s: true
-        dwtools/abase/l8/OldEncoders.s: true
-        dwtools/abase/l8.test: true
-        dwtools/abase/l8.test/Gdf.test.s: true
-        dwtools/abase/l8.test/GdfPerfomance.test.s: true
-        dwtools/amid: true
-        dwtools/atop: true
+        .: null
+        dwtools: null
+        dwtools/Tools.s: null
+        dwtools/abase: null
+        dwtools/abase/l8: null
+        dwtools/abase/l8/GdfConverter.s: null
+        dwtools/abase/l8/GdfCurrent.s: null
+        dwtools/abase/l8/GdfFormats.s: null
+        dwtools/abase/l8/OldEncoders.s: null
+        dwtools/abase/l8.test: null
+        dwtools/abase/l8.test/Gdf.test.s: null
+        dwtools/abase/l8.test/GdfPerfomance.test.s: null
+        dwtools/amid: null
+        dwtools/atop: null
       basePath: .
       prefixPath: proto
     criterion:
