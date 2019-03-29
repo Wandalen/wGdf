@@ -90,7 +90,7 @@ _.classDeclare
 // export
 // --
 
-_.staticDecalre
+_.staticDeclare
 ({
   prototype : _.Gdf.prototype,
   name : Self.shortName,
