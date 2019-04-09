@@ -257,11 +257,8 @@ readCoffee =
 
   onEncode : function( op )
   {
-    // _.assert( _.strIs( op.in.data ), 'Expects string' );
-    // _.assert( op.in.format === 'string', 'Expects string' );
-    // _.assert( _.strIs( op.envMap.filePath ) || op.envMap.filePath === null );
-    op.out.data = Coffee.eval( op.in.data, { filename : op.envMap.filePath } );
-    op.out.format = 'structure';
+    op.out.data = Coffee.eval( op.in.data, { filename : _.fileProvider.path.nativize( op.envMap.filePath ) } );
+    op.out.format = 'structure'; 
   },
 
 }
@@ -332,7 +329,7 @@ readYml =
 
   onEncode : function( op )
   {
-    op.out.data = Yaml.load( op.in.data, { filename : op.envMap.filePath } );
+    op.out.data = Yaml.load( op.in.data, { filename : _.fileProvider.path.nativize( op.envMap.filePath ) } );
     op.out.format = 'structure';
   },
 
