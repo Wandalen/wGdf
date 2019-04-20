@@ -8,14 +8,17 @@ about:
     data structure. Generic data format ( GDF ) is a format of data structure
     designed with taking into account none unique feature of data so that it is
     applicable to any kind of data.
-  version: 0.3.11
   enabled: 1
-  interpreters:
-    - nodejs >= 6.0.0
-    - chrome >= 60.0.0
-    - firefox >= 60.0.0
-  keywords:
-    - wTools
+  version: 0.3.11
+  values:
+    enabled: 1
+    name: wGdfStrategy
+    interpreters:
+      - nodejs >= 6.0.0
+      - chrome >= 60.0.0
+      - firefox >= 60.0.0
+    keywords:
+      - wTools
 execution:
   scripts:
     test: wtest proto

@@ -21,6 +21,12 @@ if( typeof module !== 'undefined' )
 
 }
 
+/**
+ * @classdesc Class to operate the GDF converter.
+ * @class wGenericDataFormatConverter
+ * @memberof module:Tools/base/GdfConverter
+ */
+
 let _global = _global_;
 let _ = _global_.wTools;
 let Parent = null;
@@ -98,6 +104,16 @@ function unform()
 
 //
 
+/**
+ * @summary Registers current converter.
+ * @description
+ * Checks descriptor of current converter and it into maps: InMap, OutMap, ExtMap, InOutMap.
+ * Generates name for converter if its not specified explicitly.
+ * @method form
+ * @memberof module:Tools/base/GdfConverter.wGenericDataFormatConverter
+ */
+
+
 function form()
 {
   let encoder = this;
@@ -155,6 +171,30 @@ function form()
 }
 
 //
+
+/**
+ * @summary Encodes source data from one specific format to another.
+ * @description
+ * Possible in/out formats are determined by converter.
+ * Use {@link module:Tools/base/GdfConverter.wGenericDataFormatConverter.Select Select} routine to find converter for your needs.
+ * @param {Object} o Options map
+ *
+ * @param {} o.data Source data.
+ * @param {String} o.format Format of source `o.data`.
+ * @param {Object} o.envMap Map with enviroment variables that will be used by converter.
+ *
+ * @example
+ * //returns converters that accept string as input
+ * let converters = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'cson', default : 1 });
+ * let src = 'val : 13';
+ * let dst = converters[ 0 ].encode({ data : src, format : 'string' });
+ * console.log( dst.data ); //{ val : 13 }
+ *
+ * @returns {Object} Returns map with properties: `data` - result of encoding and `format` : format of the result.
+ * @method encode
+ * @memberof module:Tools/base/GdfConverter.wGenericDataFormatConverter
+ */
+
 
 function encode_pre( routine, args )
 {
@@ -268,7 +308,7 @@ let encode = _.routineFromPreAndBody( encode_pre, encode_body );
  * @throws {Error} If selector is not an Object
  * @throws {Error} If selector has unknown field
  * @method Select
- * @memberof Tools/base/GdfConverter
+ * @memberof module:Tools/base/GdfConverter.wGenericDataFormatConverter
  * @static
  */
 
@@ -318,6 +358,58 @@ function Select( selector )
   }
 
 }
+
+/**
+ * @summary Contains descriptors of registered converters.
+ * @property {Object} Elements
+ * @static
+ * @memberof module:Tools/base/GdfConverter.wGenericDataFormatConverter
+ */
+
+ /**
+ * @summary Contains descriptors of registered converters mapped by inptut format.
+ * @property {Object} InMap
+ * @static
+ * @memberof module:Tools/base/GdfConverter.wGenericDataFormatConverter
+ */
+
+ /**
+ * @summary Contains descriptors of registered converters mapped by out format.
+ * @property {Object} OutMap
+ * @static
+ * @memberof module:Tools/base/GdfConverter.wGenericDataFormatConverter
+ */
+
+/**
+ * @summary Contains descriptors of registered converters mapped by extension.
+ * @property {Object} ExtMap
+ * @static
+ * @memberof module:Tools/base/GdfConverter.wGenericDataFormatConverter
+ */
+
+ /**
+ * @summary Contains descriptors of registered converters mapped by in/out format.
+ * @property {Object} InOutMap
+ * @static
+ * @memberof module:Tools/base/GdfConverter.wGenericDataFormatConverter
+ */
+
+/**
+ * @summary Fields of wGenericDataFormatConverter class.
+ * @typedef {Object} Composes
+ * @property {String} name=null Name of the converter
+ * @property {String} shortName=null Short name of the converter
+ * @property {Array} ext=null Supported extensions
+ * @property {Array} in=null Input format
+ * @property {Array} out=null Output format
+ * @property {Array} inOut=null All combinations of in-out formats
+ * @property {Object} supported=null Map with supported types of data
+ * @property {Function} onEncode=null Routine encoder
+ * @property {Boolean} default=0 Is converter default for this in-out combination
+ * @property {Boolean} forConfig=1 Can be used for configs
+ *
+ * @memberof module:Tools/base/GdfConverter.wGenericDataFormatConverter
+ */
 
 // --
 // relations
