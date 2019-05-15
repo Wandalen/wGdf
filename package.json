@@ -24,7 +24,7 @@
   "dependencies": {
     "bson": "",
     "cbor": "",
-    "coffee-script": "",
+    "coffeescript": "",
     "js-yaml": "",
     "js2coffee": "",
     "msgpack-lite": "",
