@@ -21,7 +21,7 @@ var _ = _global_.wTools;
 let SamplesPrimitive =
 {
 
-  null : null,
+  /*ttt*/null,
   number : 13,
   string : 'something',
 
@@ -231,7 +231,7 @@ function primitive1( test, o )
   let o2 =
   {
     name : 'primitive',
-    samples : samples,
+    /*ttt*/samples,
     currentLevel : 1
   }
 
@@ -246,7 +246,7 @@ function primitive2( test, o )
 
   let samples =
   {
-    null : null,
+    /*ttt*/null,
     '+infinity' : +Infinity,
     '-infinity' : -Infinity,
     nan : NaN,
@@ -255,7 +255,7 @@ function primitive2( test, o )
   let o2 =
   {
     name : 'primitive',
-    samples : samples,
+    /*ttt*/samples,
     currentLevel : 2
   }
 
@@ -282,7 +282,7 @@ function primitive3( test, o )
   let o2 =
   {
     name : 'primitive',
-    samples : samples,
+    /*ttt*/samples,
     currentLevel : 3
   }
 
@@ -309,7 +309,7 @@ function regExp1( test, o )
   let o2 =
   {
     name : 'regexp',
-    samples : samples,
+    /*ttt*/samples,
     currentLevel : 1
   }
 
@@ -337,7 +337,7 @@ function regExp2( test, o )
   let o2 =
   {
     name : 'regexp',
-    samples : samples,
+    /*ttt*/samples,
     currentLevel : 2
   }
 
@@ -362,7 +362,7 @@ function buffer1( test, o )
   let o2 =
   {
     name : 'buffer',
-    samples : samples,
+    /*ttt*/samples,
     currentLevel : 1,
     atLeastOne : 1
   }
@@ -384,7 +384,7 @@ function buffer2( test, o )
   let o2 =
   {
     name : 'buffer',
-    samples : samples,
+    /*ttt*/samples,
     currentLevel : 2,
   }
 
@@ -409,7 +409,7 @@ function buffer3( test, o )
   let o2 =
   {
     name : 'buffer',
-    samples : samples,
+    /*ttt*/samples,
     currentLevel : 3,
   }
 
@@ -438,14 +438,14 @@ function structure1( test, o )
 
   let samples =
   {
-    array : array,
-    map : map,
+    /*ttt*/array,
+    /*ttt*/map,
   }
 
   let o2 =
   {
     name : 'structure',
-    samples : samples,
+    /*ttt*/samples,
     currentLevel : 1,
   }
 
@@ -486,7 +486,7 @@ function structure2( test, o )
   let o2 =
   {
     name : 'structure',
-    samples : samples,
+    /*ttt*/samples,
     currentLevel : 2,
   }
 
@@ -508,13 +508,13 @@ function structure3( test, o )
 
   let samples =
   {
-    recursion : recursion,
+    /*ttt*/recursion,
   }
 
   let o2 =
   {
     name : 'structure',
-    samples : samples,
+    /*ttt*/samples,
     currentLevel : 3,
   }
 
@@ -658,50 +658,50 @@ function json( test )
 
   test.case = 'number';
   var data = '1.12345';
-  var deserialized = deserialize.encode({ data : data });
+  var deserialized = deserialize.encode({ /*ttt*/data });
   test.identical( deserialized.data, 1.12345 );
 
   test.case = 'string';
   var data = '"1.12345"';
-  var deserialized = deserialize.encode({ data : data });
+  var deserialized = deserialize.encode({ /*ttt*/data });
   test.identical( deserialized.data, '1.12345' );
 
   test.case = 'null';
   var data = 'null';
-  var deserialized = deserialize.encode({ data : data });
+  var deserialized = deserialize.encode({ /*ttt*/data });
   test.identical( deserialized.data, null );
 
   test.case = 'array';
   var data = '[0, 1, 2]';
-  var deserialized = deserialize.encode({ data : data });
+  var deserialized = deserialize.encode({ /*ttt*/data });
   test.identical( deserialized.data, [ 0,1,2 ] );
 
   test.case = 'map';
   var data = '{"0": 0, "1": 1, "2": 2}';
-  var deserialized = deserialize.encode({ data : data });
+  var deserialized = deserialize.encode({ /*ttt*/data });
   test.identical( deserialized.data, { 0 : 0, 1 : 1, 2 : 2 } );
 
   test.case = 'date as string';
   var data = '2019-02-06T14:50:01.641Z"'
-  test.shouldThrowErrorSync( () => deserialize.encode({ data : data }) );
+  test.shouldThrowErrorSync( () => deserialize.encode({ /*ttt*/data }) );
 
   test.case = 'date as map field';
   var data = '{ "date" : "2019-02-06T14:50:01.641Z" }'
-  var deserialized = deserialize.encode({ data : data });
+  var deserialized = deserialize.encode({ /*ttt*/data });
   test.identical( deserialized.data, { date : '2019-02-06T14:50:01.641Z' } );
 
   test.case = 'map';
   var data = '{ "a" : "1", "dir" : { "b" : 2 }, "c" : [ 1,2,3 ] }';
-  var deserialized = deserialize.encode({ data : data });
+  var deserialized = deserialize.encode({ /*ttt*/data });
   test.identical( deserialized.data, { a : '1', dir : { b : 2 }, c : [ 1,2,3 ] } );
 
   test.case = 'regexp';
   var data = '/.regexp/g';
-  test.shouldThrowErrorSync( () => deserialize.encode({ data : data }) );
+  test.shouldThrowErrorSync( () => deserialize.encode({ /*ttt*/data }) );
 
   test.case = 'buffer';
   var data = '( new Uint16Array([ 1,2,3 ]) )';
-  test.shouldThrowErrorSync( () => deserialize.encode({ data : data }) );
+  test.shouldThrowErrorSync( () => deserialize.encode({ /*ttt*/data }) );
 
   test.case = 'map';
   var src =
@@ -720,7 +720,7 @@ function json( test )
     }
   }
   var data = _.toStr( src, { jsonLike : 1 } )
-  var deserialized = deserialize.encode({ data : data });
+  var deserialized = deserialize.encode({ /*ttt*/data });
   test.identical( deserialized.data, src );
 
   test.case = 'map';
@@ -740,7 +740,7 @@ function json( test )
     }
   }
   var data = _.toStr( src, { jsonLike : 1 } )
-  var deserialized = deserialize.encode({ data : data });
+  var deserialized = deserialize.encode({ /*ttt*/data });
   test.identical( deserialized.data, src );
 
   test.case = 'array'
@@ -753,12 +753,12 @@ function json( test )
     ]
   ]
   var data = _.toStr( src, { jsonLike : 1 } )
-  var deserialized = deserialize.encode({ data : data });
+  var deserialized = deserialize.encode({ /*ttt*/data });
   test.identical( deserialized.data, src );
 
   test.case = 'complicated map with unsupported type';
   var data = _.toStr( SamplesComplicated, { jsonLike : 1 } );
-  test.shouldThrowErrorSync( () => deserialize.encode({ data : data }) );
+  test.shouldThrowErrorSync( () => deserialize.encode({ /*ttt*/data }) );
 
   test.case = 'complicated map, written by json.fine'
   var src =
@@ -1641,8 +1641,8 @@ function supportedTypes( test )
         buffer : 0,
         structure : 0
       },
-      serialize : serialize,
-      deserialize : deserialize,
+      /*ttt*/serialize,
+      /*ttt*/deserialize,
       checks : {}
     }
 
@@ -1667,7 +1667,7 @@ function supportedTypes( test )
 
   var o =
   {
-    data : data,
+    /*ttt*/data,
     head : [ 'Transformer','Primitive(0-3)','RegExp(0-2)','Buffer(0-3)','Structure(0-3)' ],
     colWidth : 20
   }
