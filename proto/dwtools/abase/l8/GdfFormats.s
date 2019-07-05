@@ -230,7 +230,7 @@ let writeJsStrcuture =
 let Coffee;
 try
 {
-  Coffee = require( 'coffee-script' );
+  Coffee = require( 'coffeescript' );
 }
 catch( err )
 {
