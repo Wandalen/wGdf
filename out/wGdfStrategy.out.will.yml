@@ -9,7 +9,7 @@ about:
     designed with taking into account none unique feature of data so that it is
     applicable to any kind of data.
   enabled: 1
-  version: 0.3.11
+  version: 0.3.36
   interpreters: &ref_0
     - nodejs >= 6.0.0
     - chrome >= 60.0.0
@@ -58,9 +58,9 @@ path:
   proto:
     path: ../proto
   repository:
-    path: 'git+https:///github.com/Wandalen/wGdfStrategy.git'
+    path: 'git+https://../github.com/Wandalen/wGdfStrategy.git'
   bugs:
-    path: 'https:///github.com/Wandalen/wGdfStrategy/issues'
+    path: 'https://../github.com/Wandalen/wGdfStrategy/issues'
   exported.dir.proto.export:
     path: ../proto
     criterion:
@@ -140,7 +140,8 @@ reflector:
     mandatory: 1
   exported.files.proto.export:
     src:
-      filePath: 'path::exported.files.proto.export'
+      filePath:
+        'path::exported.files.proto.export': null
       basePath: .
       prefixPath: 'path::exported.dir.proto.export'
     criterion:
@@ -280,7 +281,7 @@ build:
       - 'step::export.proto'
 exported:
   proto.export:
-    version: 0.3.11
+    version: 0.3.36
     criterion:
       default: 1
       debug: 1
@@ -305,7 +306,7 @@ module:
         data structure designed with taking into account none unique feature of
         data so that it is applicable to any kind of data.
       enabled: 1
-      version: 0.3.11
+      version: 0.3.36
       interpreters: *ref_0
       keywords: *ref_1
     path:
@@ -352,9 +353,9 @@ module:
       proto:
         path: ./proto
       repository:
-        path: 'git+https:///github.com/Wandalen/wGdfStrategy.git'
+        path: 'git+https://github.com/Wandalen/wGdfStrategy.git'
       bugs:
-        path: 'https:///github.com/Wandalen/wGdfStrategy/issues'
+        path: 'https://github.com/Wandalen/wGdfStrategy/issues'
       exported.dir.proto.export:
         path: ./proto
         criterion:
@@ -434,7 +435,8 @@ module:
         mandatory: 1
       exported.files.proto.export:
         src:
-          filePath: 'path::exported.files.proto.export'
+          filePath:
+            'path::exported.files.proto.export': null
           basePath: .
           prefixPath: 'path::exported.dir.proto.export'
         criterion:
@@ -574,7 +576,7 @@ module:
           - 'step::export.proto'
     exported:
       proto.export:
-        version: 0.3.11
+        version: 0.3.36
         criterion:
           default: 1
           debug: 1
