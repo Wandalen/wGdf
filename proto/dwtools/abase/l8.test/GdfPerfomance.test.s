@@ -313,6 +313,8 @@ var Self =
 
   name : 'Tools/base/EncoderStrategyPerfomance',
   silencing : 1,
+  
+  enabled : 0,
 
   onSuiteBegin,
   onSuiteEnd,
