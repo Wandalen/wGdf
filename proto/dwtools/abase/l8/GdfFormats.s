@@ -315,7 +315,7 @@ catch( err )
 
 let ymlSupported =
 {
-  primitive : 3,
+  primitive : 2,
   regexp : 2,
   buffer : 1,
   structure : 3
