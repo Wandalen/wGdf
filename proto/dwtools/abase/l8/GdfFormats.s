@@ -256,8 +256,13 @@ readCoffee =
   supported : csonSupported,
 
   onEncode : function( op )
-  {
-    op.out.data = Coffee.eval( op.in.data, { filename : _.fileProvider.path.nativize( op.envMap.filePath ) } );
+  { 
+    let o = Object.create( null );
+    
+    if( op.envMap.filePath )
+    o.filename = _.fileProvider.path.nativize( op.envMap.filePath )
+    
+    op.out.data = Coffee.eval( op.in.data, o );
     op.out.format = 'structure'; 
   },
 
@@ -328,8 +333,13 @@ readYml =
   supported : ymlSupported,
 
   onEncode : function( op )
-  {
-    op.out.data = Yaml.load( op.in.data, { filename : _.fileProvider.path.nativize( op.envMap.filePath ) } );
+  { 
+    let o = Object.create( null );
+    
+    if( op.envMap.filePath )
+    o.filename = _.fileProvider.path.nativize( op.envMap.filePath )
+    
+    op.out.data = Yaml.load( op.in.data, o );
     op.out.format = 'structure';
   },
 
@@ -451,7 +461,7 @@ readCbor =
   onEncode : function( op )
   {
     _.assert( _.bufferNodeIs( op.in.data ) );
-    op.out.data = Cbor.decodeFirstSync( op.in.data );
+    op.out.data = Cbor.decodeFirstSync( op.in.data, { bigint : true } );
     op.out.format = 'structure';
   },
 
