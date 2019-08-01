@@ -95,6 +95,7 @@ path:
       - ../proto/dwtools/abase/l8.test/GdfPerfomance.test.s
       - ../proto/dwtools/amid
       - ../proto/dwtools/atop
+      - ../proto/dwtools/tmp.tmp
 submodule: {}
 reflector:
   reflect.proto.:
@@ -390,6 +391,7 @@ module:
           - proto/dwtools/abase/l8.test/GdfPerfomance.test.s
           - proto/dwtools/amid
           - proto/dwtools/atop
+          - proto/dwtools/tmp.tmp
     submodule: {}
     reflector:
       reflect.proto.:
