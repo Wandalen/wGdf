@@ -73,25 +73,20 @@ function unform()
 {
   let encoder = this;
 
-  // debugger; xxx
-
   _.arrayRemoveOnceStrictly( encoder.Elements, encoder );
 
   encoder.in.forEach( ( e, k ) =>
   {
     _.arrayRemoveOnceStrictly( encoder.InMap[ e ], encoder );
   });
-  debugger;
 
   encoder.out.forEach( ( e, k ) =>
   {
-    debugger;
     _.arrayRemoveOnceStrictly( encoder.OutMap[ e ], encoder );
   });
 
   encoder.ext.forEach( ( e, k ) =>
   {
-    debugger;
     _.arrayRemoveOnceStrictly( encoder.ExtMap[ e ], encoder );
   });
 
@@ -240,9 +235,7 @@ function encode_body( o )
     _.assert( _.strIs( op.in.format ), 'Not clear which input format is' );
     _.assert( _.arrayHas( encoder.in, op.in.format ), () => 'Unknown format ' + op.in.format );
 
-    // debugger;
     encoder.onEncode( op );
-    // debugger;
 
     op.out.format = op.out.format || encoder.out;
     if( _.arrayIs( op.out.format ) )
@@ -254,7 +247,6 @@ function encode_body( o )
   }
   catch( err )
   {
-    debugger;
     op.out.format = undefined;
     throw _.err( 'Error format ' + _.toStr( op.in.format ) + ' by encoder ' + encoder.name + '\n', err );
   }

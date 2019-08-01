@@ -286,8 +286,6 @@ function primitive3( test, o )
     currentLevel : 3
   }
 
-  debugger
-
   self.converterTypesCheck( test, o, o2 )
 }
 
