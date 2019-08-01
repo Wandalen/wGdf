@@ -21,7 +21,7 @@ var _ = _global_.wTools;
 let SamplesPrimitive =
 {
 
-  null,
+  null : null,
   number : 13,
   string : 'something',
 
@@ -246,7 +246,7 @@ function primitive2( test, o )
 
   let samples =
   {
-    null,
+    null : null,
     '+infinity' : +Infinity,
     '-infinity' : -Infinity,
     nan : NaN,

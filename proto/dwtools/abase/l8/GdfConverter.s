@@ -32,7 +32,7 @@ let _ = _global_.wTools;
 let Parent = null;
 let Self = function wGenericDataFormatConverter( o )
 {
-  return _.instanceConstructor( Self, this, arguments );
+  return _.workpiece.construct( Self, this, arguments );
 }
 
 Self.shortName = 'Gdf';
@@ -56,7 +56,7 @@ function init( o )
 
   _.assert( arguments.length === 1 );
 
-  _.instanceInit( encoder );
+  _.workpiece.initFields( encoder );
   Object.preventExtensions( encoder );
 
   if( o )
