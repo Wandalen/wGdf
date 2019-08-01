@@ -230,7 +230,7 @@ let writeJsStrcuture =
 let Coffee;
 try
 {
-  Coffee = require( 'coffee-script' );
+  Coffee = require( 'coffeescript' );
 }
 catch( err )
 {
@@ -256,8 +256,13 @@ readCoffee =
   supported : csonSupported,
 
   onEncode : function( op )
-  {
-    op.out.data = Coffee.eval( op.in.data, { filename : _.fileProvider.path.nativize( op.envMap.filePath ) } );
+  { 
+    let o = Object.create( null );
+    
+    if( op.envMap.filePath )
+    o.filename = _.fileProvider.path.nativize( op.envMap.filePath )
+    
+    op.out.data = Coffee.eval( op.in.data, o );
     op.out.format = 'structure'; 
   },
 
@@ -310,7 +315,7 @@ catch( err )
 
 let ymlSupported =
 {
-  primitive : 3,
+  primitive : 2,
   regexp : 2,
   buffer : 1,
   structure : 3
@@ -328,8 +333,13 @@ readYml =
   supported : ymlSupported,
 
   onEncode : function( op )
-  {
-    op.out.data = Yaml.load( op.in.data, { filename : _.fileProvider.path.nativize( op.envMap.filePath ) } );
+  { 
+    let o = Object.create( null );
+    
+    if( op.envMap.filePath )
+    o.filename = _.fileProvider.path.nativize( op.envMap.filePath )
+    
+    op.out.data = Yaml.load( op.in.data, o );
     op.out.format = 'structure';
   },
 
@@ -451,7 +461,7 @@ readCbor =
   onEncode : function( op )
   {
     _.assert( _.bufferNodeIs( op.in.data ) );
-    op.out.data = Cbor.decodeFirstSync( op.in.data );
+    op.out.data = Cbor.decodeFirstSync( op.in.data, { bigint : true } );
     op.out.format = 'structure';
   },
 
