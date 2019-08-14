@@ -17,7 +17,7 @@ if( typeof module !== 'undefined' )
   let _ = require( '../../Tools.s' );
 
   _.include( 'wCopyable' );
-  _.include( 'wRoutineFundamentals' );
+  _.include( 'wRoutineBasic' );
 
 }
 
@@ -208,7 +208,7 @@ function encode_body( o )
 {
   let encoder = this;
 
-  o = _.assertRoutineOptions( encode_body, arguments );
+  _.assertRoutineOptions( encode_body, arguments );
 
   /* */
 

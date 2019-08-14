@@ -51,7 +51,7 @@ function encode_body( o )
 {
   let selected = this;
 
-  o = _.assertRoutineOptions( encode, arguments );
+  _.assertRoutineOptions( encode, arguments );
 
   if( o.format === null )
   o.format = selected.in;

@@ -113,7 +113,7 @@ let writeJsonFine =
 let ExternalFundamentals;
 try
 {
-  ExternalFundamentals = _.include( 'wExternalFundamentals' );
+  ExternalFundamentals = _.include( 'wAppBasic' );
 }
 catch( err )
 {
