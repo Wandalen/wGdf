@@ -351,6 +351,8 @@ function Select( selector )
 
 }
 
+//
+
 /**
  * @summary Contains descriptors of registered converters.
  * @property {Object} Elements
@@ -395,7 +397,7 @@ function Select( selector )
  * @property {Array} in=null Input format
  * @property {Array} out=null Output format
  * @property {Array} inOut=null All combinations of in-out formats
- * @property {Object} supported=null Map with supported types of data
+ * @property {Object} supporting=null Map with supporting types of data
  * @property {Function} onEncode=null Routine encoder
  * @property {Boolean} default=0 Is converter default for this in-out combination
  * @property {Boolean} forConfig=1 Can be used for configs
@@ -424,7 +426,7 @@ let Composes =
   out : null,
   inOut : null,
 
-  supported : null,
+  supporting : null,
 
   onEncode : null,
   default : 0,

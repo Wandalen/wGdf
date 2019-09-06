@@ -1,4 +1,4 @@
-(function _EncoderStrategyStandanrd_s_() {
+(function _GdfFormats_s_() {
 
 'use strict';
 
@@ -36,7 +36,7 @@ let readJson =
   in : [ 'string' ],
   out : [ 'structure' ],
 
-  supported : jsonSupported,
+  supporting : jsonSupported,
 
   onEncode : function( op )
   {
@@ -77,7 +77,7 @@ let writeJsonMin =
   in : [ 'structure' ],
   out : [ 'string' ],
 
-  supported : jsonSupported,
+  supporting : jsonSupported,
 
   onEncode : function( op )
   {
@@ -95,7 +95,7 @@ let writeJsonFine =
   in : [ 'structure' ],
   out : [ 'string' ],
 
-  supported : jsonSupported,
+  supporting : jsonSupported,
 
   onEncode : function( op )
   {
@@ -133,11 +133,11 @@ readJsStructure =
 {
 
   forConfig : 0,
-  ext : [ 'js.structure', 'js','s','ss','jstruct', 'jslike' ],
+  ext : [ 'js.structure', 'js', 's', 'ss', 'jstruct', 'jslike' ],
   in : [ 'string' ],
   out : [ 'structure' ],
 
-  supported : jsSupported,
+  supporting : jsSupported,
 
   onEncode : function( op )
   {
@@ -158,7 +158,7 @@ readJsStructure =
 // {
 //
 //   forConfig : 0,
-//   ext : [ 'js','s','ss','jstruct', 'jslike' ],
+//   ext : [ 'js', 's', 'ss', 'jstruct', 'jslike' ],
 //   in : [ 'string' ],
 //   out : [ 'structure' ],
 //
@@ -175,7 +175,7 @@ readJsStructure =
 // let readJsSmart =
 // {
 //
-//   ext : [ 'js','s','ss','jstruct', 'jslike' ],
+//   ext : [ 'js', 's', 'ss', 'jstruct', 'jslike' ],
 //   in : [ 'string' ],
 //   out : [ 'structure' ],
 //
@@ -209,11 +209,11 @@ readJsStructure =
 let writeJsStrcuture =
 {
 
-  ext : [ 'js.structure','js','s','ss','jstruct', 'jslike' ],
+  ext : [ 'js.structure', 'js', 's', 'ss', 'jstruct', 'jslike' ],
   in : [ 'structure' ],
   out : [ 'string' ],
 
-  supported : jsSupported,
+  supporting : jsSupported,
 
   onEncode : function( op )
   {
@@ -253,17 +253,17 @@ readCoffee =
   in : [ 'string' ],
   out : [ 'structure' ],
 
-  supported : csonSupported,
+  supporting : csonSupported,
 
   onEncode : function( op )
-  { 
+  {
     let o = Object.create( null );
-    
+
     if( op.envMap.filePath )
     o.filename = _.fileProvider.path.nativize( op.envMap.filePath )
-    
+
     op.out.data = Coffee.eval( op.in.data, o );
-    op.out.format = 'structure'; 
+    op.out.format = 'structure';
   },
 
 }
@@ -288,7 +288,7 @@ writeCoffee =
   in : [ 'structure' ],
   out : [ 'string' ],
 
-  supported : csonSupported,
+  supporting : csonSupported,
 
   onEncode : function( op )
   {
@@ -326,19 +326,19 @@ if( Yaml )
 readYml =
 {
 
-  ext : [ 'yaml','yml' ],
+  ext : [ 'yaml', 'yml' ],
   in : [ 'string' ],
   out : [ 'structure' ],
 
-  supported : ymlSupported,
+  supporting : ymlSupported,
 
   onEncode : function( op )
-  { 
+  {
     let o = Object.create( null );
-    
+
     if( op.envMap.filePath )
     o.filename = _.fileProvider.path.nativize( op.envMap.filePath )
-    
+
     op.out.data = Yaml.load( op.in.data, o );
     op.out.format = 'structure';
   },
@@ -350,11 +350,11 @@ if( Yaml )
 writeYml =
 {
 
-  ext : [ 'yaml','yml' ],
+  ext : [ 'yaml', 'yml' ],
   in : [ 'structure' ],
   out : [ 'string' ],
 
-  supported : ymlSupported,
+  supporting : ymlSupported,
 
   onEncode : function( op )
   {
@@ -369,6 +369,7 @@ writeYml =
 // --
 
 let Bson;
+debugger;
 try
 {
   Bson = require( 'bson' );
@@ -395,7 +396,7 @@ readBson =
   in : [ 'buffer.node' ],
   out : [ 'structure' ],
 
-  supported : bsonSupported,
+  supporting : bsonSupported,
 
   onEncode : function( op )
   {
@@ -415,7 +416,7 @@ writeBson =
   in : [ 'structure' ],
   out : [ 'buffer.node' ],
 
-  supported : bsonSupported,
+  supporting : bsonSupported,
 
   onEncode : function( op )
   {
@@ -456,7 +457,7 @@ readCbor =
   in : [ 'buffer.node' ],
   out : [ 'structure' ],
 
-  supported : cborSupported,
+  supporting : cborSupported,
 
   onEncode : function( op )
   {
@@ -476,13 +477,13 @@ writeCbor =
   in : [ 'structure' ],
   out : [ 'buffer.node' ],
 
-  supported : cborSupported,
+  supporting : cborSupported,
 
   onEncode : function( op )
   {
     _.assert( _.mapIs( op.in.data ) );
 
-    let encoder = new Cbor.Encoder({ highWaterMark: 1 << 30 });
+    let encoder = new Cbor.Encoder({ highWaterMark : 1 << 30 });
     encoder.write( op.in.data );
     op.out.data = encoder.read();
 
@@ -642,7 +643,7 @@ function _base64ToBuffer( base64, chunkSize )
 
   var srcSize = base64.length;
   var dstSize = chunkSize ? Math.ceil( ( srcSize * 3 + 1 >> 2 ) / chunkSize ) * chunkSize : srcSize * 3 + 1 >> 2
-  var bytes = new Uint8Array( dstSize );
+  var bytes = new U8x( dstSize );
 
   var factor3, factor4, wrd3 = 0, outIndex = 0;
   for( var inIndex = 0; inIndex < srcSize; inIndex++ )
@@ -701,7 +702,7 @@ function _base64FromBuffer( byteBuffer )
 
   }
 
-  _.assert( byteBuffer instanceof Uint8Array );
+  _.assert( byteBuffer instanceof U8x );
 
   var factor3 = 2;
   var result = '';
@@ -722,7 +723,7 @@ function _base64FromBuffer( byteBuffer )
       var b = wrdBits6ToBase64( wrd3 >>> 12 & 63 );
       var c = wrdBits6ToBase64( wrd3 >>> 6 & 63 );
       var d = wrdBits6ToBase64( wrd3 & 63 );
-      result += String.fromCharCode( a,b,c,d );
+      result += String.fromCharCode( a, b, c, d );
       wrd3 = 0;
 
     }
@@ -753,7 +754,7 @@ function _base64ToBlob( base64Data, mime )
 {
   var mime = mime || 'application/octet-stream';
   var buffer = _base64ToBuffer( base64Data );
-  return new Blob( buffer, { type: mime } );
+  return new Blob( buffer, { type : mime } );
 }
 
 //Vova : added opposite version of base64ToBlob, is it needed?
@@ -904,7 +905,7 @@ function _utf8FromBuffer( byteBuffer )
 {
   var result = '';
 
-  _.assert( byteBuffer instanceof Uint8Array );
+  _.assert( byteBuffer instanceof U8x );
 
   for ( var nPart, nLen = byteBuffer.length, index = 0; index < nLen; index++ )
   {
@@ -958,7 +959,7 @@ function _utf8ToBuffer( str )
     size += chr < 0x80 ? 1 : chr < 0x800 ? 2 : chr < 0x10000 ? 3 : chr < 0x200000 ? 4 : chr < 0x4000000 ? 5 : 6;
   }
 
-  var byteBuffer = new Uint8Array( size );
+  var byteBuffer = new U8x( size );
 
   //
 
@@ -1019,37 +1020,37 @@ function _utf8ToBuffer( str )
 // declare
 // --
 
-var Proto =
+var Extend =
 {
 
   // base64
 
-  base64ToBuffer: _base64ToBuffer,
-  base64FromBuffer: _base64FromBuffer,
-  base64ToBlob: _base64ToBlob,
-  // base64FromBlob: _base64FromBlob,
+  base64ToBuffer : _base64ToBuffer,
+  base64FromBuffer : _base64FromBuffer,
+  base64ToBlob : _base64ToBlob,
+  // base64FromBlob : _base64FromBlob,
 
-  base64FromUtf8Slow: _base64FromUtf8Slow,
-  base64FromUtf8: _base64FromUtf8,
+  base64FromUtf8Slow : _base64FromUtf8Slow,
+  base64FromUtf8 : _base64FromUtf8,
   base64ToUtf8Slow : _base64ToUtf8Slow,
-  base64ToUtf8: _base64ToUtf8,
+  base64ToUtf8 : _base64ToUtf8,
 
   // utf8
 
-  utf8FromBuffer: _utf8FromBuffer,
-  utf8ToBuffer: _utf8ToBuffer,
+  utf8FromBuffer : _utf8FromBuffer,
+  utf8ToBuffer : _utf8ToBuffer,
 
 }
 
 Self = _.encode = _.encode || Object.create( null );
-_.mapExtend( _.encode,Proto );
+_.mapExtend( _.encode, Extend );
 
 // --
 // register
 // --
 
 _.Gdf([ readJson, writeJsonMin, writeJsonFine ]);
-_.Gdf([ readJsStructure, /*readJsNode, readJsSmart,*/ writeJsStrcuture ]);
+_.Gdf([ readJsStructure, /*readJsNode, readJsSmart, */ writeJsStrcuture ]);
 _.Gdf([ readYml, writeYml ]);
 _.Gdf([ readCoffee, writeCoffee ]);
 _.Gdf([ readBson, writeBson ]);

@@ -110,9 +110,9 @@ let Converters =
 qqq :
 - please, use lower case for names of routines
 - add routines to context of the test
-- add static structure supported
+- add static structure supporting
 
-let supported =
+let supporting =
 {
   'yaml' :
   {
@@ -136,8 +136,8 @@ function converterTypesCheck( test, o, o2 )
   let samples = o2.samples;
   let currentLevel = o2.currentLevel;
   let name = o2.name;
-  _.assert( o.serialize.supported, o.serialize.ext );
-  let expectedLevel = o.serialize.supported[ name ];
+  _.assert( o.serialize.supporting, `${o.serialize.ext} is not supporting` );
+  let expectedLevel = o.serialize.supporting[ name ];
 
   let prefix = o.serialize.ext + ' / ' + name + currentLevel;
 
@@ -174,38 +174,38 @@ function converterTypesCheck( test, o, o2 )
     if( !o2.atLeastOne )
     if( expectedLevel >= currentLevel )
     {
-      test.will = 'type should be supported';
+      test.will = 'type should be supporting';
       test.is( results[ k ] );
     }
   }
 
   console.log( prefix + ' / results: ', _.toStr( results, { levels : 99, multiline : 1 } ) )
 
-  o.supported = 1;
+  o.supporting = 1;
 
   for( let k in results )
   {
-    o.supported = results[ k ];
+    o.supporting = results[ k ];
 
-    if( o.supported && o2.atLeastOne )
+    if( o.supporting && o2.atLeastOne )
     break;
 
-    if( !o.supported && !o2.atLeastOne )
+    if( !o.supporting && !o2.atLeastOne )
     break;
   }
 
-  if( o.supported )
+  if( o.supporting )
   o.result[ name ] = currentLevel;
 
   if( expectedLevel >= currentLevel )
   {
-    test.will = name + currentLevel +' must be supported';
-    test.is( o.supported );
+    test.will = name + currentLevel +' must be supporting';
+    test.is( o.supporting );
   }
   else
   {
-    test.will = name + currentLevel +' must not be supported'
-    test.is( !o.supported )
+    test.will = name + currentLevel +' must not be supporting'
+    test.is( !o.supporting )
   }
 
   o.checks[ name + currentLevel ] = results;
@@ -350,12 +350,12 @@ function buffer1( test, o )
 
   let samples =
   {
-    raw : new ArrayBuffer([ 99,100,101 ]),
-    bytes : new Uint8Array([ 99,100,101 ]),
+    raw : new BufferRaw([ 99,100,101 ]),
+    bytes : new U8x([ 99,100,101 ]),
   }
 
-  if( typeof Buffer !== 'undefined' )
-  samples.node = Buffer.from([ 99,100,101 ]);
+  if( typeof BufferNode !== 'undefined' )
+  samples.node = BufferNode.from([ 99,100,101 ]);
 
   let o2 =
   {
@@ -376,7 +376,7 @@ function buffer2( test, o )
 
   let samples =
   {
-    raw : new ArrayBuffer([ 99,100,101 ]),
+    raw : new BufferRaw([ 99,100,101 ]),
   }
 
   let o2 =
@@ -397,12 +397,12 @@ function buffer3( test, o )
 
   let samples =
   {
-    raw : new ArrayBuffer([ 99,100,101 ]),
-    bytes : new Uint8Array([ 99,100,101 ]),
+    raw : new BufferRaw([ 99,100,101 ]),
+    bytes : new U8x([ 99,100,101 ]),
   }
 
-  if( typeof Buffer !== 'undefined' )
-  samples.node = Buffer.from([ 99,100,101 ]);
+  if( typeof BufferNode !== 'undefined' )
+  samples.node = BufferNode.from([ 99,100,101 ]);
 
   let o2 =
   {
@@ -523,8 +523,6 @@ function structure3( test, o )
 // test
 // --
 
-//
-
 function trivial( test )
 {
   var self = this;
@@ -538,14 +536,14 @@ function trivial( test )
 
   /* */
 
-  test.case = 'encode with converter';
+  test.case = 'encode with format';
   var dst = converters[ 0 ].encode({ data : src, format : 'string' });
   var expected = { data : { val : 13 }, format : 'structure' }
   test.identical( dst, expected );
 
   /* */
 
-  test.case = 'encode without converter';
+  test.case = 'encode without format';
   var dst = converters[ 0 ].encode({ data : src });
   var expected = { data : { val : 13 }, format : 'structure' }
   test.identical( dst, expected );
@@ -598,7 +596,7 @@ function select( test )
   if( !Config.debug )
   return;
 
-  test.case = 'not supported value'
+  test.case = 'not supporting value'
 
   test.shouldThrowErrorSync( () => _.Gdf.Select() );
   test.shouldThrowErrorSync( () => _.Gdf.Select({ ext : [ 'json.fine', 'json' ] }) );
@@ -698,7 +696,7 @@ function json( test )
   test.shouldThrowErrorSync( () => deserialize.encode({ data }) );
 
   test.case = 'buffer';
-  var data = '( new Uint16Array([ 1,2,3 ]) )';
+  var data = '( new U16x([ 1,2,3 ]) )';
   test.shouldThrowErrorSync( () => deserialize.encode({ data }) );
 
   test.case = 'map';
@@ -869,7 +867,7 @@ function jsonFine( test )
   test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) );
 
   test.case = 'typed array';
-  var src = { typed :  new Uint16Array([ 1,2,3 ]) }
+  var src = { typed :  new U16x([ 1,2,3 ]) }
   var serialized = serialize.encode({ data : src });
   test.identical( serialized.format, 'string' );
   test.is( _.strIs( serialized.data ) );
@@ -982,7 +980,7 @@ function jsonMin( test )
   test.identical( deserialized.format, 'structure' );
 
   test.case = 'typed array';
-  var src = { typed :  new Uint16Array([ 1,2,3 ]) }
+  var src = { typed :  new U16x([ 1,2,3 ]) }
   var serialized = serialize.encode({ data : src });
   test.identical( serialized.format, 'string' );
   test.is( _.strIs( serialized.data ) );
@@ -1615,9 +1613,6 @@ function supportedTypes( test )
   {
     let converter = Converters[ c ];
 
-    // if( converter.serialize.ext !== 'cbor' )
-    // continue;
-
     /* */
 
     test.case = 'select';
@@ -1656,7 +1651,7 @@ function supportedTypes( test )
     self.structure2( test, options );
     self.structure3( test, options );
 
-    test.contains( serialize.supported, options.result );
+    test.contains( serialize.supporting, options.result );
 
     let r = options.result;
 
@@ -1666,7 +1661,7 @@ function supportedTypes( test )
   var o =
   {
     data,
-    head : [ 'Transformer','Primitive(0-3)','RegExp(0-2)','Buffer(0-3)','Structure(0-3)' ],
+    head : [ 'Transformer','Primitive(0-3)','RegExp(0-2)','BufferNode(0-3)','Structure(0-3)' ],
     colWidth : 20
   }
   var output = _.strTable( o );
