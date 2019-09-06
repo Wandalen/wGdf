@@ -369,7 +369,7 @@ writeYml =
 // --
 
 let Bson;
-debugger;
+
 try
 {
   Bson = require( 'bson' );
@@ -606,7 +606,7 @@ writeMsgpackWtp =
 
 let base64ToBuffer =
 {
-  ext : [ 'base64' ],
+  ext : [],
   in : [ 'string/base64' ],
   out : [ 'buffer.bytes' ],
 
@@ -669,7 +669,7 @@ function _base64ToBuffer( base64, chunkSize )
 
 let base64FromBuffer =
 {
-  ext : [ 'base64' ],
+  ext : [],
   in : [ 'buffer.bytes' ],
   out : [ 'string/base64' ],
 
@@ -738,7 +738,7 @@ function _base64FromBuffer( byteBuffer )
 
 let base64ToBlob =
 {
-  ext : [ 'blob' ],
+  ext : [],
   in : [ 'string/base64' ],
   out : [ 'blob' ],
 
@@ -757,13 +757,14 @@ function _base64ToBlob( base64Data, mime )
   return new Blob( buffer, { type : mime } );
 }
 
-//Vova : added opposite version of base64ToBlob, is it needed?
+// Vova : added opposite version of base64ToBlob, is it needed?
+// qqq : yes
 
 // let base64FromBlob = null;
 // if( _.workerIs() )
 // base64FromBlob =
 // {
-//   ext : [ 'base64' ],
+//   ext : [],
 //   in : [ 'blob' ],
 //   out : [ 'string/base64' ],
 
@@ -793,7 +794,7 @@ let base64FromUtf8Slow =
 {
   shortName : 'base64FromUtf8Slow',
 
-  ext : [ 'base64' ],
+  ext : [],
   in : [ 'string/utf8' ],
   out : [ 'string/base64' ],
 
@@ -818,7 +819,7 @@ let base64FromUtf8 =
   shortName : 'base64FromUtf8',
   default : 1,
 
-  ext : [ 'base64' ],
+  ext : [],
   in : [ 'string/utf8' ],
   out : [ 'string/base64' ],
 
@@ -841,7 +842,7 @@ function _base64FromUtf8( string )
 
 let base64ToUtf8Slow =
 {
-  ext : [ 'utf8' ],
+  ext : [],
   in : [ 'string/base64' ],
   out : [ 'string/utf8' ],
 
@@ -866,7 +867,7 @@ let base64ToUtf8 =
   shortName : 'base64ToUtf8',
   default : 1,
 
-  ext : [ 'utf8' ],
+  ext : [],
   in : [ 'string/base64' ],
   out : [ 'string/utf8' ],
 
@@ -889,7 +890,7 @@ function _base64ToUtf8( base64 )
 
 let utf8FromBuffer =
 {
-  ext : [ 'utf8' ],
+  ext : [],
   in : [ 'buffer.bytes' ],
   out : [ 'string/utf8' ],
 
@@ -934,7 +935,7 @@ function _utf8FromBuffer( byteBuffer )
 
 let utf8ToBuffer =
 {
-  ext : [ 'bytes', 'buffer' ],
+  ext : [],
   in : [ 'string/utf8' ],
   out : [ 'buffer.bytes' ],
 

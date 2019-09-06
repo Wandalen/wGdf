@@ -1532,11 +1532,11 @@ function base64( test )
 
   test.case = 'buffer.bytes <-> string/base64';
 
-  var serialize = _.Gdf.Select({ in : 'buffer.bytes', out : 'string/base64', ext : 'base64' });
+  var serialize = _.Gdf.Select({ in : 'buffer.bytes', out : 'string/base64' });
   test.identical( serialize.length, 1 );
   let base64FromBuffer = serialize[ 0 ];
 
-  var serialize = _.Gdf.Select({ out : 'buffer.bytes', in : 'string/base64', ext : 'base64' });
+  var serialize = _.Gdf.Select({ out : 'buffer.bytes', in : 'string/base64' });
   test.identical( serialize.length, 1 );
   let base64ToBuffer = serialize[ 0 ];
 
@@ -1553,11 +1553,11 @@ function base64( test )
 
   var utf8 = _.encode.utf8FromBuffer( buffer );
 
-  var serialize = _.Gdf.Select({ in : 'string/utf8', out : 'string/base64', ext : 'base64', default : 1 });
+  var serialize = _.Gdf.Select({ in : 'string/utf8', out : 'string/base64', default : 1 });
   test.identical( serialize.length, 1 );
   let base64FromUtf8 = serialize[ 0 ];
 
-  var serialize = _.Gdf.Select({ out : 'string/utf8', in : 'string/base64', ext : 'utf8', default : 1 });
+  var serialize = _.Gdf.Select({ out : 'string/utf8', in : 'string/base64', default : 1 });
   test.identical( serialize.length, 1 );
   let base64ToUtf8 = serialize[ 0 ];
 
@@ -1583,11 +1583,11 @@ function utf8( test )
 
   test.case = 'buffer.bytes <-> string/utf8';
 
-  var serialize = _.Gdf.Select({ in : 'buffer.bytes', out : 'string/utf8', ext : 'utf8' });
+  var serialize = _.Gdf.Select({ in : 'buffer.bytes', out : 'string/utf8' });
   test.identical( serialize.length, 1 );
   let utf8FromBuffer = serialize[ 0 ];
 
-  var serialize = _.Gdf.Select({ out : 'buffer.bytes', in : 'string/utf8', ext : 'bytes' });
+  var serialize = _.Gdf.Select({ out : 'buffer.bytes', in : 'string/utf8' });
   test.identical( serialize.length, 1 );
   let utf8ToBuffer = serialize[ 0 ];
 
