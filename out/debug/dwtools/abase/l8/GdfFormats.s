@@ -13,6 +13,19 @@ if( typeof module !== 'undefined' )
 
 }
 
+/*
+qqq : make it working
+qqq : use algorithms from wGraphBasic to find shortest path
+qqq : introduce field cost
+let encoder = _.Gdf.Select
+({
+  in : 'buffer.raw',
+  out : 'structure',
+  ext : 'yml',
+})[ 0 ];
+let structure = encoder.encode( bufferRaw );
+*/
+
 let _global = _global_;
 let _ = _global_.wTools;
 let Self = _global_.wTools;
@@ -110,10 +123,10 @@ let writeJsonFine =
 // js
 // --
 
-let ExternalFundamentals;
+let ProcessBasic;
 try
 {
-  ExternalFundamentals = _.include( 'wAppBasic' );
+  ProcessBasic = _.include( 'wAppBasic' );
 }
 catch( err )
 {
@@ -128,7 +141,7 @@ let jsSupported =
 }
 
 let readJsStructure = null;
-if( ExternalFundamentals )
+if( ProcessBasic )
 readJsStructure =
 {
 

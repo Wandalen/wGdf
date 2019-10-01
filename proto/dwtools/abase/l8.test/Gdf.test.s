@@ -1675,7 +1675,7 @@ function supportedTypes( test )
 var Self =
 {
 
-  name : 'Tools/base/gdf',
+  name : 'Tools.base.gdf',
   silencing : 1,
 
   context :
