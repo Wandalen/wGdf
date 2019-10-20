@@ -247,8 +247,9 @@ function encode_body( o )
   }
   catch( err )
   {
-    op.out.format = undefined;
-    throw _.err( 'Failed to format ' + _.strQuote( op.in.format ) + ' by encoder ' + encoder.name + '\n', err );
+    let outFormat = op.out.format || encoder.out;
+    op.out.format = undefined; /* qqq : ? */
+    throw _.err( err, `\nFailed to convert from "${op.in.format}" to "${outFormat}" by encoder ${encoder.name}` );
   }
 
   /* */
