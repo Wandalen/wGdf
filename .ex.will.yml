@@ -23,13 +23,16 @@ about :
 path :
 
   repository : git+https:///github.com/Wandalen/wGdfStrategy.git
+  remotes :
+   - git+https:///github.com/Wandalen/wGdfStrategy.git
+   - npm:///wgdfstrategy
   bugtracker : https:///github.com/Wandalen/wGdfStrategy/issues
 
 step :
 
   proto.export :
     inherit : module.export
-    export : path::proto
+    export : path::export
     tar : 0
     criterion :
       content : 'proto'

@@ -1032,6 +1032,26 @@ function _utf8ToBuffer( str )
 
 //
 
+function yamlLineFind( src, ins )
+{
+
+  let r = Object.create( null );
+  r.regexp = new RegExp( '\\n(((?!\\n)\\s)*)(' + _.regexpEscape( ins ) + ')(.*?)\\n' );
+  let match = src.match( r.regexp );
+
+  if( !match )
+  return null;
+
+  r.line = match[ 0 ].replace( '\n', '' ).replace( '\n', '' );
+  r.pre = match[ 1 ];
+  r.before = src.substring( 0, match.index );
+  r.after = src.substring( match.index + match[ 0 ].length );
+
+  return r;
+}
+
+//
+
 function yamlCommentOut( content, name )
 {
   let regexp = new RegExp( '\\n(((?!\\n)\\s)*)(' + _.regexpEscape( name ) + ')(\\s*:.*?)\\n' );
@@ -1114,6 +1134,7 @@ var Extend =
 
   //
 
+  yamlLineFind,
   yamlCommentOut,
 
 }
