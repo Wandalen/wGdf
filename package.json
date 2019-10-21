@@ -24,11 +24,11 @@
     "js-yaml" : "", 
     "js2coffee" : "", 
     "msgpack-lite" : "", 
-    "wCopyable" : "", 
-    "wTools" : "", 
-    "what-the-pack" : "", 
-    "wroutinebasic" : ""
+    "wCopyable" : "beta", 
+    "wTools" : "beta", 
+    "what-the-pack" : "beta", 
+    "wroutinebasic" : "beta"
   }, 
-  "devDependencies" : { "wTesting" : "", "cli-table2" : "" }, 
+  "devDependencies" : { "wTesting" : "beta", "cli-table2" : "" }, 
   "keywords" : [ "wTools" ]
 }
