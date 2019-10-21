@@ -23,7 +23,7 @@ about :
 path :
 
   repository : git+https:///github.com/Wandalen/wGdfStrategy.git
-  remotes :
+  origins :
    - git+https:///github.com/Wandalen/wGdfStrategy.git
    - npm:///wgdfstrategy
   bugtracker : https:///github.com/Wandalen/wGdfStrategy/issues
