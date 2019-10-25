@@ -371,6 +371,7 @@ writeYml =
 
   onEncode : function( op )
   {
+    debugger;
     op.out.data = Yaml.dump( op.in.data );
     op.out.format = 'string';
   },
@@ -1030,84 +1031,6 @@ function _utf8ToBuffer( str )
   return byteBuffer;
 }
 
-//
-
-function yamlLineFind( src, ins )
-{
-
-  let r = Object.create( null );
-  r.regexp = new RegExp( '\\n(((?!\\n)\\s)*)(' + _.regexpEscape( ins ) + ')(.*?)\\n' );
-  let match = src.match( r.regexp );
-
-  if( !match )
-  return null;
-
-  r.line = match[ 0 ].replace( '\n', '' ).replace( '\n', '' );
-  r.pre = match[ 1 ];
-  r.before = src.substring( 0, match.index );
-  r.after = src.substring( match.index + match[ 0 ].length );
-
-  return r;
-}
-
-//
-
-function yamlCommentOut( content, name )
-{
-  let regexp = new RegExp( '\\n(((?!\\n)\\s)*)(' + _.regexpEscape( name ) + ')(\\s*:.*?)\\n' );
-
-  let match = content.match( regexp );
-  if( !match )
-  return false;
-
-  let before = content.substring( 0, match.index );
-  let after = content.substring( match.index + match[ 0 ].length );
-  let inside = match[ 0 ].replace( '\n', '' ).replace( '\n', '' );
-  let pre = match[ 1 ];
-  let result = before;
-
-  add( inside );
-
-  after = after.split( '\n' );
-
-  while( after.length )
-  {
-    let line = after[ 0 ];
-    after.splice( 0, 1 );
-    if( !line.trim().length )
-    {
-      add( line );
-      continue;
-    }
-    if( line.length <= pre.length )
-    {
-      close( line );
-      break;
-    }
-    if( line.charCodeAt( pre.length+1 ) > 32 )
-    {
-      close( line );
-      break;
-    }
-    add( line );
-  }
-
-  result += after.join( '\n' );
-
-  return result;
-
-  function close( line )
-  {
-    result += '\n' + line + '\n';
-  }
-
-  function add( line )
-  {
-    line = line.replace( /^\s*/, '' );
-    result += `\n${pre}# ${line}`;
-  }
-}
-
 // --
 // declare
 // --
@@ -1131,11 +1054,6 @@ var Extend =
 
   utf8FromBuffer : _utf8FromBuffer,
   utf8ToBuffer : _utf8ToBuffer,
-
-  //
-
-  yamlLineFind,
-  yamlCommentOut,
 
 }
 
