@@ -371,7 +371,7 @@ writeYml =
 
   onEncode : function( op )
   {
-    debugger;
+    // debugger;
     op.out.data = Yaml.dump( op.in.data );
     op.out.format = 'string';
   },

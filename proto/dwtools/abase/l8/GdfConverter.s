@@ -233,7 +233,7 @@ function encode_body( o )
 
     _.assert( _.objectIs( op.envMap ) )
     _.assert( _.strIs( op.in.format ), 'Not clear which input format is' );
-    _.assert( _.arrayHas( encoder.in, op.in.format ), () => 'Unknown format ' + op.in.format );
+    _.assert( _.longHas( encoder.in, op.in.format ), () => 'Unknown format ' + op.in.format );
 
     encoder.onEncode( op );
 
@@ -242,7 +242,7 @@ function encode_body( o )
     op.out.format = op.out.format.length === 1 ? op.out.format[ 0 ] : undefined;
 
     _.assert( _.strIs( op.out.format ), 'Output should have format' );
-    _.assert( _.arrayHas( encoder.out, op.out.format ), () => 'Strange output format ' + o.out.format );
+    _.assert( _.longHas( encoder.out, op.out.format ), () => 'Strange output format ' + o.out.format );
 
   }
   catch( err )
@@ -335,7 +335,7 @@ function Select( selector )
       if( _.arrayIs( cfield ) )
       {
         _.assert( _.strIs( sfield ) );
-        if( !_.arrayHas( cfield, sfield ) )
+        if( !_.longHas( cfield, sfield ) )
         return undefined;
       }
       else _.assert( 0, 'Unknown selector field ' + s );

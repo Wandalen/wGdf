@@ -625,19 +625,19 @@ function registerAndFinit( test )
 
   converter = _.Gdf( converter );
 
-  test.is( _.arrayHas( _.Gdf.Elements, converter ) );
-  test.is( _.arrayHas( _.Gdf.InMap[ 'string' ], converter ) );
-  test.is( _.arrayHas( _.Gdf.OutMap[ 'number' ], converter ) );
-  test.is( _.arrayHas( _.Gdf.ExtMap[ 'ext' ], converter ) );
-  test.is( _.arrayHas( _.Gdf.InOutMap[ 'string-number' ], converter ) );
+  test.is( _.longHas( _.Gdf.Elements, converter ) );
+  test.is( _.longHas( _.Gdf.InMap[ 'string' ], converter ) );
+  test.is( _.longHas( _.Gdf.OutMap[ 'number' ], converter ) );
+  test.is( _.longHas( _.Gdf.ExtMap[ 'ext' ], converter ) );
+  test.is( _.longHas( _.Gdf.InOutMap[ 'string-number' ], converter ) );
 
   converter.finit();
 
-  test.is( !_.arrayHas( _.Gdf.Elements, converter ) );
-  test.is( !_.arrayHas( _.Gdf.InMap[ 'string' ], converter ) );
-  test.is( !_.arrayHas( _.Gdf.OutMap[ 'number' ], converter ) );
-  test.is( !_.arrayHas( _.Gdf.ExtMap[ 'ext' ], converter ) );
-  test.is( !_.arrayHas( _.Gdf.InOutMap[ 'string-number' ], converter ) );
+  test.is( !_.longHas( _.Gdf.Elements, converter ) );
+  test.is( !_.longHas( _.Gdf.InMap[ 'string' ], converter ) );
+  test.is( !_.longHas( _.Gdf.OutMap[ 'number' ], converter ) );
+  test.is( !_.longHas( _.Gdf.ExtMap[ 'ext' ], converter ) );
+  test.is( !_.longHas( _.Gdf.InOutMap[ 'string-number' ], converter ) );
 }
 
 //
