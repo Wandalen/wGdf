@@ -6,7 +6,7 @@ Collection of strategies to convert complex data structures from one GDF ( gener
 ## Try out
 ```
 npm install
-node sample/Sample.s
+node sample/Sample.js
 ```
 
 ## Usage:
