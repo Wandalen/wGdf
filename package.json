@@ -1,6 +1,6 @@
 {
   "name" : "wgdfstrategy", 
-  "version" : "0.3.100", 
+  "version" : "0.3.101", 
   "description" : "Collection of strategies to convert complex data structures from one GDF ( generic data format ) to another GDF. You may use the module to serialize complex data structure to string or deserialize string back to the original data structure. Generic data format ( GDF ) is a format of data structure designed with taking into account none unique feature of data so that it is applicable to any kind of data.", 
   "author" : "Kostiantyn Wandalen <wanalen@willbe.so>", 
   "license" : "MIT", 
@@ -24,11 +24,11 @@
     "js-yaml" : "3.13.1", 
     "js2coffee" : "2.2.0", 
     "msgpack-lite" : "0.1.26", 
-    "wCopyable" : "beta", 
-    "wTools" : "beta", 
+    "wCopyable" : "alpha", 
+    "wTools" : "alpha", 
     "what-the-pack" : "2.0.3", 
-    "wroutinebasic" : "beta"
+    "wroutinebasic" : "alpha"
   }, 
-  "devDependencies" : { "wTesting" : "beta", "cli-table2" : "0.2.0" }, 
+  "devDependencies" : { "wTesting" : "alpha", "cli-table2" : "0.2.0" }, 
   "keywords" : [ "wTools" ]
 }
