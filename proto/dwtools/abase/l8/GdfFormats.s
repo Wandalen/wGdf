@@ -54,6 +54,18 @@ let readJson =
   onEncode : function( op )
   {
 
+/*
+
+qqq : could throw different errors
+cover them all please
+
+SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>:null:null)
+    at wGenericDataFormatConverter.onEncode (C:\pro\web\Dave\git\trunk\builder\include\dwtools\abase\l8\GdfFormats.s:59:26)
+    at wGenericDataFormatConverter.encode_body (C:\pro\web\Dave\git\trunk\builder\include\dwtools\abase\l8\GdfConverter.s:238:13)
+    at Proxy.encode_body (C:\pro\web\Dave\git\trunk\builder\include\dwtools\abase\l8\GdfCurrent.s:59:45)
+
+*/
     try
     {
       op.out.data = JSON.parse( op.in.data );
@@ -65,7 +77,8 @@ let readJson =
       if( position )
       position = Number( position[ 1 ] );
       let first = 0;
-      if( !isNaN( position ) )
+      // if( !isNaN( position ) )
+      if( position >= 0 )
       {
         let nearest = _.strLinesNearest( src, position );
         first = _.strLinesCount( src.substring( 0, nearest.spans[ 0 ] ) );
