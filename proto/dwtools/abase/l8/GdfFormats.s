@@ -9,7 +9,7 @@
 if( typeof module !== 'undefined' )
 {
 
-  let _ = require( '../../Tools.s' );
+  let _ = require( '../../../dwtools/Tools.s' );
 
 }
 
@@ -253,10 +253,12 @@ let writeJsStrcuture =
 // coffee
 // --
 
-let Coffee;
+/* xxx qqq : implement delayed including */
+
+let Coffee, CoffeePath;
 try
 {
-  Coffee = require( 'coffeescript' );
+  CoffeePath = require.resolve( 'coffeescript' );
 }
 catch( err )
 {
@@ -271,7 +273,7 @@ let csonSupported =
 }
 
 let readCoffee = null;
-if( Coffee )
+if( CoffeePath )
 readCoffee =
 {
 
@@ -285,6 +287,9 @@ readCoffee =
   {
     let o = Object.create( null );
 
+    if( !Coffee )
+    Coffee = require( CoffeePath );
+
     if( op.envMap.filePath )
     o.filename = _.fileProvider.path.nativize( op.envMap.filePath )
 
@@ -296,17 +301,17 @@ readCoffee =
 
 //
 
-let Js2coffee;
+let Js2coffee, Js2coffeePath;
 try
 {
-  Js2coffee = require( 'js2coffee' );
+  Js2coffeePath = require.resolve( 'js2coffee' );
 }
 catch( err )
 {
 }
 
 let writeCoffee = null;
-if( Js2coffee )
+if( Js2coffeePath )
 writeCoffee =
 {
 
@@ -318,6 +323,10 @@ writeCoffee =
 
   onEncode : function( op )
   {
+
+    if( !Js2coffee )
+    Js2coffee = require( Js2coffeePath );
+
     let data = _.toStr( op.in.data, { jsLike : 1, keyWrapper : '' } );
     if( _.mapIs( op.in.data ) )
     data = '(' + data + ')';
@@ -330,10 +339,10 @@ writeCoffee =
 // yaml
 // --
 
-let Yaml;
+let Yaml, YamlPath;
 try
 {
-  Yaml = require( 'js-yaml' );
+  YamlPath = require.resolve( 'js-yaml' );
 }
 catch( err )
 {
@@ -348,7 +357,7 @@ let ymlSupported =
 }
 
 let readYml = null;
-if( Yaml )
+if( YamlPath )
 readYml =
 {
 
@@ -362,6 +371,9 @@ readYml =
   {
     let o = Object.create( null );
 
+    if( !Yaml )
+    Yaml = require( YamlPath );
+
     if( op.envMap.filePath )
     o.filename = _.fileProvider.path.nativize( op.envMap.filePath )
 
@@ -372,7 +384,7 @@ readYml =
 }
 
 let writeYml = null;
-if( Yaml )
+if( YamlPath )
 writeYml =
 {
 
@@ -384,7 +396,10 @@ writeYml =
 
   onEncode : function( op )
   {
-    // debugger;
+
+    if( !Yaml )
+    Yaml = require( YamlPath );
+
     op.out.data = Yaml.dump( op.in.data );
     op.out.format = 'string';
   },
@@ -395,12 +410,11 @@ writeYml =
 // bson
 // --
 
-let Bson;
-
+let Bson, BsonPath;
 try
 {
-  Bson = require( 'bson' );
-  Bson.setInternalBufferSize( 1 << 30 );
+  BsonPath = require.resolve( 'bson' );
+  // Bson.setInternalBufferSize( 1 << 30 );
 }
 catch( err )
 {
@@ -415,7 +429,7 @@ let bsonSupported =
 }
 
 let readBson = null;
-if( Bson )
+if( BsonPath )
 readBson =
 {
 
@@ -427,6 +441,13 @@ readBson =
 
   onEncode : function( op )
   {
+
+    if( !Bson )
+    {
+      Bson = require( BsonPath );
+      Bson.setInternalBufferSize( 1 << 30 );
+    }
+
     _.assert( _.bufferNodeIs( op.in.data ) );
     op.out.data = Bson.deserialize( op.in.data );
     op.out.format = 'structure';
@@ -435,7 +456,7 @@ readBson =
 }
 
 let writeBson = null;
-if( Bson )
+if( BsonPath )
 writeBson =
 {
 
@@ -447,6 +468,13 @@ writeBson =
 
   onEncode : function( op )
   {
+
+    if( !Bson )
+    {
+      Bson = require( BsonPath );
+      Bson.setInternalBufferSize( 1 << 30 );
+    }
+
     _.assert( _.mapIs( op.in.data ) );
     op.out.data = Bson.serialize( op.in.data );
     op.out.format = 'buffer.node';
@@ -458,10 +486,10 @@ writeBson =
 // cbor
 // --
 
-let Cbor;
+let Cbor, CborPath;
 try
 {
-  Cbor = require( 'cbor' );
+  CborPath = require.resolve( 'cbor' );
 }
 catch( err )
 {
@@ -476,7 +504,7 @@ let cborSupported =
 }
 
 let readCbor = null;
-if( Cbor )
+if( CborPath )
 readCbor =
 {
 
@@ -488,6 +516,10 @@ readCbor =
 
   onEncode : function( op )
   {
+
+    if( !Cbor )
+    Cbor = require( CborPath );
+
     _.assert( _.bufferNodeIs( op.in.data ) );
     op.out.data = Cbor.decodeFirstSync( op.in.data, { bigint : true } );
     op.out.format = 'structure';
@@ -496,7 +528,7 @@ readCbor =
 }
 
 let writeCbor = null;
-if( Cbor )
+if( CborPath )
 writeCbor =
 {
 
@@ -508,6 +540,10 @@ writeCbor =
 
   onEncode : function( op )
   {
+
+    if( !Cbor )
+    Cbor = require( CborPath );
+
     _.assert( _.mapIs( op.in.data ) );
 
     let encoder = new Cbor.Encoder({ highWaterMark : 1 << 30 });
@@ -525,17 +561,17 @@ writeCbor =
 // Msgpack-lite
 // --
 
-let MsgpackLite;
+let MsgpackLite, MsgpackLitePath;
 try
 {
-  MsgpackLite = require( 'msgpack-lite' );
+  MsgpackLitePath = require.resolve( 'msgpack-lite' );
 }
 catch( err )
 {
 }
 
 let readMsgpackLite = null;
-if( MsgpackLite )
+if( MsgpackLitePath )
 readMsgpackLite =
 {
 
@@ -545,6 +581,10 @@ readMsgpackLite =
 
   onEncode : function( op )
   {
+
+    if( !MsgpackLite )
+    MsgpackLite = require( MsgpackLitePath );
+
     _.assert( _.bufferNodeIs( op.in.data ) );
     op.out.data = MsgpackLite.decode( op.in.data );
     op.out.format = 'structure';
@@ -553,7 +593,7 @@ readMsgpackLite =
 }
 
 let writeMsgpackLite = null;
-if( MsgpackLite )
+if( MsgpackLitePath )
 writeMsgpackLite =
 {
 
@@ -563,6 +603,10 @@ writeMsgpackLite =
 
   onEncode : function( op )
   {
+
+    if( !MsgpackLite )
+    MsgpackLite = require( MsgpackLitePath );
+
     _.assert( _.mapIs( op.in.data ) );
     op.out.data = MsgpackLite.encode( op.in.data );
     op.out.format = 'buffer.node';
@@ -574,17 +618,17 @@ writeMsgpackLite =
 // Msgpack-wtp
 // --
 
-let MsgpackWtp;
+let MsgpackWtp, MsgpackWtpPath;
 try
 {
-  MsgpackWtp = require( 'what-the-pack' );
+  MsgpackWtpPath = require.resolve( 'what-the-pack' );
 }
 catch( err )
 {
 }
 
 let readMsgpackWtp = null;
-if( MsgpackWtp )
+if( MsgpackWtpPath )
 readMsgpackWtp =
 {
 
@@ -596,8 +640,12 @@ readMsgpackWtp =
   {
     _.assert( _.bufferNodeIs( op.in.data ) );
 
-    if( !MsgpackWtp.decode )
-    MsgpackWtp = MsgpackWtp.initialize( 2**27 ); //134 MB
+    if( !MsgpackWtp )
+    {
+      MsgpackWtp = require( MsgpackLitePath );
+      // if( !MsgpackWtp.decode )
+      MsgpackWtp = MsgpackWtp.initialize( 2**27 ); //134 MB
+    }
 
     op.out.data = MsgpackWtp.decode( op.in.data );
     op.out.format = 'structure';
@@ -606,7 +654,7 @@ readMsgpackWtp =
 }
 
 let writeMsgpackWtp = null;
-if( MsgpackWtp )
+if( MsgpackWtpPath )
 writeMsgpackWtp =
 {
 
@@ -618,8 +666,14 @@ writeMsgpackWtp =
   {
     _.assert( _.mapIs( op.in.data ) );
 
-    if( !MsgpackWtp.encode )
-    MsgpackWtp = MsgpackWtp.initialize( 2**27 ); //134 MB
+    if( !MsgpackWtp )
+    {
+      MsgpackWtp = require( MsgpackLitePath );
+      MsgpackWtp = MsgpackWtp.initialize( 2**27 ); //134 MB
+    }
+
+    // if( !MsgpackWtp.encode )
+    // MsgpackWtp = MsgpackWtp.initialize( 2**27 ); //134 MB
 
     op.out.data = MsgpackWtp.encode( op.in.data );
     op.out.format = 'buffer.node';
