@@ -1596,6 +1596,4 @@ module:
       ../.im.will.yml:
         hash: c4e3d2a66d32e890e7bb67fa7b358bbe
         size: 5699
-      wGdfStrategy.out.will.yml:
-        hash: 65e8c2e7f9244599e318d28d15f1ebaf
-        size: 41038
+      wGdfStrategy.out.will.yml: *ref_0
