@@ -1,11 +1,11 @@
 {
   "name" : "wgdfstrategy", 
-  "version" : "0.3.125", 
+  "version" : "0.3.126", 
   "description" : "Collection of strategies to convert complex data structures from one GDF ( generic data format ) to another GDF. You may use the module to serialize complex data structure to string or deserialize string back to the original data structure. Generic data format ( GDF ) is a format of data structure designed with taking into account none unique feature of data so that it is applicable to any kind of data.", 
   "author" : "Kostiantyn Wandalen <wanalen@willbe.so>", 
   "license" : "MIT", 
-  "main" : "proto/dwtools/abase/l8/GdfConverter.s", 
-  "files" : [ "proto/dwtools/abase/l8", "proto/dwtools/Tools.s", "out" ], 
+  "main" : "proto/dwtools/abase/l8_gdf/GdfConverter.s", 
+  "files" : [ "proto/dwtools/abase/l8_gdf", "proto/dwtools/Tools.s", "out" ], 
   "scripts" : { "test" : "wtest .run proto/**", "docgen" : "wdocgen proto" }, 
   "repository" : 
   {
