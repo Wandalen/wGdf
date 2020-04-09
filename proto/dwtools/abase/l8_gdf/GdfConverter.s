@@ -24,7 +24,8 @@ if( typeof module !== 'undefined' )
 /**
  * @classdesc Class to operate the GDF converter.
  * @class wGenericDataFormatConverter
- * @memberof module:Tools/base/GdfConverter
+ * @namespace Tools
+ * @module Tools/base/GdfConverter
  */
 
 let _global = _global_;
@@ -105,7 +106,9 @@ function unform()
  * Checks descriptor of current converter and it into maps: InMap, OutMap, ExtMap, InOutMap.
  * Generates name for converter if its not specified explicitly.
  * @method form
- * @memberof module:Tools/base/GdfConverter.wGenericDataFormatConverter
+ * @class wGenericDataFormatConverter
+ * @namespace Tools
+ * @module Tools/base/GdfConverter
  */
 
 
@@ -187,7 +190,9 @@ function form()
  *
  * @returns {Object} Returns map with properties: `data` - result of encoding and `format` : format of the result.
  * @method encode
- * @memberof module:Tools/base/GdfConverter.wGenericDataFormatConverter
+ * @class wGenericDataFormatConverter
+ * @namespace Tools
+ * @module Tools/base/GdfConverter
  */
 
 
@@ -301,7 +306,9 @@ let encode = _.routineFromPreAndBody( encode_pre, encode_body );
  * @throws {Error} If selector is not an Object
  * @throws {Error} If selector has unknown field
  * @method Select
- * @memberof module:Tools/base/GdfConverter.wGenericDataFormatConverter
+ * @class wGenericDataFormatConverter
+ * @namespace Tools
+ * @module Tools/base/GdfConverter
  * @static
  */
 
@@ -358,35 +365,45 @@ function Select( selector )
  * @summary Contains descriptors of registered converters.
  * @property {Object} Elements
  * @static
- * @memberof module:Tools/base/GdfConverter.wGenericDataFormatConverter
+ * @class wGenericDataFormatConverter
+ * @namespace Tools
+ * @module Tools/base/GdfConverter
  */
 
  /**
  * @summary Contains descriptors of registered converters mapped by inptut format.
  * @property {Object} InMap
  * @static
- * @memberof module:Tools/base/GdfConverter.wGenericDataFormatConverter
+ * @class wGenericDataFormatConverter
+ * @namespace Tools
+ * @module Tools/base/GdfConverter
  */
 
  /**
  * @summary Contains descriptors of registered converters mapped by out format.
  * @property {Object} OutMap
  * @static
- * @memberof module:Tools/base/GdfConverter.wGenericDataFormatConverter
+ * @class wGenericDataFormatConverter
+ * @namespace Tools
+ * @module Tools/base/GdfConverter
  */
 
 /**
  * @summary Contains descriptors of registered converters mapped by extension.
  * @property {Object} ExtMap
  * @static
- * @memberof module:Tools/base/GdfConverter.wGenericDataFormatConverter
+ * @class wGenericDataFormatConverter
+ * @namespace Tools
+ * @module Tools/base/GdfConverter
  */
 
  /**
  * @summary Contains descriptors of registered converters mapped by in/out format.
  * @property {Object} InOutMap
  * @static
- * @memberof module:Tools/base/GdfConverter.wGenericDataFormatConverter
+ * @class wGenericDataFormatConverter
+ * @namespace Tools
+ * @module Tools/base/GdfConverter
  */
 
 /**
@@ -403,7 +420,9 @@ function Select( selector )
  * @property {Boolean} default=0 Is converter default for this in-out combination
  * @property {Boolean} forConfig=1 Can be used for configs
  *
- * @memberof module:Tools/base/GdfConverter.wGenericDataFormatConverter
+ * @class wGenericDataFormatConverter
+ * @namespace Tools
+ * @module Tools/base/GdfConverter
  */
 
 // --
