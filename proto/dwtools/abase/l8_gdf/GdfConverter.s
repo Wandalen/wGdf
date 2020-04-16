@@ -177,7 +177,7 @@ function form()
  * Use {@link module:Tools/base/GdfConverter.wGenericDataFormatConverter.Select Select} routine to find converter for your needs.
  * @param {Object} o Options map
  *
- * @param {} o.data Source data.
+ * @param {*} o.data Source data.
  * @param {String} o.format Format of source `o.data`.
  * @param {Object} o.envMap Map with enviroment variables that will be used by converter.
  *
