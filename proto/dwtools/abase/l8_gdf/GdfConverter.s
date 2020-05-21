@@ -514,7 +514,7 @@ _.Copyable.mixin( Self );
 
 _[ Self.shortName ] = Self;
 
-if( typeof module !== 'undefined' && module !== null )
+if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;
 
 if( typeof module !== 'undefined' )

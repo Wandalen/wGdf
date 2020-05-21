@@ -1148,7 +1148,7 @@ _.Gdf([ utf8FromBuffer, utf8ToBuffer ]);
 // export
 // --
 
-if( typeof module !== 'undefined' && module !== null )
+if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;
 
 })();
