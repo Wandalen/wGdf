@@ -167,9 +167,17 @@ module:
           - ../proto/dwtools/amid
           - ../proto/dwtools/amid/l1
           - ../proto/dwtools/amid/l1/gdf
+          - ../proto/dwtools/amid/l1/gdf/Base64.s
+          - ../proto/dwtools/amid/l1/gdf/Bson.s
+          - ../proto/dwtools/amid/l1/gdf/Cbor.s
+          - ../proto/dwtools/amid/l1/gdf/Coffee.s
           - ../proto/dwtools/amid/l1/gdf/Converter.s
           - ../proto/dwtools/amid/l1/gdf/Current.s
           - ../proto/dwtools/amid/l1/gdf/Formats.s
+          - ../proto/dwtools/amid/l1/gdf/Json.s
+          - ../proto/dwtools/amid/l1/gdf/JsStructure.s
+          - ../proto/dwtools/amid/l1/gdf/MsgpackLiteWtp.s
+          - ../proto/dwtools/amid/l1/gdf/Yml.s
           - ../proto/dwtools/amid/l1/gdf.test
           - ../proto/dwtools/amid/l1/gdf.test/Gdf.test.s
           - ../proto/dwtools/amid/l1/gdf.test/GdfPerfomance.test.s
