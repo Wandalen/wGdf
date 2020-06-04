@@ -14,19 +14,6 @@
 
   }
 
-  /*
-  qqq : make it working
-  qqq : use algorithms from wGraphBasic to find shortest path
-  qqq : introduce field cost
-  let encoder = _.Gdf.Select
-  ({
-    in : 'buffer.raw',
-    out : 'structure',
-    ext : 'yml',
-  })[ 0 ];
-  let structure = encoder.encode( bufferRaw );
-  */
-
   let _global = _global_;
   let _ = _global_.wTools;
   let Self = _global_.wTools;

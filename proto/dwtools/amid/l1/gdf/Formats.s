@@ -1134,10 +1134,10 @@ _.mapExtend( _.encode, Extend );
 debugger;
 _.Gdf([ readJson, writeJsonMin, writeJsonFine ]);
 _.Gdf([ readJsStructure, /*readJsNode, readJsSmart, */ writeJsStrcuture ]);
-_.Gdf([ readYml, writeYml ]);
+_.Gdf([ readYml, writeYml ]); 
 _.Gdf([ readCoffee, writeCoffee ]);
-_.Gdf([ readBson, writeBson ]);
-_.Gdf([ readCbor, writeCbor ]);
+_.Gdf([ readBson, writeBson ]); 
+_.Gdf([ readCbor, writeCbor ]); 
 _.Gdf([ readMsgpackLite, writeMsgpackLite, readMsgpackWtp, writeMsgpackWtp ]);
 
 _.Gdf([ base64ToBuffer, base64FromBuffer ]);
