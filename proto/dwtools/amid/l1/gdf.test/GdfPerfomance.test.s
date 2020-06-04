@@ -1,11 +1,11 @@
-( function _Gdf_Perfomance_test_s_( ) {
+( function _GdfPerfomance_test_s_( ) {
 
 'use strict';
 
 if( typeof module !== 'undefined' )
 {
 
-  var _ = require( '../../Tools.s' );
+  var _ = require( '../../../Tools.s' );
   require( '../l8/Converter.s' );
   _.include( 'wTesting' );
   _.include( 'wFiles' );

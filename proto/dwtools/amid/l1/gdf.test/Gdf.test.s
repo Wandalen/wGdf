@@ -4,7 +4,7 @@
 
 if( typeof module !== 'undefined' )
 {
-  var _ = require( '../../../dwtools/Tools.s' );
+  var _ = require( '../../../../dwtools/Tools.s' );
   require( '../gdf/Converter.s' );
   _.include( 'wTesting' );
 }
@@ -529,7 +529,9 @@ function trivial( test )
 
   test.case = 'select';
   var src = 'val : 13';
+  debugger;
   var converters = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'cson', default : 1 });
+  debugger;
   test.identical( converters.length, 1 );
 
   /* */

@@ -1,27 +1,43 @@
 {
-  "name" : "wgdf",
-  "version" : "0.3.158",
-  "description" : "Collection of strategies to convert complex data structures from one GDF ( generic data format ) to another GDF. You may use the module to serialize complex data structure to string or deserialize string back to the original data structure. Generic data format ( GDF ) is a format of data structure designed with taking into account none unique feature of data so that it is applicable to any kind of data.",
-  "author" : "Kostiantyn Wandalen <wanalen@01.school>",
-  "license" : "MIT",
-  "main" : "proto/dwtools/amid/l1/gdf/Converter.s",
-  "files" : [ "proto/dwtools/amid/l1/gdf", "proto/dwtools/Tools.s", "out" ],
-  "scripts" : { "test" : "wtest .run 'proto/**'", "docgen" : "wdocgen proto" },
-  "repository" : { "type" : "git", "url" : "https://github.com/Wandalen/wGdf.git" },
-  "bugs" : { "url" : "https://github.com/Wandalen/wGdf/issues" },
-  "dependencies" :
-  {
-    "bson" : "4.0.4",
-    "cbor" : "5.0.2",
-    "coffeescript" : "2.5.1",
-    "js-yaml" : "3.14.0",
-    "js2coffee" : "2.2.0",
-    "msgpack-lite" : "0.1.26",
-    "wCopyable" : "alpha",
-    "wTools" : "alpha",
-    "what-the-pack" : "2.0.3",
-    "wroutinebasic" : "alpha"
+  "name": "wgdf",
+  "version": "0.3.158",
+  "description": "Collection of strategies to convert complex data structures from one GDF ( generic data format ) to another GDF. You may use the module to serialize complex data structure to string or deserialize string back to the original data structure. Generic data format ( GDF ) is a format of data structure designed with taking into account none unique feature of data so that it is applicable to any kind of data.",
+  "author": "Kostiantyn Wandalen <wanalen@01.school>",
+  "license": "MIT",
+  "main": "proto/dwtools/amid/l1/gdf/Converter.s",
+  "files": [
+    "proto/dwtools/amid/l1/gdf",
+    "proto/dwtools/Tools.s",
+    "out"
+  ],
+  "scripts": {
+    "test": "wtest .run 'proto/**'",
+    "docgen": "wdocgen proto"
   },
-  "devDependencies" : { "wTesting" : "alpha", "cli-table2" : "0.2.0" },
-  "keywords" : [ "wTools" ]
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wandalen/wGdf.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wandalen/wGdf/issues"
+  },
+  "dependencies": {
+    "bson": "4.0.4",
+    "cbor": "5.0.2",
+    "coffeescript": "2.5.1",
+    "js-yaml": "3.14.0",
+    "js2coffee": "2.2.0",
+    "msgpack-lite": "0.1.26",
+    "wCopyable": "alpha",
+    "wTools": "alpha",
+    "what-the-pack": "2.0.3",
+    "wroutinebasic": "alpha"
+  },
+  "devDependencies": {
+    "wTesting": "alpha",
+    "cli-table2": "0.2.0"
+  },
+  "keywords": [
+    "wTools"
+  ]
 }
