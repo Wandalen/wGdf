@@ -4,11 +4,9 @@
 
 if( typeof module !== 'undefined' )
 {
-
   var _ = require( '../../../dwtools/Tools.s' );
-  require( '../l8/GdfConverter.s' );
+  require( '../gdf/Converter.s' );
   _.include( 'wTesting' );
-
 }
 
 var _global = _global_;

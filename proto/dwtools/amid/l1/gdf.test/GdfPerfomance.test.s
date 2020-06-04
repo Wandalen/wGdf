@@ -6,7 +6,7 @@ if( typeof module !== 'undefined' )
 {
 
   var _ = require( '../../Tools.s' );
-  require( '../l8/GdfConverter.s' );
+  require( '../l8/Converter.s' );
   _.include( 'wTesting' );
   _.include( 'wFiles' );
 
@@ -22,7 +22,7 @@ var _ = _global_.wTools;
 function onSuiteBegin()
 {
   var self = this;
-  self.testSuitePath = _.path.dirTempOpen( _.path.join( __dirname, '../..'  ), 'wGdfStrategy' );
+  self.testSuitePath = _.path.dirTempOpen( _.path.join( __dirname, '../..'  ), 'wGdf' );
 
   self.results = Object.create( null );
 }
@@ -70,7 +70,7 @@ function onSuiteEnd()
 function testApp()
 {
   let _ = require( '../../../Tools.s' );
-  require( '../../../abase/l8/GdfConverter.s' );
+  require( '../../../abase/l8/Converter.s' );
 
   let commonTypes =
   {
@@ -303,7 +303,6 @@ function perfomance( test )
 perfomance.experimental = 1;
 perfomance.timeOut = _.mapOwnKeys( converters ).length * 6 * 60000;
 
-
 // --
 // declare
 // --
@@ -313,7 +312,6 @@ var Self =
 
   name : 'Tools/base/EncoderStrategyPerfomance',
   silencing : 1,
-  
   enabled : 0,
 
   onSuiteBegin,

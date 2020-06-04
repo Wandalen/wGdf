@@ -1,8 +1,8 @@
 format: outwillfile-2.0
 root:
-  - wGdfStrategy.out
+  - wGdf.out
 consistency:
-  wGdfStrategy.out.will.yml: &ref_0
+  wGdf.out.will.yml: &ref_0
     hash: 32bda8a2dc135684ad6050e722b61a11
     size: 41798
   ../.ex.will.yml: &ref_1
@@ -12,9 +12,9 @@ consistency:
     hash: c4e3d2a66d32e890e7bb67fa7b358bbe
     size: 5699
 module:
-  wGdfStrategy.out:
+  wGdf.out:
     about:
-      name: wGdfStrategy
+      name: wGdf
       org: noorg
       description: >-
         Collection of strategies to convert complex data structures from one GDF
@@ -35,7 +35,7 @@ module:
       author: Kostiantyn Wandalen <wanalen@01.school>
       contributors:
         - Kostiantyn Wandalen <wanalen@01.school>
-      npm.name: wgdfstrategy
+      npm.name: wgdf
       npm.scripts:
         test: wtest .run proto/**
         docgen: wdocgen .build proto
@@ -43,11 +43,11 @@ module:
       module.willfiles:
         criterion:
           predefined: 1
-        path: wGdfStrategy.out.will.yml
+        path: wGdf.out.will.yml
       module.common:
         criterion:
           predefined: 1
-        path: wGdfStrategy.out
+        path: wGdf.out
       module.original.willfiles:
         criterion:
           predefined: 1
@@ -68,13 +68,13 @@ module:
         criterion:
           predefined: 1
       repository:
-        path: 'git+https:///github.com/Wandalen/wGdfStrategy.git'
+        path: 'git+https:///github.com/Wandalen/wGdf.git'
       origins:
         path:
-          - 'git+https:///github.com/Wandalen/wGdfStrategy.git'
-          - 'npm:///wgdfstrategy'
+          - 'git+https:///github.com/Wandalen/wGdf.git'
+          - 'npm:///wgdf'
       bugtracker:
-        path: 'https:///github.com/Wandalen/wGdfStrategy/issues'
+        path: 'https:///github.com/Wandalen/wGdf/issues'
       in:
         path: .
       out:
@@ -118,7 +118,7 @@ module:
       entry.proto.no.tests:
         criterion:
           tests: no.tests
-        path: ../proto/dwtools/abase/l8_gdf/GdfConverter.s
+        path: ../proto/dwtools/amid/l1/gdf/Converter.s
       entry.proto.only.tests:
         criterion:
           tests: only.tests
@@ -128,13 +128,13 @@ module:
           debug: debug
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/abase/l8_gdf/GdfConverter.s'
+        path: '{path::out.*=1}/source/dwtools/amid/l1/gdf/Converter.s'
       entry.out.raw.debug.release:
         criterion:
           debug: release
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/abase/l8_gdf/GdfConverter.s'
+        path: '{path::out.*=1}/source/dwtools/amid/l1/gdf/Converter.s'
       entry.out.compiled.debug.debug:
         criterion:
           debug: debug
@@ -166,11 +166,11 @@ module:
           - ../proto/dwtools/abase/l8.test
           - ../proto/dwtools/abase/l8.test/Gdf.test.s
           - ../proto/dwtools/abase/l8.test/GdfPerfomance.test.s
-          - ../proto/dwtools/abase/l8_gdf
-          - ../proto/dwtools/abase/l8_gdf/GdfConverter.s
-          - ../proto/dwtools/abase/l8_gdf/GdfCurrent.s
-          - ../proto/dwtools/abase/l8_gdf/GdfFormats.s
-          - ../proto/dwtools/abase/l8_gdf/OldEncoders.s
+          - ../proto/dwtools/amid/l1/gdf
+          - ../proto/dwtools/amid/l1/gdf/Converter.s
+          - ../proto/dwtools/amid/l1/gdf/GdfCurrent.s
+          - ../proto/dwtools/amid/l1/gdf/GdfFormats.s
+          - ../proto/dwtools/amid/l1/gdf/OldEncoders.s
           - ../proto/dwtools/amid
           - ../proto/dwtools/atop
     submodule:
@@ -214,7 +214,7 @@ module:
         path: 'npm:///wroutinebasic'
         autoExporting: 0
         enabled: 0
-      wgdfstrategy:
+      wgdf:
         path: 'hd://..'
         autoExporting: 0
         enabled: 0
@@ -875,12 +875,12 @@ module:
           content: proto
           export: 1
     consistency:
-      wGdfStrategy.out.will.yml: *ref_0
+      wGdf.out.will.yml: *ref_0
       ../.ex.will.yml: *ref_1
       ../.im.will.yml: *ref_2
   ../:
     about:
-      name: wGdfStrategy
+      name: wGdf
       org: noorg
       description: >-
         Collection of strategies to convert complex data structures from one GDF
@@ -901,7 +901,7 @@ module:
       author: Kostiantyn Wandalen <wanalen@01.school>
       contributors:
         - Kostiantyn Wandalen <wanalen@01.school>
-      npm.name: wgdfstrategy
+      npm.name: wgdf
       npm.scripts:
         test: wtest .run proto/**
         docgen: wdocgen .build proto
@@ -921,7 +921,7 @@ module:
       module.peer.willfiles:
         criterion:
           predefined: 1
-        path: out/wGdfStrategy.out.will.yml
+        path: out/wGdf.out.will.yml
       module.peer.in:
         criterion:
           predefined: 1
@@ -934,13 +934,13 @@ module:
         criterion:
           predefined: 1
       repository:
-        path: 'git+https:///github.com/Wandalen/wGdfStrategy.git'
+        path: 'git+https:///github.com/Wandalen/wGdf.git'
       origins:
         path:
-          - 'git+https:///github.com/Wandalen/wGdfStrategy.git'
-          - 'npm:///wgdfstrategy'
+          - 'git+https:///github.com/Wandalen/wGdf.git'
+          - 'npm:///wgdf'
       bugtracker:
-        path: 'https:///github.com/Wandalen/wGdfStrategy/issues'
+        path: 'https:///github.com/Wandalen/wGdf/issues'
       in:
         path: .
       out:
@@ -984,7 +984,7 @@ module:
       entry.proto.no.tests:
         criterion:
           tests: no.tests
-        path: proto/dwtools/abase/l8_gdf/GdfConverter.s
+        path: proto/dwtools/amid/l1/gdf/Converter.s
       entry.proto.only.tests:
         criterion:
           tests: only.tests
@@ -994,13 +994,13 @@ module:
           debug: debug
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/abase/l8_gdf/GdfConverter.s'
+        path: '{path::out.*=1}/source/dwtools/amid/l1/gdf/Converter.s'
       entry.out.raw.debug.release:
         criterion:
           debug: release
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/abase/l8_gdf/GdfConverter.s'
+        path: '{path::out.*=1}/source/dwtools/amid/l1/gdf/Converter.s'
       entry.out.compiled.debug.debug:
         criterion:
           debug: debug
@@ -1054,7 +1054,7 @@ module:
         path: 'npm:///wroutinebasic'
         autoExporting: 0
         enabled: 0
-      wgdfstrategy:
+      wgdf:
         path: 'hd://.'
         autoExporting: 0
         enabled: 0
@@ -1636,4 +1636,4 @@ module:
       ../.im.will.yml:
         hash: c4e3d2a66d32e890e7bb67fa7b358bbe
         size: 5699
-      wGdfStrategy.out.will.yml: *ref_0
+      wGdf.out.will.yml: *ref_0

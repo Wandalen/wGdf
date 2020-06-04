@@ -1,14 +1,14 @@
-(function _GdfConverter_s_() {
+(function _Converter_s_() {
 
 'use strict';
 
 /**
  * Collection of strategies to convert complex data structures from one GDF ( generic data format ) to another GDF. You may use the module to serialize complex data structure to string or deserialize string back to the original data structure. Generic data format ( GDF ) is a format of data structure designed with taking into account none unique feature of data so that it is applicable to any kind of data.
-  @module Tools/base/GdfConverter
+  @module Tools/base/Converter
 */
 
 /**
- * @file GdfConverter.s.
+ * @file Converter.s.
  */
 
 if( typeof module !== 'undefined' )
@@ -25,7 +25,7 @@ if( typeof module !== 'undefined' )
  * @classdesc Class to operate the GDF converter.
  * @class wGenericDataFormatConverter
  * @namespace Tools
- * @module Tools/base/GdfConverter
+ * @module Tools/base/Converter
  */
 
 let _global = _global_;
@@ -108,7 +108,7 @@ function unform()
  * @method form
  * @class wGenericDataFormatConverter
  * @namespace Tools
- * @module Tools/base/GdfConverter
+ * @module Tools/base/Converter
  */
 
 
@@ -174,7 +174,7 @@ function form()
  * @summary Encodes source data from one specific format to another.
  * @description
  * Possible in/out formats are determined by converter.
- * Use {@link module:Tools/base/GdfConverter.wGenericDataFormatConverter.Select Select} routine to find converter for your needs.
+ * Use {@link module:Tools/base/Converter.wGenericDataFormatConverter.Select Select} routine to find converter for your needs.
  * @param {Object} o Options map
  *
  * @param {*} o.data Source data.
@@ -192,7 +192,7 @@ function form()
  * @method encode
  * @class wGenericDataFormatConverter
  * @namespace Tools
- * @module Tools/base/GdfConverter
+ * @module Tools/base/Converter
  */
 
 
@@ -308,7 +308,7 @@ let encode = _.routineFromPreAndBody( encode_pre, encode_body );
  * @method Select
  * @class wGenericDataFormatConverter
  * @namespace Tools
- * @module Tools/base/GdfConverter
+ * @module Tools/base/Converter
  * @static
  */
 
@@ -367,7 +367,7 @@ function Select( selector )
  * @static
  * @class wGenericDataFormatConverter
  * @namespace Tools
- * @module Tools/base/GdfConverter
+ * @module Tools/base/Converter
  */
 
  /**
@@ -376,7 +376,7 @@ function Select( selector )
  * @static
  * @class wGenericDataFormatConverter
  * @namespace Tools
- * @module Tools/base/GdfConverter
+ * @module Tools/base/Converter
  */
 
  /**
@@ -385,7 +385,7 @@ function Select( selector )
  * @static
  * @class wGenericDataFormatConverter
  * @namespace Tools
- * @module Tools/base/GdfConverter
+ * @module Tools/base/Converter
  */
 
 /**
@@ -394,7 +394,7 @@ function Select( selector )
  * @static
  * @class wGenericDataFormatConverter
  * @namespace Tools
- * @module Tools/base/GdfConverter
+ * @module Tools/base/Converter
  */
 
  /**
@@ -403,7 +403,7 @@ function Select( selector )
  * @static
  * @class wGenericDataFormatConverter
  * @namespace Tools
- * @module Tools/base/GdfConverter
+ * @module Tools/base/Converter
  */
 
 /**
@@ -422,7 +422,7 @@ function Select( selector )
  *
  * @class wGenericDataFormatConverter
  * @namespace Tools
- * @module Tools/base/GdfConverter
+ * @module Tools/base/Converter
  */
 
 // --
@@ -519,8 +519,8 @@ module[ 'exports' ] = Self;
 
 if( typeof module !== 'undefined' )
 {
-  require( './GdfCurrent.s' );
-  require( './GdfFormats.s' );
+  require( './Current.s' );
+  require( './Formats.s' );
 }
 
 })();

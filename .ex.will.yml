@@ -1,7 +1,7 @@
 
 about :
 
-  name : 'wGdfStrategy'
+  name : 'wGdf'
   description : "Collection of strategies to convert complex data structures from one GDF ( generic data format ) to another GDF. You may use the module to serialize complex data structure to string or deserialize string back to the original data structure. Generic data format ( GDF ) is a format of data structure designed with taking into account none unique feature of data so that it is applicable to any kind of data."
   version : '0.4.0'
   enabled : 1
@@ -15,18 +15,18 @@ about :
   author : 'Kostiantyn Wandalen <wanalen@01.school>'
   contributors :
   - 'Kostiantyn Wandalen <wanalen@01.school>'
-  npm.name : 'wgdfstrategy'
+  npm.name : 'wgdf'
   npm.scripts :
     test : 'wtest .run proto/**'
     docgen : 'wdocgen .build proto'
 
 path :
 
-  repository : git+https:///github.com/Wandalen/wGdfStrategy.git
+  repository : git+https:///github.com/Wandalen/wGdf.git
   origins :
-   - git+https:///github.com/Wandalen/wGdfStrategy.git
-   - npm:///wgdfstrategy
-  bugtracker : https:///github.com/Wandalen/wGdfStrategy/issues
+   - git+https:///github.com/Wandalen/wGdf.git
+   - npm:///wgdf
+  bugtracker : https:///github.com/Wandalen/wGdf/issues
 
 step :
 

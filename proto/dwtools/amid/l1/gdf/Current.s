@@ -1,4 +1,4 @@
-(function _GdfCurrent_s_() {
+(function _Current_s_() {
 
 'use strict';
 
