@@ -55,6 +55,8 @@ function init( o )
 {
   let encoder = this;
 
+  debugger;
+
   _.assert( arguments.length === 1 );
 
   _.workpiece.initFields( encoder );
@@ -512,7 +514,7 @@ _.Copyable.mixin( Self );
 // export
 // --
 
-_[ Self.shortName ] = Self;
+_[ Self.shortName ] = Self; debugger;
 
 if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;

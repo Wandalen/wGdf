@@ -22,6 +22,6 @@
     "what-the-pack" : "",
     "wroutinebasic" : ""
   },
-  "devDependencies" : { "wTesting" : "", "cli-table2" : "" },
-  "keywords" : [ "wTools" ]
+  "devDependencies" : { "wTesting" : "", "cli-table2" : "", "wgdf": "file:." },
+  "keywords" : [ "wTools", "gdf", "abstract data structure", "generic data format", "standardized abstract interface" ]
 }

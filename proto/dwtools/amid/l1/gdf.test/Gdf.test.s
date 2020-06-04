@@ -4,6 +4,7 @@
 
 if( typeof module !== 'undefined' )
 {
+  // require( 'wTesting' );
   var _ = require( '../../../../dwtools/Tools.s' );
   require( '../gdf/Converter.s' );
   _.include( 'wTesting' );
@@ -11,6 +12,9 @@ if( typeof module !== 'undefined' )
 
 var _global = _global_;
 var _ = _global_.wTools;
+
+_.assert( _testerGlobal_.wTools !== _global_.wTools );
+debugger;
 
 // --
 // data
