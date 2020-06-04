@@ -3,11 +3,11 @@ root:
   - wGdf.out
 consistency:
   wGdf.out.will.yml: &ref_0
-    hash: 3916790f5f538fa14a77eac4b04f9b5f
-    size: 42201
+    hash: e68a34ae71c53e9101506d24a7a344fe
+    size: 42321
   ../.ex.will.yml: &ref_1
-    hash: 9eba7645744b57cdfc4abde2755daf6a
-    size: 2027
+    hash: 242cde9bb094797aae061a3e0cd7895e
+    size: 2079
   ../.im.will.yml: &ref_2
     hash: f260b52ccb1cfa64e12042f3763b828e
     size: 5683
@@ -17,12 +17,13 @@ module:
       name: wGdf
       org: noorg
       description: >-
-        Collection of strategies to convert complex data structures from one GDF
-        ( generic data format ) to another GDF. You may use the module to
-        serialize complex data structure to string or deserialize string back to
-        the original data structure. Generic data format ( GDF ) is a format of
-        data structure designed with taking into account none unique feature of
-        data so that it is applicable to any kind of data.
+        Standardized abstract interface and collection of strategies to convert
+        complex data structures from one generic data format ( GDF ) to another
+        generic data format. You may use the module to serialize complex data
+        structure to string or deserialize string back to the original data
+        structure. Generic data format ( GDF ) is a format of data structure
+        designed with taking into account none unique feature of data so that it
+        is applicable to any kind of data.
       enabled: 1
       version: 0.4.0
       interpreters:
@@ -883,12 +884,13 @@ module:
       name: wGdf
       org: noorg
       description: >-
-        Collection of strategies to convert complex data structures from one GDF
-        ( generic data format ) to another GDF. You may use the module to
-        serialize complex data structure to string or deserialize string back to
-        the original data structure. Generic data format ( GDF ) is a format of
-        data structure designed with taking into account none unique feature of
-        data so that it is applicable to any kind of data.
+        Standardized abstract interface and collection of strategies to convert
+        complex data structures from one generic data format ( GDF ) to another
+        generic data format. You may use the module to serialize complex data
+        structure to string or deserialize string back to the original data
+        structure. Generic data format ( GDF ) is a format of data structure
+        designed with taking into account none unique feature of data so that it
+        is applicable to any kind of data.
       enabled: 1
       version: 0.4.0
       interpreters:
@@ -1631,11 +1633,9 @@ module:
           - 'build::npm'
     consistency:
       ../.ex.will.yml:
-        hash: 9eba7645744b57cdfc4abde2755daf6a
-        size: 2027
+        hash: 242cde9bb094797aae061a3e0cd7895e
+        size: 2079
       ../.im.will.yml:
         hash: f260b52ccb1cfa64e12042f3763b828e
         size: 5683
-      wGdf.out.will.yml:
-        hash: 3916790f5f538fa14a77eac4b04f9b5f
-        size: 42201
+      wGdf.out.will.yml: *ref_0

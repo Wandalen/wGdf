@@ -1,7 +1,7 @@
 
 # wGdf [![Status](https://github.com/Wandalen/wGdf/workflows/Test/badge.svg)](https://github.com/Wandalen/wGdf/actions?query=workflow%3ATest)
 
-Collection of strategies to convert complex data structures from one GDF ( generic data format ) to another GDF. You may use the module to serialize complex data structure to string or deserialize string back to the original data structure. Generic data format ( GDF ) is a format of data structure designed with taking into account none unique feature of data so that it is applicable to any kind of data.
+Standardized abstract interface and collection of strategies to convert complex data structures from one generic data format ( GDF ) to another generic data format. You may use the module to serialize complex data structure to string or deserialize string back to the original data structure. Generic data format ( GDF ) is a format of data structure designed with taking into account none unique feature of data so that it is applicable to any kind of data.
 
 ## Try out
 ```

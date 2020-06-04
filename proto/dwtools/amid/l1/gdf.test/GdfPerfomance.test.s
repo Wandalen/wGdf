@@ -5,8 +5,8 @@
 if( typeof module !== 'undefined' )
 {
 
-  var _ = require( '../../../Tools.s' );
-  require( '../l8/Converter.s' );
+  var _ = require( '../../../../dwtools/Tools.s' );
+  require( '../gdf/Converter.s' );
   _.include( 'wTesting' );
   _.include( 'wFiles' );
 

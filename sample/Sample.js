@@ -1,5 +1,5 @@
 if( typeof module !== 'undefined' )
-require( '..' );
+require( 'wgdf' );
 var _ = wTools;
 
 /* select encoder */
@@ -28,9 +28,3 @@ var deserialized = deserialize.encode({ data : serialized.data });
 console.log( deserialized.data );
 
 //{ field: 'value' }
-
-
-
-
-
-

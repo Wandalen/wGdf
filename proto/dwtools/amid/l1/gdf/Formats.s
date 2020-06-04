@@ -1131,6 +1131,7 @@ _.mapExtend( _.encode, Extend );
 // register
 // --
 
+debugger;
 _.Gdf([ readJson, writeJsonMin, writeJsonFine ]);
 _.Gdf([ readJsStructure, /*readJsNode, readJsSmart, */ writeJsStrcuture ]);
 _.Gdf([ readYml, writeYml ]);

@@ -4,6 +4,7 @@
 
 if( typeof module !== 'undefined' )
 {
+  // require( 'wTesting' );
   var _ = require( '../../../../dwtools/Tools.s' );
   require( '../gdf/Converter.s' );
   _.include( 'wTesting' );
@@ -11,6 +12,9 @@ if( typeof module !== 'undefined' )
 
 var _global = _global_;
 var _ = _global_.wTools;
+
+_.assert( _testerGlobal_.wTools !== _global_.wTools );
+debugger;
 
 // --
 // data
@@ -562,11 +566,11 @@ function select( test )
 
   test.case = 'in'
   var got = _.Gdf.Select({ in : 'structure' });
-  test.is( got.length );
+  test.ge( got.length, 1 );
 
   test.case = 'out'
   var got = _.Gdf.Select({ out : 'string' });
-  test.is( got.length );
+  test.ge( got.length, 1 );
 
   test.case = 'not existing'
 

@@ -3,7 +3,7 @@
 'use strict';
 
 /**
- * Collection of strategies to convert complex data structures from one GDF ( generic data format ) to another GDF. You may use the module to serialize complex data structure to string or deserialize string back to the original data structure. Generic data format ( GDF ) is a format of data structure designed with taking into account none unique feature of data so that it is applicable to any kind of data.
+ * Standardized abstract interface and collection of strategies to convert complex data structures from one generic data format ( GDF ) to another generic data format. You may use the module to serialize complex data structure to string or deserialize string back to the original data structure. Generic data format ( GDF ) is a format of data structure designed with taking into account none unique feature of data so that it is applicable to any kind of data.
   @module Tools/base/Converter
 */
 
@@ -54,6 +54,8 @@ function finit()
 function init( o )
 {
   let encoder = this;
+
+  debugger;
 
   _.assert( arguments.length === 1 );
 
@@ -512,7 +514,7 @@ _.Copyable.mixin( Self );
 // export
 // --
 
-_[ Self.shortName ] = Self;
+_[ Self.shortName ] = Self; debugger;
 
 if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;
