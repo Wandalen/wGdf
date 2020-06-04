@@ -562,11 +562,11 @@ function select( test )
 
   test.case = 'in'
   var got = _.Gdf.Select({ in : 'structure' });
-  test.is( got.length );
+  test.ge( got.length, 1 );
 
   test.case = 'out'
   var got = _.Gdf.Select({ out : 'string' });
-  test.is( got.length );
+  test.ge( got.length, 1 );
 
   test.case = 'not existing'
 
