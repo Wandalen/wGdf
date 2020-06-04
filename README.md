@@ -1,5 +1,5 @@
 
-# wGdf [![Build Status](https://travis-ci.org/Wandalen/wGdf.svg?branch=master)](https://travis-ci.org/Wandalen/wGdf) 
+# wGdf [![Status](https://github.com/Wandalen/wGdf/workflows/Test/badge.svg)](https://github.com/Wandalen/wGdf/actions?query=workflow%3ATest)
 
 Collection of strategies to convert complex data structures from one GDF ( generic data format ) to another GDF. You may use the module to serialize complex data structure to string or deserialize string back to the original data structure. Generic data format ( GDF ) is a format of data structure designed with taking into account none unique feature of data so that it is applicable to any kind of data.
 
@@ -66,45 +66,3 @@ console.log( deserialized.data );
 ## Level of Support of Types
 
 Information about level of support of each data type by each converter an be found [here.]( doc/SupportedTypes.md )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
