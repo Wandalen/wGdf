@@ -14,7 +14,7 @@
 if( typeof module !== 'undefined' )
 {
 
-  let _ = require( '../../../dwtools/Tools.s' );
+  let _ = require( '../../../../dwtools/Tools.s' );
 
   _.include( 'wCopyable' );
   _.include( 'wRoutineBasic' );
