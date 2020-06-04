@@ -140,23 +140,6 @@
   var Extend =
   {
 
-    // // base64
-
-    // base64ToBuffer : _base64ToBuffer,
-    // base64FromBuffer : _base64FromBuffer,
-    // base64ToBlob : _base64ToBlob,
-    // // base64FromBlob : _base64FromBlob,
-
-    // base64FromUtf8Slow : _base64FromUtf8Slow,
-    // base64FromUtf8 : _base64FromUtf8,
-    // base64ToUtf8Slow : _base64ToUtf8Slow,
-    // base64ToUtf8 : _base64ToUtf8,
-
-    // // utf8
-
-    // utf8FromBuffer : _utf8FromBuffer,
-    // utf8ToBuffer : _utf8ToBuffer,
-
   }
 
   Self = _.encode = _.encode || Object.create( null );
