@@ -1,11 +1,9 @@
-( function _Gdf_test_s_()
+( function _Bson_test_s_()
 {
-
 'use strict';
 
 if( typeof module !== 'undefined' )
 {
-  // require( 'wTesting' );
   var _ = require( '../../../../dwtools/Tools.s' );
   require( '../gdf/Converter.s' );
   _.include( 'wTesting' );
@@ -18,6 +16,31 @@ _.assert( _testerGlobal_.wTools !== _global_.wTools );
 
 // --
 // data
+// --
+
+let SamplesPrimitive =
+{
+  null : null,
+  number : 13,
+  string : 'something',
+}
+
+let SamplesSimple =
+{
+  map : { a : '1', dir : { b : 2 }, c : [ 1, 2, 3 ] },
+  array : [ { a : '1', dir : { b : 2 }, c : [ 1, 2, 3 ] } ],
+}
+
+let SamplesComplicated =
+{
+  regexp : /.regexp/g,
+  infinity : -Infinity,
+  nan : NaN,
+  date : new Date(),
+}
+
+// --
+// test
 // --
 
 function bson( test )
@@ -149,9 +172,7 @@ var Self =
 
 };
 
-Self = wTestSuite( Self );
-if( typeof module !== 'undefined' && !module.parent )
+if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;
-// wTester.test( Self.name );
 
 } )();
