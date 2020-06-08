@@ -5,6 +5,8 @@
 if( typeof module !== 'undefined' )
 {
   var _ = require( '../../../../dwtools/Tools.s' );
+  require( '../gdf/Converter.s' );
+  _.include( 'wTesting' );
 }
 
 var _global = _global_;
@@ -65,7 +67,8 @@ var Self =
 
 };
 
-if( typeof module !== 'undefined' )
-module[ 'exports' ] = Self;
+Self = wTestSuite( Self );
+if( typeof module !== 'undefined' && !module.parent )
+wTester.test( Self.name );
 
 } )();
