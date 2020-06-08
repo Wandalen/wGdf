@@ -1,4 +1,4 @@
-( function _Cbor_test_s_()
+( function _Yml_test_s_()
 {
 'use strict';
 
@@ -17,7 +17,7 @@ _.assert( _testerGlobal_.wTools !== _global_.wTools );
 // test
 // --
 
-function cbor( test )
+function yml( test )
 {
   var self = this;
 
@@ -46,11 +46,11 @@ function cbor( test )
 
   test.case = 'select';
 
-  var serialize = _.Gdf.Select({ in : 'structure', out : 'buffer.node', ext : 'cbor' });
+  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'yml' });
   test.identical( serialize.length, 1 );
   serialize = serialize[ 0 ];
 
-  var deserialize = _.Gdf.Select({ in : 'buffer.node', out : 'structure', ext : 'cbor' });
+  var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'yml' });
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
@@ -66,8 +66,8 @@ function cbor( test )
     src = { [ s ] : src };
 
     var serialized = serialize.encode({ data : src });
-    test.identical( serialized.format, 'buffer.node' );
-    test.is( _.bufferNodeIs( serialized.data ) );
+    test.identical( serialized.format, 'string' );
+    test.is( _.strIs( serialized.data ) );
 
     var deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
@@ -77,8 +77,8 @@ function cbor( test )
 
   test.case = 'all simple together';
   var serialized = serialize.encode({ data : SamplesSimple });
-  test.identical( serialized.format, 'buffer.node' );
-  test.is( _.bufferNodeIs( serialized.data ) );
+  test.identical( serialized.format, 'string' );
+  test.is( _.strIs( serialized.data ) );
 
   var deserialized = deserialize.encode({ data : serialized.data });
   test.identical( deserialized.data, SamplesSimple );
@@ -96,7 +96,7 @@ function cbor( test )
     src = { [ s ] : src };
 
     var serialized = serialize.encode({ data : src });
-    test.identical( serialized.format, 'buffer.node' );
+    test.identical( serialized.format, 'string' );
 
     var deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
@@ -106,8 +106,8 @@ function cbor( test )
 
   test.case = 'all primitive together';
   var serialized = serialize.encode({ data : SamplesPrimitive });
-  test.identical( serialized.format, 'buffer.node' );
-  test.is( _.bufferNodeIs( serialized.data ) );
+  test.identical( serialized.format, 'string' );
+  test.is( _.strIs( serialized.data ) );
 
   var deserialized = deserialize.encode({ data : serialized.data });
   test.identical( deserialized.data, SamplesPrimitive );
@@ -125,25 +125,21 @@ function cbor( test )
     src = { [ s ] : src };
 
     var serialized = serialize.encode({ data : src });
-    test.identical( serialized.format, 'buffer.node' );
+    test.identical( serialized.format, 'string' );
 
     var deserialized = deserialize.encode({ data : serialized.data });
-    let identical = _.entityIdentical( deserialized.data, src );
-    if( _.regexpIs( src[ s ] ) )
-    test.is( !identical );
-    else
-    test.is( identical );
+    test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
   test.close( 'complicated' );
 
   test.case = 'all complicated together';
   var serialized = serialize.encode({ data : SamplesComplicated });
-  test.identical( serialized.format, 'buffer.node' );
-  test.is( _.bufferNodeIs( serialized.data ) );
+  test.identical( serialized.format, 'string' );
+  test.is( _.strIs( serialized.data ) );
 
   var deserialized = deserialize.encode({ data : serialized.data });
-  test.notIdentical( deserialized.data, SamplesComplicated );
+  test.identical( deserialized.data, SamplesComplicated );
   test.identical( deserialized.format, 'structure' );
 
   /* */
@@ -157,7 +153,7 @@ function cbor( test )
 var Self =
 {
 
-  name : 'Tools.cbor.gdf',
+  name : 'Tools.yml.gdf',
   silencing : 1,
 
   context :
@@ -166,7 +162,7 @@ var Self =
 
   tests :
   {
-    cbor
+    yml
   },
 
 };
