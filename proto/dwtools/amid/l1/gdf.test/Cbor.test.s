@@ -1,4 +1,4 @@
-( function _Bson_test_s_()
+( function _Cbor_test_s_()
 {
 'use strict';
 
@@ -6,6 +6,7 @@ if( typeof module !== 'undefined' )
 {
   var _ = require( '../../../../dwtools/Tools.s' );
   require( '../gdf/Converter.s' );
+  _.include( 'wTesting' );
 }
 
 var _global = _global_;
@@ -17,7 +18,7 @@ _.assert( _testerGlobal_.wTools !== _global_.wTools );
 // test
 // --
 
-function bson( test )
+function cbor( test )
 {
   var self = this;
 
@@ -46,11 +47,11 @@ function bson( test )
 
   test.case = 'select';
 
-  var serialize = _.Gdf.Select({ in : 'structure', out : 'buffer.node', ext : 'bson' });
+  var serialize = _.Gdf.Select({ in : 'structure', out : 'buffer.node', ext : 'cbor' });
   test.identical( serialize.length, 1 );
   serialize = serialize[ 0 ];
 
-  var deserialize = _.Gdf.Select({ in : 'buffer.node', out : 'structure', ext : 'bson' });
+  var deserialize = _.Gdf.Select({ in : 'buffer.node', out : 'structure', ext : 'cbor' });
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
@@ -128,7 +129,11 @@ function bson( test )
     test.identical( serialized.format, 'buffer.node' );
 
     var deserialized = deserialize.encode({ data : serialized.data });
-    test.identical( deserialized.data, src );
+    let identical = _.entityIdentical( deserialized.data, src );
+    if( _.regexpIs( src[ s ] ) )
+    test.is( !identical );
+    else
+    test.is( identical );
     test.identical( deserialized.format, 'structure' );
   }
   test.close( 'complicated' );
@@ -139,7 +144,7 @@ function bson( test )
   test.is( _.bufferNodeIs( serialized.data ) );
 
   var deserialized = deserialize.encode({ data : serialized.data });
-  test.identical( deserialized.data, SamplesComplicated );
+  test.notIdentical( deserialized.data, SamplesComplicated );
   test.identical( deserialized.format, 'structure' );
 
   /* */
@@ -153,7 +158,7 @@ function bson( test )
 var Self =
 {
 
-  name : 'Tools.bson.gdf',
+  name : 'Tools.cbor.gdf',
   silencing : 1,
 
   context :
@@ -162,7 +167,7 @@ var Self =
 
   tests :
   {
-    bson
+    cbor
   },
 
 };
