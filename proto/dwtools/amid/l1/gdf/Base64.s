@@ -1,4 +1,4 @@
-( function _Formats_s_()
+( function _Base64_s_()
 {
 
 'use strict';

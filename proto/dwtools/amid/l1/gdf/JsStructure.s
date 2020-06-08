@@ -1,4 +1,4 @@
-( function _Formats_s_()
+( function _JsStructure_s_()
 {
 
 'use strict';

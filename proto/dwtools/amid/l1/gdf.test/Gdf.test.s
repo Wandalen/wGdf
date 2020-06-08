@@ -7,6 +7,7 @@ if( typeof module !== 'undefined' )
   // require( 'wTesting' );
   var _ = require( '../../../../dwtools/Tools.s' );
   require( '../gdf/Converter.s' );
+  require( './Bson.test.s' );
   _.include( 'wTesting' );
 }
 
