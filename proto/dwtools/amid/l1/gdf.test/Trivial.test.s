@@ -5,7 +5,6 @@
 if( typeof module !== 'undefined' )
 {
   var _ = require( '../../../../dwtools/Tools.s' );
-  require( '../gdf/Converter.s' );
 }
 
 var _global = _global_;
@@ -26,21 +25,21 @@ function trivial( test )
   test.case = 'select';
   var src = 'val : 13';
   debugger;
-  var converters = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'cson', default : 1 });
+  var converters = _.Gdf.Select( { in : 'string', out : 'structure', ext : 'cson', default : 1 } );
   debugger;
   test.identical( converters.length, 1 );
 
   /* */
 
   test.case = 'encode with format';
-  var dst = converters[ 0 ].encode({ data : src, format : 'string' });
+  var dst = converters[ 0 ].encode( { data : src, format : 'string' } );
   var expected = { data : { val : 13 }, format : 'structure' }
   test.identical( dst, expected );
 
   /* */
 
   test.case = 'encode without format';
-  var dst = converters[ 0 ].encode({ data : src });
+  var dst = converters[ 0 ].encode( { data : src } );
   var expected = { data : { val : 13 }, format : 'structure' }
   test.identical( dst, expected );
 

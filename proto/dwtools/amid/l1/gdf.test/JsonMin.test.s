@@ -5,7 +5,6 @@
 if( typeof module !== 'undefined' )
 {
   var _ = require( '../../../../dwtools/Tools.s' );
-  require( '../gdf/Converter.s' );
 }
 
 var _global = _global_;
@@ -42,7 +41,7 @@ function jsonMin( test )
     date : new Date(),
   }
 
-  var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'json', default : 1 });
+  var deserialize = _.Gdf.Select( { in : 'string', out : 'structure', ext : 'json', default : 1 } );
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
@@ -50,7 +49,7 @@ function jsonMin( test )
 
   test.case = 'select json.min';
 
-  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'json', default : 1 });
+  var serialize = _.Gdf.Select( { in : 'structure', out : 'string', ext : 'json', default : 1 } );
   test.identical( serialize.length, 1 );
   serialize = serialize[ 0 ];
   test.identical( serialize.shortName, 'json.min' );
@@ -63,10 +62,10 @@ function jsonMin( test )
     test.case = s;
     let src = SamplesSimple[ s ];
 
-    var serialized = serialize.encode({ data : src });
+    var serialized = serialize.encode( { data : src } );
     test.identical( serialized.format, 'string' );
 
-    var deserialized = deserialize.encode({ data : serialized.data });
+    var deserialized = deserialize.encode( { data : serialized.data } );
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
@@ -80,10 +79,10 @@ function jsonMin( test )
     test.case = s;
     let src = SamplesPrimitive[ s ];
 
-    var serialized = serialize.encode({ data : src });
+    var serialized = serialize.encode( { data : src } );
     test.identical( serialized.format, 'string' );
 
-    var deserialized = deserialize.encode({ data : serialized.data });
+    var deserialized = deserialize.encode( { data : serialized.data } );
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
@@ -94,10 +93,10 @@ function jsonMin( test )
   test.open( 'complicated' );
 
   test.case = 'all complicated together';
-  var serialized = serialize.encode({ data : SamplesComplicated });
+  var serialized = serialize.encode( { data : SamplesComplicated } );
   test.identical( serialized.format, 'string' );
   test.is( _.strIs( serialized.data ) );
-  var deserialized = deserialize.encode({ data : serialized.data });
+  var deserialized = deserialize.encode( { data : serialized.data } );
   var expected =
   {
     'regexp' : {},
@@ -109,11 +108,11 @@ function jsonMin( test )
   test.identical( deserialized.format, 'structure' );
 
   test.case = 'typed array';
-  var src = { typed :  new U16x([ 1,2,3 ]) }
-  var serialized = serialize.encode({ data : src });
+  var src = { typed :  new U16x( [ 1,2,3 ] ) }
+  var serialized = serialize.encode( { data : src } );
   test.identical( serialized.format, 'string' );
   test.is( _.strIs( serialized.data ) );
-  var deserialized = deserialize.encode({ data : serialized.data });
+  var deserialized = deserialize.encode( { data : serialized.data } );
   var expected =
   {
     typed : { '0' : 1, '1' : 2, '2' : 3 }
@@ -122,10 +121,10 @@ function jsonMin( test )
 
   test.case = 'regexp';
   var src = { regexp :  /.regexp/g }
-  var serialized = serialize.encode({ data : src });
+  var serialized = serialize.encode( { data : src } );
   test.identical( serialized.format, 'string' );
   test.is( _.strIs( serialized.data ) );
-  var deserialized = deserialize.encode({ data : serialized.data });
+  var deserialized = deserialize.encode( { data : serialized.data } );
   var expected =
   {
     regexp : {}
@@ -134,10 +133,10 @@ function jsonMin( test )
 
   test.case = 'infinity';
   var src = { infinity : -Infinity }
-  var serialized = serialize.encode({ data : src });
+  var serialized = serialize.encode( { data : src } );
   test.identical( serialized.format, 'string' );
   test.is( _.strIs( serialized.data ) );
-  var deserialized = deserialize.encode({ data : serialized.data });
+  var deserialized = deserialize.encode( { data : serialized.data } );
   var expected =
   {
     infinity : null
@@ -146,10 +145,10 @@ function jsonMin( test )
 
   test.case = 'NaN';
   var src = { nan : NaN }
-  var serialized = serialize.encode({ data : src });
+  var serialized = serialize.encode( { data : src } );
   test.identical( serialized.format, 'string' );
   test.is( _.strIs( serialized.data ) );
-  var deserialized = deserialize.encode({ data : serialized.data });
+  var deserialized = deserialize.encode( { data : serialized.data } );
   var expected =
   {
     nan : null
@@ -158,10 +157,10 @@ function jsonMin( test )
 
   test.case = 'date';
   var src = { date : new Date() }
-  var serialized = serialize.encode({ data : src });
+  var serialized = serialize.encode( { data : src } );
   test.identical( serialized.format, 'string' );
   test.is( _.strIs( serialized.data ) );
-  var deserialized = deserialize.encode({ data : serialized.data })
+  var deserialized = deserialize.encode( { data : serialized.data } )
   var expected = { date : src.date.toJSON() }
   test.identical( deserialized.data, expected );
 

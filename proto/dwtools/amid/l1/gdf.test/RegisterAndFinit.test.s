@@ -5,7 +5,6 @@
 if( typeof module !== 'undefined' )
 {
   var _ = require( '../../../../dwtools/Tools.s' );
-  require( '../gdf/Converter.s' );
 }
 
 var _global = _global_;

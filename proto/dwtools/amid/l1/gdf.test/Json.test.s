@@ -5,7 +5,6 @@
 if( typeof module !== 'undefined' )
 {
   var _ = require( '../../../../dwtools/Tools.s' );
-  require( '../gdf/Converter.s' );
 }
 
 var _global = _global_;
@@ -29,7 +28,7 @@ function json( test )
     date : new Date(),
   }
 
-  var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'json', default : 1 });
+  var deserialize = _.Gdf.Select( { in : 'string', out : 'structure', ext : 'json', default : 1 } );
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
@@ -37,50 +36,50 @@ function json( test )
 
   test.case = 'number';
   var data = '1.12345';
-  var deserialized = deserialize.encode({ data });
+  var deserialized = deserialize.encode( { data } );
   test.identical( deserialized.data, 1.12345 );
 
   test.case = 'string';
   var data = '"1.12345"';
-  var deserialized = deserialize.encode({ data });
+  var deserialized = deserialize.encode( { data } );
   test.identical( deserialized.data, '1.12345' );
 
   test.case = 'null';
   var data = 'null';
-  var deserialized = deserialize.encode({ data });
+  var deserialized = deserialize.encode( { data } );
   test.identical( deserialized.data, null );
 
   test.case = 'array';
   var data = '[0, 1, 2]';
-  var deserialized = deserialize.encode({ data });
-  test.identical( deserialized.data, [ 0,1,2 ] );
+  var deserialized = deserialize.encode( { data } );
+  test.identical( deserialized.data, [ 0, 1, 2 ] );
 
   test.case = 'map';
   var data = '{"0": 0, "1": 1, "2": 2}';
-  var deserialized = deserialize.encode({ data });
+  var deserialized = deserialize.encode( { data } );
   test.identical( deserialized.data, { 0 : 0, 1 : 1, 2 : 2 } );
 
   test.case = 'date as string';
   var data = '2019-02-06T14:50:01.641Z"'
-  test.shouldThrowErrorSync( () => deserialize.encode({ data }) );
+  test.shouldThrowErrorSync( () => deserialize.encode( { data } ) );
 
   test.case = 'date as map field';
   var data = '{ "date" : "2019-02-06T14:50:01.641Z" }'
-  var deserialized = deserialize.encode({ data });
+  var deserialized = deserialize.encode( { data } );
   test.identical( deserialized.data, { date : '2019-02-06T14:50:01.641Z' } );
 
   test.case = 'map';
   var data = '{ "a" : "1", "dir" : { "b" : 2 }, "c" : [ 1,2,3 ] }';
-  var deserialized = deserialize.encode({ data });
-  test.identical( deserialized.data, { a : '1', dir : { b : 2 }, c : [ 1,2,3 ] } );
+  var deserialized = deserialize.encode( { data } );
+  test.identical( deserialized.data, { a : '1', dir : { b : 2 }, c : [ 1, 2, 3 ] } );
 
   test.case = 'regexp';
   var data = '/.regexp/g';
-  test.shouldThrowErrorSync( () => deserialize.encode({ data }) );
+  test.shouldThrowErrorSync( () => deserialize.encode( { data } ) );
 
   test.case = 'buffer';
   var data = '( new U16x([ 1,2,3 ]) )';
-  test.shouldThrowErrorSync( () => deserialize.encode({ data }) );
+  test.shouldThrowErrorSync( () => deserialize.encode( { data } ) );
 
   test.case = 'map';
   var src =
@@ -99,7 +98,7 @@ function json( test )
     }
   }
   var data = _.toStr( src, { jsonLike : 1 } )
-  var deserialized = deserialize.encode({ data });
+  var deserialized = deserialize.encode( { data } );
   test.identical( deserialized.data, src );
 
   test.case = 'map';
@@ -119,7 +118,7 @@ function json( test )
     }
   }
   var data = _.toStr( src, { jsonLike : 1 } )
-  var deserialized = deserialize.encode({ data });
+  var deserialized = deserialize.encode( { data } );
   test.identical( deserialized.data, src );
 
   test.case = 'array'
@@ -132,12 +131,12 @@ function json( test )
     ]
   ]
   var data = _.toStr( src, { jsonLike : 1 } )
-  var deserialized = deserialize.encode({ data });
+  var deserialized = deserialize.encode( { data } );
   test.identical( deserialized.data, src );
 
   test.case = 'complicated map with unsupported type';
   var data = _.toStr( SamplesComplicated, { jsonLike : 1 } );
-  test.shouldThrowErrorSync( () => deserialize.encode({ data }) );
+  test.shouldThrowErrorSync( () => deserialize.encode( { data } ) );
 
   test.case = 'complicated map, written by json.fine'
   var src =
@@ -145,19 +144,19 @@ function json( test )
     string : 'string',
     number : 1,
     array : [ 1, 'string' ],
-    date : new Date( Date.UTC( 2018,1,1 ) ),
+    date : new Date( Date.UTC( 2018, 1, 1 ) ),
     map : { string : 'string', number : 1, array : [ 'string', 1 ] }
   }
-  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'json.fine' });
+  var serialize = _.Gdf.Select( { in : 'structure', out : 'string', ext : 'json.fine' } );
   serialize = serialize[ 0 ];
-  var serialized = serialize.encode({ data : src });
-  var deserialized = deserialize.encode({ data : serialized.data });
+  var serialized = serialize.encode( { data : src } );
+  var deserialized = deserialize.encode( { data : serialized.data } );
   var expected =
   {
     string : 'string',
     number : 1,
     array : [ 1, 'string' ],
-    date : new Date( Date.UTC( 2018,1,1 ) ).toJSON(),
+    date : new Date( Date.UTC( 2018, 1, 1 ) ).toJSON(),
     map : { string : 'string', number : 1, array : [ 'string', 1 ] }
   }
   test.identical( deserialized.data, expected );
@@ -168,19 +167,19 @@ function json( test )
     string : 'string',
     number : 1,
     array : [ 1, 'string' ],
-    date : new Date( Date.UTC( 2018,1,1 ) ),
+    date : new Date( Date.UTC( 2018, 1, 1 ) ),
     map : { string : 'string', number : 1, array : [ 'string', 1 ] }
   }
-  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'json.min' });
+  var serialize = _.Gdf.Select( { in : 'structure', out : 'string', ext : 'json.min' } );
   serialize = serialize[ 0 ];
-  var serialized = serialize.encode({ data : src });
-  var deserialized = deserialize.encode({ data : serialized.data });
+  var serialized = serialize.encode( { data : src } );
+  var deserialized = deserialize.encode( { data : serialized.data } );
   var expected =
   {
     string : 'string',
     number : 1,
     array : [ 1, 'string' ],
-    date : new Date( Date.UTC( 2018,1,1 ) ).toJSON(),
+    date : new Date( Date.UTC( 2018, 1, 1 ) ).toJSON(),
     map : { string : 'string', number : 1, array : [ 'string', 1 ] }
   }
   test.identical( deserialized.data, expected );
