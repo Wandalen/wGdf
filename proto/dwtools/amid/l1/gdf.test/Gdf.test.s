@@ -21,6 +21,8 @@ if( typeof module !== 'undefined' )
   var base64 = require( './Base64.test.s' ).tests.base64;
   var supportedTypes = require( './SupportedTypes.test.s' ).tests.supportedTypes;
   var registerAndFinit = require( './RegisterAndFinit.test.s' ).tests.registerAndFinit;
+  var select = require( './Select.test.s' ).tests.select;
+  var trivial = require( './Trivial.test.s' ).tests.trivial;
 }
 
 var _global = _global_;
@@ -450,87 +452,7 @@ function structure3( test, o )
 // test
 // --
 
-function trivial( test )
-{
-  var self = this;
 
-  /* */
-
-  test.case = 'select';
-  var src = 'val : 13';
-  debugger;
-  var converters = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'cson', default : 1 });
-  debugger;
-  test.identical( converters.length, 1 );
-
-  /* */
-
-  test.case = 'encode with format';
-  var dst = converters[ 0 ].encode({ data : src, format : 'string' });
-  var expected = { data : { val : 13 }, format : 'structure' }
-  test.identical( dst, expected );
-
-  /* */
-
-  test.case = 'encode without format';
-  var dst = converters[ 0 ].encode({ data : src });
-  var expected = { data : { val : 13 }, format : 'structure' }
-  test.identical( dst, expected );
-
-}
-
-//
-
-function select( test )
-{
-  let self = this;
-
-  test.case = 'all'
-  var got = _.Gdf.Select({});
-  test.is( got.length === _.Gdf.Elements.length );
-
-  test.case = 'in'
-  var got = _.Gdf.Select({ in : 'structure' });
-  test.ge( got.length, 1 );
-
-  test.case = 'out'
-  var got = _.Gdf.Select({ out : 'string' });
-  test.ge( got.length, 1 );
-
-  test.case = 'not existing'
-
-  var got = _.Gdf.Select({ in : 'not existing'});
-  test.is( !got.length );
-
-  var got = _.Gdf.Select({ out : 'not existing'});
-  test.is( !got.length );
-
-  var got = _.Gdf.Select({ ext : 'not existing' });
-  test.is( !got.length );
-
-  test.case = 'default';
-
-  var got = _.Gdf.Select({ in : 'structure', out : 'string' });
-  test.is( got.length > 1 );
-  var got = _.Gdf.Select({ in : 'structure', out : 'string', default : 1 });
-  test.is( got.length === 1 );
-  test.identical( got[ 0 ].shortName, 'json.min' );
-
-  // test.case = 'shortName';
-
-  // var got = _.Gdf.Select({ shortName : 'json.fine', out : 'string' });
-  // test.is( got.length === 1 );
-  // test.identical( got[ 0 ].shortName, 'json.fine' );
-
-  if( !Config.debug )
-  return;
-
-  test.case = 'not supporting value'
-
-  test.shouldThrowErrorSync( () => _.Gdf.Select() );
-  test.shouldThrowErrorSync( () => _.Gdf.Select({ ext : [ 'json.fine', 'json' ] }) );
-
-}
 
 // --
 // declare
