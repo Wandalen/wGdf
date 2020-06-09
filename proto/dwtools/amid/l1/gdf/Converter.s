@@ -31,7 +31,8 @@ if( typeof module !== 'undefined' )
 let _global = _global_;
 let _ = _global_.wTools;
 let Parent = null;
-let Self = function wGenericDataFormatConverter( o )
+let Self = wGenericDataFormatConverter;
+function wGenericDataFormatConverter( o )
 {
   return _.workpiece.construct( Self, this, arguments );
 }

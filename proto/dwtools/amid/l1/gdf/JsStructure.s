@@ -25,7 +25,7 @@
   let ProcessBasic;
   try
   {
-    ProcessBasic = _.include( 'wAppBasic' );
+    ProcessBasic = _.include( 'wProcess' );
   }
   catch( err )
   {
