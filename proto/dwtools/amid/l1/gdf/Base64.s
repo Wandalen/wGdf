@@ -3,9 +3,8 @@
 
 'use strict';
 
-/**
-   * @file EncoderStrategyStandanrd.s.
-   */
+  /* qqq : should be no indentation in such places! */
+  /* qqq : end of line should be LF not CRLF! */
 
   if( typeof module !== 'undefined' )
   {
