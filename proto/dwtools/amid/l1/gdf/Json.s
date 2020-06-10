@@ -1,4 +1,4 @@
-( function _Formats_s_()
+( function _Json_s_()
 {
 
 'use strict';
@@ -113,7 +113,7 @@
 
     onEncode : function( op )
     {
-      op.out.data = _.cloneData( { src : op.in.data } );
+      op.out.data = _.cloneData({ src : op.in.data });
       op.out.data = _.toJson( op.out.data, { cloning : 0 } );
       op.out.format = 'string';
     }

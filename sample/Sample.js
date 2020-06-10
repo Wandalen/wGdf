@@ -28,3 +28,4 @@ var deserialized = deserialize.encode({ data : serialized.data });
 console.log( deserialized.data );
 
 //{ field: 'value' }
+
