@@ -6,7 +6,7 @@
   "license" : "MIT",
   "main" : "proto/dwtools/amid/l1/gdf/Converter.s",
   "files" : [ "proto/dwtools/amid/l1/gdf", "proto/dwtools/Tools.s", "out" ],
-  "scripts" : { "test" : "wtest .run 'proto/**'", "docgen" : "wdocgen proto" },
+  "scripts" : { "test" : "wtest .run 'proto/**' rapidity:-3", "docgen" : "wdocgen proto" },
   "repository" : { "type" : "git", "url" : "https://github.com/Wandalen/wGdf.git" },
   "bugs" : { "url" : "https://github.com/Wandalen/wGdf/issues" },
   "dependencies" :
