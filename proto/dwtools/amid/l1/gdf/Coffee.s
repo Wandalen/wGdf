@@ -1,4 +1,4 @@
-( function _Formats_s_()
+( function _Coffee_s_()
 {
 
 'use strict';
