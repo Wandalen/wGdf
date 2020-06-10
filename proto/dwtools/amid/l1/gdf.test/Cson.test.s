@@ -47,11 +47,11 @@ function cson( test )
 
   test.case = 'select';
 
-  var serialize = _.Gdf.Select( { in : 'structure', out : 'string', ext : 'cson' } );
+  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'cson' });
   test.identical( serialize.length, 1 );
   serialize = serialize[ 0 ];
 
-  var deserialize = _.Gdf.Select( { in : 'string', out : 'structure', ext : 'cson' } );
+  var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'cson' });
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
@@ -63,10 +63,10 @@ function cson( test )
     test.case = s;
     let src = SamplesSimple[ s ];
 
-    var serialized = serialize.encode( { data : src } );
+    var serialized = serialize.encode({ data : src });
     test.identical( serialized.format, 'string' );
 
-    var deserialized = deserialize.encode( { data : serialized.data } );
+    var deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
@@ -80,10 +80,10 @@ function cson( test )
     test.case = s;
     let src = SamplesPrimitive[ s ];
 
-    var serialized = serialize.encode( { data : src } );
+    var serialized = serialize.encode({ data : src });
     test.identical( serialized.format, 'string' );
 
-    var deserialized = deserialize.encode( { data : serialized.data } );
+    var deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
@@ -97,10 +97,10 @@ function cson( test )
     test.case = s;
     let src = SamplesComplicated[ s ];
 
-    var serialized = serialize.encode( { data : src } );
+    var serialized = serialize.encode({ data : src });
     test.identical( serialized.format, 'string' );
 
-    var deserialized = deserialize.encode( { data : serialized.data } );
+    var deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
@@ -135,4 +135,4 @@ Self = wTestSuite( Self );
 if( typeof module !== 'undefined' && !module.parent )
 wTester.test( Self.name );
 
-} )();
+})();

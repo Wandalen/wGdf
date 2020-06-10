@@ -28,19 +28,19 @@ function utf8( test )
 
   test.case = 'buffer.bytes <-> string/utf8';
 
-  var serialize = _.Gdf.Select( { in : 'buffer.bytes', out : 'string/utf8' } );
+  var serialize = _.Gdf.Select({ in : 'buffer.bytes', out : 'string/utf8' });
   test.identical( serialize.length, 1 );
   let utf8FromBuffer = serialize[ 0 ];
 
-  var serialize = _.Gdf.Select( { out : 'buffer.bytes', in : 'string/utf8' } );
+  var serialize = _.Gdf.Select({ out : 'buffer.bytes', in : 'string/utf8' });
   test.identical( serialize.length, 1 );
   let utf8ToBuffer = serialize[ 0 ];
 
-  var converted = utf8FromBuffer.encode( { data : buffer } );
+  var converted = utf8FromBuffer.encode({ data : buffer });
   test.identical( converted.format, 'string/utf8' );
   test.is( _.strIs( converted.data ) );
 
-  var converted = utf8ToBuffer.encode( { data : converted.data } );
+  var converted = utf8ToBuffer.encode({ data : converted.data });
   test.identical( converted.format, 'buffer.bytes' );
   test.is( _.bufferBytesIs( converted.data ) );
   test.identical( converted.data, buffer );
@@ -71,4 +71,4 @@ Self = wTestSuite( Self );
 if( typeof module !== 'undefined' && !module.parent )
 wTester.test( Self.name );
 
-} )();
+})();

@@ -47,11 +47,11 @@ function yml( test )
 
   test.case = 'select';
 
-  var serialize = _.Gdf.Select( { in : 'structure', out : 'string', ext : 'yml' } );
+  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'yml' });
   test.identical( serialize.length, 1 );
   serialize = serialize[ 0 ];
 
-  var deserialize = _.Gdf.Select( { in : 'string', out : 'structure', ext : 'yml' } );
+  var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'yml' });
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
@@ -66,22 +66,22 @@ function yml( test )
     if( !_.mapIs( src ) )
     src = { [ s ] : src };
 
-    var serialized = serialize.encode( { data : src } );
+    var serialized = serialize.encode({ data : src });
     test.identical( serialized.format, 'string' );
     test.is( _.strIs( serialized.data ) );
 
-    var deserialized = deserialize.encode( { data : serialized.data } );
+    var deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
   test.close( 'simple' );
 
   test.case = 'all simple together';
-  var serialized = serialize.encode( { data : SamplesSimple } );
+  var serialized = serialize.encode({ data : SamplesSimple });
   test.identical( serialized.format, 'string' );
   test.is( _.strIs( serialized.data ) );
 
-  var deserialized = deserialize.encode( { data : serialized.data } );
+  var deserialized = deserialize.encode({ data : serialized.data });
   test.identical( deserialized.data, SamplesSimple );
   test.identical( deserialized.format, 'structure' );
 
@@ -96,21 +96,21 @@ function yml( test )
     if( !_.mapIs( src ) )
     src = { [ s ] : src };
 
-    var serialized = serialize.encode( { data : src } );
+    var serialized = serialize.encode({ data : src });
     test.identical( serialized.format, 'string' );
 
-    var deserialized = deserialize.encode( { data : serialized.data } );
+    var deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
   test.close( 'primitive' );
 
   test.case = 'all primitive together';
-  var serialized = serialize.encode( { data : SamplesPrimitive } );
+  var serialized = serialize.encode({ data : SamplesPrimitive });
   test.identical( serialized.format, 'string' );
   test.is( _.strIs( serialized.data ) );
 
-  var deserialized = deserialize.encode( { data : serialized.data } );
+  var deserialized = deserialize.encode({ data : serialized.data });
   test.identical( deserialized.data, SamplesPrimitive );
   test.identical( deserialized.format, 'structure' );
 
@@ -125,21 +125,21 @@ function yml( test )
     if( !_.mapIs( src ) )
     src = { [ s ] : src };
 
-    var serialized = serialize.encode( { data : src } );
+    var serialized = serialize.encode({ data : src });
     test.identical( serialized.format, 'string' );
 
-    var deserialized = deserialize.encode( { data : serialized.data } );
+    var deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
   test.close( 'complicated' );
 
   test.case = 'all complicated together';
-  var serialized = serialize.encode( { data : SamplesComplicated } );
+  var serialized = serialize.encode({ data : SamplesComplicated });
   test.identical( serialized.format, 'string' );
   test.is( _.strIs( serialized.data ) );
 
-  var deserialized = deserialize.encode( { data : serialized.data } );
+  var deserialized = deserialize.encode({ data : serialized.data });
   test.identical( deserialized.data, SamplesComplicated );
   test.identical( deserialized.format, 'structure' );
 
@@ -172,4 +172,4 @@ Self = wTestSuite( Self );
 if( typeof module !== 'undefined' && !module.parent )
 wTester.test( Self.name );
 
-} )();
+})();

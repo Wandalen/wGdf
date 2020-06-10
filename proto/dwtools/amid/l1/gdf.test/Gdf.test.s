@@ -75,10 +75,10 @@ function converterTypesCheck( test, o, o2 )
 
     try
     {
-      serialized = o.serialize.encode( { data : src } );
+      serialized = o.serialize.encode({ data : src });
       // test.identical( serialized.format, o.serializeFormat );
 
-      deserialized = o.deserialize.encode( { data : serialized.data } );
+      deserialized = o.deserialize.encode({ data : serialized.data });
       // test.identical( deserialized.format, o.deserializeFormat );
 
       results[ k ] = _.entityIdentical( deserialized.data, src );
@@ -96,7 +96,7 @@ function converterTypesCheck( test, o, o2 )
     }
   }
 
-  console.log( prefix + ' / results: ', _.toStr( results, { levels : 99, multiline : 1 } ) )
+  console.log( prefix + ' / results: ', _.toStr( results, { levels : 99, multiline : 1 }) )
 
   o.supporting = 1;
 
@@ -573,21 +573,21 @@ function trivial( test )
   test.case = 'select';
   var src = 'val : 13';
   debugger;
-  var converters = _.Gdf.Select( { in : 'string', out : 'structure', ext : 'cson', default : 1 } );
+  var converters = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'cson', default : 1 });
   debugger;
   test.identical( converters.length, 1 );
 
   /* */
 
   test.case = 'encode with format';
-  var dst = converters[ 0 ].encode( { data : src, format : 'string' } );
+  var dst = converters[ 0 ].encode({ data : src, format : 'string' });
   var expected = { data : { val : 13 }, format : 'structure' }
   test.identical( dst, expected );
 
   /* */
 
   test.case = 'encode without format';
-  var dst = converters[ 0 ].encode( { data : src } );
+  var dst = converters[ 0 ].encode({ data : src });
   var expected = { data : { val : 13 }, format : 'structure' }
   test.identical( dst, expected );
 
@@ -600,33 +600,33 @@ function select( test )
   let self = this;
 
   test.case = 'all'
-  var got = _.Gdf.Select( {} );
+  var got = _.Gdf.Select({});
   test.is( got.length === _.Gdf.Elements.length );
 
   test.case = 'in'
-  var got = _.Gdf.Select( { in : 'structure' } );
+  var got = _.Gdf.Select({ in : 'structure' });
   test.ge( got.length, 1 );
 
   test.case = 'out'
-  var got = _.Gdf.Select( { out : 'string' } );
+  var got = _.Gdf.Select({ out : 'string' });
   test.ge( got.length, 1 );
 
   test.case = 'not existing'
 
-  var got = _.Gdf.Select( { in : 'not existing' } );
+  var got = _.Gdf.Select({ in : 'not existing' });
   test.is( !got.length );
 
-  var got = _.Gdf.Select( { out : 'not existing' } );
+  var got = _.Gdf.Select({ out : 'not existing' });
   test.is( !got.length );
 
-  var got = _.Gdf.Select( { ext : 'not existing' } );
+  var got = _.Gdf.Select({ ext : 'not existing' });
   test.is( !got.length );
 
   test.case = 'default';
 
-  var got = _.Gdf.Select( { in : 'structure', out : 'string' } );
+  var got = _.Gdf.Select({ in : 'structure', out : 'string' });
   test.is( got.length > 1 );
-  var got = _.Gdf.Select( { in : 'structure', out : 'string', default : 1 } );
+  var got = _.Gdf.Select({ in : 'structure', out : 'string', default : 1 });
   test.is( got.length === 1 );
   test.identical( got[ 0 ].shortName, 'json.min' );
 
@@ -642,7 +642,7 @@ function select( test )
   test.case = 'not supporting value'
 
   test.shouldThrowErrorSync( () => _.Gdf.Select() );
-  test.shouldThrowErrorSync( () => _.Gdf.Select( { ext : [ 'json.fine', 'json' ] } ) );
+  test.shouldThrowErrorSync( () => _.Gdf.Select({ ext : [ 'json.fine', 'json' ] }) );
 
 }
 
