@@ -561,6 +561,7 @@ function supportedTypes( test )
   var output = _.strTable( o );
   console.log( output );
 }
+supportedTypes.timeOut = 10000;
 
 // trivial
 
