@@ -1,4 +1,5 @@
-(function _Converter_s_() {
+(function _Converter_s_()
+{
 
 'use strict';
 
@@ -322,7 +323,7 @@ function Select( selector )
   if( result.length > 1 )
   if( selector.default !== undefined )
   {
-    result = result.filter( ( e ) => selector.default == e.default );
+    result = result.filter( ( e ) => selector.default === e.default );
   }
 
   result = result.map( ( e ) => _.mapExtend( null, selector, { encoder : e } ) );
@@ -371,7 +372,7 @@ function Select( selector )
  * @module Tools/base/Converter
  */
 
- /**
+/**
  * @summary Contains descriptors of registered converters mapped by inptut format.
  * @property {Object} InMap
  * @static
@@ -380,7 +381,7 @@ function Select( selector )
  * @module Tools/base/Converter
  */
 
- /**
+/**
  * @summary Contains descriptors of registered converters mapped by out format.
  * @property {Object} OutMap
  * @static
@@ -398,7 +399,7 @@ function Select( selector )
  * @module Tools/base/Converter
  */
 
- /**
+/**
  * @summary Contains descriptors of registered converters mapped by in/out format.
  * @property {Object} InOutMap
  * @static

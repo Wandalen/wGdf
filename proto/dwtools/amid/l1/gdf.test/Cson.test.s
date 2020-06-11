@@ -4,13 +4,13 @@
 
 if( typeof module !== 'undefined' )
 {
-  var _ = require( '../../../../dwtools/Tools.s' );
+  let _ = require( '../../../../dwtools/Tools.s' );
   require( '../gdf/Converter.s' );
   _.include( 'wTesting' );
 }
 
 var _global = _global_;
-var _ = _global_.wTools;
+let _ = _global_.wTools;
 
 _.assert( _testerGlobal_.wTools !== _global_.wTools );
 
@@ -63,10 +63,10 @@ function cson( test )
     test.case = s;
     let src = SamplesSimple[ s ];
 
-    var serialized = serialize.encode({ data : src });
+    let serialized = serialize.encode({ data : src });
     test.identical( serialized.format, 'string' );
 
-    var deserialized = deserialize.encode({ data : serialized.data });
+    let deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
@@ -80,10 +80,10 @@ function cson( test )
     test.case = s;
     let src = SamplesPrimitive[ s ];
 
-    var serialized = serialize.encode({ data : src });
+    let serialized = serialize.encode({ data : src });
     test.identical( serialized.format, 'string' );
 
-    var deserialized = deserialize.encode({ data : serialized.data });
+    let deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
