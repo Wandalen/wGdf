@@ -2,9 +2,11 @@
 {
 'use strict';
 
+var _;
+
 if( typeof module !== 'undefined' )
 {
-  var _ = require( '../../../../dwtools/Tools.s' );
+  _ = require( '../../../../dwtools/Tools.s' );
   require( '../gdf/Converter.s' );
   _.include( 'wTesting' );
 }
@@ -125,9 +127,12 @@ function json( test )
 
   test.case = 'array'
   var src =
-  [ 0,
-    [ 1,
-      [ 2,
+  [
+    0,
+    [
+      1,
+      [
+        2,
         [ 3 ]
       ]
     ]

@@ -2,9 +2,11 @@
 {
 'use strict';
 
+var _;
+
 if( typeof module !== 'undefined' )
 {
-  var _ = require( '../../../../dwtools/Tools.s' );
+  _ = require( '../../../../dwtools/Tools.s' );
   require( '../gdf/Converter.s' );
   _.include( 'wTesting' );
 }
@@ -66,11 +68,11 @@ function yml( test )
     if( !_.mapIs( src ) )
     src = { [ s ] : src };
 
-    var serialized = serialize.encode({ data : src });
+    let serialized = serialize.encode({ data : src });
     test.identical( serialized.format, 'string' );
     test.is( _.strIs( serialized.data ) );
 
-    var deserialized = deserialize.encode({ data : serialized.data });
+    let deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
@@ -96,10 +98,10 @@ function yml( test )
     if( !_.mapIs( src ) )
     src = { [ s ] : src };
 
-    var serialized = serialize.encode({ data : src });
+    let serialized = serialize.encode({ data : src });
     test.identical( serialized.format, 'string' );
 
-    var deserialized = deserialize.encode({ data : serialized.data });
+    let deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
@@ -125,10 +127,10 @@ function yml( test )
     if( !_.mapIs( src ) )
     src = { [ s ] : src };
 
-    var serialized = serialize.encode({ data : src });
+    let serialized = serialize.encode({ data : src });
     test.identical( serialized.format, 'string' );
 
-    var deserialized = deserialize.encode({ data : serialized.data });
+    let deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }

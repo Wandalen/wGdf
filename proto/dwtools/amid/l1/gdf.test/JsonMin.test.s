@@ -2,9 +2,11 @@
 {
 'use strict';
 
+var _;
+
 if( typeof module !== 'undefined' )
 {
-  var _ = require( '../../../../dwtools/Tools.s' );
+  _ = require( '../../../../dwtools/Tools.s' );
   require( '../gdf/Converter.s' );
   _.include( 'wTesting' );
 }
@@ -64,10 +66,10 @@ function jsonMin( test )
     test.case = s;
     let src = SamplesSimple[ s ];
 
-    var serialized = serialize.encode({ data : src });
+    let serialized = serialize.encode({ data : src });
     test.identical( serialized.format, 'string' );
 
-    var deserialized = deserialize.encode({ data : serialized.data });
+    let deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
@@ -81,10 +83,10 @@ function jsonMin( test )
     test.case = s;
     let src = SamplesPrimitive[ s ];
 
-    var serialized = serialize.encode({ data : src });
+    let serialized = serialize.encode({ data : src });
     test.identical( serialized.format, 'string' );
 
-    var deserialized = deserialize.encode({ data : serialized.data });
+    let deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
@@ -110,7 +112,7 @@ function jsonMin( test )
   test.identical( deserialized.format, 'structure' );
 
   test.case = 'typed array';
-  var src = { typed :  new U16x( [ 1,2,3 ] ) }
+  var src = { typed :  new U16x( [ 1, 2, 3 ] ) }
   var serialized = serialize.encode({ data : src });
   test.identical( serialized.format, 'string' );
   test.is( _.strIs( serialized.data ) );

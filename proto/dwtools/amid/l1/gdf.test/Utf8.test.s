@@ -2,9 +2,11 @@
 {
 'use strict';
 
+var _;
+
 if( typeof module !== 'undefined' )
 {
-  var _ = require( '../../../../dwtools/Tools.s' );
+  _ = require( '../../../../dwtools/Tools.s' );
   require( '../gdf/Converter.s' );
   _.include( 'wTesting' );
 }

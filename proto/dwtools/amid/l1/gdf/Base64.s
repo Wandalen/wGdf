@@ -3,8 +3,8 @@
 
 'use strict';
 
-/* qqq : should be no indentation in such places! */
-/* qqq : end of line should be LF not CRLF! */
+/* aaa Artem : done. should be no indentation in such places! */
+/* aaa Artem : done. end of line should be LF not CRLF! */
 
 if( typeof module !== 'undefined' )
 {
@@ -40,19 +40,34 @@ function _base64ToBuffer( base64, chunkSize )
 
   function base64ToWrdBits6( chr )
   {
+    let result;
 
-    return chr > 64 && chr < 91 ?
-        chr - 65
-      : chr > 96 && chr < 123 ?
-        chr - 71
-      : chr > 47 && chr < 58 ?
-        chr + 4
-      : chr === 43 ?
-        62
-      : chr === 47 ?
-        63
-      :
-        0;
+    if( chr > 64 && chr < 91 )
+      result = chr - 65;
+    else if( chr > 96 && chr < 123 )
+      result = chr - 71;
+    else if( chr > 47 && chr < 58 )
+      result = chr + 4;
+    else if( chr === 43 )
+      result = 62;
+    else if( chr === 47 )
+      result = 63;
+    else
+      result = 0;
+
+    return result;
+    // return chr > 64 && chr < 91 ?
+    //     chr - 65
+    //   : chr > 96 && chr < 123 ?
+    //     chr - 71
+    //   : chr > 47 && chr < 58 ?
+    //     chr + 4
+    //   : chr === 43 ?
+    //     62
+    //   : chr === 47 ?
+    //     63
+    //   :
+    //     0;
 
   }
 
@@ -62,15 +77,19 @@ function _base64ToBuffer( base64, chunkSize )
   var dstSize = chunkSize ? Math.ceil( ( srcSize * 3 + 1 >> 2 ) / chunkSize ) * chunkSize : srcSize * 3 + 1 >> 2
   var bytes = new U8x( dstSize );
 
-  var factor3, factor4, wrd3 = 0, outIndex = 0;
+  var factor3,
+    factor4;
+  var wrd3 = 0;
+  var outIndex = 0;
+
   for( var inIndex = 0; inIndex < srcSize; inIndex++ )
   {
 
     factor4 = inIndex & 3;
     wrd3 |= base64ToWrdBits6( base64.charCodeAt( inIndex ) ) << 18 - 6 * factor4;
-    if ( factor4 === 3 || srcSize - inIndex === 1 )
+    if( factor4 === 3 || srcSize - inIndex === 1 )
     {
-      for ( factor3 = 0; factor3 < 3 && outIndex < dstSize; factor3++, outIndex++ )
+      for( factor3 = 0; factor3 < 3 && outIndex < dstSize; factor3++, outIndex++ )
       {
         bytes[ outIndex ] = wrd3 >>> ( 16 >>> factor3 & 24 ) & 255;
       }
@@ -103,19 +122,34 @@ function _base64FromBuffer( byteBuffer )
 
   function wrdBits6ToBase64( wrdBits6 )
   {
+    let result;
 
-    return wrdBits6 < 26 ?
-        wrdBits6 + 65
-      : wrdBits6 < 52 ?
-        wrdBits6 + 71
-      : wrdBits6 < 62 ?
-        wrdBits6 - 4
-      : wrdBits6 === 62 ?
-        43
-      : wrdBits6 === 63 ?
-        47
-      :
-        65;
+    if( wrdBits6 < 26 )
+      result = wrdBits6 + 65;
+    else if( wrdBits6 < 52 )
+      result = wrdBits6 + 71;
+    else if( wrdBits6 < 62 )
+      result = wrdBits6 - 4;
+    else if( wrdBits6 === 62 )
+      result = 43;
+    else if( wrdBits6 === 63 )
+      result = 47;
+    else
+      result = 65;
+
+    return result;
+    // return wrdBits6 < 26 ?
+    //     wrdBits6 + 65
+    //   : wrdBits6 < 52 ?
+    //     wrdBits6 + 71
+    //   : wrdBits6 < 62 ?
+    //     wrdBits6 - 4
+    //   : wrdBits6 === 62 ?
+    //     43
+    //   : wrdBits6 === 63 ?
+    //     47
+    //   :
+    //     65;
 
   }
 
@@ -125,7 +159,7 @@ function _base64FromBuffer( byteBuffer )
   var result = '';
   var size = byteBuffer.length;
 
-  for ( var l = size, wrd3 = 0, index = 0; index < l; index++ )
+  for( var l = size, wrd3 = 0, index = 0; index < l; index++ )
   {
 
     factor3 = index % 3;
@@ -133,7 +167,7 @@ function _base64FromBuffer( byteBuffer )
     //{ result += "\r\n"; }
 
     wrd3 |= byteBuffer[ index ] << ( 16 >>> factor3 & 24 );
-    if ( factor3 === 2 || l - index === 1 )
+    if( factor3 === 2 || l - index === 1 )
     {
 
       var a = wrdBits6ToBase64( wrd3 >>> 18 & 63 );
@@ -147,7 +181,16 @@ function _base64FromBuffer( byteBuffer )
 
   }
 
-  var postfix = ( factor3 === 2 ? '' : factor3 === 1 ? '=' : '==' );
+  // var postfix = ( factor3 === 2 ? '' : factor3 === 1 ? '=' : '==' );
+  let postfix;
+
+  if( factor3 === 2 )
+    postfix = '';
+  else if( factor3 === 1 )
+    postfix = '=';
+  else
+    postfix = '==';
+
   return result.substr( 0, result.length - 2 + factor3 ) + postfix;
 }
 
@@ -325,23 +368,43 @@ function _utf8FromBuffer( byteBuffer )
 
   _.assert( byteBuffer instanceof U8x );
 
-  for ( var nPart, nLen = byteBuffer.length, index = 0; index < nLen; index++ )
+  for( var nPart, nLen = byteBuffer.length, index = 0; index < nLen; index++ )
   {
     nPart = byteBuffer[ index ];
-    result += String.fromCharCode(
-      nPart > 251 && nPart < 254 && index + 5 < nLen ?
-        ( nPart - 252 ) * 1073741824 + ( byteBuffer[ ++index ] - 128 << 24 ) + ( byteBuffer[ ++index ] - 128 << 18 ) + ( byteBuffer[ ++index ] - 128 << 12 ) + ( byteBuffer[ ++index ] - 128 << 6 ) + byteBuffer[ ++index ] - 128
-      : nPart > 247 && nPart < 252 && index + 4 < nLen ?
-        ( nPart - 248 << 24 ) + ( byteBuffer[ ++index ] - 128 << 18 ) + ( byteBuffer[ ++index ] - 128 << 12 ) + ( byteBuffer[ ++index ] - 128 << 6 ) + byteBuffer[ ++index ] - 128
-      : nPart > 239 && nPart < 248 && index + 3 < nLen ?
-        ( nPart - 240 << 18 ) + ( byteBuffer[ ++index ] - 128 << 12 ) + ( byteBuffer[ ++index ] - 128 << 6 ) + byteBuffer[ ++index ] - 128
-      : nPart > 223 && nPart < 240 && index + 2 < nLen ?
-        ( nPart - 224 << 12 ) + ( byteBuffer[ ++index ] - 128 << 6 ) + byteBuffer[ ++index ] - 128
-      : nPart > 191 && nPart < 224 && index + 1 < nLen ?
-        ( nPart - 192 << 6 ) + byteBuffer[ ++index ] - 128
-      :
-        nPart
-    );
+
+    let charCode;
+
+    if( nPart > 251 && nPart < 254 && index + 5 < nLen )
+      charCode = ( nPart - 252 ) * 1073741824 + ( byteBuffer[ ++index ] - 128 << 24 ) + ( byteBuffer[ ++index ] - 128 << 18 )
+      + ( byteBuffer[ ++index ] - 128 << 12 ) + ( byteBuffer[ ++index ] - 128 << 6 ) + byteBuffer[ ++index ] - 128;
+    else if( nPart > 247 && nPart < 252 && index + 4 < nLen )
+      charCode = ( nPart - 248 << 24 ) + ( byteBuffer[ ++index ] - 128 << 18 ) + ( byteBuffer[ ++index ] - 128 << 12 )
+      + ( byteBuffer[ ++index ] - 128 << 6 ) + byteBuffer[ ++index ] - 128;
+    else if( nPart > 239 && nPart < 248 && index + 3 < nLen )
+      charCode = ( nPart - 240 << 18 ) + ( byteBuffer[ ++index ] - 128 << 12 ) + ( byteBuffer[ ++index ] - 128 << 6 )
+      + byteBuffer[ ++index ] - 128;
+    else if( nPart > 223 && nPart < 240 && index + 2 < nLen )
+      charCode = ( nPart - 224 << 12 ) + ( byteBuffer[ ++index ] - 128 << 6 ) + byteBuffer[ ++index ] - 128;
+    else if( nPart > 191 && nPart < 224 && index + 1 < nLen )
+      charCode = ( nPart - 192 << 6 ) + byteBuffer[ ++index ] - 128;
+    else
+      charCode = nPart;
+
+    result += String.fromCharCode( charCode );
+    // result += String.fromCharCode(
+    //   nPart > 251 && nPart < 254 && index + 5 < nLen ?
+    //     ( nPart - 252 ) * 1073741824 + ( byteBuffer[ ++index ] - 128 << 24 ) + ( byteBuffer[ ++index ] - 128 << 18 ) + ( byteBuffer[ ++index ] - 128 << 12 ) + ( byteBuffer[ ++index ] - 128 << 6 ) + byteBuffer[ ++index ] - 128
+    //   : nPart > 247 && nPart < 252 && index + 4 < nLen ?
+    //     ( nPart - 248 << 24 ) + ( byteBuffer[ ++index ] - 128 << 18 ) + ( byteBuffer[ ++index ] - 128 << 12 ) + ( byteBuffer[ ++index ] - 128 << 6 ) + byteBuffer[ ++index ] - 128
+    //   : nPart > 239 && nPart < 248 && index + 3 < nLen ?
+    //     ( nPart - 240 << 18 ) + ( byteBuffer[ ++index ] - 128 << 12 ) + ( byteBuffer[ ++index ] - 128 << 6 ) + byteBuffer[ ++index ] - 128
+    //   : nPart > 223 && nPart < 240 && index + 2 < nLen ?
+    //     ( nPart - 224 << 12 ) + ( byteBuffer[ ++index ] - 128 << 6 ) + byteBuffer[ ++index ] - 128
+    //   : nPart > 191 && nPart < 224 && index + 1 < nLen ?
+    //     ( nPart - 192 << 6 ) + byteBuffer[ ++index ] - 128
+    //   :
+    //     nPart
+    // );
   }
 
   return result;
@@ -367,14 +430,30 @@ let utf8ToBuffer =
 function _utf8ToBuffer( str )
 {
 
-  var chr, nStrLen = str.length, size = 0;
+  var chr;
+  var nStrLen = str.length;
+  var size = 0;
 
   //
 
-  for ( var index = 0; index < nStrLen; index++ )
+  for( let index = 0; index < nStrLen; index++ )
   {
     chr = str.charCodeAt( index );
-    size += chr < 0x80 ? 1 : chr < 0x800 ? 2 : chr < 0x10000 ? 3 : chr < 0x200000 ? 4 : chr < 0x4000000 ? 5 : 6;
+
+    if( chr < 0x80 )
+      size += 1;
+    else if( chr < 0x800 )
+      size += 2;
+    else if( chr < 0x10000 )
+      size += 3;
+    else if( chr < 0x200000 )
+      size += 4;
+    else if( chr < 0x4000000 )
+      size += 5;
+    else
+      size += 6;
+
+    // size += chr < 0x80 ? 1 : chr < 0x800 ? 2 : chr < 0x10000 ? 3 : chr < 0x200000 ? 4 : chr < 0x4000000 ? 5 : 6;
   }
 
   var byteBuffer = new U8x( size );
@@ -384,25 +463,25 @@ function _utf8ToBuffer( str )
   for( var index = 0, nChrIdx = 0; index < size; nChrIdx++ )
   {
     chr = str.charCodeAt( nChrIdx );
-    if ( chr < 128 )
+    if( chr < 128 )
     {
       /* one byte */
       byteBuffer[ index++ ] = chr;
     }
-    else if ( chr < 0x800 )
+    else if( chr < 0x800 )
     {
       /* two bytes */
       byteBuffer[ index++ ] = 192 + ( chr >>> 6 );
       byteBuffer[ index++ ] = 128 + ( chr & 63 );
     }
-    else if ( chr < 0x10000 )
+    else if( chr < 0x10000 )
     {
       /* three bytes */
       byteBuffer[ index++ ] = 224 + ( chr >>> 12 );
       byteBuffer[ index++ ] = 128 + ( chr >>> 6 & 63 );
       byteBuffer[ index++ ] = 128 + ( chr & 63 );
     }
-    else if ( chr < 0x200000 )
+    else if( chr < 0x200000 )
     {
       /* four bytes */
       byteBuffer[ index++ ] = 240 + ( chr >>> 18 );
@@ -410,7 +489,7 @@ function _utf8ToBuffer( str )
       byteBuffer[ index++ ] = 128 + ( chr >>> 6 & 63 );
       byteBuffer[ index++ ] = 128 + ( chr & 63 );
     }
-    else if ( chr < 0x4000000 )
+    else if( chr < 0x4000000 )
     {
       /* five bytes */
       byteBuffer[ index++ ] = 248 + ( chr >>> 24 );
