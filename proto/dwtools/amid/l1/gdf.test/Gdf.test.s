@@ -1,17 +1,18 @@
-( function _Gdf_test_s_( ) {
+( function _Gdf_test_s_( )
+{
 
 'use strict';
 
 if( typeof module !== 'undefined' )
 {
   // require( 'wTesting' );
-  var _ = require( '../../../../dwtools/Tools.s' );
+  let _ = require( '../../../../dwtools/Tools.s' );
   require( '../gdf/Converter.s' );
   _.include( 'wTesting' );
 }
 
 var _global = _global_;
-var _ = _global_.wTools;
+let _ = _global_.wTools;
 
 _.assert( _testerGlobal_.wTools !== _global_.wTools );
 debugger;
@@ -70,8 +71,8 @@ function converterTypesCheck( test, o, o2 )
 
     results[ k ] = false;
 
-    let serialized;
-    let deserialized;
+    let serialized,
+      deserialized;
 
     try
     {
@@ -161,10 +162,10 @@ function primitive2( test, o )
 
   let samples =
   {
-    null : null,
+    'null' : null,
     '+infinity' : +Infinity,
     '-infinity' : -Infinity,
-    nan : NaN,
+    'nan' : NaN,
   }
 
   let o2 =
@@ -187,8 +188,8 @@ function primitive3( test, o )
   {
     '+0' : +0,
     '-0' : -0,
-    'undefined' : undefined,
-    date : new Date()
+    undefined,
+    'date' : new Date()
   }
 
   if( typeof BigInt !== 'undefined' )

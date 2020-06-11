@@ -1,11 +1,12 @@
-( function _GdfPerfomance_test_s_( ) {
+( function _GdfPerfomance_test_s_( )
+{
 
 'use strict';
 
 if( typeof module !== 'undefined' )
 {
 
-  var _ = require( '../../../../dwtools/Tools.s' );
+  let _ = require( '../../../../dwtools/Tools.s' );
   require( '../gdf/Converter.s' );
   _.include( 'wTesting' );
   _.include( 'wFiles' );
@@ -13,7 +14,7 @@ if( typeof module !== 'undefined' )
 }
 
 var _global = _global_;
-var _ = _global_.wTools;
+let _ = _global_.wTools;
 
 // --
 // context
@@ -22,7 +23,7 @@ var _ = _global_.wTools;
 function onSuiteBegin()
 {
   var self = this;
-  self.testSuitePath = _.path.dirTempOpen( _.path.join( __dirname, '../..'  ), 'wGdf' );
+  self.testSuitePath = _.path.dirTempOpen( _.path.join( __dirname, '../..' ), 'wGdf' );
 
   self.results = Object.create( null );
 }
@@ -124,8 +125,8 @@ function testApp()
 
     for( var i in srcs )
     {
-      let serialized;
-      let deserialized;
+      let serialized,
+        deserialized;
 
       let src = srcs[ i ];
       let srcSize = i;
@@ -135,10 +136,10 @@ function testApp()
 
       try
       {
-        var t0 = _.timeNow();
+        let t0 = _.timeNow();
         serialized = serialize.encode({ data : src });
-        var spent = _.timeSpent( t0 );
-        var size =  _.strMetricFormatBytes( _.entitySize( serialized.data ) );
+        let spent = _.timeSpent( t0 );
+        let size =  _.strMetricFormatBytes( _.entitySize( serialized.data ) );
 
         console.log( 'write: ', spent );
         console.log( serialize.ext, 'out size:', size );
@@ -146,7 +147,7 @@ function testApp()
         result[ 1 ] = size;
         result[ 2 ] = spent;
 
-        process.send({ converter : serialize.ext, results : results });
+        process.send({ converter : serialize.ext, results });
 
       }
       catch( err )
@@ -157,21 +158,21 @@ function testApp()
         result[ 2 ] = 'Err';
         result[ 3 ] = 'Err';
 
-        process.send({ converter : serialize.ext, results : results });
+        process.send({ converter : serialize.ext, results });
 
         continue;
       }
 
       try
       {
-        var t0 = _.timeNow();
+        let t0 = _.timeNow();
         deserialized = deserialize.encode({ data : serialized.data });
-        var spent = _.timeSpent( t0 );
+        let spent = _.timeSpent( t0 );
         console.log( 'read: ', spent );
 
         result[ 3 ] = spent;
 
-        process.send({ converter : serialize.ext, results : results });
+        process.send({ converter : serialize.ext, results });
 
       }
       catch( err )
@@ -179,7 +180,7 @@ function testApp()
         _.errLogOnce( err );
         result[ 3 ] = 'Err';
 
-        process.send({ converter : serialize.ext, results : results });
+        process.send({ converter : serialize.ext, results });
       }
 
     }
@@ -261,7 +262,7 @@ function perfomance( test )
   let ready = new _.Consequence().take( null );
 
   for( var c in self.converters )
-  ready.finally( _.routineSeal( self, execute, [ self.converters[ c ] ] ) );
+    ready.finally( _.routineSeal( self, execute, [ self.converters[ c ] ] ) );
 
 
   return ready;
@@ -321,7 +322,7 @@ var Self =
   {
     testSuitePath : null,
     results : null,
-    converters : converters
+    converters
   },
 
   tests :

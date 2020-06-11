@@ -4,13 +4,13 @@
 
 if( typeof module !== 'undefined' )
 {
-  var _ = require( '../../../../dwtools/Tools.s' );
+  let _ = require( '../../../../dwtools/Tools.s' );
   require( '../gdf/Converter.s' );
   _.include( 'wTesting' );
 }
 
 var _global = _global_;
-var _ = _global_.wTools;
+let _ = _global_.wTools;
 
 _.assert( _testerGlobal_.wTools !== _global_.wTools );
 
@@ -125,9 +125,12 @@ function json( test )
 
   test.case = 'array'
   var src =
-  [ 0,
-    [ 1,
-      [ 2,
+  [
+    0,
+    [
+      1,
+      [
+        2,
         [ 3 ]
       ]
     ]
