@@ -2,17 +2,15 @@
 {
 'use strict';
 
-var _;
-
 if( typeof module !== 'undefined' )
 {
-  _ = require( '../../../../dwtools/Tools.s' );
+  let _ = require( '../../../../dwtools/Tools.s' );
   require( '../gdf/Converter.s' );
   _.include( 'wTesting' );
 }
 
 var _global = _global_;
-var _ = _global_.wTools;
+let _ = _global_.wTools;
 
 _.assert( _testerGlobal_.wTools !== _global_.wTools );
 
