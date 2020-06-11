@@ -1,4 +1,5 @@
-( function _GdfPerfomance_test_s_( ) {
+( function _GdfPerfomance_test_s_( )
+{
 
 'use strict';
 
