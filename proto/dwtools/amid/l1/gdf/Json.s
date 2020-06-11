@@ -65,8 +65,7 @@
         if( position )
         position = Number( position[ 1 ] );
         let first = 0;
-        // if( !isNaN( position ) )
-        if( position >= 0 )
+        if( _.numberDefined( position ) && position >= 0 )
         {
           let nearest = _.strLinesNearest( src, position );
           first = _.strLinesCount( src.substring( 0, nearest.spans[ 0 ] ) );
