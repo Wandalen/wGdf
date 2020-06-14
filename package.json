@@ -1,33 +1,49 @@
 {
-  "name" : "wgdf",
-  "version" : "0.3.170",
-  "description" : "Standardized abstract interface and collection of strategies to convert complex data structures from one generic data format ( GDF ) to another generic data format. You may use the module to serialize complex data structure to string or deserialize string back to the original data structure. Generic data format ( GDF ) is a format of data structure designed with taking into account none unique feature of data so that it is applicable to any kind of data.",
-  "author" : "Kostiantyn Wandalen <wanalen@01.school>",
-  "license" : "MIT",
-  "main" : "proto/dwtools/amid/l1/gdf/Converter.s",
-  "files" : [ "proto/dwtools/amid/l1/gdf", "proto/dwtools/Tools.s", "out" ],
-  "scripts" : { "test" : "wtest .run 'proto/**' rapidity:-3", "docgen" : "wdocgen proto" },
-  "repository" : { "type" : "git", "url" : "https://github.com/Wandalen/wGdf.git" },
-  "bugs" : { "url" : "https://github.com/Wandalen/wGdf/issues" },
-  "dependencies" :
-  {
-    "bson" : "4.0.4",
-    "cbor" : "5.0.2",
-    "coffeescript" : "2.5.1",
-    "js-yaml" : "3.14.0",
-    "js2coffee" : "2.2.0",
-    "msgpack-lite" : "0.1.26",
-    "wCopyable" : "alpha",
-    "wTools" : "alpha",
-    "what-the-pack" : "2.0.3",
-    "wroutinebasic" : "alpha"
+  "name": "wgdf",
+  "version": "0.3.170",
+  "description": "Standardized abstract interface and collection of strategies to convert complex data structures from one generic data format ( GDF ) to another generic data format. You may use the module to serialize complex data structure to string or deserialize string back to the original data structure. Generic data format ( GDF ) is a format of data structure designed with taking into account none unique feature of data so that it is applicable to any kind of data.",
+  "author": "Kostiantyn Wandalen <wanalen@01.school>",
+  "license": "MIT",
+  "main": "proto/dwtools/amid/l1/gdf/Converter.s",
+  "files": [
+    "proto/dwtools/amid/l1/gdf",
+    "proto/dwtools/Tools.s",
+    "out"
+  ],
+  "scripts": {
+    "test": "wtest .run 'proto/**' rapidity:-3",
+    "docgen": "wdocgen proto"
   },
-  "devDependencies" :
-  {
-    "eslint" : "7.2.0",
-    "wgdf" : "file:.",
-    "wTesting" : "alpha",
-    "cli-table2" : "0.2.0"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wandalen/wGdf.git"
   },
-  "keywords" : [ "wTools", "gdf", "abstract data structure", "generic data format", "standardized abstract interface" ]
+  "bugs": {
+    "url": "https://github.com/Wandalen/wGdf/issues"
+  },
+  "dependencies": {
+    "bson": "4.0.4",
+    "cbor": "5.0.2",
+    "coffeescript": "2.5.1",
+    "js-yaml": "3.14.0",
+    "js2coffee": "2.2.0",
+    "msgpack-lite": "0.1.26",
+    "wCopyable": "alpha",
+    "wTools": "alpha",
+    "what-the-pack": "2.0.3",
+    "wroutinebasic": "alpha"
+  },
+  "devDependencies": {
+    "eslint": "7.2.0",
+    "wgdf": "file:.",
+    "wTesting": "alpha",
+    "cli-table2": "0.2.0"
+  },
+  "keywords": [
+    "wTools",
+    "gdf",
+    "abstract data structure",
+    "generic data format",
+    "standardized abstract interface"
+  ]
 }

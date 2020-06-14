@@ -7,27 +7,6 @@ submodule :
   wCopyable :
     path : npm:///wCopyable
     enabled : 0 # submodule
-  bson :
-    path : npm:///bson
-    enabled : 0 # submodule
-  cbor :
-    path : npm:///cbor
-    enabled : 0 # submodule
-  coffeescript :
-    path : npm:///coffeescript
-    enabled : 0 # submodule
-  js-yaml :
-    path : npm:///js-yaml
-    enabled : 0 # submodule
-  js2coffee :
-    path : npm:///js2coffee
-    enabled : 0 # submodule
-  msgpack-lite :
-    path : npm:///msgpack-lite
-    enabled : 0 # submodule
-  what-the-pack :
-    path : npm:///what-the-pack
-    enabled : 0 # submodule
   wRoutineBasic :
     path : npm:///wroutinebasic
     enabled : 0 # submodule
@@ -41,16 +20,54 @@ submodule :
     enabled : 0 # submodule
     criterion :
       development : 1
+
+  bson :
+    path : npm:///bson#4.0.4
+    enabled : 0 # submodule
+    criterion :
+      external : 1
+  cbor :
+    path : npm:///cbor#5.0.2
+    enabled : 0 # submodule
+    criterion :
+      external : 1
+  coffeescript :
+    path : npm:///coffeescript#2.5.1
+    enabled : 0 # submodule
+    criterion :
+      external : 1
+  js-yaml :
+    path : npm:///js-yaml#3.14.0
+    enabled : 0 # submodule
+    criterion :
+      external : 1
+  js2coffee :
+    path : npm:///js2coffee#2.2.0
+    enabled : 0 # submodule
+    criterion :
+      external : 1
+  msgpack-lite :
+    path : npm:///msgpack-lite#0.1.26
+    enabled : 0 # submodule
+    criterion :
+      external : 1
+  what-the-pack :
+    path : npm:///what-the-pack#2.0.3
+    enabled : 0 # submodule
+    criterion :
+      external : 1
   cli-table2 :
-    path : npm:///cli-table2
+    path : npm:///cli-table2#0.2.0
     enabled : 0 # submodule
     criterion :
       development : 1
+      external : 1
   eslint :
     path : npm:///eslint#7.1.0
     enabled : 0 # submodule
     criterion :
       debug : 1
+      external : 1
 
 path :
 

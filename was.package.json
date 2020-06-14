@@ -11,21 +11,21 @@
   "bugs" : { "url" : "https://github.com/Wandalen/wGdf/issues" },
   "dependencies" :
   {
-    "bson" : "",
-    "cbor" : "",
-    "coffeescript" : "",
-    "js-yaml" : "",
-    "js2coffee" : "",
-    "msgpack-lite" : "",
+    "bson" : "4.0.4",
+    "cbor" : "5.0.2",
+    "coffeescript" : "2.5.1",
+    "js-yaml" : "3.14.0",
+    "js2coffee" : "2.2.0",
+    "msgpack-lite" : "0.1.26",
     "wCopyable" : "",
     "wTools" : "",
-    "what-the-pack" : "",
+    "what-the-pack" : "2.0.3",
     "wroutinebasic" : ""
   },
   "devDependencies" :
   {
     "wTesting" : "",
-    "cli-table2" : "",
+    "cli-table2" : "0.2.0",
     "eslint" : "7.2.0",
     "wgdf" : "file:."
   },

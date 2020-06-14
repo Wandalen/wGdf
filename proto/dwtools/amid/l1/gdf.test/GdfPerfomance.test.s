@@ -136,9 +136,9 @@ function testApp()
 
       try
       {
-        let t0 = _.timeNow();
+        let t0 = _.time.now();
         serialized = serialize.encode({ data : src });
-        let spent = _.timeSpent( t0 );
+        let spent = _.time.spent( t0 );
         let size =  _.strMetricFormatBytes( _.entitySize( serialized.data ) );
 
         console.log( 'write: ', spent );
@@ -165,9 +165,9 @@ function testApp()
 
       try
       {
-        let t0 = _.timeNow();
+        let t0 = _.time.now();
         deserialized = deserialize.encode({ data : serialized.data });
-        let spent = _.timeSpent( t0 );
+        let spent = _.time.spent( t0 );
         console.log( 'read: ', spent );
 
         result[ 3 ] = spent;
