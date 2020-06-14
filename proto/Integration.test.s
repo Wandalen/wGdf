@@ -110,7 +110,6 @@ function eslint( test )
   let eslint = process.platform === 'win32' ? 'node_modules/eslint/bin/eslint' : 'node_modules/.bin/eslint';
   eslint = path.join( rootPath, eslint );
   let sampleDir = path.join( rootPath, 'sample' );
-
   let ready = new _.Consequence().take( null );
 
   let start = _.process.starter

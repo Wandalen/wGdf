@@ -6,8 +6,8 @@ consistency:
     hash: e275e8471a7a8ff3a0e7e1fb7c979868
     size: 2080
   ../.im.will.yml: &ref_1
-    hash: 2a7ae6331e1d66a0f34b73d668c17c29
-    size: 5785
+    hash: e3d88a1b6334199be92ecb30a421f7a2
+    size: 6119
 module:
   wGdf.out:
     about:
@@ -199,34 +199,6 @@ module:
         path: 'npm:///wCopyable'
         autoExporting: 0
         enabled: 0
-      bson:
-        path: 'npm:///bson'
-        autoExporting: 0
-        enabled: 0
-      cbor:
-        path: 'npm:///cbor'
-        autoExporting: 0
-        enabled: 0
-      coffeescript:
-        path: 'npm:///coffeescript'
-        autoExporting: 0
-        enabled: 0
-      js-yaml:
-        path: 'npm:///js-yaml'
-        autoExporting: 0
-        enabled: 0
-      js2coffee:
-        path: 'npm:///js2coffee'
-        autoExporting: 0
-        enabled: 0
-      msgpack-lite:
-        path: 'npm:///msgpack-lite'
-        autoExporting: 0
-        enabled: 0
-      what-the-pack:
-        path: 'npm:///what-the-pack'
-        autoExporting: 0
-        enabled: 0
       wRoutineBasic:
         path: 'npm:///wroutinebasic'
         autoExporting: 0
@@ -243,18 +215,62 @@ module:
         enabled: 0
         criterion:
           development: 1
+      bson:
+        path: 'npm:///bson#4.0.4'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          external: 1
+      cbor:
+        path: 'npm:///cbor#5.0.2'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          external: 1
+      coffeescript:
+        path: 'npm:///coffeescript#2.5.1'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          external: 1
+      js-yaml:
+        path: 'npm:///js-yaml#3.14.0'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          external: 1
+      js2coffee:
+        path: 'npm:///js2coffee#2.2.0'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          external: 1
+      msgpack-lite:
+        path: 'npm:///msgpack-lite#0.1.26'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          external: 1
+      what-the-pack:
+        path: 'npm:///what-the-pack#2.0.3'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          external: 1
       cli-table2:
-        path: 'npm:///cli-table2'
+        path: 'npm:///cli-table2#0.2.0'
         autoExporting: 0
         enabled: 0
         criterion:
           development: 1
+          external: 1
       eslint:
         path: 'npm:///eslint#7.1.0'
         autoExporting: 0
         enabled: 0
         criterion:
           debug: 1
+          external: 1
     reflector:
       reflect.proto.debug.raw:
         src:
@@ -990,34 +1006,6 @@ module:
         path: 'npm:///wCopyable'
         autoExporting: 0
         enabled: 0
-      bson:
-        path: 'npm:///bson'
-        autoExporting: 0
-        enabled: 0
-      cbor:
-        path: 'npm:///cbor'
-        autoExporting: 0
-        enabled: 0
-      coffeescript:
-        path: 'npm:///coffeescript'
-        autoExporting: 0
-        enabled: 0
-      js-yaml:
-        path: 'npm:///js-yaml'
-        autoExporting: 0
-        enabled: 0
-      js2coffee:
-        path: 'npm:///js2coffee'
-        autoExporting: 0
-        enabled: 0
-      msgpack-lite:
-        path: 'npm:///msgpack-lite'
-        autoExporting: 0
-        enabled: 0
-      what-the-pack:
-        path: 'npm:///what-the-pack'
-        autoExporting: 0
-        enabled: 0
       wRoutineBasic:
         path: 'npm:///wroutinebasic'
         autoExporting: 0
@@ -1034,18 +1022,62 @@ module:
         enabled: 0
         criterion:
           development: 1
+      bson:
+        path: 'npm:///bson#4.0.4'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          external: 1
+      cbor:
+        path: 'npm:///cbor#5.0.2'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          external: 1
+      coffeescript:
+        path: 'npm:///coffeescript#2.5.1'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          external: 1
+      js-yaml:
+        path: 'npm:///js-yaml#3.14.0'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          external: 1
+      js2coffee:
+        path: 'npm:///js2coffee#2.2.0'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          external: 1
+      msgpack-lite:
+        path: 'npm:///msgpack-lite#0.1.26'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          external: 1
+      what-the-pack:
+        path: 'npm:///what-the-pack#2.0.3'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          external: 1
       cli-table2:
-        path: 'npm:///cli-table2'
+        path: 'npm:///cli-table2#0.2.0'
         autoExporting: 0
         enabled: 0
         criterion:
           development: 1
+          external: 1
       eslint:
         path: 'npm:///eslint#7.1.0'
         autoExporting: 0
         enabled: 0
         criterion:
           debug: 1
+          external: 1
     reflector:
       reflect.proto.debug.raw:
         src:
@@ -1581,5 +1613,5 @@ module:
         hash: e275e8471a7a8ff3a0e7e1fb7c979868
         size: 2080
       ../.im.will.yml:
-        hash: 2a7ae6331e1d66a0f34b73d668c17c29
-        size: 5785
+        hash: e3d88a1b6334199be92ecb30a421f7a2
+        size: 6119
