@@ -51,11 +51,6 @@ submodule :
     enabled : 0 # submodule
     criterion :
       external : 1
-  what-the-pack :
-    path : npm:///what-the-pack#2.0.3
-    enabled : 0 # submodule
-    criterion :
-      external : 1
   cli-table2 :
     path : npm:///cli-table2#0.2.0
     enabled : 0 # submodule

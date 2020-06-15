@@ -16,7 +16,7 @@ if( typeof module !== 'undefined' )
   require( './Coffee.s' );
   require( './JsStructure.s' );
   require( './Json.s' );
-  require( './MsgpackLiteWtp.s' );
+  require( './MsgpackLite.s' );
   require( './Yml.s' );
   require( './Base64.s' );
 }
