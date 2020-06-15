@@ -495,11 +495,13 @@ function supportedTypes( test )
     //   deserialize : { in : 'buffer.node', out : 'structure', ext : 'msgpack.lite' }
     // },
 
+    // xxx : remove msgpack.wtp
     // 'msgpack.wtp' :
     // {
     //   serialize : { in : 'structure', out : 'buffer.node', ext : 'msgpack.wtp' },
     //   deserialize : { in : 'buffer.node', out : 'structure', ext : 'msgpack.wtp' }
     // }
+
   }
 
   let data = [];
