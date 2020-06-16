@@ -3,16 +3,16 @@
 
 'use strict';
 
-/**
- * @file EncoderStrategyStandanrd.s.
- */
-
-if( typeof module !== 'undefined' )
-{
-
-  let _ = require( '../../../../dwtools/Tools.s' );
-
-}
+// /**
+//  * @file EncoderStrategyStandanrd.s.
+//  */
+//
+// if( typeof module !== 'undefined' )
+// {
+//
+//   let _ = require( '../../../../dwtools/Tools.s' );
+//
+// }
 
 let _global = _global_;
 let _ = _global_.wTools;
@@ -59,8 +59,8 @@ readCoffee =
     if( !Coffee )
     Coffee = require( CoffeePath );
 
-    if( op.envMap.filePath )
-    o.filename = _.fileProvider.path.nativize( op.envMap.filePath )
+    if( op.filePath )
+    o.filename = _.fileProvider.path.nativize( op.filePath )
 
     op.out.data = Coffee.eval( op.in.data, o );
     op.out.format = 'structure';

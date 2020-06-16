@@ -5,9 +5,8 @@
 
 if( typeof module !== 'undefined' )
 {
-  // require( 'wTesting' );
   let _ = require( '../../../../dwtools/Tools.s' );
-  require( '../gdf/Converter.s' );
+  require( '../gdf/entry/Gdf.s' );
   _.include( 'wTesting' );
 }
 
@@ -15,7 +14,6 @@ var _global = _global_;
 let _ = _global_.wTools;
 
 _.assert( _testerGlobal_.wTools !== _global_.wTools );
-debugger;
 
 // --
 // data
@@ -514,11 +512,11 @@ function supportedTypes( test )
 
     test.case = 'select';
 
-    var serialize = _.Gdf.Select( converter.serialize );
+    var serialize = _.gdf.select( converter.serialize );
     test.identical( serialize.length, 1 );
     serialize = serialize[ 0 ];
 
-    var deserialize = _.Gdf.Select( converter.deserialize );
+    var deserialize = _.gdf.select( converter.deserialize );
     test.identical( deserialize.length, 1 );
     deserialize = deserialize[ 0 ];
 
@@ -576,9 +574,7 @@ function trivial( test )
 
   test.case = 'select';
   var src = 'val : 13';
-  debugger;
-  var converters = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'cson', default : 1 });
-  debugger;
+  var converters = _.gdf.select({ in : 'string', out : 'structure', ext : 'cson', default : 1 });
   test.identical( converters.length, 1 );
 
   /* */
@@ -604,39 +600,39 @@ function select( test )
   let self = this;
 
   test.case = 'all'
-  var got = _.Gdf.Select({});
-  test.is( got.length === _.Gdf.Elements.length );
+  var got = _.gdf.select({});
+  test.is( got.length === _.gdf.convertersArray.length );
 
   test.case = 'in'
-  var got = _.Gdf.Select({ in : 'structure' });
+  var got = _.gdf.select({ in : 'structure' });
   test.ge( got.length, 1 );
 
   test.case = 'out'
-  var got = _.Gdf.Select({ out : 'string' });
+  var got = _.gdf.select({ out : 'string' });
   test.ge( got.length, 1 );
 
   test.case = 'not existing'
 
-  var got = _.Gdf.Select({ in : 'not existing' });
+  var got = _.gdf.select({ in : 'not existing' });
   test.is( !got.length );
 
-  var got = _.Gdf.Select({ out : 'not existing' });
+  var got = _.gdf.select({ out : 'not existing' });
   test.is( !got.length );
 
-  var got = _.Gdf.Select({ ext : 'not existing' });
+  var got = _.gdf.select({ ext : 'not existing' });
   test.is( !got.length );
 
   test.case = 'default';
 
-  var got = _.Gdf.Select({ in : 'structure', out : 'string' });
+  var got = _.gdf.select({ in : 'structure', out : 'string' });
   test.is( got.length > 1 );
-  var got = _.Gdf.Select({ in : 'structure', out : 'string', default : 1 });
+  var got = _.gdf.select({ in : 'structure', out : 'string', default : 1 });
   test.is( got.length === 1 );
   test.identical( got[ 0 ].shortName, 'json.min' );
 
   // test.case = 'shortName';
 
-  // var got = _.Gdf.Select({ shortName : 'json.fine', out : 'string' });
+  // var got = _.gdf.select({ shortName : 'json.fine', out : 'string' });
   // test.is( got.length === 1 );
   // test.identical( got[ 0 ].shortName, 'json.fine' );
 
@@ -645,8 +641,8 @@ function select( test )
 
   test.case = 'not supporting value'
 
-  test.shouldThrowErrorSync( () => _.Gdf.Select() );
-  test.shouldThrowErrorSync( () => _.Gdf.Select({ ext : [ 'json.fine', 'json' ] }) );
+  test.shouldThrowErrorSync( () => _.gdf.select() );
+  test.shouldThrowErrorSync( () => _.gdf.select({ ext : [ 'json.fine', 'json' ] }) );
 
 }
 
@@ -672,19 +668,19 @@ function registerAndFinit( test )
 
   converter = _.Gdf( converter );
 
-  test.is( _.longHas( _.Gdf.Elements, converter ) );
-  test.is( _.longHas( _.Gdf.InMap[ 'string' ], converter ) );
-  test.is( _.longHas( _.Gdf.OutMap[ 'number' ], converter ) );
-  test.is( _.longHas( _.Gdf.ExtMap[ 'ext' ], converter ) );
-  test.is( _.longHas( _.Gdf.InOutMap[ 'string-number' ], converter ) );
+  test.is( _.longHas( _.gdf.convertersArray, converter ) );
+  test.is( _.longHas( _.gdf.inMap[ 'string' ], converter ) );
+  test.is( _.longHas( _.gdf.outMap[ 'number' ], converter ) );
+  test.is( _.longHas( _.gdf.extMap[ 'ext' ], converter ) );
+  test.is( _.longHas( _.gdf.inOutMap[ 'string-number' ], converter ) );
 
   converter.finit();
 
-  test.is( !_.longHas( _.Gdf.Elements, converter ) );
-  test.is( !_.longHas( _.Gdf.InMap[ 'string' ], converter ) );
-  test.is( !_.longHas( _.Gdf.OutMap[ 'number' ], converter ) );
-  test.is( !_.longHas( _.Gdf.ExtMap[ 'ext' ], converter ) );
-  test.is( !_.longHas( _.Gdf.InOutMap[ 'string-number' ], converter ) );
+  test.is( !_.longHas( _.gdf.convertersArray, converter ) );
+  test.is( !_.longHas( _.gdf.inMap[ 'string' ], converter ) );
+  test.is( !_.longHas( _.gdf.outMap[ 'number' ], converter ) );
+  test.is( !_.longHas( _.gdf.extMap[ 'ext' ], converter ) );
+  test.is( !_.longHas( _.gdf.inOutMap[ 'string-number' ], converter ) );
 }
 
 // --

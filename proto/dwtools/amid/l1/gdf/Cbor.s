@@ -3,16 +3,16 @@
 
 'use strict';
 
-/**
- * @file EncoderStrategyStandanrd.s.
- */
-
-if( typeof module !== 'undefined' )
-{
-
-  let _ = require( '../../../../dwtools/Tools.s' );
-
-}
+// /**
+//  * @file EncoderStrategyStandanrd.s.
+//  */
+//
+// if( typeof module !== 'undefined' )
+// {
+//
+//   let _ = require( '../../../../dwtools/Tools.s' );
+//
+// }
 
 let _global = _global_;
 let _ = _global_.wTools;

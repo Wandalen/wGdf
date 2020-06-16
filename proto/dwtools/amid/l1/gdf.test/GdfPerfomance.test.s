@@ -7,7 +7,7 @@ if( typeof module !== 'undefined' )
 {
 
   let _ = require( '../../../../dwtools/Tools.s' );
-  require( '../gdf/Converter.s' );
+  require( '../gdf/entry/Gdf.s' );
   _.include( 'wTesting' );
   _.include( 'wFiles' );
 
@@ -112,10 +112,10 @@ function testApp()
 
   function run( o )
   {
-    var serialize = _.Gdf.Select( o.serialize );
+    var serialize = _.gdf.select( o.serialize );
     serialize = serialize[ 0 ];
 
-    var deserialize = _.Gdf.Select( o.deserialize );
+    var deserialize = _.gdf.select( o.deserialize );
     deserialize = deserialize[ 0 ];
 
     _.assert( serialize );

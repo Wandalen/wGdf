@@ -5,7 +5,7 @@
 if( typeof module !== 'undefined' )
 {
   let _ = require( '../../../../dwtools/Tools.s' );
-  require( '../gdf/Converter.s' );
+  require( '../gdf/entry/Gdf.s' );
   _.include( 'wTesting' );
 }
 
@@ -47,11 +47,11 @@ function bson( test )
 
   test.case = 'select';
 
-  var serialize = _.Gdf.Select({ in : 'structure', out : 'buffer.node', ext : 'bson' });
+  var serialize = _.gdf.select({ in : 'structure', out : 'buffer.node', ext : 'bson' });
   test.identical( serialize.length, 1 );
   serialize = serialize[ 0 ];
 
-  var deserialize = _.Gdf.Select({ in : 'buffer.node', out : 'structure', ext : 'bson' });
+  var deserialize = _.gdf.select({ in : 'buffer.node', out : 'structure', ext : 'bson' });
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 

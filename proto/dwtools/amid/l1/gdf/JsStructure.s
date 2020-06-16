@@ -3,17 +3,6 @@
 
 'use strict';
 
-/**
- * @file EncoderStrategyStandanrd.s.
- */
-
-if( typeof module !== 'undefined' )
-{
-
-  let _ = require( '../../../../dwtools/Tools.s' );
-
-}
-
 let _global = _global_;
 let _ = _global_.wTools;
 let Self = _global_.wTools;
@@ -22,10 +11,12 @@ let Self = _global_.wTools;
 // js
 // --
 
-let ProcessBasic;
+// let ProcessBasic;
+let RoutineBasic;
 try
 {
-  ProcessBasic = _.include( 'wProcess' );
+  // ProcessBasic = _.include( 'wProcess' );
+  RoutineBasic = _.include( 'wRoutineBasic' );
 }
 catch( err )
 {
@@ -40,7 +31,7 @@ let jsSupported =
 }
 
 let readJsStructure = null;
-if( ProcessBasic )
+if( RoutineBasic )
 readJsStructure =
 {
 
@@ -58,7 +49,9 @@ readJsStructure =
 
   onEncode : function( op )
   {
-    op.out.data = _.exec({ code : op.in.data, filePath : op.envMap.filePath, prependingReturn : 1 });
+    // debugger;
+    // _.assert( _.strDefined( op.filePath ) );
+    op.out.data = _.exec({ code : op.in.data, filePath : op.filePath, prependingReturn : 1 });
     op.out.format = 'structure';
   },
 
@@ -76,7 +69,7 @@ readJsStructure =
 //
 //   onEncode : function( op )
 //   {
-//     op.out.data = require( _.fileProvider.path.nativize( op.envMap.filePath ) );
+//     op.out.data = require( _.fileProvider.path.nativize( op.filePath ) );
 //     op.out.format = 'structure';
 //   },
 //
@@ -96,9 +89,9 @@ readJsStructure =
 //
 //     // qqq
 //     // if( typeof process !== 'undefined' && typeof require !== 'undefined' )
-//     // if( _.FileProvider.HardDrive && op.envMap.provider instanceof _.FileProvider.HardDrive )
+//     // if( _.FileProvider.HardDrive && op.provider instanceof _.FileProvider.HardDrive )
 //     // {
-//     //   op.out.data = require( _.fileProvider.path.nativize( op.envMap.filePath ) );
+//     //   op.out.data = require( _.fileProvider.path.nativize( op.filePath ) );
 //     //   op.out.format = 'structure';
 //     //   return;
 //     // }
@@ -106,7 +99,7 @@ readJsStructure =
 //     op.out.data = _.exec
 //     ({
 //       code : op.in.data,
-//       filePath : op.envMap.filePath,
+//       filePath : op.filePath,
 //       prependingReturn : 1,
 //     });
 //

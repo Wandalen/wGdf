@@ -3,30 +3,21 @@
 
 'use strict';
 
-/**
- * Standardized abstract interface and collection of strategies to convert complex data structures from one generic data format ( GDF ) to another generic data format. You may use the module to serialize complex data structure to string or deserialize string back to the original data structure. Generic data format ( GDF ) is a format of data structure designed with taking into account none unique feature of data so that it is applicable to any kind of data.
-  @module Tools/base/Converter
-*/
-
-/**
- * @file Converter.s.
- */
-
-if( typeof module !== 'undefined' )
-{
-
-  let _ = require( '../../../../dwtools/Tools.s' );
-
-  _.include( 'wCopyable' );
-  _.include( 'wRoutineBasic' );
-
-}
+// if( typeof module !== 'undefined' )
+// {
+//
+//   let _ = require( '../../../../dwtools/Tools.s' );
+//
+//   _.include( 'wCopyable' );
+//   _.include( 'wRoutineBasic' );
+//
+// }
 
 /**
  * @classdesc Class to operate the GDF converter.
  * @class wGenericDataFormatConverter
  * @namespace Tools
- * @module Tools/base/Converter
+ * @module Tools/mid/Gdf
  */
 
 let _global = _global_;
@@ -46,56 +37,55 @@ Self.shortName = 'Gdf';
 
 function finit()
 {
-  let encoder = this;
-  encoder.unform();
-  return _.Copyable.prototype.finit.apply( encoder, arguments );
+  let converter = this;
+  converter.unform();
+  return _.Copyable.prototype.finit.apply( converter, arguments );
 }
 
 //
 
 function init( o )
 {
-  let encoder = this;
+  let converter = this;
 
   _.assert( arguments.length === 1 );
 
-  _.workpiece.initFields( encoder );
-  Object.preventExtensions( encoder );
+  _.workpiece.initFields( converter );
+  Object.preventExtensions( converter );
 
   if( o )
-  encoder.copy( o );
+  converter.copy( o );
 
-  encoder.form();
-
-  return encoder;
+  converter.form();
+  return converter;
 }
 
 //
 
 function unform()
 {
-  let encoder = this;
+  let converter = this;
 
-  _.arrayRemoveOnceStrictly( encoder.Elements, encoder );
+  _.arrayRemoveOnceStrictly( _.gdf.convertersArray, converter );
 
-  encoder.in.forEach( ( e, k ) =>
+  converter.in.forEach( ( e, k ) =>
   {
-    _.arrayRemoveOnceStrictly( encoder.InMap[ e ], encoder );
+    _.arrayRemoveOnceStrictly( _.gdf.inMap[ e ], converter );
   });
 
-  encoder.out.forEach( ( e, k ) =>
+  converter.out.forEach( ( e, k ) =>
   {
-    _.arrayRemoveOnceStrictly( encoder.OutMap[ e ], encoder );
+    _.arrayRemoveOnceStrictly( _.gdf.outMap[ e ], converter );
   });
 
-  encoder.ext.forEach( ( e, k ) =>
+  converter.ext.forEach( ( e, k ) =>
   {
-    _.arrayRemoveOnceStrictly( encoder.ExtMap[ e ], encoder );
+    _.arrayRemoveOnceStrictly( _.gdf.extMap[ e ], converter );
   });
 
-  encoder.inOut.forEach( ( e, k ) =>
+  converter.inOut.forEach( ( e, k ) =>
   {
-    _.arrayRemoveOnceStrictly( encoder.InOutMap[ e ], encoder );
+    _.arrayRemoveOnceStrictly( _.gdf.inOutMap[ e ], converter );
   });
 
 }
@@ -110,63 +100,62 @@ function unform()
  * @method form
  * @class wGenericDataFormatConverter
  * @namespace Tools
- * @module Tools/base/Converter
+ * @module Tools/mid/Gdf
  */
-
 
 function form()
 {
-  let encoder = this;
+  let converter = this;
 
-  _.assert( encoder.inOut === null );
+  _.assert( converter.inOut === null );
 
-  encoder.in = _.arrayAs( encoder.in );
-  encoder.out = _.arrayAs( encoder.out );
-  encoder.ext = _.arrayAs( encoder.ext );
+  converter.in = _.arrayAs( converter.in );
+  converter.out = _.arrayAs( converter.out );
+  converter.ext = _.arrayAs( converter.ext );
 
-  if( encoder.name === null )
-  encoder.name = ( encoder.ext[ 0 ] ? encoder.ext[ 0 ] + '-' : '' ) + encoder.in[ 0 ] + '->' + encoder.out[ 0 ];
+  if( converter.name === null )
+  converter.name = ( converter.ext[ 0 ] ? converter.ext[ 0 ] + '-' : '' ) + converter.in[ 0 ] + '->' + converter.out[ 0 ];
 
   /* - */
 
-  _.arrayAppendOnceStrictly( encoder.Elements, encoder );
+  _.arrayAppendOnceStrictly( _.gdf.convertersArray, converter );
 
-  encoder.in.forEach( ( e, k ) =>
+  converter.in.forEach( ( e, k ) =>
   {
-    encoder.InMap[ e ] = _.arrayAppend( encoder.InMap[ e ] || null, encoder );
+    _.gdf.inMap[ e ] = _.arrayAppend( _.gdf.inMap[ e ] || null, converter );
   });
 
-  encoder.out.forEach( ( e, k ) =>
+  converter.out.forEach( ( e, k ) =>
   {
-    encoder.OutMap[ e ] = _.arrayAppend( encoder.OutMap[ e ] || null, encoder );
+    _.gdf.outMap[ e ] = _.arrayAppend( _.gdf.outMap[ e ] || null, converter );
   });
 
-  encoder.ext.forEach( ( e, k ) =>
+  converter.ext.forEach( ( e, k ) =>
   {
-    encoder.ExtMap[ e ] = _.arrayAppend( encoder.ExtMap[ e ] || null, encoder );
+    _.gdf.extMap[ e ] = _.arrayAppend( _.gdf.extMap[ e ] || null, converter );
   });
 
-  let inOut = _.eachSample([ encoder.in, encoder.out ]);
-  encoder.inOut = [];
+  let inOut = _.eachSample([ converter.in, converter.out ]);
+  converter.inOut = [];
   inOut.forEach( ( inOut ) =>
   {
     let key = inOut.join( '-' );
-    encoder.inOut.push( key );
-    encoder.InOutMap[ key ] = _.arrayAppend( encoder.InOutMap[ key ] || null, encoder );
+    converter.inOut.push( key );
+    _.gdf.inOutMap[ key ] = _.arrayAppend( _.gdf.inOutMap[ key ] || null, converter );
   });
 
   /* - */
 
-  _.assert( _.strIs( encoder.name ) );
-  _.assert( _.strsAreAll( encoder.in ) );
-  _.assert( _.strsAreAll( encoder.out ) );
-  _.assert( _.strsAreAll( encoder.ext ) );
+  _.assert( _.strIs( converter.name ) );
+  _.assert( _.strsAreAll( converter.in ) );
+  _.assert( _.strsAreAll( converter.out ) );
+  _.assert( _.strsAreAll( converter.ext ) );
 
-  _.assert( encoder.in.length >= 1 );
-  _.assert( encoder.out.length >= 1 );
-  _.assert( encoder.ext.length >= 0 );
+  _.assert( converter.in.length >= 1 );
+  _.assert( converter.out.length >= 1 );
+  _.assert( converter.ext.length >= 0 );
 
-  _.assert( _.routineIs( encoder.encode ) );
+  _.assert( _.routineIs( converter._encode ) );
 
 }
 
@@ -176,31 +165,30 @@ function form()
  * @summary Encodes source data from one specific format to another.
  * @description
  * Possible in/out formats are determined by converter.
- * Use {@link module:Tools/base/Converter.wGenericDataFormatConverter.Select Select} routine to find converter for your needs.
+ * Use {@link module:Tools/mid/Gdf.gdf.select select} routine to find converter for your needs.
  * @param {Object} o Options map
  *
  * @param {*} o.data Source data.
  * @param {String} o.format Format of source `o.data`.
- * @param {Object} o.envMap Map with enviroment variables that will be used by converter.
+ * @param {Object} o.secondary Map with enviroment variables that will be used by converter.
  *
  * @example
  * //returns converters that accept string as input
- * let converters = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'cson', default : 1 });
+ * let converters = _.gdf.select({ in : 'string', out : 'structure', ext : 'cson', default : 1 });
  * let src = 'val : 13';
- * let dst = converters[ 0 ].encode({ data : src, format : 'string' });
+ * let dst = converters[ 0 ]._encode({ data : src, format : 'string' });
  * console.log( dst.data ); //{ val : 13 }
  *
  * @returns {Object} Returns map with properties: `data` - result of encoding and `format` : format of the result.
- * @method encode
+ * @method _encode
  * @class wGenericDataFormatConverter
  * @namespace Tools
- * @module Tools/base/Converter
+ * @module Tools/mid/Gdf
  */
-
 
 function encode_pre( routine, args )
 {
-  let encoder = this;
+  let converter = this;
   let o = args[ 0 ];
 
   _.assert( arguments.length === 2 );
@@ -211,21 +199,21 @@ function encode_pre( routine, args )
 
 //
 
-function encode_body( o )
+function _encode( o )
 {
-  let encoder = this;
+  let converter = this;
 
-  _.assertRoutineOptions( encode_body, arguments );
+  _.assertRoutineOptions( _encode, arguments );
 
   /* */
 
   let op = Object.create( null );
 
-  op.envMap = o.envMap || Object.create( null );
+  op.secondary = o.secondary || Object.create( null );
 
   op.in = Object.create( null );
   op.in.data = o.data;
-  op.in.format = o.format || encoder.in;
+  op.in.format = o.format || converter.in;
   if( _.arrayIs( op.in.format ) )
   op.in.format = op.in.format.length === 1 ? op.in.format[ 0 ] : undefined;
 
@@ -238,25 +226,25 @@ function encode_body( o )
   try
   {
 
-    _.assert( _.objectIs( op.envMap ) )
+    _.assert( _.objectIs( op.secondary ) )
     _.assert( _.strIs( op.in.format ), 'Not clear which input format is' );
-    _.assert( _.longHas( encoder.in, op.in.format ), () => 'Unknown format ' + op.in.format );
+    _.assert( _.longHas( converter.in, op.in.format ), () => 'Unknown format ' + op.in.format );
 
-    encoder.onEncode( op );
+    converter.onEncode( op );
 
-    op.out.format = op.out.format || encoder.out;
+    op.out.format = op.out.format || converter.out;
     if( _.arrayIs( op.out.format ) )
     op.out.format = op.out.format.length === 1 ? op.out.format[ 0 ] : undefined;
 
     _.assert( _.strIs( op.out.format ), 'Output should have format' );
-    _.assert( _.longHas( encoder.out, op.out.format ), () => 'Strange output format ' + o.out.format );
+    _.assert( _.longHas( converter.out, op.out.format ), () => 'Strange output format ' + o.out.format );
 
   }
   catch( err )
   {
-    let outFormat = op.out.format || encoder.out;
-    op.out.format = undefined; /* qqq : ? */
-    throw _.err( err, `\nFailed to convert from "${op.in.format}" to "${outFormat}" by encoder ${encoder.name}` );
+    let outFormat = op.out.format || converter.out;
+    // op.out.format = undefined; /* qqq : ? */
+    throw _.err( err, `\nFailed to convert from "${op.in.format}" to "${outFormat}" by converter ${converter.name}` );
   }
 
   /* */
@@ -264,149 +252,88 @@ function encode_body( o )
   return op.out;
 }
 
-encode_body.defaults =
+_encode.defaults =
 {
   data : null,
   format : null,
-  envMap : null,
+  filePath : null,
+  ext : null,
+  secondary : null,
+}
+
+function encode_body( o )
+{
+  let converter = this;
+
+  _.assert( arguments.length === 1 );
+
+  if( !o.filePath )
+  if( o.secondary && _.strIs( o.secondary.filePath ) )
+  o.filePath = o.secondary.filePath;
+
+  if( !o.ext )
+  if( o.filePath )
+  o.filePath = _.path.ext( o.filePath );
+  if( o.ext )
+  o.ext = o.ext.toLowerCase()
+
+  return converter._encode( o );
+}
+
+encode_body.defaults =
+{
+  ... _encode.defaults,
 }
 
 let encode = _.routineFromPreAndBody( encode_pre, encode_body );
 
 //
 
-/**
- * Searches for converters.
- * Finds converters that match the specified selector.
- * Converter is selected if all fields of selector are equal with appropriate properties of the converter.
- *
- * @param {Object} selector a map with one or several rules that should be met by the converter
- *
- * Possible selector properties are :
- * @param {String} [selector.in] Input format of the converter
- * @param {String} [selector.out] Output format of the converter
- * @param {String} [selector.ext] File extension of the converter
- * @param {Boolean|Number} [selector.default] Selects default converter for provided in,out and ext
- *
- * @example
- * //returns converters that accept string as input
- * let converters = _.Gdf.Select({ in : 'string' });
- * console.log( converters )
- *
- * @example
- * //returns converters that accept string and return structure( object )
- * let converters = _.Gdf.Select({ in : 'string', out : 'structure' });
- * console.log( converters )
- *
- * * @example
- * //returns default json converter that encodes structure to string
- * let converters = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'json', default : 1 });
- * console.log( converters[ 0 ] )
- *
- * @returns {Array} Returns array with selected converters or empty array if nothing found.
- * @throws {Error} If more than one argument is provided
- * @throws {Error} If selector is not an Object
- * @throws {Error} If selector has unknown field
- * @method Select
- * @class wGenericDataFormatConverter
- * @namespace Tools
- * @module Tools/base/Converter
- * @static
- */
-
-function Select( selector )
+function supportsInput( o )
 {
-  _.assert( arguments.length === 1 );
+  let converter = this;
 
-  let result = _.filter( this.Elements, select );
+  o = _.routineOptions( supportsInput, arguments );
 
-  if( result.length > 1 )
-  if( selector.default !== undefined )
-  {
-    result = result.filter( ( e ) => selector.default === e.default );
-  }
+  if( !o.ext )
+  if( o.filePath )
+  o.filePath = _.path.ext( o.filePath );
+  if( o.ext )
+  o.ext = o.ext.toLowerCase()
 
-  result = result.map( ( e ) => _.mapExtend( null, selector, { encoder : e } ) );
-  result = this.Current( result );
+  _.assert( o.format === null, 'not implemented' );
+  _.assert( _.strIs( o.ext ), 'not implemented' );
 
-  return result;
+  if( _.longHas( converter.ext, o.ext ) )
+  return true;
 
-  /* */
+  return converter._supportsInput( o );
+}
 
-  function select( converter )
-  {
-    for( let s in selector )
-    {
-      let sfield = selector[ s ];
-      let cfield = converter[ s ];
-      if( s === 'default' )
-      continue;
-      if( _.arrayIs( cfield ) )
-      {
-        _.assert( _.strIs( sfield ) );
-        if( !_.longHas( cfield, sfield ) )
-        return undefined;
-      }
-      else _.assert( 0, 'Unknown selector field ' + s );
-      // else
-      // {
-      //   _.assert( _.boolLike( sfield ) );
-      //   if( cfield !== null )
-      //   if( cfield != sfield )
-      //   return undefined;
-      // }
-    }
-    return converter;
-  }
-
+supportsInput.defaults =
+{
+  format : null,
+  ext : null,
+  filePath : null,
+  data : null,
 }
 
 //
 
-/**
- * @summary Contains descriptors of registered converters.
- * @property {Object} Elements
- * @static
- * @class wGenericDataFormatConverter
- * @namespace Tools
- * @module Tools/base/Converter
- */
+function _supportsInput( o )
+{
+  let converter = this;
+  return false;
+}
 
-/**
- * @summary Contains descriptors of registered converters mapped by inptut format.
- * @property {Object} InMap
- * @static
- * @class wGenericDataFormatConverter
- * @namespace Tools
- * @module Tools/base/Converter
- */
+_supportsInput.defaults =
+{
+  ... supportsInput.defaults,
+}
 
-/**
- * @summary Contains descriptors of registered converters mapped by out format.
- * @property {Object} OutMap
- * @static
- * @class wGenericDataFormatConverter
- * @namespace Tools
- * @module Tools/base/Converter
- */
+//
 
-/**
- * @summary Contains descriptors of registered converters mapped by extension.
- * @property {Object} ExtMap
- * @static
- * @class wGenericDataFormatConverter
- * @namespace Tools
- * @module Tools/base/Converter
- */
 
-/**
- * @summary Contains descriptors of registered converters mapped by in/out format.
- * @property {Object} InOutMap
- * @static
- * @class wGenericDataFormatConverter
- * @namespace Tools
- * @module Tools/base/Converter
- */
 
 /**
  * @summary Fields of wGenericDataFormatConverter class.
@@ -418,24 +345,17 @@ function Select( selector )
  * @property {Array} out=null Output format
  * @property {Array} inOut=null All combinations of in-out formats
  * @property {Object} supporting=null Map with supporting types of data
- * @property {Function} onEncode=null Routine encoder
  * @property {Boolean} default=0 Is converter default for this in-out combination
  * @property {Boolean} forConfig=1 Can be used for configs
  *
  * @class wGenericDataFormatConverter
  * @namespace Tools
- * @module Tools/base/Converter
+ * @module Tools/mid/Gdf
  */
 
 // --
 // relations
 // --
-
-let Elements = [];
-let InMap = Object.create( null );
-let OutMap = Object.create( null );
-let ExtMap = Object.create( null );
-let InOutMap = Object.create( null );
 
 let Composes =
 {
@@ -466,14 +386,17 @@ let Restricts =
 
 let Statics =
 {
+}
 
-  Select,
+let Forbids =
+{
 
-  Elements,
-  InMap,
-  OutMap,
-  ExtMap,
-  InOutMap
+  Select : 'Select',
+  Elements : 'Elements',
+  InMap : 'InMap',
+  OutMap : 'OutMap',
+  ExtMap : 'ExtMap',
+  InOutMap : 'InOutMap',
 
 }
 
@@ -488,7 +411,11 @@ let Proto =
   init,
   unform,
   form,
+  _encode,
   encode,
+
+  supportsInput,
+  _supportsInput,
 
   // relations
 
@@ -514,15 +441,9 @@ _.Copyable.mixin( Self );
 // export
 // --
 
-_[ Self.shortName ] = Self;
-
+_.Gdf = Self;
+_.gdf.Converter = Self;
 if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;
-
-if( typeof module !== 'undefined' )
-{
-  require( './Current.s' );
-  require( './Formats.s' );
-}
 
 })();

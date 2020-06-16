@@ -5,7 +5,7 @@
 if( typeof module !== 'undefined' )
 {
   let _ = require( '../../../../dwtools/Tools.s' );
-  require( '../gdf/Converter.s' );
+  require( '../gdf/entry/Gdf.s' );
   _.include( 'wTesting' );
 }
 
@@ -26,18 +26,18 @@ function utf8( test )
   var src = 'Lorem Ipsum is simply dummy text.';
   var buffer = _.bufferBytesFrom( src );
 
-  test.case = 'buffer.bytes <-> string/utf8';
+  test.case = 'buffer.bytes <-> string.utf8';
 
-  var serialize = _.Gdf.Select({ in : 'buffer.bytes', out : 'string/utf8' });
+  var serialize = _.gdf.select({ in : 'buffer.bytes', out : 'string.utf8' });
   test.identical( serialize.length, 1 );
   let utf8FromBuffer = serialize[ 0 ];
 
-  var serialize = _.Gdf.Select({ out : 'buffer.bytes', in : 'string/utf8' });
+  var serialize = _.gdf.select({ out : 'buffer.bytes', in : 'string.utf8' });
   test.identical( serialize.length, 1 );
   let utf8ToBuffer = serialize[ 0 ];
 
   var converted = utf8FromBuffer.encode({ data : buffer });
-  test.identical( converted.format, 'string/utf8' );
+  test.identical( converted.format, 'string.utf8' );
   test.is( _.strIs( converted.data ) );
 
   var converted = utf8ToBuffer.encode({ data : converted.data });

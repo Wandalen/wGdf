@@ -3,16 +3,16 @@
 
 'use strict';
 
-/**
- * @file EncoderStrategyStandanrd.s.
- */
-
-if( typeof module !== 'undefined' )
-{
-
-  let _ = require( '../../../../dwtools/Tools.s' );
-
-}
+// /**
+//  * @file EncoderStrategyStandanrd.s.
+//  */
+//
+// if( typeof module !== 'undefined' )
+// {
+//
+//   let _ = require( '../../../../dwtools/Tools.s' );
+//
+// }
 
 let _global = _global_;
 let _ = _global_.wTools;
@@ -57,8 +57,8 @@ readYml =
     if( !Yaml )
     Yaml = require( YamlPath );
 
-    if( op.envMap.filePath )
-    o.filename = _.fileProvider.path.nativize( op.envMap.filePath )
+    if( op.filePath )
+    o.filename = _.fileProvider.path.nativize( op.filePath )
 
     op.out.data = Yaml.load( op.in.data, o );
     op.out.format = 'structure';

@@ -5,7 +5,7 @@
 if( typeof module !== 'undefined' )
 {
   let _ = require( '../../../../dwtools/Tools.s' );
-  require( '../gdf/Converter.s' );
+  require( '../gdf/entry/Gdf.s' );
   _.include( 'wTesting' );
 }
 
@@ -43,7 +43,7 @@ function jsonMin( test )
     date : new Date(),
   }
 
-  var deserialize = _.Gdf.Select({ in : 'string', out : 'structure', ext : 'json', default : 1 });
+  var deserialize = _.gdf.select({ in : 'string', out : 'structure', ext : 'json', default : 1 });
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
@@ -51,7 +51,7 @@ function jsonMin( test )
 
   test.case = 'select json.min';
 
-  var serialize = _.Gdf.Select({ in : 'structure', out : 'string', ext : 'json', default : 1 });
+  var serialize = _.gdf.select({ in : 'structure', out : 'string', ext : 'json', default : 1 });
   test.identical( serialize.length, 1 );
   serialize = serialize[ 0 ];
   test.identical( serialize.shortName, 'json.min' );

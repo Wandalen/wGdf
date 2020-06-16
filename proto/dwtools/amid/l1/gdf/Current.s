@@ -3,19 +3,6 @@
 
 'use strict';
 
-/**
- * @file GdfCurrent.s.
- */
-
-if( typeof module !== 'undefined' )
-{
-
-  let _ = require( '../../../../dwtools/Tools.s' );
-
-  _.include( 'wCopyable' );
-
-}
-
 let _global = _global_;
 let _ = _global_.wTools;
 let Parent = null;
@@ -39,7 +26,6 @@ function init( o )
   _.mapExtend( selected, o )
   delete selected.default;
   Object.preventExtensions( selected );
-
   _.assert( selected.encoder instanceof _.Gdf );
 
   let proxy = _.proxyMap( selected, selected.encoder );
@@ -92,13 +78,7 @@ _.classDeclare
 // export
 // --
 
-_.staticDeclare
-({
-  prototype : _.Gdf.prototype,
-  name : Self.shortName,
-  value : Self,
-});
-
+_.gdf[ Self.shortName ] = Self;
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
 

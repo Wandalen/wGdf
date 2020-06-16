@@ -3,14 +3,14 @@
 
 'use strict';
 
-/* aaa Artem : done. should be no indentation in such places! */
-/* aaa Artem : done. end of line should be LF not CRLF! */
-
-if( typeof module !== 'undefined' )
-{
-  let _ = require( '../../../../dwtools/Tools.s' );
-
-}
+// /* aaa Artem : done. should be no indentation in such places! */
+// /* aaa Artem : done. end of line should be LF not CRLF! */
+//
+// if( typeof module !== 'undefined' )
+// {
+//   let _ = require( '../../../../dwtools/Tools.s' );
+//
+// }
 
 let _global = _global_;
 let _ = _global_.wTools;
@@ -23,13 +23,13 @@ let Self = _global_.wTools;
 let base64ToBuffer =
 {
   ext : [],
-  in : [ 'string/base64' ],
+  in : [ 'string.base64' ],
   out : [ 'buffer.bytes' ],
 
   onEncode : function( op )
   {
     _.assert( _.strIs( op.in.data ) );
-    op.out.data = _base64ToBuffer( op.in.data, op.envMap.chunkSize )
+    op.out.data = _base64ToBuffer( op.in.data, op.secondary ? op.secondary.chunkSize : undefined )
     op.out.format = 'buffer.bytes';
   },
 }
@@ -106,13 +106,13 @@ let base64FromBuffer =
 {
   ext : [],
   in : [ 'buffer.bytes' ],
-  out : [ 'string/base64' ],
+  out : [ 'string.base64' ],
 
   onEncode : function( op )
   {
     _.assert( _.bufferBytesIs( op.in.data ) );
     op.out.data = _base64FromBuffer( op.in.data )
-    op.out.format = 'string/base64';
+    op.out.format = 'string.base64';
   },
 }
 
@@ -198,13 +198,13 @@ function _base64FromBuffer( byteBuffer )
 let base64ToBlob =
 {
   ext : [],
-  in : [ 'string/base64' ],
+  in : [ 'string.base64' ],
   out : [ 'blob' ],
 
   onEncode : function( op )
   {
     _.assert( _.strIs( op.in.data ) );
-    op.out.data = _base64ToBlob( op.in.data, op.envMap.mime )
+    op.out.data = _base64ToBlob( op.in.data, op.secondary ? op.secondary.mime : undefined )
     op.out.format = 'blob';
   },
 }
@@ -225,12 +225,12 @@ function _base64ToBlob( base64Data, mime )
 // {
 //   ext : [],
 //   in : [ 'blob' ],
-//   out : [ 'string/base64' ],
+//   out : [ 'string.base64' ],
 
 //   onEncode : function( op )
 //   {
 //     op.out.data = _base64FromBlob( op.in.data )
-//     op.out.format = 'string/base64';
+//     op.out.format = 'string.base64';
 //   },
 // }
 
@@ -254,14 +254,14 @@ let base64FromUtf8Slow =
   shortName : 'base64FromUtf8Slow',
 
   ext : [],
-  in : [ 'string/utf8' ],
-  out : [ 'string/base64' ],
+  in : [ 'string.utf8' ],
+  out : [ 'string.base64' ],
 
   onEncode : function( op )
   {
     _.assert( _.strIs( op.in.data ) );
     op.out.data = _base64FromUtf8Slow( op.in.data )
-    op.out.format = 'string/base64';
+    op.out.format = 'string.base64';
   },
 }
 
@@ -279,14 +279,14 @@ let base64FromUtf8 =
   default : 1,
 
   ext : [],
-  in : [ 'string/utf8' ],
-  out : [ 'string/base64' ],
+  in : [ 'string.utf8' ],
+  out : [ 'string.base64' ],
 
   onEncode : function( op )
   {
     _.assert( _.strIs( op.in.data ) );
     op.out.data = _base64FromUtf8( op.in.data )
-    op.out.format = 'string/base64';
+    op.out.format = 'string.base64';
   },
 }
 
@@ -302,14 +302,14 @@ function _base64FromUtf8( string )
 let base64ToUtf8Slow =
 {
   ext : [],
-  in : [ 'string/base64' ],
-  out : [ 'string/utf8' ],
+  in : [ 'string.base64' ],
+  out : [ 'string.utf8' ],
 
   onEncode : function( op )
   {
     _.assert( _.strIs( op.in.data ) );
     op.out.data = _base64ToUtf8Slow( op.in.data )
-    op.out.format = 'string/utf8';
+    op.out.format = 'string.utf8';
   },
 }
 
@@ -327,14 +327,14 @@ let base64ToUtf8 =
   default : 1,
 
   ext : [],
-  in : [ 'string/base64' ],
-  out : [ 'string/utf8' ],
+  in : [ 'string.base64' ],
+  out : [ 'string.utf8' ],
 
   onEncode : function( op )
   {
     _.assert( _.strIs( op.in.data ) );
     op.out.data = _base64ToUtf8( op.in.data )
-    op.out.format = 'string/utf8';
+    op.out.format = 'string.utf8';
   },
 }
 
@@ -351,13 +351,13 @@ let utf8FromBuffer =
 {
   ext : [],
   in : [ 'buffer.bytes' ],
-  out : [ 'string/utf8' ],
+  out : [ 'string.utf8' ],
 
   onEncode : function( op )
   {
     _.assert( _.bufferBytesIs( op.in.data ) );
     op.out.data = _utf8FromBuffer( op.in.data )
-    op.out.format = 'string/utf8';
+    op.out.format = 'string.utf8';
   },
 }
 
@@ -415,7 +415,7 @@ function _utf8FromBuffer( byteBuffer )
 let utf8ToBuffer =
 {
   ext : [],
-  in : [ 'string/utf8' ],
+  in : [ 'string.utf8' ],
   out : [ 'buffer.bytes' ],
 
   onEncode : function( op )
@@ -547,6 +547,8 @@ _.Gdf([ base64ToBuffer, base64FromBuffer ]);
 _.Gdf([ base64ToBlob ]);
 _.Gdf([ base64FromUtf8Slow, base64ToUtf8Slow, base64FromUtf8, base64ToUtf8 ]);
 _.Gdf([ utf8FromBuffer, utf8ToBuffer ]);
+
+/* xxx : string.utf8 -> string */
 
 // --
 // export
