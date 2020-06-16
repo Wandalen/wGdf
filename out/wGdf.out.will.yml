@@ -2,14 +2,11 @@ format: outwillfile-2.0
 root:
   - wGdf.out
 consistency:
-  wGdf.out.will.yml: &ref_0
-    hash: 317d94eb1c98996518a1e08c922970d0
-    size: 42513
-  ../.ex.will.yml: &ref_1
+  ../.ex.will.yml: &ref_0
     hash: e275e8471a7a8ff3a0e7e1fb7c979868
     size: 2080
-  ../.im.will.yml: &ref_2
-    hash: c2594be2ea8f72726e172b1818e29f8f
+  ../.im.will.yml: &ref_1
+    hash: d99959ca7212edabdc96b9ea93330da3
     size: 6000
 module:
   wGdf.out:
@@ -26,18 +23,18 @@ module:
         is applicable to any kind of data.
       enabled: 1
       version: 0.4.0
-      interpreters:
+      interpreters: &ref_2
         - njs >= 10.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords:
+      keywords: &ref_3
         - wTools
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors:
+      contributors: &ref_4
         - Kostiantyn Wandalen <wanalen@01.school>
       npm.name: wgdf
-      npm.scripts:
+      npm.scripts: &ref_5
         test: wtest .run proto/**
         docgen: wdocgen .build proto
     path:
@@ -166,19 +163,54 @@ module:
           - ../proto/dwtools/Tools.s
           - ../proto/dwtools/abase
           - ../proto/dwtools/amid
+          - ../proto/dwtools/amid/-l1
+          - ../proto/dwtools/amid/-l1/gdf
+          - ../proto/dwtools/amid/-l1/gdf/Base64.s
+          - ../proto/dwtools/amid/-l1/gdf/Bson.s
+          - ../proto/dwtools/amid/-l1/gdf/Cbor.s
+          - ../proto/dwtools/amid/-l1/gdf/Coffee.s
+          - ../proto/dwtools/amid/-l1/gdf/Converter.s
+          - ../proto/dwtools/amid/-l1/gdf/Current.s
+          - ../proto/dwtools/amid/-l1/gdf/Formats.s
+          - ../proto/dwtools/amid/-l1/gdf/Json.s
+          - ../proto/dwtools/amid/-l1/gdf/JsStructure.s
+          - ../proto/dwtools/amid/-l1/gdf/MsgpackLite.s
+          - ../proto/dwtools/amid/-l1/gdf/Yml.s
+          - ../proto/dwtools/amid/-l1/gdf.test
+          - ../proto/dwtools/amid/-l1/gdf.test/Base64.test.s
+          - ../proto/dwtools/amid/-l1/gdf.test/Bson.test.s
+          - ../proto/dwtools/amid/-l1/gdf.test/Cbor.test.s
+          - ../proto/dwtools/amid/-l1/gdf.test/Cson.test.s
+          - ../proto/dwtools/amid/-l1/gdf.test/Gdf.test.s
+          - ../proto/dwtools/amid/-l1/gdf.test/GdfPerfomance.test.s
+          - ../proto/dwtools/amid/-l1/gdf.test/Js.test.s
+          - ../proto/dwtools/amid/-l1/gdf.test/Json.test.s
+          - ../proto/dwtools/amid/-l1/gdf.test/JsonFine.test.s
+          - ../proto/dwtools/amid/-l1/gdf.test/JsonMin.test.s
+          - ../proto/dwtools/amid/-l1/gdf.test/Utf8.test.s
+          - ../proto/dwtools/amid/-l1/gdf.test/Yml.test.s
           - ../proto/dwtools/amid/l1
           - ../proto/dwtools/amid/l1/gdf
-          - ../proto/dwtools/amid/l1/gdf/Base64.s
-          - ../proto/dwtools/amid/l1/gdf/Bson.s
-          - ../proto/dwtools/amid/l1/gdf/Cbor.s
-          - ../proto/dwtools/amid/l1/gdf/Coffee.s
+          - ../proto/dwtools/amid/l1/gdf/entry
           - ../proto/dwtools/amid/l1/gdf/entry/Gdf.s
-          - ../proto/dwtools/amid/l1/gdf/Current.s
-          - ../proto/dwtools/amid/l1/gdf/Formats.s
-          - ../proto/dwtools/amid/l1/gdf/Json.s
-          - ../proto/dwtools/amid/l1/gdf/JsStructure.s
-          - ../proto/dwtools/amid/l1/gdf/MsgpackLite.s
-          - ../proto/dwtools/amid/l1/gdf/Yml.s
+          - ../proto/dwtools/amid/l1/gdf/include
+          - ../proto/dwtools/amid/l1/gdf/include/Basic.s
+          - ../proto/dwtools/amid/l1/gdf/include/Mid.s
+          - ../proto/dwtools/amid/l1/gdf/l1
+          - ../proto/dwtools/amid/l1/gdf/l1/Namespace.s
+          - ../proto/dwtools/amid/l1/gdf/l3
+          - ../proto/dwtools/amid/l1/gdf/l3/-Formats.s
+          - ../proto/dwtools/amid/l1/gdf/l3/Converter.s
+          - ../proto/dwtools/amid/l1/gdf/l3/Current.s
+          - ../proto/dwtools/amid/l1/gdf/l5_strategy
+          - ../proto/dwtools/amid/l1/gdf/l5_strategy/Base64.s
+          - ../proto/dwtools/amid/l1/gdf/l5_strategy/Bson.s
+          - ../proto/dwtools/amid/l1/gdf/l5_strategy/Cbor.s
+          - ../proto/dwtools/amid/l1/gdf/l5_strategy/Coffee.s
+          - ../proto/dwtools/amid/l1/gdf/l5_strategy/Json.s
+          - ../proto/dwtools/amid/l1/gdf/l5_strategy/JsStructure.s
+          - ../proto/dwtools/amid/l1/gdf/l5_strategy/MsgpackLite.s
+          - ../proto/dwtools/amid/l1/gdf/l5_strategy/Yml.s
           - ../proto/dwtools/amid/l1/gdf.test
           - ../proto/dwtools/amid/l1/gdf.test/Base64.test.s
           - ../proto/dwtools/amid/l1/gdf.test/Bson.test.s
@@ -775,24 +807,6 @@ module:
           content: prime
         inherit:
           - files.transpile
-      exported.proto.export:
-        opts:
-          filePath: 'reflector::exported.proto.export'
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
-      exported.files.proto.export:
-        opts:
-          filePath: 'reflector::exported.files.proto.export'
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
     build:
       proto.export:
         steps:
@@ -881,9 +895,8 @@ module:
           content: proto
           export: 1
     consistency:
-      wGdf.out.will.yml: *ref_0
-      ../.ex.will.yml: *ref_1
-      ../.im.will.yml: *ref_2
+      ../.ex.will.yml: *ref_0
+      ../.im.will.yml: *ref_1
   ../:
     about:
       name: wGdf
@@ -898,20 +911,13 @@ module:
         is applicable to any kind of data.
       enabled: 1
       version: 0.4.0
-      interpreters:
-        - njs >= 10.0.0
-        - chrome >= 60.0.0
-        - firefox >= 60.0.0
-      keywords:
-        - wTools
+      interpreters: *ref_2
+      keywords: *ref_3
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors:
-        - Kostiantyn Wandalen <wanalen@01.school>
+      contributors: *ref_4
       npm.name: wgdf
-      npm.scripts:
-        test: wtest .run proto/**
-        docgen: wdocgen .build proto
+      npm.scripts: *ref_5
     path:
       module.willfiles:
         criterion:
@@ -1630,8 +1636,5 @@ module:
         hash: e275e8471a7a8ff3a0e7e1fb7c979868
         size: 2080
       ../.im.will.yml:
-        hash: c2594be2ea8f72726e172b1818e29f8f
+        hash: d99959ca7212edabdc96b9ea93330da3
         size: 6000
-      wGdf.out.will.yml:
-        hash: 317d94eb1c98996518a1e08c922970d0
-        size: 42513
