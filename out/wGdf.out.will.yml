@@ -119,7 +119,7 @@ module:
       entry.proto.no.tests:
         criterion:
           tests: no.tests
-        path: ../proto/dwtools/amid/l1/gdf/Converter.s
+        path: ../proto/dwtools/amid/l1/gdf/entry/Gdf.s
       entry.proto.only.tests:
         criterion:
           tests: only.tests
@@ -129,13 +129,13 @@ module:
           debug: debug
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/amid/l1/gdf/Converter.s'
+        path: '{path::out.*=1}/source/dwtools/amid/l1/gdf/entry/Gdf.s'
       entry.out.raw.debug.release:
         criterion:
           debug: release
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/amid/l1/gdf/Converter.s'
+        path: '{path::out.*=1}/source/dwtools/amid/l1/gdf/entry/Gdf.s'
       entry.out.compiled.debug.debug:
         criterion:
           debug: debug
@@ -172,7 +172,7 @@ module:
           - ../proto/dwtools/amid/l1/gdf/Bson.s
           - ../proto/dwtools/amid/l1/gdf/Cbor.s
           - ../proto/dwtools/amid/l1/gdf/Coffee.s
-          - ../proto/dwtools/amid/l1/gdf/Converter.s
+          - ../proto/dwtools/amid/l1/gdf/entry/Gdf.s
           - ../proto/dwtools/amid/l1/gdf/Current.s
           - ../proto/dwtools/amid/l1/gdf/Formats.s
           - ../proto/dwtools/amid/l1/gdf/Json.s
@@ -991,7 +991,7 @@ module:
       entry.proto.no.tests:
         criterion:
           tests: no.tests
-        path: proto/dwtools/amid/l1/gdf/Converter.s
+        path: proto/dwtools/amid/l1/gdf/entry/Gdf.s
       entry.proto.only.tests:
         criterion:
           tests: only.tests
@@ -1001,13 +1001,13 @@ module:
           debug: debug
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/amid/l1/gdf/Converter.s'
+        path: '{path::out.*=1}/source/dwtools/amid/l1/gdf/entry/Gdf.s'
       entry.out.raw.debug.release:
         criterion:
           debug: release
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/amid/l1/gdf/Converter.s'
+        path: '{path::out.*=1}/source/dwtools/amid/l1/gdf/entry/Gdf.s'
       entry.out.compiled.debug.debug:
         criterion:
           debug: debug

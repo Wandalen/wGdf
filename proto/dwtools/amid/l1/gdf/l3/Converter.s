@@ -333,8 +333,6 @@ _supportsInput.defaults =
 
 //
 
-
-
 /**
  * @summary Fields of wGenericDataFormatConverter class.
  * @typedef {Object} Composes

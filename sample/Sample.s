@@ -4,12 +4,12 @@ var _ = wTools;
 
 /* select encoder */
 
-var serialize = _.Gdf.Select({ in : 'structure', ext : 'bson' });
+var serialize = _.gdf.select({ in : 'structure', ext : 'bson' });
 serialize = serialize[ 0 ];
 
 /* select decoder */
 
-var deserialize = _.Gdf.Select({ in : 'buffer.node', ext : 'bson' });
+var deserialize = _.gdf.select({ in : 'buffer.node', ext : 'bson' });
 deserialize = deserialize[ 0 ];
 
 /* encode */
@@ -28,4 +28,3 @@ var deserialized = deserialize.encode({ data : serialized.data });
 console.log( deserialized.data );
 
 //{ field: 'value' }
-
