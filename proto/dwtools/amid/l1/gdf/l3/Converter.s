@@ -244,7 +244,13 @@ function _encode( o )
   {
     let outFormat = op.out.format || converter.out;
     // op.out.format = undefined; /* qqq : ? */
-    throw _.err( err, `\nFailed to convert from "${op.in.format}" to "${outFormat}" by converter ${converter.name}` );
+    // let fileStr = op.secondary && op.secondary.filePath ? '\n  ' + op.secondary.filePath : '';
+    throw _.err
+    (
+       err
+      ,`\nFailed to convert from "${op.in.format}" to "${outFormat}" by converter ${converter.name}`
+      // ,`\nFailed to convert from "${op.in.format}" to "${outFormat}" by converter ${converter.name}${fileStr}`
+    );
   }
 
   /* */

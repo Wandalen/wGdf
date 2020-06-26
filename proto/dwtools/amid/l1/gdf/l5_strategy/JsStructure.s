@@ -51,7 +51,8 @@ readJsStructure =
   {
     // debugger;
     // _.assert( _.strDefined( op.filePath ) );
-    op.out.data = _.exec({ code : op.in.data, filePath : op.filePath, prependingReturn : 1 });
+    op.out.data = _.exec({ code : op.in.data, filePath : op.filePath, prependingReturn : 1 }); /* yyy */
+    // op.out.data = _.exec({ code : op.in.data, filePath : op.filePath, prependingReturn : 0 });
     op.out.format = 'structure';
   },
 
