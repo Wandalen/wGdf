@@ -339,6 +339,50 @@ _supportsInput.defaults =
 
 //
 
+function supportsOutput( o )
+{
+  let converter = this;
+
+  o = _.routineOptions( supportsOutput, arguments );
+
+  if( !o.ext )
+  if( o.filePath )
+  o.filePath = _.path.ext( o.filePath );
+  if( o.ext )
+  o.ext = o.ext.toLowerCase()
+
+  _.assert( o.format === null, 'not implemented' );
+  _.assert( _.strIs( o.ext ), 'not implemented' );
+
+  if( _.longHas( converter.ext, o.ext ) )
+  return true;
+
+  return converter._supportsOutput( o );
+}
+
+supportsOutput.defaults =
+{
+  format : null,
+  ext : null,
+  filePath : null,
+  data : null,
+}
+
+//
+
+function _supportsOutput( o )
+{
+  let converter = this;
+  return false;
+}
+
+_supportsOutput.defaults =
+{
+  ... supportsOutput.defaults,
+}
+
+//
+
 /**
  * @summary Fields of wGenericDataFormatConverter class.
  * @typedef {Object} Composes
@@ -420,6 +464,8 @@ let Proto =
 
   supportsInput,
   _supportsInput,
+  supportsOutput,
+  _supportsOutput,
 
   // relations
 
