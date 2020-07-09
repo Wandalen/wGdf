@@ -1,10 +1,10 @@
-( function _Cson_test_s_()
+( function _Js_test_s_()
 {
 'use strict';
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( '../../../../dwtools/Tools.s' );
+  let _ = require( '../../../../wtools/Tools.s' );
   require( '../gdf/entry/Gdf.s' );
   _.include( 'wTesting' );
 }
@@ -18,7 +18,7 @@ _.assert( _testerGlobal_.wTools !== _global_.wTools );
 // test
 // --
 
-function cson( test )
+function js( test )
 {
   var self = this;
 
@@ -47,11 +47,11 @@ function cson( test )
 
   test.case = 'select';
 
-  var serialize = _.gdf.select({ in : 'structure', out : 'string', ext : 'cson' });
+  var serialize = _.gdf.select({ in : 'structure', out : 'string', ext : 'js' });
   test.identical( serialize.length, 1 );
   serialize = serialize[ 0 ];
 
-  var deserialize = _.gdf.select({ in : 'string', out : 'structure', ext : 'cson' });
+  var deserialize = _.gdf.select({ in : 'string', out : 'structure', ext : 'js' });
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
@@ -109,7 +109,6 @@ function cson( test )
   /* */
 
 }
-
 // --
 // declare
 // --
@@ -117,7 +116,7 @@ function cson( test )
 var Self =
 {
 
-  name : 'Tools.cson.gdf',
+  name : 'Tools.js.gdf',
   silencing : 1,
 
   context :
@@ -126,7 +125,7 @@ var Self =
 
   tests :
   {
-    cson
+    js
   },
 
 };
@@ -135,4 +134,4 @@ Self = wTestSuite( Self );
 if( typeof module !== 'undefined' && !module.parent )
 wTester.test( Self.name );
 
-})();
+} )();

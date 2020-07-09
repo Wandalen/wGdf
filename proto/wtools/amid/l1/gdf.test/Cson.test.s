@@ -1,10 +1,10 @@
-( function _Bson_test_s_()
+( function _Cson_test_s_()
 {
 'use strict';
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( '../../../../dwtools/Tools.s' );
+  let _ = require( '../../../../wtools/Tools.s' );
   require( '../gdf/entry/Gdf.s' );
   _.include( 'wTesting' );
 }
@@ -18,7 +18,7 @@ _.assert( _testerGlobal_.wTools !== _global_.wTools );
 // test
 // --
 
-function bson( test )
+function cson( test )
 {
   var self = this;
 
@@ -47,11 +47,11 @@ function bson( test )
 
   test.case = 'select';
 
-  var serialize = _.gdf.select({ in : 'structure', out : 'buffer.node', ext : 'bson' });
+  var serialize = _.gdf.select({ in : 'structure', out : 'string', ext : 'cson' });
   test.identical( serialize.length, 1 );
   serialize = serialize[ 0 ];
 
-  var deserialize = _.gdf.select({ in : 'buffer.node', out : 'structure', ext : 'bson' });
+  var deserialize = _.gdf.select({ in : 'string', out : 'structure', ext : 'cson' });
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
@@ -63,27 +63,14 @@ function bson( test )
     test.case = s;
     let src = SamplesSimple[ s ];
 
-    if( !_.mapIs( src ) )
-    src = { [ s ] : src };
-
     let serialized = serialize.encode({ data : src });
-    test.identical( serialized.format, 'buffer.node' );
-    test.is( _.bufferNodeIs( serialized.data ) );
+    test.identical( serialized.format, 'string' );
 
     let deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
   test.close( 'simple' );
-
-  test.case = 'all simple together';
-  var serialized = serialize.encode({ data : SamplesSimple });
-  test.identical( serialized.format, 'buffer.node' );
-  test.is( _.bufferNodeIs( serialized.data ) );
-
-  var deserialized = deserialize.encode({ data : serialized.data });
-  test.identical( deserialized.data, SamplesSimple );
-  test.identical( deserialized.format, 'structure' );
 
   /* */
 
@@ -93,26 +80,14 @@ function bson( test )
     test.case = s;
     let src = SamplesPrimitive[ s ];
 
-    if( !_.mapIs( src ) )
-    src = { [ s ] : src };
-
     let serialized = serialize.encode({ data : src });
-    test.identical( serialized.format, 'buffer.node' );
+    test.identical( serialized.format, 'string' );
 
     let deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
   test.close( 'primitive' );
-
-  test.case = 'all primitive together';
-  var serialized = serialize.encode({ data : SamplesPrimitive });
-  test.identical( serialized.format, 'buffer.node' );
-  test.is( _.bufferNodeIs( serialized.data ) );
-
-  var deserialized = deserialize.encode({ data : serialized.data });
-  test.identical( deserialized.data, SamplesPrimitive );
-  test.identical( deserialized.format, 'structure' );
 
   /* */
 
@@ -122,26 +97,14 @@ function bson( test )
     test.case = s;
     let src = SamplesComplicated[ s ];
 
-    if( !_.mapIs( src ) )
-    src = { [ s ] : src };
+    var serialized = serialize.encode({ data : src });
+    test.identical( serialized.format, 'string' );
 
-    let serialized = serialize.encode({ data : src });
-    test.identical( serialized.format, 'buffer.node' );
-
-    let deserialized = deserialize.encode({ data : serialized.data });
+    var deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
   test.close( 'complicated' );
-
-  test.case = 'all complicated together';
-  var serialized = serialize.encode({ data : SamplesComplicated });
-  test.identical( serialized.format, 'buffer.node' );
-  test.is( _.bufferNodeIs( serialized.data ) );
-
-  var deserialized = deserialize.encode({ data : serialized.data });
-  test.identical( deserialized.data, SamplesComplicated );
-  test.identical( deserialized.format, 'structure' );
 
   /* */
 
@@ -154,7 +117,7 @@ function bson( test )
 var Self =
 {
 
-  name : 'Tools.bson.gdf',
+  name : 'Tools.cson.gdf',
   silencing : 1,
 
   context :
@@ -163,7 +126,7 @@ var Self =
 
   tests :
   {
-    bson
+    cson
   },
 
 };

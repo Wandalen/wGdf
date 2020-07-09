@@ -1,10 +1,10 @@
-( function _JsonMin_test_s_()
+( function _JsonFine_test_s_()
 {
 'use strict';
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( '../../../../dwtools/Tools.s' );
+  let _ = require( '../../../../wtools/Tools.s' );
   require( '../gdf/entry/Gdf.s' );
   _.include( 'wTesting' );
 }
@@ -18,9 +18,9 @@ _.assert( _testerGlobal_.wTools !== _global_.wTools );
 // test
 // --
 
-function jsonMin( test )
+function jsonFine( test )
 {
-  let self = this;
+  var self = this;
 
   let SamplesPrimitive =
   {
@@ -47,14 +47,14 @@ function jsonMin( test )
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
-  /* json.min */
+  /* json.fine */
 
-  test.case = 'select json.min';
+  test.case = 'select json.fine';
 
-  var serialize = _.gdf.select({ in : 'structure', out : 'string', ext : 'json', default : 1 });
+  var serialize = _.gdf.select({ in : 'structure', out : 'string', ext : 'json.fine' });
   test.identical( serialize.length, 1 );
   serialize = serialize[ 0 ];
-  test.identical( serialize.shortName, 'json.min' );
+  test.identical( serialize.shortName, 'json.fine' );
 
   /* */
 
@@ -98,64 +98,35 @@ function jsonMin( test )
   var serialized = serialize.encode({ data : SamplesComplicated });
   test.identical( serialized.format, 'string' );
   test.is( _.strIs( serialized.data ) );
-  var deserialized = deserialize.encode({ data : serialized.data });
-  var expected =
-  {
-    'regexp' : {},
-    'infinity' : null,
-    'nan' : null,
-    'date' : SamplesComplicated.date.toJSON()
-  }
-  test.identical( deserialized.data, expected );
-  test.identical( deserialized.format, 'structure' );
+  test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) );
 
   test.case = 'typed array';
   var src = { typed :  new U16x( [ 1, 2, 3 ] ) }
   var serialized = serialize.encode({ data : src });
   test.identical( serialized.format, 'string' );
   test.is( _.strIs( serialized.data ) );
-  var deserialized = deserialize.encode({ data : serialized.data });
-  var expected =
-  {
-    typed : { '0' : 1, '1' : 2, '2' : 3 }
-  }
-  test.identical( deserialized.data, expected );
+  test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) );
 
   test.case = 'regexp';
   var src = { regexp :  /.regexp/g }
   var serialized = serialize.encode({ data : src });
   test.identical( serialized.format, 'string' );
   test.is( _.strIs( serialized.data ) );
-  var deserialized = deserialize.encode({ data : serialized.data });
-  var expected =
-  {
-    regexp : {}
-  }
-  test.identical( deserialized.data, expected );
+  test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) );
 
   test.case = 'infinity';
   var src = { infinity : -Infinity }
   var serialized = serialize.encode({ data : src });
   test.identical( serialized.format, 'string' );
   test.is( _.strIs( serialized.data ) );
-  var deserialized = deserialize.encode({ data : serialized.data });
-  var expected =
-  {
-    infinity : null
-  }
-  test.identical( deserialized.data, expected );
+  test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) );
 
   test.case = 'NaN';
   var src = { nan : NaN }
   var serialized = serialize.encode({ data : src });
   test.identical( serialized.format, 'string' );
   test.is( _.strIs( serialized.data ) );
-  var deserialized = deserialize.encode({ data : serialized.data });
-  var expected =
-  {
-    nan : null
-  }
-  test.identical( deserialized.data, expected );
+  test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) );
 
   test.case = 'date';
   var src = { date : new Date() }
@@ -177,7 +148,7 @@ function jsonMin( test )
 var Self =
 {
 
-  name : 'Tools.jsonMin.gdf',
+  name : 'Tools.jsonFine.gdf',
   silencing : 1,
 
   context :
@@ -186,7 +157,7 @@ var Self =
 
   tests :
   {
-    jsonMin
+    jsonFine
   },
 
 };

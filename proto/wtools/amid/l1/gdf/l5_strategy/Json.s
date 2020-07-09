@@ -38,9 +38,9 @@ cover them all please
 
 SyntaxError: Unexpected end of JSON input
     at JSON.parse (<anonymous>:null:null)
-    at wGenericDataFormatConverter.onEncode (C:\pro\web\Dave\git\trunk\builder\include\dwtools\abase\l8\GdfFormats.s:59:26)
-    at wGenericDataFormatConverter.encode_body (C:\pro\web\Dave\git\trunk\builder\include\dwtools\abase\l8\Converter.s:238:13)
-    at Proxy.encode_body (C:\pro\web\Dave\git\trunk\builder\include\dwtools\abase\l8\GdfCurrent.s:59:45)
+    at wGenericDataFormatConverter.onEncode (C:\pro\web\Dave\git\trunk\builder\include\wtools\abase\l8\GdfFormats.s:59:26)
+    at wGenericDataFormatConverter.encode_body (C:\pro\web\Dave\git\trunk\builder\include\wtools\abase\l8\Converter.s:238:13)
+    at Proxy.encode_body (C:\pro\web\Dave\git\trunk\builder\include\wtools\abase\l8\GdfCurrent.s:59:45)
 
 */
     try

@@ -1,10 +1,10 @@
-( function _Js_test_s_()
+( function _Yml_test_s_()
 {
 'use strict';
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( '../../../../dwtools/Tools.s' );
+  let _ = require( '../../../../wtools/Tools.s' );
   require( '../gdf/entry/Gdf.s' );
   _.include( 'wTesting' );
 }
@@ -18,7 +18,7 @@ _.assert( _testerGlobal_.wTools !== _global_.wTools );
 // test
 // --
 
-function js( test )
+function yml( test )
 {
   var self = this;
 
@@ -47,11 +47,11 @@ function js( test )
 
   test.case = 'select';
 
-  var serialize = _.gdf.select({ in : 'structure', out : 'string', ext : 'js' });
+  var serialize = _.gdf.select({ in : 'structure', out : 'string', ext : 'yml' });
   test.identical( serialize.length, 1 );
   serialize = serialize[ 0 ];
 
-  var deserialize = _.gdf.select({ in : 'string', out : 'structure', ext : 'js' });
+  var deserialize = _.gdf.select({ in : 'string', out : 'structure', ext : 'yml' });
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
@@ -63,14 +63,27 @@ function js( test )
     test.case = s;
     let src = SamplesSimple[ s ];
 
+    if( !_.mapIs( src ) )
+    src = { [ s ] : src };
+
     let serialized = serialize.encode({ data : src });
     test.identical( serialized.format, 'string' );
+    test.is( _.strIs( serialized.data ) );
 
     let deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
   test.close( 'simple' );
+
+  test.case = 'all simple together';
+  var serialized = serialize.encode({ data : SamplesSimple });
+  test.identical( serialized.format, 'string' );
+  test.is( _.strIs( serialized.data ) );
+
+  var deserialized = deserialize.encode({ data : serialized.data });
+  test.identical( deserialized.data, SamplesSimple );
+  test.identical( deserialized.format, 'structure' );
 
   /* */
 
@@ -79,6 +92,9 @@ function js( test )
   {
     test.case = s;
     let src = SamplesPrimitive[ s ];
+
+    if( !_.mapIs( src ) )
+    src = { [ s ] : src };
 
     let serialized = serialize.encode({ data : src });
     test.identical( serialized.format, 'string' );
@@ -89,6 +105,15 @@ function js( test )
   }
   test.close( 'primitive' );
 
+  test.case = 'all primitive together';
+  var serialized = serialize.encode({ data : SamplesPrimitive });
+  test.identical( serialized.format, 'string' );
+  test.is( _.strIs( serialized.data ) );
+
+  var deserialized = deserialize.encode({ data : serialized.data });
+  test.identical( deserialized.data, SamplesPrimitive );
+  test.identical( deserialized.format, 'structure' );
+
   /* */
 
   test.open( 'complicated' );
@@ -97,18 +122,31 @@ function js( test )
     test.case = s;
     let src = SamplesComplicated[ s ];
 
-    var serialized = serialize.encode({ data : src });
+    if( !_.mapIs( src ) )
+    src = { [ s ] : src };
+
+    let serialized = serialize.encode({ data : src });
     test.identical( serialized.format, 'string' );
 
-    var deserialized = deserialize.encode({ data : serialized.data });
+    let deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
   test.close( 'complicated' );
 
+  test.case = 'all complicated together';
+  var serialized = serialize.encode({ data : SamplesComplicated });
+  test.identical( serialized.format, 'string' );
+  test.is( _.strIs( serialized.data ) );
+
+  var deserialized = deserialize.encode({ data : serialized.data });
+  test.identical( deserialized.data, SamplesComplicated );
+  test.identical( deserialized.format, 'structure' );
+
   /* */
 
 }
+
 // --
 // declare
 // --
@@ -116,7 +154,7 @@ function js( test )
 var Self =
 {
 
-  name : 'Tools.js.gdf',
+  name : 'Tools.yml.gdf',
   silencing : 1,
 
   context :
@@ -125,7 +163,7 @@ var Self =
 
   tests :
   {
-    js
+    yml
   },
 
 };
@@ -134,4 +172,4 @@ Self = wTestSuite( Self );
 if( typeof module !== 'undefined' && !module.parent )
 wTester.test( Self.name );
 
-} )();
+})();

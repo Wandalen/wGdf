@@ -1,10 +1,10 @@
-( function _Cbor_test_s_()
+( function _Bson_test_s_()
 {
 'use strict';
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( '../../../../dwtools/Tools.s' );
+  let _ = require( '../../../../wtools/Tools.s' );
   require( '../gdf/entry/Gdf.s' );
   _.include( 'wTesting' );
 }
@@ -18,7 +18,7 @@ _.assert( _testerGlobal_.wTools !== _global_.wTools );
 // test
 // --
 
-function cbor( test )
+function bson( test )
 {
   var self = this;
 
@@ -47,11 +47,11 @@ function cbor( test )
 
   test.case = 'select';
 
-  var serialize = _.gdf.select({ in : 'structure', out : 'buffer.node', ext : 'cbor' });
+  var serialize = _.gdf.select({ in : 'structure', out : 'buffer.node', ext : 'bson' });
   test.identical( serialize.length, 1 );
   serialize = serialize[ 0 ];
 
-  var deserialize = _.gdf.select({ in : 'buffer.node', out : 'structure', ext : 'cbor' });
+  var deserialize = _.gdf.select({ in : 'buffer.node', out : 'structure', ext : 'bson' });
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
@@ -129,11 +129,7 @@ function cbor( test )
     test.identical( serialized.format, 'buffer.node' );
 
     let deserialized = deserialize.encode({ data : serialized.data });
-    let identical = _.entityIdentical( deserialized.data, src );
-    if( _.regexpIs( src[ s ] ) )
-    test.is( !identical );
-    else
-    test.is( identical );
+    test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
   test.close( 'complicated' );
@@ -144,7 +140,7 @@ function cbor( test )
   test.is( _.bufferNodeIs( serialized.data ) );
 
   var deserialized = deserialize.encode({ data : serialized.data });
-  test.notIdentical( deserialized.data, SamplesComplicated );
+  test.identical( deserialized.data, SamplesComplicated );
   test.identical( deserialized.format, 'structure' );
 
   /* */
@@ -158,7 +154,7 @@ function cbor( test )
 var Self =
 {
 
-  name : 'Tools.cbor.gdf',
+  name : 'Tools.bson.gdf',
   silencing : 1,
 
   context :
@@ -167,7 +163,7 @@ var Self =
 
   tests :
   {
-    cbor
+    bson
   },
 
 };

@@ -1,10 +1,10 @@
-( function _Yml_test_s_()
+( function _Cbor_test_s_()
 {
 'use strict';
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( '../../../../dwtools/Tools.s' );
+  let _ = require( '../../../../wtools/Tools.s' );
   require( '../gdf/entry/Gdf.s' );
   _.include( 'wTesting' );
 }
@@ -18,7 +18,7 @@ _.assert( _testerGlobal_.wTools !== _global_.wTools );
 // test
 // --
 
-function yml( test )
+function cbor( test )
 {
   var self = this;
 
@@ -47,11 +47,11 @@ function yml( test )
 
   test.case = 'select';
 
-  var serialize = _.gdf.select({ in : 'structure', out : 'string', ext : 'yml' });
+  var serialize = _.gdf.select({ in : 'structure', out : 'buffer.node', ext : 'cbor' });
   test.identical( serialize.length, 1 );
   serialize = serialize[ 0 ];
 
-  var deserialize = _.gdf.select({ in : 'string', out : 'structure', ext : 'yml' });
+  var deserialize = _.gdf.select({ in : 'buffer.node', out : 'structure', ext : 'cbor' });
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
@@ -67,8 +67,8 @@ function yml( test )
     src = { [ s ] : src };
 
     let serialized = serialize.encode({ data : src });
-    test.identical( serialized.format, 'string' );
-    test.is( _.strIs( serialized.data ) );
+    test.identical( serialized.format, 'buffer.node' );
+    test.is( _.bufferNodeIs( serialized.data ) );
 
     let deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
@@ -78,8 +78,8 @@ function yml( test )
 
   test.case = 'all simple together';
   var serialized = serialize.encode({ data : SamplesSimple });
-  test.identical( serialized.format, 'string' );
-  test.is( _.strIs( serialized.data ) );
+  test.identical( serialized.format, 'buffer.node' );
+  test.is( _.bufferNodeIs( serialized.data ) );
 
   var deserialized = deserialize.encode({ data : serialized.data });
   test.identical( deserialized.data, SamplesSimple );
@@ -97,7 +97,7 @@ function yml( test )
     src = { [ s ] : src };
 
     let serialized = serialize.encode({ data : src });
-    test.identical( serialized.format, 'string' );
+    test.identical( serialized.format, 'buffer.node' );
 
     let deserialized = deserialize.encode({ data : serialized.data });
     test.identical( deserialized.data, src );
@@ -107,8 +107,8 @@ function yml( test )
 
   test.case = 'all primitive together';
   var serialized = serialize.encode({ data : SamplesPrimitive });
-  test.identical( serialized.format, 'string' );
-  test.is( _.strIs( serialized.data ) );
+  test.identical( serialized.format, 'buffer.node' );
+  test.is( _.bufferNodeIs( serialized.data ) );
 
   var deserialized = deserialize.encode({ data : serialized.data });
   test.identical( deserialized.data, SamplesPrimitive );
@@ -126,21 +126,25 @@ function yml( test )
     src = { [ s ] : src };
 
     let serialized = serialize.encode({ data : src });
-    test.identical( serialized.format, 'string' );
+    test.identical( serialized.format, 'buffer.node' );
 
     let deserialized = deserialize.encode({ data : serialized.data });
-    test.identical( deserialized.data, src );
+    let identical = _.entityIdentical( deserialized.data, src );
+    if( _.regexpIs( src[ s ] ) )
+    test.is( !identical );
+    else
+    test.is( identical );
     test.identical( deserialized.format, 'structure' );
   }
   test.close( 'complicated' );
 
   test.case = 'all complicated together';
   var serialized = serialize.encode({ data : SamplesComplicated });
-  test.identical( serialized.format, 'string' );
-  test.is( _.strIs( serialized.data ) );
+  test.identical( serialized.format, 'buffer.node' );
+  test.is( _.bufferNodeIs( serialized.data ) );
 
   var deserialized = deserialize.encode({ data : serialized.data });
-  test.identical( deserialized.data, SamplesComplicated );
+  test.notIdentical( deserialized.data, SamplesComplicated );
   test.identical( deserialized.format, 'structure' );
 
   /* */
@@ -154,7 +158,7 @@ function yml( test )
 var Self =
 {
 
-  name : 'Tools.yml.gdf',
+  name : 'Tools.cbor.gdf',
   silencing : 1,
 
   context :
@@ -163,7 +167,7 @@ var Self =
 
   tests :
   {
-    yml
+    cbor
   },
 
 };
