@@ -6,7 +6,7 @@ Standardized abstract interface and collection of strategies to convert complex 
 ## Try out
 ```
 npm install
-node sample/Sample.js
+node sample/Sample.s
 ```
 
 ## Usage:
