@@ -9,7 +9,7 @@ if( typeof module !== 'undefined' )
   _.include( 'wTesting' );
 }
 
-var _global = _global_;
+let _global = _global_;
 let _ = _global_.wTools;
 
 _.assert( _testerGlobal_.wTools !== _global_.wTools );
@@ -151,7 +151,7 @@ function bson( test )
 // declare
 // --
 
-var Self =
+let Self =
 {
 
   name : 'Tools.bson.gdf',

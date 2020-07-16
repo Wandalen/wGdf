@@ -13,7 +13,7 @@ if( typeof module !== 'undefined' )
 
 }
 
-var _global = _global_;
+let _global = _global_;
 let _ = _global_.wTools;
 
 // --
@@ -308,7 +308,7 @@ perfomance.timeOut = _.mapOwnKeys( converters ).length * 6 * 60000;
 // declare
 // --
 
-var Self =
+let Self =
 {
 
   name : 'Tools/base/EncoderStrategyPerfomance',

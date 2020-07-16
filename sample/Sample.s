@@ -1,6 +1,6 @@
 if( typeof module !== 'undefined' )
 require( 'wgdf' );
-var _ = wTools;
+let _ = wTools;
 
 /* select encoder */
 
