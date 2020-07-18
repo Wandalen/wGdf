@@ -58,7 +58,7 @@ function onSuiteEnd()
       head : [ 'Converter', 'Out size', 'Write time', 'Read time' ],
       colWidth : 15
     }
-    var output = _.strTable( o );
+    var output = _.strTable_old( o );
 
     console.log( i, '\n' );
     console.log( output );

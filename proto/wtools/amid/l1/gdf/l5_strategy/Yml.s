@@ -93,13 +93,13 @@ writeYml =
 // declare
 // --
 
-var Extend =
+var Extension =
 {
 
 }
 
 Self = _.encode = _.encode || Object.create( null );
-_.mapExtend( _.encode, Extend );
+_.mapExtend( _.encode, Extension );
 
 // --
 // register

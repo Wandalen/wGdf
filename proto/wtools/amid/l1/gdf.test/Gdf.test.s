@@ -559,7 +559,7 @@ function supportedTypes( test )
     head : [ 'Transformer', 'Primitive(0-3)', 'RegExp(0-2)', 'BufferNode(0-3)', 'Structure(0-3)' ],
     colWidth : 20
   }
-  var output = _.strTable( o );
+  var output = _.strTable_old( o );
   console.log( output );
 }
 supportedTypes.timeOut = 10000;
@@ -690,7 +690,7 @@ function registerAndFinit( test )
 let Self =
 {
 
-  name : 'Tools.base.gdf',
+  name : 'Tools.gdf',
   silencing : 1,
 
   context :

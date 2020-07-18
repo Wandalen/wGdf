@@ -516,7 +516,7 @@ function _utf8ToBuffer( str )
 // declare
 // --
 
-var Extend =
+var Extension =
 {
   // base64
 
@@ -537,7 +537,7 @@ var Extend =
 }
 
 Self = _.encode = _.encode || Object.create( null );
-_.mapExtend( _.encode, Extend );
+_.mapExtend( _.encode, Extension );
 
 // --
 // register

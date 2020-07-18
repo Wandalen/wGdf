@@ -74,7 +74,7 @@ function base64( test )
 let Self =
 {
 
-  name : 'Tools.base64.gdf',
+  name : 'Tools64.gdf',
   silencing : 1,
 
   context :
