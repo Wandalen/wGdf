@@ -5,7 +5,6 @@
 
 if( typeof module !== 'undefined' )
 {
-
   let _ = require( '../../../../wtools/Tools.s' );
   require( '../gdf/entry/Gdf.s' );
   _.include( 'wTesting' );
@@ -20,22 +19,38 @@ let _ = _global_.wTools;
 // context
 // --
 
+// function onSuiteBegin()
+// {
+//   let context = this;
+//   context.suiteTempPath = path.tempOpen( path.join( __dirname, '../..'  ), 'ConsequenceExternal' );
+//   context.assetsOriginalPath = path.join( __dirname, '_asset' );
+// }
+//
+// //
+//
+// function onSuiteEnd()
+// {
+//   let context = this;
+//   _.assert( _.strHas( context.suiteTempPath, '/ConsequenceExternal-' ) )
+//   path.tempClose( context.suiteTempPath );
+// }
+
 function onSuiteBegin()
 {
-  var self = this;
-  self.testSuitePath = _.path.dirTempOpen( _.path.join( __dirname, '../..' ), 'wGdf' );
-
-  self.results = Object.create( null );
+  var context = this;
+  context.suiteTempPath = _.path.tempOpen( _.path.join( __dirname, '../..' ), 'wGdf' );
+  context.results = Object.create( null );
 }
 
 //
 
 function onSuiteEnd()
 {
-  let self = this;
-  let results = self.results;
+  let context = this;
+  let results = context.results;
 
-  _.fileProvider.filesDelete( self.testSuitePath );
+  _.path.tempClose( context.suiteTempPath );
+  // _.fileProvider.filesDelete( context.suiteTempPath );
 
   let data = {};
 
@@ -52,17 +67,55 @@ function onSuiteEnd()
 
   for( let i in data )
   {
+    // console.log( data[ i ] );
     var o =
     {
       data : data[ i ],
-      head : [ 'Converter', 'Out size', 'Write time', 'Read time' ],
-      colWidth : 15
+      // leftHead : [ 'Converter', 'Out size', 'Write time', 'Read time' ],
+      dim : onTableDim( data[ i ] ),
+      onCellGet,
+      colWidth : 15,
+      colSplits : 1,
+      rowSplits : 1,
+      style : 'doubleBorder',
     }
-    var output = _.strTable_old( o );
-
+    var output = _.strTable( o );
     console.log( i, '\n' );
-    console.log( output );
+    console.log( output.result );
   }
+
+  /* */
+
+  function onTableDim( table )
+  {
+    let result = [ table.length, table[ 0 ].length ];
+    // console.log( 'onTableDim', result );
+    return result;
+  }
+
+  /* */
+
+  function onCellGet( i2d, o )
+  {
+    let row = o.data[ i2d[ 0 ] ];
+    let result = row[ i2d[ 1 ] ];
+    // console.log( 'i2d', i2d, result );
+    _.assert( result !== undefined );
+    return String( result );
+  }
+
+  // for( let i in data )
+  // {
+  //   var o =
+  //   {
+  //     data : data[ i ],
+  //     head : [ 'Converter', 'Out size', 'Write time', 'Read time' ],
+  //     colWidth : 15
+  //   }
+  //   var output = _.strTable_old( o );
+  //   console.log( i, '\n' );
+  //   console.log( output );
+  // }
 
 }
 
@@ -70,29 +123,41 @@ function onSuiteEnd()
 
 function testApp()
 {
-  let _ = require( '../../../Tools.s' );
-  require( '../../../abase/l8/Converter.s' );
+  // debugger;
+  // let _ = require( '../../../Tools.s' );
+  let _ = require( toolsPath );
+  _.include( 'wGdf' );
+  // require( '../../../abase/l8/Converter.s' );
+
 
   let commonTypes =
   {
-    string : 1,
-    number : 1,
-    map : 1,
-    array : 1,
-    boolean : 1,
-    null : 1,
-
-    mapComplex : 1,
-    arrayComplex : 1
+    stringComplexity : 1,
+    numberComplexity : 1,
+    mapComplexity : 1,
+    arrayComplexity : 1,
+    booleanComplexity : 1,
+    nullComplexity : 1,
+    // mapComplex : 1,
+    // arrayComplex : 1
   }
 
-  var o1 = _.mapExtend( { depth : 1, breadth : 1 }, commonTypes );
-  var o2 = _.mapExtend( { depth : 20, breadth : 90 }, commonTypes );
-  var o3 = _.mapExtend( { depth : 150, breadth : 1100 }, commonTypes );
+  // var o1 = _.mapExtend( { depth : 1, breadth : 1 }, commonTypes );
+  // var o2 = _.mapExtend( { depth : 20, breadth : 90 }, commonTypes );
+  // var o3 = _.mapExtend( { depth : 150, breadth : 1100 }, commonTypes );
 
-  _.diagnosticsStructureGenerate( o1 );
-  _.diagnosticsStructureGenerate( o2 );
-  _.diagnosticsStructureGenerate( o3 );
+  var o1 = _.mapExtend( { depth : 1 }, commonTypes );
+  var o2 = _.mapExtend( { depth : 1 }, commonTypes );
+  var o3 = _.mapExtend( { depth : 1 }, commonTypes );
+
+  // var o1 = _.mapExtend( { depth : 1 }, commonTypes );
+  // var o2 = _.mapExtend( { depth : 20 }, commonTypes );
+  // var o3 = _.mapExtend( { depth : 150 }, commonTypes );
+
+  debugger;
+  _.diagnosticStructureGenerate( o1 );
+  _.diagnosticStructureGenerate( o2 );
+  _.diagnosticStructureGenerate( o3 );
 
   let srcs =
   {
@@ -252,18 +317,34 @@ let converters =
 
 function perfomance( test )
 {
-  let self = this;
+  let context = this;
+  let a = test.assetFor( false );
+  // let toolsPath = a.path.nativize( _.module.toolsPathGet() );
+  // let locals = { toolsPath,  };
+  // debugger;
 
-  var routinePath = _.path.join( self.testSuitePath, test.name );
-  var testAppPath = _.fileProvider.path.nativize( _.path.join( routinePath, 'testApp.js' ) );
-  var testAppCode = testApp.toString() + '\ntestApp();';
-  _.fileProvider.fileWrite( testAppPath, testAppCode );
+  var programPath = a.program( testApp );
+
+  // a.appStartNonThrowing({ execPath : programPath })
+
+  // var routinePath = _.path.join( context.suiteTempPath, test.name );
+  // var testAppPath = _.fileProvider.path.nativize( _.path.join( routinePath, 'testApp.js' ) );
+  // var testAppCode = testApp.toString() + '\ntestApp();';
+  // let program = _.program.write( testApp );
+  // debugger;
+  // _.fileProvider.fileWrite( testAppPath, testAppCode );
+
+  // let o2 = _.program.write
+  // ({
+  //   routine : o.routine,
+  //   locals : o.locals,
+  //   tempPath : a.abs( '.' ),
+  // });
 
   let ready = new _.Consequence().take( null );
 
-  for( var c in self.converters )
-    ready.finally( _.routineSeal( self, execute, [ self.converters[ c ] ] ) );
-
+  for( var c in context.converters )
+  ready.finally( _.routineSeal( context, execute, [ context.converters[ c ] ] ) );
 
   return ready;
 
@@ -273,22 +354,24 @@ function perfomance( test )
   {
     let o =
     {
-      execPath : _.path.nativize( testAppPath ),
+      // execPath : _.path.nativize( testAppPath ),
+      execPath : programPath,
       maximumMemory : 1,
       mode : 'spawn',
       ipc : 1,
-      timeOut : 5 * 60000,
+      timeOut : 5 * 600000,
       stdio : 'pipe',
       outputPiping : 1,
     }
 
-    let con = _.shellNode( o );
+    // debugger;
+    let con = _.process.startNode( o );
 
     o.process.send( converter );
 
     o.process.on( 'message', ( data ) =>
     {
-      self.results[ data.converter ] = data.results;
+      context.results[ data.converter ] = data.results;
     })
 
     con.finally( ( err, got ) =>
@@ -303,6 +386,7 @@ function perfomance( test )
 
 perfomance.experimental = 1;
 perfomance.timeOut = _.mapOwnKeys( converters ).length * 6 * 60000;
+perfomance.rapidity = -4;
 
 // --
 // declare
@@ -311,7 +395,7 @@ perfomance.timeOut = _.mapOwnKeys( converters ).length * 6 * 60000;
 let Self =
 {
 
-  name : 'Tools/base/EncoderStrategyPerfomance',
+  name : 'Tools/base/gdf/Performance',
   silencing : 1,
   enabled : 0,
 
@@ -320,14 +404,20 @@ let Self =
 
   context :
   {
-    testSuitePath : null,
+
+    suiteTempPath : null,
     results : null,
-    converters
+    converters,
+
+    suiteTempPath : null,
+    assetsOriginalPath : null,
+    appJsPath : null,
+
   },
 
   tests :
   {
-    perfomance
+    perfomance,
   },
 
 };

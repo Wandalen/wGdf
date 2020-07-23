@@ -437,8 +437,6 @@ function structure3( test, o )
 // test
 // --
 
-// supportedTypes
-
 function supportedTypes( test )
 {
   var self = this;
@@ -487,18 +485,11 @@ function supportedTypes( test )
       deserialize : { in : 'string', out : 'structure', ext : 'yml' }
     },
 
-    // 'msgpack.lite' :
+    // 'msgpack.lite' : /* qqq : switch it on */
     // {
     //   serialize : { in : 'structure', out : 'buffer.node', ext : 'msgpack.lite' },
     //   deserialize : { in : 'buffer.node', out : 'structure', ext : 'msgpack.lite' }
     // },
-
-    // xxx : remove msgpack.wtp
-    // 'msgpack.wtp' :
-    // {
-    //   serialize : { in : 'structure', out : 'buffer.node', ext : 'msgpack.wtp' },
-    //   deserialize : { in : 'buffer.node', out : 'structure', ext : 'msgpack.wtp' }
-    // }
 
   }
 
@@ -556,15 +547,43 @@ function supportedTypes( test )
   var o =
   {
     data,
-    head : [ 'Transformer', 'Primitive(0-3)', 'RegExp(0-2)', 'BufferNode(0-3)', 'Structure(0-3)' ],
-    colWidth : 20
+    topHead : [ 'Transformer', 'Primitive(0-3)', 'RegExp(0-2)', 'BufferNode(0-3)', 'Structure(0-3)' ],
+    dim : onTableDim( data ),
+    style : 'doubleBorder',
+    colSplits : 1,
+    rowSplits : 1,
+    onCellGet,
   }
-  var output = _.strTable_old( o );
-  console.log( output );
-}
-supportedTypes.timeOut = 10000;
+  // var output = _.strTable_old( o );
+  // console.log( data );
+  var output = _.strTable( o );
+  console.log( output.result );
 
-// trivial
+  /* */
+
+  function onTableDim( table )
+  {
+    let result = [ table.length, table[ 0 ].length ];
+    // console.log( 'onTableDim', result );
+    return result;
+  }
+
+  /* */
+
+  function onCellGet( i2d, o )
+  {
+    let row = o.data[ i2d[ 0 ] ];
+    let result = row[ i2d[ 1 ] ];
+    // console.log( 'i2d', i2d, result );
+    _.assert( result !== undefined );
+    return String( result );
+  }
+
+}
+
+supportedTypes.timeOut = 20000;
+
+//
 
 function trivial( test )
 {
@@ -593,7 +612,7 @@ function trivial( test )
 
 }
 
-// select
+//
 
 function select( test )
 {
@@ -646,7 +665,7 @@ function select( test )
 
 }
 
-// registerAndFinit
+//
 
 function registerAndFinit( test )
 {
@@ -696,7 +715,6 @@ let Self =
   context :
   {
     converterTypesCheck,
-
     primitive1,
     primitive2,
     primitive3,
