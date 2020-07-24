@@ -51,12 +51,12 @@ submodule :
     enabled : 0 # submodule
     criterion :
       external : 1
-  cli-table2 :
-    path : npm:///cli-table2#0.2.0
-    enabled : 0 # submodule
-    criterion :
-      development : 1
-      external : 1
+  # cli-table2 :
+  #   path : npm:///cli-table2#0.2.0
+  #   enabled : 0 # submodule
+  #   criterion :
+  #     development : 1
+  #     external : 1
   eslint :
     path : npm:///eslint#7.1.0
     enabled : 0 # submodule
