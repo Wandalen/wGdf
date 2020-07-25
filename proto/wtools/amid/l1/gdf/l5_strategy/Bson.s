@@ -4,8 +4,7 @@
 'use strict';
 
 // /**
-//  * @file EncoderStrategyStandanrd.s.
-//  */
+//  * //  */
 //
 // if( typeof module !== 'undefined' )
 // {
@@ -49,7 +48,7 @@ readBson =
   in : [ 'buffer.node' ],
   out : [ 'structure' ],
 
-  supporting : bsonSupported,
+  feature : bsonSupported,
 
   onEncode : function( op )
   {
@@ -76,7 +75,7 @@ writeBson =
   in : [ 'structure' ],
   out : [ 'buffer.node' ],
 
-  supporting : bsonSupported,
+  feature : bsonSupported,
 
   onEncode : function( op )
   {

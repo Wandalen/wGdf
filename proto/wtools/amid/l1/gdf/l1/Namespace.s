@@ -58,7 +58,8 @@ function select( selector )
   if( result.length > 1 )
   if( selector.default !== undefined )
   {
-    result = result.filter( ( e ) => selector.default === e.default );
+    selector.default = !!selector.default;
+    result = result.filter( ( e ) => e.feature ? e.feature.default === selector.default : undefined );
   }
 
   result = result.map( ( e ) => _.mapExtend( null, selector, { encoder : e } ) );
@@ -72,10 +73,10 @@ function select( selector )
   {
     for( let s in selector )
     {
-      let sfield = selector[ s ];
-      let cfield = converter[ s ];
       if( s === 'default' )
       continue;
+      let sfield = selector[ s ];
+      let cfield = converter[ s ];
       if( _.arrayIs( cfield ) )
       {
         _.assert( _.strIs( sfield ) );

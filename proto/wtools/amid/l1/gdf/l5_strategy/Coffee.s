@@ -4,8 +4,7 @@
 'use strict';
 
 // /**
-//  * @file EncoderStrategyStandanrd.s.
-//  */
+//  * //  */
 //
 // if( typeof module !== 'undefined' )
 // {
@@ -50,7 +49,7 @@ readCoffee =
   in : [ 'string' ],
   out : [ 'structure' ],
 
-  supporting : csonSupported,
+  feature : csonSupported,
 
   onEncode : function( op )
   {
@@ -88,7 +87,7 @@ writeCoffee =
   in : [ 'structure' ],
   out : [ 'string' ],
 
-  supporting : csonSupported,
+  feature : csonSupported,
 
   onEncode : function( op )
   {

@@ -52,7 +52,9 @@ function base64( test )
   test.identical( serialize.length, 1 );
   let base64FromUtf8 = serialize[ 0 ];
 
+  debugger;
   var serialize = _.gdf.select({ out : 'string.utf8', in : 'string.base64', default : 1 });
+  debugger;
   test.identical( serialize.length, 1 );
   let base64ToUtf8 = serialize[ 0 ];
 

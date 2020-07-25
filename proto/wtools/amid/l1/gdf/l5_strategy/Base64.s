@@ -3,15 +3,6 @@
 
 'use strict';
 
-// /* aaa Artem : done. should be no indentation in such places! */
-// /* aaa Artem : done. end of line should be LF not CRLF! */
-//
-// if( typeof module !== 'undefined' )
-// {
-//   let _ = require( '../../../../wtools/Tools.s' );
-//
-// }
-
 let _global = _global_;
 let _ = _global_.wTools;
 let Self = _global_.wTools;
@@ -22,9 +13,12 @@ let Self = _global_.wTools;
 
 let base64ToBuffer =
 {
+
+  shortName : 'base64',
   ext : [],
   in : [ 'string.base64' ],
   out : [ 'buffer.bytes' ],
+  feature : {},
 
   onEncode : function( op )
   {
@@ -34,13 +28,14 @@ let base64ToBuffer =
   },
 }
 
+//
+
 function _base64ToBuffer( base64, chunkSize )
 {
 
   function base64ToWrdBits6( chr )
   {
     let result;
-
     if( chr > 64 && chr < 91 )
       result = chr - 65;
     else if( chr > 96 && chr < 123 )
@@ -53,31 +48,14 @@ function _base64ToBuffer( base64, chunkSize )
       result = 63;
     else
       result = 0;
-
     return result;
-    // return chr > 64 && chr < 91 ?
-    //     chr - 65
-    //   : chr > 96 && chr < 123 ?
-    //     chr - 71
-    //   : chr > 47 && chr < 58 ?
-    //     chr + 4
-    //   : chr === 43 ?
-    //     62
-    //   : chr === 47 ?
-    //     63
-    //   :
-    //     0;
-
   }
-
-  //var base64 = base64.replace( /[^0-9A-Za-z\+\/]/g, "" );
 
   var srcSize = base64.length;
   var dstSize = chunkSize ? Math.ceil( ( srcSize * 3 + 1 >> 2 ) / chunkSize ) * chunkSize : srcSize * 3 + 1 >> 2
   var bytes = new U8x( dstSize );
 
-  var factor3,
-    factor4;
+  var factor3, factor4;
   var wrd3 = 0;
   var outIndex = 0;
 
@@ -104,9 +82,12 @@ function _base64ToBuffer( base64, chunkSize )
 
 let base64FromBuffer =
 {
+
+  shortName : 'base64',
   ext : [],
   in : [ 'buffer.bytes' ],
   out : [ 'string.base64' ],
+  feature : {},
 
   onEncode : function( op )
   {
@@ -115,6 +96,8 @@ let base64FromBuffer =
     op.out.format = 'string.base64';
   },
 }
+
+//
 
 function _base64FromBuffer( byteBuffer )
 {
@@ -137,19 +120,6 @@ function _base64FromBuffer( byteBuffer )
       result = 65;
 
     return result;
-    // return wrdBits6 < 26 ?
-    //     wrdBits6 + 65
-    //   : wrdBits6 < 52 ?
-    //     wrdBits6 + 71
-    //   : wrdBits6 < 62 ?
-    //     wrdBits6 - 4
-    //   : wrdBits6 === 62 ?
-    //     43
-    //   : wrdBits6 === 63 ?
-    //     47
-    //   :
-    //     65;
-
   }
 
   _.assert( byteBuffer instanceof U8x );
@@ -162,8 +132,6 @@ function _base64FromBuffer( byteBuffer )
   {
 
     factor3 = index % 3;
-    //if ( index > 0 && ( index * 4 / 3 ) % 76 === 0 )
-    //{ result += "\r\n"; }
 
     wrd3 |= byteBuffer[ index ] << ( 16 >>> factor3 & 24 );
     if( factor3 === 2 || l - index === 1 )
@@ -180,7 +148,6 @@ function _base64FromBuffer( byteBuffer )
 
   }
 
-  // var postfix = ( factor3 === 2 ? '' : factor3 === 1 ? '=' : '==' );
   let postfix;
 
   if( factor3 === 2 )
@@ -197,9 +164,12 @@ function _base64FromBuffer( byteBuffer )
 
 let base64ToBlob =
 {
+
+  shortName : 'base64',
   ext : [],
   in : [ 'string.base64' ],
   out : [ 'blob' ],
+  feature : {},
 
   onEncode : function( op )
   {
@@ -256,6 +226,7 @@ let base64FromUtf8Slow =
   ext : [],
   in : [ 'string.utf8' ],
   out : [ 'string.base64' ],
+  feature : {},
 
   onEncode : function( op )
   {
@@ -275,12 +246,15 @@ function _base64FromUtf8Slow( string )
 
 let base64FromUtf8 =
 {
-  shortName : 'base64FromUtf8',
-  default : 1,
+
+  shortName : 'base64',
+  // shortName : 'base64FromUtf8',
+  // default : 1,
 
   ext : [],
   in : [ 'string.utf8' ],
   out : [ 'string.base64' ],
+  feature : { default : 1 },
 
   onEncode : function( op )
   {
@@ -289,6 +263,8 @@ let base64FromUtf8 =
     op.out.format = 'string.base64';
   },
 }
+
+//
 
 function _base64FromUtf8( string )
 {
@@ -301,9 +277,12 @@ function _base64FromUtf8( string )
 
 let base64ToUtf8Slow =
 {
+
+  shortName : 'base64',
   ext : [],
   in : [ 'string.base64' ],
   out : [ 'string.utf8' ],
+  feature : {},
 
   onEncode : function( op )
   {
@@ -323,12 +302,15 @@ function _base64ToUtf8Slow( base64 )
 
 let base64ToUtf8 =
 {
-  shortName : 'base64ToUtf8',
-  default : 1,
+
+  shortName : 'base64',
+  // shortName : 'base64ToUtf8',
+  // default : 1,
 
   ext : [],
   in : [ 'string.base64' ],
   out : [ 'string.utf8' ],
+  feature : { default : 1 },
 
   onEncode : function( op )
   {
@@ -349,9 +331,12 @@ function _base64ToUtf8( base64 )
 
 let utf8FromBuffer =
 {
+
+  shortName : 'base64',
   ext : [],
   in : [ 'buffer.bytes' ],
   out : [ 'string.utf8' ],
+  feature : {},
 
   onEncode : function( op )
   {
@@ -360,6 +345,8 @@ let utf8FromBuffer =
     op.out.format = 'string.utf8';
   },
 }
+
+//
 
 function _utf8FromBuffer( byteBuffer )
 {
@@ -390,20 +377,6 @@ function _utf8FromBuffer( byteBuffer )
       charCode = nPart;
 
     result += String.fromCharCode( charCode );
-    // result += String.fromCharCode(
-    //   nPart > 251 && nPart < 254 && index + 5 < nLen ?
-    //     ( nPart - 252 ) * 1073741824 + ( byteBuffer[ ++index ] - 128 << 24 ) + ( byteBuffer[ ++index ] - 128 << 18 ) + ( byteBuffer[ ++index ] - 128 << 12 ) + ( byteBuffer[ ++index ] - 128 << 6 ) + byteBuffer[ ++index ] - 128
-    //   : nPart > 247 && nPart < 252 && index + 4 < nLen ?
-    //     ( nPart - 248 << 24 ) + ( byteBuffer[ ++index ] - 128 << 18 ) + ( byteBuffer[ ++index ] - 128 << 12 ) + ( byteBuffer[ ++index ] - 128 << 6 ) + byteBuffer[ ++index ] - 128
-    //   : nPart > 239 && nPart < 248 && index + 3 < nLen ?
-    //     ( nPart - 240 << 18 ) + ( byteBuffer[ ++index ] - 128 << 12 ) + ( byteBuffer[ ++index ] - 128 << 6 ) + byteBuffer[ ++index ] - 128
-    //   : nPart > 223 && nPart < 240 && index + 2 < nLen ?
-    //     ( nPart - 224 << 12 ) + ( byteBuffer[ ++index ] - 128 << 6 ) + byteBuffer[ ++index ] - 128
-    //   : nPart > 191 && nPart < 224 && index + 1 < nLen ?
-    //     ( nPart - 192 << 6 ) + byteBuffer[ ++index ] - 128
-    //   :
-    //     nPart
-    // );
   }
 
   return result;
@@ -414,9 +387,12 @@ function _utf8FromBuffer( byteBuffer )
 
 let utf8ToBuffer =
 {
+
+  shortName : 'utf8',
   ext : [],
   in : [ 'string.utf8' ],
   out : [ 'buffer.bytes' ],
+  feature : {},
 
   onEncode : function( op )
   {
@@ -426,6 +402,8 @@ let utf8ToBuffer =
   },
 }
 
+//
+
 function _utf8ToBuffer( str )
 {
 
@@ -433,7 +411,7 @@ function _utf8ToBuffer( str )
   var nStrLen = str.length;
   var size = 0;
 
-  //
+  /* */
 
   for( let index = 0; index < nStrLen; index++ )
   {
@@ -452,12 +430,11 @@ function _utf8ToBuffer( str )
     else
       size += 6;
 
-    // size += chr < 0x80 ? 1 : chr < 0x800 ? 2 : chr < 0x10000 ? 3 : chr < 0x200000 ? 4 : chr < 0x4000000 ? 5 : 6;
   }
 
   var byteBuffer = new U8x( size );
 
-  //
+  /* */
 
   for( var index = 0, nChrIdx = 0; index < size; nChrIdx++ )
   {

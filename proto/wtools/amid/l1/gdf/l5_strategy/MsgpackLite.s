@@ -28,6 +28,7 @@ readMsgpackLite =
   ext : [ 'msgpack.lite' ],
   in : [ 'buffer.node' ],
   out : [ 'structure' ],
+  feature : {},
 
   onEncode : function( op )
   {
@@ -50,6 +51,7 @@ writeMsgpackLite =
   ext : [ 'msgpack.lite' ],
   in : [ 'structure' ],
   out : [ 'buffer.node' ],
+  feature : {},
 
   onEncode : function( op )
   {

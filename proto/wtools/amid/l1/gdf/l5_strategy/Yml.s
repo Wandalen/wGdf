@@ -4,8 +4,7 @@
 'use strict';
 
 // /**
-//  * @file EncoderStrategyStandanrd.s.
-//  */
+//  * //  */
 //
 // if( typeof module !== 'undefined' )
 // {
@@ -48,7 +47,7 @@ readYml =
   in : [ 'string' ],
   out : [ 'structure' ],
 
-  supporting : ymlSupported,
+  feature : ymlSupported,
 
   onEncode : function( op )
   {
@@ -75,7 +74,7 @@ writeYml =
   in : [ 'structure' ],
   out : [ 'string' ],
 
-  supporting : ymlSupported,
+  feature : ymlSupported,
 
   onEncode : function( op )
   {

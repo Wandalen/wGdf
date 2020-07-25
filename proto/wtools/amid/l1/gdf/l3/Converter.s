@@ -3,16 +3,6 @@
 
 'use strict';
 
-// if( typeof module !== 'undefined' )
-// {
-//
-//   let _ = require( '../../../../wtools/Tools.s' );
-//
-//   _.include( 'wCopyable' );
-//   _.include( 'wRoutineBasic' );
-//
-// }
-
 /**
  * @classdesc Class to operate the GDF converter.
  * @class wGenericDataFormatConverter
@@ -108,13 +98,30 @@ function form()
   let converter = this;
 
   _.assert( converter.inOut === null );
+  _.assert( _.mapIs( converter.feature ), `Expects map {- feature -}` );
+  _.assert( converter.name === null );
+
+  if( converter.feature.config === undefined )
+  converter.feature.config = true;
+
+  if( converter.feature.default !== undefined )
+  converter.feature.default = !!converter.feature.default;
 
   converter.in = _.arrayAs( converter.in );
   converter.out = _.arrayAs( converter.out );
   converter.ext = _.arrayAs( converter.ext );
 
+  if( converter.shortName === null && converter.ext[ 0 ] )
+  converter.shortName = converter.ext[ 0 ];
+  // if( converter.name === null )
+  // converter.name = ( converter.ext[ 0 ] ? converter.ext[ 0 ] + '-' : '' ) + converter.in[ 0 ] + '->' + converter.out[ 0 ];
   if( converter.name === null )
-  converter.name = ( converter.ext[ 0 ] ? converter.ext[ 0 ] + '-' : '' ) + converter.in[ 0 ] + '->' + converter.out[ 0 ];
+  converter.name = converter.shortName + ':' + converter.in[ 0 ] + '->' + converter.out[ 0 ];
+
+  _.assert( _.strsAreAll( converter.in ) );
+  _.assert( _.strsAreAll( converter.out ) );
+  _.assert( _.strsAreAll( converter.ext ) );
+  _.assert( _.strDefined( converter.shortName ), () => 'Expects defined shortName' );
 
   /* - */
 
@@ -174,7 +181,7 @@ function form()
  *
  * @example
  * //returns converters that accept string as input
- * let converters = _.gdf.select({ in : 'string', out : 'structure', ext : 'cson', default : 1 });
+ * let converters = _.gdf.select({ in : 'string', out : 'structure', ext : 'cson' });
  * let src = 'val : 13';
  * let dst = converters[ 0 ]._encode({ data : src, format : 'string' });
  * console.log( dst.data ); //{ val : 13 }
@@ -392,9 +399,7 @@ _supportsOutput.defaults =
  * @property {Array} in=null Input format
  * @property {Array} out=null Output format
  * @property {Array} inOut=null All combinations of in-out formats
- * @property {Object} supporting=null Map with supporting types of data
- * @property {Boolean} default=0 Is converter default for this in-out combination
- * @property {Boolean} forConfig=1 Can be used for configs
+ * @property {Object} feature=null Map with feature types of data
  *
  * @class wGenericDataFormatConverter
  * @namespace Tools
@@ -416,11 +421,11 @@ let Composes =
   out : null,
   inOut : null,
 
-  supporting : null,
+  feature : null,
 
   onEncode : null,
-  default : 0,
-  forConfig : 1,
+  // default : 0,
+  // forConfig : 1,
 
 }
 
@@ -445,6 +450,9 @@ let Forbids =
   OutMap : 'OutMap',
   ExtMap : 'ExtMap',
   InOutMap : 'InOutMap',
+  forConfig : 'forConfig',
+  default : 'default',
+  supporting : 'supporting',
 
 }
 
@@ -473,6 +481,7 @@ let Proto =
   Aggregates,
   Restricts,
   Statics,
+  Forbids,
 
 }
 

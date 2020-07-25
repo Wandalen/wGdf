@@ -23,9 +23,9 @@ _.assert( _testerGlobal_.wTools !== _global_.wTools );
 qqq :
 - please, use lower case for names of routines
 - add routines to context of the test
-- add static structure supporting
+- add static structure feature
 
-let supporting =
+let feature =
 {
   'yaml' :
   {
@@ -52,8 +52,8 @@ function converterTypesCheck( test, o, o2 )
   let samples = o2.samples;
   let currentLevel = o2.currentLevel;
   let name = o2.name;
-  _.assert( o.serialize.supporting, `${o.serialize.ext} is not supporting` );
-  let expectedLevel = o.serialize.supporting[ name ];
+  _.assert( o.serialize.feature, `${o.serialize.ext} is not feature` );
+  let expectedLevel = o.serialize.feature[ name ];
 
   let prefix = o.serialize.ext + ' / ' + name + currentLevel;
 
@@ -90,38 +90,38 @@ function converterTypesCheck( test, o, o2 )
     if( !o2.atLeastOne )
     if( expectedLevel >= currentLevel )
     {
-      test.will = 'type should be supporting';
+      test.will = 'type should be feature';
       test.is( results[ k ] );
     }
   }
 
   console.log( prefix + ' / results: ', _.toStr( results, { levels : 99, multiline : 1 }) )
 
-  o.supporting = 1;
+  o.feature = 1;
 
   for( let k in results )
   {
-    o.supporting = results[ k ];
+    o.feature = results[ k ];
 
-    if( o.supporting && o2.atLeastOne )
+    if( o.feature && o2.atLeastOne )
     break;
 
-    if( !o.supporting && !o2.atLeastOne )
+    if( !o.feature && !o2.atLeastOne )
     break;
   }
 
-  if( o.supporting )
+  if( o.feature )
   o.result[ name ] = currentLevel;
 
   if( expectedLevel >= currentLevel )
   {
-    test.will = name + currentLevel +' must be supporting';
-    test.is( o.supporting );
+    test.will = name + currentLevel +' must be feature';
+    test.is( o.feature );
   }
   else
   {
-    test.will = name + currentLevel +' must not be supporting'
-    test.is( !o.supporting )
+    test.will = name + currentLevel +' must not be feature'
+    test.is( !o.feature )
   }
 
   o.checks[ name + currentLevel ] = results;
@@ -537,7 +537,7 @@ function supportedTypes( test )
     self.structure2( test, options );
     self.structure3( test, options );
 
-    test.contains( serialize.supporting, options.result );
+    test.contains( serialize.feature, options.result );
 
     let r = options.result;
 
@@ -658,7 +658,7 @@ function select( test )
   if( !Config.debug )
   return;
 
-  test.case = 'not supporting value'
+  test.case = 'not feature value'
 
   test.shouldThrowErrorSync( () => _.gdf.select() );
   test.shouldThrowErrorSync( () => _.gdf.select({ ext : [ 'json.fine', 'json' ] }) );
@@ -676,7 +676,7 @@ function registerAndFinit( test )
     ext : [ 'ext' ],
     in : [ 'string' ],
     out : [ 'number' ],
-
+    feature : {},
     onEncode : function( op )
     {
       _.assert( _.strIs( op.in.data ) );
@@ -731,13 +731,11 @@ let Self =
   tests :
   {
 
+    supportedTypes,
+
     trivial,
     select,
     registerAndFinit,
-
-    //
-
-    supportedTypes,
 
   },
 

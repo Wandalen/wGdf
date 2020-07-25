@@ -35,12 +35,12 @@ if( RoutineBasic )
 readJsStructure =
 {
 
-  forConfig : 0,
+  // forConfig : 0,
   ext : [ 'js.structure', 'js', 's', 'ss', 'jstruct', 'jslike' ],
   in : [ 'string' ],
   out : [ 'structure' ],
 
-  supporting : jsSupported,
+  feature : jsSupported,
 
   // onEncode : function( op )
   // {
@@ -119,7 +119,7 @@ let writeJsStrcuture =
   in : [ 'structure' ],
   out : [ 'string' ],
 
-  supporting : jsSupported,
+  feature : jsSupported,
 
   onEncode : function( op )
   {

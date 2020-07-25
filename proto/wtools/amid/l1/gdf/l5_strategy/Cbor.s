@@ -3,17 +3,6 @@
 
 'use strict';
 
-// /**
-//  * @file EncoderStrategyStandanrd.s.
-//  */
-//
-// if( typeof module !== 'undefined' )
-// {
-//
-//   let _ = require( '../../../../wtools/Tools.s' );
-//
-// }
-
 let _global = _global_;
 let _ = _global_.wTools;
 let Self = _global_.wTools;
@@ -47,8 +36,7 @@ readCbor =
   ext : [ 'cbor' ],
   in : [ 'buffer.node' ],
   out : [ 'structure' ],
-
-  supporting : cborSupported,
+  feature : cborSupported,
 
   onEncode : function( op )
   {
@@ -63,6 +51,8 @@ readCbor =
 
 }
 
+//
+
 let writeCbor = null;
 if( CborPath )
 writeCbor =
@@ -71,8 +61,7 @@ writeCbor =
   ext : [ 'cbor' ],
   in : [ 'structure' ],
   out : [ 'buffer.node' ],
-
-  supporting : cborSupported,
+  feature : cborSupported,
 
   onEncode : function( op )
   {
@@ -99,7 +88,6 @@ writeCbor =
 
 var Extension =
 {
-
 }
 
 Self = _.encode = _.encode || Object.create( null );

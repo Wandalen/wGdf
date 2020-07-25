@@ -21,15 +21,13 @@ Self.shortName = 'Current';
 function init( o )
 {
   let selected = this;
-
   _.assert( arguments.length <= 1 );
   _.mapExtend( selected, o )
+  // debugger;
   delete selected.default;
   Object.preventExtensions( selected );
   _.assert( selected.encoder instanceof _.Gdf );
-
   let proxy = _.proxyMap( selected, selected.encoder );
-
   return proxy;
 }
 

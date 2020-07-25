@@ -26,7 +26,7 @@ let readJson =
   in : [ 'string' ],
   out : [ 'structure' ],
 
-  supporting : jsonSupported,
+  feature : _.mapExtend( null, jsonSupported, { default : 1 } ),
 
   onEncode : function( op )
   {
@@ -34,7 +34,7 @@ let readJson =
     /*
 
 qqq : could throw different errors
-cover them all please
+cover them please
 
 SyntaxError: Unexpected end of JSON input
     at JSON.parse (<anonymous>:null:null)
@@ -71,15 +71,16 @@ SyntaxError: Unexpected end of JSON input
 
 }
 
+//
+
 let writeJsonMin =
 {
-  default : 1,
+  // default : 1,
   ext : [ 'json.min', 'json' ],
   shortName : 'json.min',
   in : [ 'structure' ],
   out : [ 'string' ],
-
-  supporting : jsonSupported,
+  feature : _.mapExtend( null, jsonSupported, { default : 1 } ),
 
   onEncode : function( op )
   {
@@ -89,6 +90,8 @@ let writeJsonMin =
 
 }
 
+//
+
 let writeJsonFine =
 {
 
@@ -96,8 +99,7 @@ let writeJsonFine =
   ext : [ 'json.fine', 'json' ],
   in : [ 'structure' ],
   out : [ 'string' ],
-
-  supporting : jsonSupported,
+  feature : _.mapExtend( null, jsonSupported ),
 
   onEncode : function( op )
   {
@@ -124,7 +126,7 @@ _.mapExtend( _.encode, Extension );
 // register
 // --
 
-_.Gdf( [ readJson, writeJsonMin, writeJsonFine ] );
+_.Gdf([ readJson, writeJsonMin, writeJsonFine ]);
 
 // --
 // export
