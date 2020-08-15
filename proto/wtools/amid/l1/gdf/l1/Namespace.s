@@ -96,8 +96,6 @@ function select( o )
     result = _.gdf.encodersArray.slice();
   }
 
-  // result = _.filter( result, converterSelect );
-
   result = result.filter( ( encoder ) =>
   {
     let o2 = _.mapExtend( null, o );
@@ -111,43 +109,7 @@ function select( o )
     result = result.filter( ( e ) => e.feature ? e.feature.default : false );
   }
 
-  // result = result.map( ( e ) => _.mapExtend( null, o, { encoder : e } ) );
-  // result = _.gdf.Context( result );
-
   return result;
-
-  /* */
-
-  // function converterSelect( converter )
-  // {
-  //   for( let s in o )
-  //   {
-  //     if( o[ s ] === null )
-  //     continue;
-  //     if( !_.longHas( names, s) )
-  //     continue;
-  //     let sfield = o[ s ];
-  //     _.assert( _.strIs( sfield ) );
-  //     sfield = _.gdf.formatNameSplit( sfield );
-  //     let cfield = converter[ s ];
-  //     if( _.arrayIs( cfield ) )
-  //     {
-  //       // debugger;
-  //       if( _.none( cfield, ( e ) => _.longHasAll( formatNameSplit( e ), sfield ) ) )
-  //       return undefined
-  //       // cfield = formatNameSplit( cfield );
-  //       // if( !_.longHas( cfield, sfield ) )
-  //       // debugger;
-  //       // if( !_.longHasAll( cfield, sfield ) )
-  //       // return undefined;
-  //     }
-  //     else _.assert( 0, `Unknown field ${s}` );
-  //   }
-  //   return converter;
-  // }
-
-  /* */
-
 }
 
 select.defaults =
@@ -158,6 +120,7 @@ select.defaults =
   filePath : null,
   ext : null,
   single : 1,
+  feature : null,
 }
 
 //

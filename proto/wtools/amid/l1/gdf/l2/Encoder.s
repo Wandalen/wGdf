@@ -77,9 +77,6 @@ function unform()
   encoder.ext.forEach( ( e, k ) =>
   {
     _.arrayRemoveOnceStrictly( _.gdf.extMap[ e ], encoder );
-    // let splits = _.gdf.formatNameSplit( e );
-    // if( splits.length > 1 )
-    // splits.forEach( ( split ) => _.arrayRemoveOnceStrictly( _.gdf.extMap[ split ], encoder ) );
   });
 
   encoder.inOut.forEach( ( e, k ) =>
@@ -124,8 +121,6 @@ function form()
 
   if( encoder.shortName === null && encoder.ext[ 0 ] )
   encoder.shortName = encoder.ext[ 0 ];
-  // if( encoder.name === null )
-  // encoder.name = ( encoder.ext[ 0 ] ? encoder.ext[ 0 ] + '-' : '' ) + encoder.inFormat[ 0 ] + '->' + encoder.outFormat[ 0 ];
   if( encoder.name === null )
   encoder.name = encoder.shortName + ':' + encoder.inFormat[ 0 ] + '->' + encoder.outFormat[ 0 ];
 
@@ -155,8 +150,6 @@ function form()
 
   encoder.inFormat.forEach( ( e, k ) =>
   {
-    // if( e === 'string.any' )
-    // debugger;
     _.gdf.inMap[ e ] = _.arrayAppendOnceStrictly( _.gdf.inMap[ e ] || null, encoder );
     let splits = _.gdf.formatNameSplit( e );
     if( splits.length > 1 )
@@ -173,12 +166,7 @@ function form()
 
   encoder.ext.forEach( ( e, k ) =>
   {
-    // if( e === 'json' )
-    // debugger;
     _.gdf.extMap[ e ] = _.arrayAppendOnceStrictly( _.gdf.extMap[ e ] || null, encoder );
-    // let splits = _.gdf.formatNameSplit( e );
-    // if( splits.length > 1 )
-    // splits.forEach( ( split ) => _.gdf.extMap[ split ] = _.arrayAppendOnceStrictly( _.gdf.extMap[ split ] || null, encoder ) );
   });
 
   let inOut = _.eachSample([ encoder.inFormat, encoder.outFormat ]);
@@ -200,8 +188,6 @@ function form()
   _.assert( encoder.outFormat.length >= 1 );
   _.assert( encoder.ext.length >= 0 );
   _.assert( _.routineIs( encoder.onEncode ) );
-
-  // _.assert( _.routineIs( encoder._encode ) );
 
   encoder.formed = 1;
   return encoder;
@@ -245,73 +231,6 @@ function encode_pre( routine, args )
   return o;
 }
 
-// //
-//
-// function _encode( o )
-// {
-//   let encoder = this;
-//
-//   _.assertRoutineOptions( _encode, arguments );
-//
-//   /* */
-//
-//   let op = Object.create( null );
-//
-//   op.params = o.params || Object.create( null );
-//
-//   op.in = Object.create( null );
-//   op.in.data = o.data;
-//   op.in.format = o.format || encoder.inFormat;
-//   if( _.arrayIs( op.in.format ) )
-//   op.in.format = op.in.format.length === 1 ? op.in.format[ 0 ] : undefined;
-//
-//   op.out = Object.create( null );
-//   op.out.data = undefined;
-//   op.out.format = undefined;
-//
-//   /* */
-//
-//   try
-//   {
-//
-//     _.assert( _.objectIs( op.params ) )
-//     _.assert( _.strIs( op.in.format ), 'Not clear which input format is' );
-//     _.assert( encoder.inFormatSupports( op.in.format ), () => 'Unknown format ' + op.in.format );
-//
-//     encoder.onEncode( op );
-//
-//     op.out.format = op.out.format || encoder.outFormat;
-//     if( _.arrayIs( op.out.format ) )
-//     op.out.format = op.out.format.length === 1 ? op.out.format[ 0 ] : undefined;
-//
-//     _.assert( _.strIs( op.out.format ), 'Output should have format' );
-//     _.assert( _.longHas( encoder.outFormat, op.out.format ), () => 'Strange output format ' + o.out.format );
-//
-//   }
-//   catch( err )
-//   {
-//     let outFormat = op.out.format || encoder.outFormat;
-//     throw _.err
-//     (
-//        err
-//       ,`\nFailed to convert from "${op.in.format}" to "${outFormat}" by encoder ${encoder.name}`
-//     );
-//   }
-//
-//   /* */
-//
-//   return op.out;
-// }
-//
-// _encode.defaults =
-// {
-//   data : null,
-//   format : null,
-//   filePath : null,
-//   ext : null,
-//   params : null,
-// }
-
 //
 
 function _encode( op )
@@ -328,7 +247,7 @@ _encode.defaults =
 {
   in : null,
   out : null,
-  // sync : null, // xxx : add?
+  sync : null,
   params : null,
   err : null,
 }
@@ -370,7 +289,13 @@ function encode_body( o )
   op.out.format = null;
 
   op.params = o.params || Object.create( null );
+  op.sync = o.sync;
+  // if( o.params.sync !== undefined )
+  // op.sync = o.params.sync;
   op.err = null;
+
+  if( op.sync === null )
+  op.sync = true;
 
   /* */
 
@@ -381,8 +306,14 @@ function encode_body( o )
     _.assert( op.in.format === null || _.strIs( op.in.format ), 'Not clear which input format is' );
     _.assert( op.in.format === null || encoder.inFormatSupports( op.in.format ), () => `Unknown format ${op.in.format}` );
 
-    // encoder.onEncode( op );
+    // if( op.in.format === 'structure' )
+    // debugger;
+
     result = encoder._encode( op );
+    // logger.log( `${op.in.format} -> ${op.out.format} , filePath : ${op.in.filePath}` );
+
+    // structure
+    // string.utf8
 
     if( result === undefined )
     result = op;
@@ -395,6 +326,7 @@ function encode_body( o )
     _.assert( _.longHas( encoder.outFormat, op.out.format ), () => 'Strange output format ' + o.out.format );
     _.assertRoutineOptions( encoder._encode, op );
     _.assert( result === op || _.consequenceIs( result ) );
+    // _.assert( op.params.sync === undefined );
 
   }
   catch( err )
@@ -418,6 +350,7 @@ encode_body.defaults =
   format : null,
   filePath : null,
   ext : null,
+  sync : null,
   params : null,
 }
 
@@ -458,6 +391,16 @@ function supports( o )
   else
   return false;
 
+  if( o.feature )
+  {
+    debugger;
+    for( let f in o.feature )
+    if( o.feature[ f ] !== encoder.feature[ f ] )
+    return false;
+    else
+    o.counter += 1;
+  }
+
   return encoder._supports( o );
 }
 
@@ -469,6 +412,7 @@ supports.defaults =
   ext : null,
   filePath : null,
   data : null,
+  feature : null,
 }
 
 //
@@ -477,101 +421,12 @@ function _supports( o )
 {
   let encoder = this;
   return true;
-  // return !!o.counter;
 }
 
 _supports.defaults =
 {
   ... supports.defaults,
 }
-
-// //
-//
-// function supportsInput( o )
-// {
-//   let encoder = this;
-//
-//   o = _.routineOptions( supportsInput, arguments );
-//
-//   if( !o.ext )
-//   if( o.filePath )
-//   o.filePath = _.path.ext( o.filePath );
-//   if( o.ext )
-//   o.ext = o.ext.toLowerCase()
-//
-//   _.assert( o.format === null, 'not implemented' );
-//   _.assert( _.strIs( o.ext ), 'not implemented' );
-//
-//   if( _.longHas( encoder.ext, o.ext ) )
-//   return true;
-//
-//   return encoder._supportsInput( o );
-// }
-//
-// supportsInput.defaults =
-// {
-//   format : null,
-//   ext : null,
-//   filePath : null,
-//   data : null,
-// }
-//
-// //
-//
-// function _supportsInput( o )
-// {
-//   let encoder = this;
-//   return false;
-// }
-//
-// _supportsInput.defaults =
-// {
-//   ... supportsInput.defaults,
-// }
-//
-// //
-//
-// function supportsOutput( o )
-// {
-//   let encoder = this;
-//
-//   o = _.routineOptions( supportsOutput, arguments );
-//
-//   if( !o.ext )
-//   if( o.filePath )
-//   o.filePath = _.path.ext( o.filePath );
-//   if( o.ext )
-//   o.ext = o.ext.toLowerCase()
-//
-//   _.assert( o.format === null, 'not implemented' );
-//   _.assert( _.strIs( o.ext ), 'not implemented' );
-//
-//   if( _.longHas( encoder.ext, o.ext ) )
-//   return true;
-//
-//   return encoder._supportsOutput( o );
-// }
-//
-// supportsOutput.defaults =
-// {
-//   format : null,
-//   ext : null,
-//   filePath : null,
-//   data : null,
-// }
-//
-// //
-//
-// function _supportsOutput( o )
-// {
-//   let encoder = this;
-//   return false;
-// }
-//
-// _supportsOutput.defaults =
-// {
-//   ... supportsOutput.defaults,
-// }
 
 //
 
@@ -676,16 +531,11 @@ let Proto =
   init,
   unform,
   form,
-  // _encode,
   _encode,
   encode,
 
   supports,
   _supports,
-  // supportsInput,
-  // _supportsInput,
-  // supportsOutput,
-  // _supportsOutput,
 
   inFormatSupports,
   outFormatSupports,

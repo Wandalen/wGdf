@@ -52,10 +52,10 @@ function converterTypesCheck( test, o, o2 )
   let samples = o2.samples;
   let currentLevel = o2.currentLevel;
   let name = o2.name;
-  _.assert( o.serialize.feature, `${o.serialize.ext} is not feature` );
-  let expectedLevel = o.serialize.feature[ name ];
+  _.assert( o.serializer.encoder.feature, `${o.serializer.ext} is not feature` );
+  let expectedLevel = o.serializer.encoder.feature[ name ];
 
-  let prefix = o.serialize.ext + ' / ' + name + currentLevel;
+  let prefix = o.serializer.ext + ' / ' + name + currentLevel;
 
   test.open( prefix );
 
@@ -73,8 +73,8 @@ function converterTypesCheck( test, o, o2 )
 
     try
     {
-      serialized = o.serialize.encode({ data : src });
-      deserialized = o.deserialize.encode({ data : serialized.out.data });
+      serialized = o.serializer.encode({ data : src });
+      deserialized = o.deserializer.encode({ data : serialized.out.data });
       results[ k ] = _.entityIdentical( deserialized.out.data, src );
     }
     catch( err )
@@ -125,6 +125,8 @@ function converterTypesCheck( test, o, o2 )
 
   return o;
 }
+
+//
 
 function primitive1( test, o )
 {
@@ -441,50 +443,50 @@ function supportedTypes( test )
 
     'bson' :
     {
-      serialize : { inFormat : 'structure', outFormat : 'buffer.node', ext : 'bson' },
-      deserialize : { inFormat : 'buffer.node', outFormat : 'structure', ext : 'bson' }
+      serializer : { inFormat : 'structure', outFormat : 'buffer.node', ext : 'bson' },
+      deserializer : { inFormat : 'buffer.node', outFormat : 'structure', ext : 'bson' }
     },
 
     'json.fine' :
     {
-      serialize : { inFormat : 'structure', outFormat : 'string', ext : 'json.fine' },
-      deserialize : { inFormat : 'string', outFormat : 'structure', ext : 'json' }
+      serializer : { inFormat : 'structure', outFormat : 'string', ext : 'json.fine' },
+      deserializer : { inFormat : 'string', outFormat : 'structure', ext : 'json' }
     },
 
     'json' :
     {
-      serialize : { inFormat : 'structure', outFormat : 'string', ext : 'json' },
-      deserialize : { inFormat : 'string', outFormat : 'structure', ext : 'json' }
+      serializer : { inFormat : 'structure', outFormat : 'string', ext : 'json' },
+      deserializer : { inFormat : 'string', outFormat : 'structure', ext : 'json' }
     },
 
     'cson' :
     {
-      serialize : { inFormat : 'structure', outFormat : 'string', ext : 'cson' },
-      deserialize : { inFormat : 'string', outFormat : 'structure', ext : 'cson' }
+      serializer : { inFormat : 'structure', outFormat : 'string', ext : 'cson' },
+      deserializer : { inFormat : 'string', outFormat : 'structure', ext : 'cson' }
     },
 
     'js' :
     {
-      serialize : { inFormat : 'structure', outFormat : 'string', ext : 'js' },
-      deserialize : { inFormat : 'string', outFormat : 'structure', ext : 'js' }
+      serializer : { inFormat : 'structure', outFormat : 'string', ext : 'js' },
+      deserializer : { inFormat : 'string', outFormat : 'structure', ext : 'js' }
     },
 
     'cbor' :
     {
-      serialize : { inFormat : 'structure', outFormat : 'buffer.node', ext : 'cbor' },
-      deserialize : { inFormat : 'buffer.node', outFormat : 'structure', ext : 'cbor' }
+      serializer : { inFormat : 'structure', outFormat : 'buffer.node', ext : 'cbor' },
+      deserializer : { inFormat : 'buffer.node', outFormat : 'structure', ext : 'cbor' }
     },
 
     'yml' :
     {
-      serialize : { inFormat : 'structure', outFormat : 'string', ext : 'yml' },
-      deserialize : { inFormat : 'string', outFormat : 'structure', ext : 'yml' }
+      serializer : { inFormat : 'structure', outFormat : 'string', ext : 'yml' },
+      deserializer : { inFormat : 'string', outFormat : 'structure', ext : 'yml' }
     },
 
     // 'msgpack.lite' : /* qqq : switch it on */
     // {
-    //   serialize : { inFormat : 'structure', outFormat : 'buffer.node', ext : 'msgpack.lite' },
-    //   deserialize : { inFormat : 'buffer.node', outFormat : 'structure', ext : 'msgpack.lite' }
+    //   serializer : { inFormat : 'structure', outFormat : 'buffer.node', ext : 'msgpack.lite' },
+    //   deserializer : { inFormat : 'buffer.node', outFormat : 'structure', ext : 'msgpack.lite' }
     // },
 
   }
@@ -499,13 +501,13 @@ function supportedTypes( test )
 
     test.case = 'select';
 
-    var serialize = _.gdf.selectContext( converter.serialize );
-    test.identical( serialize.length, 1 );
-    serialize = serialize[ 0 ];
+    var serializer = _.gdf.selectContext( converter.serializer );
+    test.identical( serializer.length, 1 );
+    serializer = serializer[ 0 ];
 
-    var deserialize = _.gdf.selectContext( converter.deserialize );
-    test.identical( deserialize.length, 1 );
-    deserialize = deserialize[ 0 ];
+    var deserializer = _.gdf.selectContext( converter.deserializer );
+    test.identical( deserializer.length, 1 );
+    deserializer = deserializer[ 0 ];
 
     let options =
     {
@@ -516,8 +518,8 @@ function supportedTypes( test )
         buffer : 0,
         structure : 0
       },
-      serialize,
-      deserialize,
+      serializer,
+      deserializer,
       checks : {}
     }
 
@@ -533,11 +535,11 @@ function supportedTypes( test )
     context.structure2( test, options );
     context.structure3( test, options );
 
-    test.contains( serialize.feature, options.result );
+    test.contains( serializer.encoder.feature, options.result );
 
     let r = options.result;
 
-    data.push( [ serialize.ext, r.primitive, r.regexp, r.buffer, r.structure ] )
+    data.push( [ serializer.ext, r.primitive, r.regexp, r.buffer, r.structure ] )
   }
 
   var o =
@@ -600,11 +602,12 @@ function trivial( test )
   {
     'params' : {},
     'err' : null,
+    'sync' : true,
     'in' : { 'data' : 'val : 13', 'format' : 'string', 'filePath' : null, 'ext' : null },
     'out' :
     {
       'data' : { 'val' : 13 },
-      'format' : 'structure'
+      'format' : 'structure',
     },
   }
   test.identical( dst, expected );
@@ -617,6 +620,7 @@ function trivial( test )
   {
     'params' : {},
     'err' : null,
+    'sync' : true,
     'in' : { 'data' : 'val : 13', 'format' : 'string', 'filePath' : null, 'ext' : null },
     'out' :
     {
@@ -698,6 +702,50 @@ function select( test )
 
   test.shouldThrowErrorSync( () => _.gdf.selectContext() );
   test.shouldThrowErrorSync( () => _.gdf.selectContext({ ext : [ 'json.fine', 'json' ] }) );
+
+}
+
+//
+
+function selectWithFeature( test )
+{
+  let context = this;
+
+  /* */
+
+  test.case = 'json.fine';
+  var encoders = _.gdf.select
+  ({
+    inFormat : 'structure',
+    outFormat : 'string',
+    ext : 'json',
+    feature : { fine : 1 },
+  });
+  var exp = [ _.gdf.extMap[ 'json.fine' ][ 0 ] ];
+  test.identical( encoders, exp );
+
+  var got = encoders[ 0 ].encode({ data : { a : 1 } }).out.data;
+  var exp = '{ "a" : 1 }';
+  test.identical( got, exp );
+
+  /* */
+
+  test.case = 'json.min';
+  var encoders = _.gdf.select
+  ({
+    inFormat : 'structure',
+    outFormat : 'string',
+    ext : 'json',
+    feature : { min : 1 },
+  });
+  var exp = [ _.gdf.extMap[ 'json.min' ][ 0 ] ];
+  test.identical( encoders, exp );
+
+  var got = encoders[ 0 ].encode({ data : { a : 1 } }).out.data;
+  var exp = '{"a":1}';
+  test.identical( got, exp );
+
+  /* */
 
 }
 
@@ -805,6 +853,8 @@ let Self =
 
     supportedTypes,
     trivial,
+    select,
+    selectWithFeature,
     select,
     registerAndFinit,
 
