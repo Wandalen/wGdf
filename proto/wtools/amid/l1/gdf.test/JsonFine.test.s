@@ -20,7 +20,7 @@ _.assert( _testerGlobal_.wTools !== _global_.wTools );
 
 function jsonFine( test )
 {
-  var self = this;
+  let context = this;
 
   let SamplesPrimitive =
   {
@@ -43,7 +43,8 @@ function jsonFine( test )
     date : new Date(),
   }
 
-  var deserialize = _.gdf.select({ in : 'string', out : 'structure', ext : 'json', default : 1 });
+  // var deserialize = _.gdf.selectContext({ inFormat : 'string', outFormat : 'structure', ext : 'json', default : 1 });
+  var deserialize = _.gdf.selectContext({ inFormat : 'string', outFormat : 'structure', ext : 'json' });
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
@@ -51,7 +52,7 @@ function jsonFine( test )
 
   test.case = 'select json.fine';
 
-  var serialize = _.gdf.select({ in : 'structure', out : 'string', ext : 'json.fine' });
+  var serialize = _.gdf.selectContext({ inFormat : 'structure', outFormat : 'string', ext : 'json.fine' });
   test.identical( serialize.length, 1 );
   serialize = serialize[ 0 ];
   test.identical( serialize.shortName, 'json.fine' );
@@ -64,10 +65,10 @@ function jsonFine( test )
     test.case = s;
     let src = SamplesSimple[ s ];
 
-    let serialized = serialize.encode({ data : src });
-    test.identical( serialized.format, 'string' );
+    let serialized = serialize.encode({ data : src }).out;
+    test.identical( serialized.format, 'string.utf8' );
 
-    let deserialized = deserialize.encode({ data : serialized.data });
+    let deserialized = deserialize.encode({ data : serialized.data }).out;
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
@@ -81,10 +82,10 @@ function jsonFine( test )
     test.case = s;
     let src = SamplesPrimitive[ s ];
 
-    let serialized = serialize.encode({ data : src });
-    test.identical( serialized.format, 'string' );
+    let serialized = serialize.encode({ data : src }).out;
+    test.identical( serialized.format, 'string.utf8' );
 
-    let deserialized = deserialize.encode({ data : serialized.data });
+    let deserialized = deserialize.encode({ data : serialized.data }).out;
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
@@ -95,45 +96,45 @@ function jsonFine( test )
   test.open( 'complicated' );
 
   test.case = 'all complicated together';
-  var serialized = serialize.encode({ data : SamplesComplicated });
-  test.identical( serialized.format, 'string' );
+  var serialized = serialize.encode({ data : SamplesComplicated }).out;
+  test.identical( serialized.format, 'string.utf8' );
   test.is( _.strIs( serialized.data ) );
-  test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) );
+  test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) ).out;
 
   test.case = 'typed array';
   var src = { typed :  new U16x( [ 1, 2, 3 ] ) }
-  var serialized = serialize.encode({ data : src });
-  test.identical( serialized.format, 'string' );
+  var serialized = serialize.encode({ data : src }).out;
+  test.identical( serialized.format, 'string.utf8' );
   test.is( _.strIs( serialized.data ) );
-  test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) );
+  test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) ).out;
 
   test.case = 'regexp';
   var src = { regexp :  /.regexp/g }
-  var serialized = serialize.encode({ data : src });
-  test.identical( serialized.format, 'string' );
+  var serialized = serialize.encode({ data : src }).out;
+  test.identical( serialized.format, 'string.utf8' );
   test.is( _.strIs( serialized.data ) );
-  test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) );
+  test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) ).out;
 
   test.case = 'infinity';
   var src = { infinity : -Infinity }
-  var serialized = serialize.encode({ data : src });
-  test.identical( serialized.format, 'string' );
+  var serialized = serialize.encode({ data : src }).out;
+  test.identical( serialized.format, 'string.utf8' );
   test.is( _.strIs( serialized.data ) );
-  test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) );
+  test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) ).out;
 
   test.case = 'NaN';
   var src = { nan : NaN }
-  var serialized = serialize.encode({ data : src });
-  test.identical( serialized.format, 'string' );
+  var serialized = serialize.encode({ data : src }).out;
+  test.identical( serialized.format, 'string.utf8' );
   test.is( _.strIs( serialized.data ) );
-  test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) );
+  test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) ).out;
 
   test.case = 'date';
   var src = { date : new Date() }
-  var serialized = serialize.encode({ data : src });
-  test.identical( serialized.format, 'string' );
+  var serialized = serialize.encode({ data : src }).out;
+  test.identical( serialized.format, 'string.utf8' );
   test.is( _.strIs( serialized.data ) );
-  var deserialized = deserialize.encode({ data : serialized.data })
+  var deserialized = deserialize.encode({ data : serialized.data }).out;
   var expected = { date : src.date.toJSON() }
   test.identical( deserialized.data, expected );
 

@@ -37,14 +37,14 @@ readJsStructure =
 
   // forConfig : 0,
   ext : [ 'js.structure', 'js', 's', 'ss', 'jstruct', 'jslike' ],
-  in : [ 'string' ],
-  out : [ 'structure' ],
+  inFormat : [ 'string.utf8' ],
+  outFormat : [ 'structure' ],
 
   feature : jsSupported,
 
   // onEncode : function( op )
   // {
-  //   op.out.format = 'string';
+  //   op.out.format = 'string.utf8';
   // },
 
   onEncode : function( op )
@@ -65,8 +65,8 @@ readJsStructure =
 //
 //   forConfig : 0,
 //   ext : [ 'js', 's', 'ss', 'jstruct', 'jslike' ],
-//   in : [ 'string' ],
-//   out : [ 'structure' ],
+//   inFormat : [ 'string.utf8' ],
+//   outFormat : [ 'structure' ],
 //
 //   onEncode : function( op )
 //   {
@@ -82,8 +82,8 @@ readJsStructure =
 // {
 //
 //   ext : [ 'js', 's', 'ss', 'jstruct', 'jslike' ],
-//   in : [ 'string' ],
-//   out : [ 'structure' ],
+//   inFormat : [ 'string.utf8' ],
+//   outFormat : [ 'structure' ],
 //
 //   onEncode : function( op )
 //   {
@@ -116,15 +116,15 @@ let writeJsStrcuture =
 {
 
   ext : [ 'js.structure', 'js', 's', 'ss', 'jstruct', 'jslike' ],
-  in : [ 'structure' ],
-  out : [ 'string' ],
+  inFormat : [ 'structure' ],
+  outFormat : [ 'string.utf8' ],
 
   feature : jsSupported,
 
   onEncode : function( op )
   {
     op.out.data = _.toJs( op.in.data );
-    op.out.format = 'string';
+    op.out.format = 'string.utf8';
   }
 
 }

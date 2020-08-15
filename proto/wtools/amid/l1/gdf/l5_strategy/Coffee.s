@@ -21,8 +21,6 @@ let Self = _global_.wTools;
 // coffee
 // --
 
-/* xxx qqq : implement delayed including */
-
 let Coffee, CoffeePath;
 try
 {
@@ -46,8 +44,8 @@ readCoffee =
 {
 
   ext : [ 'coffee', 'cson' ],
-  in : [ 'string' ],
-  out : [ 'structure' ],
+  inFormat : [ 'string.utf8' ],
+  outFormat : [ 'structure' ],
 
   feature : csonSupported,
 
@@ -84,8 +82,8 @@ writeCoffee =
 {
 
   ext : [ 'coffee', 'cson' ],
-  in : [ 'structure' ],
-  out : [ 'string' ],
+  inFormat : [ 'structure' ],
+  outFormat : [ 'string.utf8' ],
 
   feature : csonSupported,
 

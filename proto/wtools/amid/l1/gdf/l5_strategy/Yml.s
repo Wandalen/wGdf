@@ -44,8 +44,8 @@ readYml =
 {
 
   ext : [ 'yaml', 'yml' ],
-  in : [ 'string' ],
-  out : [ 'structure' ],
+  inFormat : [ 'string.utf8' ],
+  outFormat : [ 'structure' ],
 
   feature : ymlSupported,
 
@@ -71,8 +71,8 @@ writeYml =
 {
 
   ext : [ 'yaml', 'yml' ],
-  in : [ 'structure' ],
-  out : [ 'string' ],
+  inFormat : [ 'structure' ],
+  outFormat : [ 'string.utf8' ],
 
   feature : ymlSupported,
 
@@ -83,7 +83,7 @@ writeYml =
     Yaml = require( YamlPath );
 
     op.out.data = Yaml.dump( op.in.data );
-    op.out.format = 'string';
+    op.out.format = 'string.utf8';
   },
 
 }

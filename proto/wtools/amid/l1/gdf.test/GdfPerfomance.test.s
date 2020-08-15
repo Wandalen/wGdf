@@ -37,7 +37,7 @@ let _ = _global_.wTools;
 
 function onSuiteBegin()
 {
-  var context = this;
+  let context = this;
   context.suiteTempPath = _.path.tempOpen( _.path.join( __dirname, '../..' ), 'wGdf' );
   context.results = Object.create( null );
 }
@@ -177,10 +177,10 @@ function testApp()
 
   function run( o )
   {
-    var serialize = _.gdf.select( o.serialize );
+    var serialize = _.gdf.selectContext( o.serialize );
     serialize = serialize[ 0 ];
 
-    var deserialize = _.gdf.select( o.deserialize );
+    var deserialize = _.gdf.selectContext( o.deserialize );
     deserialize = deserialize[ 0 ];
 
     _.assert( serialize );
@@ -202,7 +202,7 @@ function testApp()
       try
       {
         let t0 = _.time.now();
-        serialized = serialize.encode({ data : src });
+        serialized = serialize.encode({ data : src }).out;
         let spent = _.time.spent( t0 );
         let size =  _.strMetricFormatBytes( _.entitySize( serialized.data ) );
 
@@ -231,7 +231,7 @@ function testApp()
       try
       {
         let t0 = _.time.now();
-        deserialized = deserialize.encode({ data : serialized.data });
+        deserialized = deserialize.encode({ data : serialized.data }).out;
         let spent = _.time.spent( t0 );
         console.log( 'read: ', spent );
 
@@ -260,56 +260,56 @@ let converters =
 {
   'bson' :
   {
-    serialize : { in : 'structure', out : 'buffer.node', ext : 'bson' },
-    deserialize : { in : 'buffer.node', out : 'structure', ext : 'bson' }
+    serialize : { inFormat : 'structure', outFormat : 'buffer.node', ext : 'bson' },
+    deserialize : { inFormat : 'buffer.node', outFormat : 'structure', ext : 'bson' }
   },
 
   'json.fine' :
   {
-    serialize : { in : 'structure', out : 'string', ext : 'json.fine' },
-    deserialize : { in : 'string', out : 'structure', ext : 'json', default : 1 }
+    serialize : { inFormat : 'structure', outFormat : 'string', ext : 'json.fine' },
+    deserialize : { inFormat : 'string', outFormat : 'structure', ext : 'json', default : 1 }
   },
 
   'json.min' :
   {
-    serialize : { in : 'structure', out : 'string', ext : 'json', default : 1 },
-    deserialize : { in : 'string', out : 'structure', ext : 'json', default : 1 }
+    serialize : { inFormat : 'structure', outFormat : 'string', ext : 'json', default : 1 },
+    deserialize : { inFormat : 'string', outFormat : 'structure', ext : 'json', default : 1 }
   },
 
   'cson' :
   {
-    serialize : { in : 'structure', out : 'string', ext : 'cson' },
-    deserialize : { in : 'string', out : 'structure', ext : 'cson' }
+    serialize : { inFormat : 'structure', outFormat : 'string', ext : 'cson' },
+    deserialize : { inFormat : 'string', outFormat : 'structure', ext : 'cson' }
   },
 
   'js' :
   {
-    serialize : { in : 'structure', out : 'string', ext : 'js' },
-    deserialize : { in : 'string', out : 'structure', ext : 'js' }
+    serialize : { inFormat : 'structure', outFormat : 'string', ext : 'js' },
+    deserialize : { inFormat : 'string', outFormat : 'structure', ext : 'js' }
   },
 
   'cbor' :
   {
-    serialize : { in : 'structure', out : 'buffer.node', ext : 'cbor' },
-    deserialize : { in : 'buffer.node', out : 'structure', ext : 'cbor' }
+    serialize : { inFormat : 'structure', outFormat : 'buffer.node', ext : 'cbor' },
+    deserialize : { inFormat : 'buffer.node', outFormat : 'structure', ext : 'cbor' }
   },
 
   'yml' :
   {
-    serialize : { in : 'structure', out : 'string', ext : 'yml' },
-    deserialize : { in : 'string', out : 'structure', ext : 'yml' }
+    serialize : { inFormat : 'structure', outFormat : 'string', ext : 'yml' },
+    deserialize : { inFormat : 'string', outFormat : 'structure', ext : 'yml' }
   },
 
   'msgpack.lite' :
   {
-    serialize : { in : 'structure', out : 'buffer.node', ext : 'msgpack.lite' },
-    deserialize : { in : 'buffer.node', out : 'structure', ext : 'msgpack.lite' }
+    serialize : { inFormat : 'structure', outFormat : 'buffer.node', ext : 'msgpack.lite' },
+    deserialize : { inFormat : 'buffer.node', outFormat : 'structure', ext : 'msgpack.lite' }
   },
 
   'msgpack.wtp' :
   {
-    serialize : { in : 'structure', out : 'buffer.node', ext : 'msgpack.wtp' },
-    deserialize : { in : 'buffer.node', out : 'structure', ext : 'msgpack.wtp' }
+    serialize : { inFormat : 'structure', outFormat : 'buffer.node', ext : 'msgpack.wtp' },
+    deserialize : { inFormat : 'buffer.node', outFormat : 'structure', ext : 'msgpack.wtp' }
   }
 }
 
@@ -397,7 +397,7 @@ let Self =
 
   name : 'Tools/base/gdf/Performance',
   silencing : 1,
-  enabled : 0,
+  enabled : 1,
 
   onSuiteBegin,
   onSuiteEnd,

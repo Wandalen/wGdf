@@ -21,26 +21,26 @@ _.assert( _testerGlobal_.wTools !== _global_.wTools );
 
 function utf8( test )
 {
-  var self = this;
+  let context = this;
 
   var src = 'Lorem Ipsum is simply dummy text.';
   var buffer = _.bufferBytesFrom( src );
 
   test.case = 'buffer.bytes <-> string.utf8';
 
-  var serialize = _.gdf.select({ in : 'buffer.bytes', out : 'string.utf8' });
+  var serialize = _.gdf.selectContext({ inFormat : 'buffer.bytes', outFormat : 'string.utf8' });
   test.identical( serialize.length, 1 );
   let utf8FromBuffer = serialize[ 0 ];
 
-  var serialize = _.gdf.select({ out : 'buffer.bytes', in : 'string.utf8' });
+  var serialize = _.gdf.selectContext({ outFormat : 'buffer.bytes', inFormat : 'string.utf8' });
   test.identical( serialize.length, 1 );
   let utf8ToBuffer = serialize[ 0 ];
 
-  var converted = utf8FromBuffer.encode({ data : buffer });
+  var converted = utf8FromBuffer.encode({ data : buffer }).out;
   test.identical( converted.format, 'string.utf8' );
   test.is( _.strIs( converted.data ) );
 
-  var converted = utf8ToBuffer.encode({ data : converted.data });
+  var converted = utf8ToBuffer.encode({ data : converted.data }).out;
   test.identical( converted.format, 'buffer.bytes' );
   test.is( _.bufferBytesIs( converted.data ) );
   test.identical( converted.data, buffer );

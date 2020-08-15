@@ -1,4 +1,4 @@
-(function _Current_s_()
+(function _Context_s_()
 {
 
 'use strict';
@@ -6,13 +6,13 @@
 let _global = _global_;
 let _ = _global_.wTools;
 let Parent = null;
-let Self = wGenericDataFormatCurrent;
-function wGenericDataFormatCurrent( o )
+let Self = wGenericDataFormatContext;
+function wGenericDataFormatContext( o )
 {
   return _.workpiece.construct( Self, this, arguments );
 }
 
-Self.shortName = 'Current';
+Self.shortName = 'Context';
 
 // --
 // routines
@@ -20,14 +20,13 @@ Self.shortName = 'Current';
 
 function init( o )
 {
-  let selected = this;
+  let context = this;
   _.assert( arguments.length <= 1 );
-  _.mapExtend( selected, o )
-  // debugger;
-  delete selected.default;
-  Object.preventExtensions( selected );
-  _.assert( selected.encoder instanceof _.Gdf );
-  let proxy = _.proxyMap( selected, selected.encoder );
+  _.mapExtend( context, o )
+  delete context.default;
+  Object.preventExtensions( context );
+  _.assert( context.encoder instanceof _.Gdf );
+  let proxy = _.proxyMap( context, context.encoder );
   return proxy;
 }
 
@@ -35,14 +34,14 @@ function init( o )
 
 function encode_body( o )
 {
-  let selected = this;
+  let context = this;
 
   _.assertRoutineOptions( encode, arguments );
 
   if( o.format === null )
-  o.format = selected.in;
+  o.format = context.inFormat;
 
-  let result = selected.encoder.encode.body.call( selected.encoder, o );
+  let result = context.encoder.encode.body.call( context.encoder, o );
 
   return result;
 }

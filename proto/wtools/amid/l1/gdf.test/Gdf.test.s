@@ -47,7 +47,7 @@ let feature =
 
 function converterTypesCheck( test, o, o2 )
 {
-  let self = this;
+  let context = this;
 
   let samples = o2.samples;
   let currentLevel = o2.currentLevel;
@@ -69,18 +69,13 @@ function converterTypesCheck( test, o, o2 )
 
     results[ k ] = false;
 
-    let serialized,
-      deserialized;
+    let serialized, deserialized;
 
     try
     {
       serialized = o.serialize.encode({ data : src });
-      // test.identical( serialized.format, o.serializeFormat );
-
-      deserialized = o.deserialize.encode({ data : serialized.data });
-      // test.identical( deserialized.format, o.deserializeFormat );
-
-      results[ k ] = _.entityIdentical( deserialized.data, src );
+      deserialized = o.deserialize.encode({ data : serialized.out.data });
+      results[ k ] = _.entityIdentical( deserialized.out.data, src );
     }
     catch( err )
     {
@@ -133,7 +128,7 @@ function converterTypesCheck( test, o, o2 )
 
 function primitive1( test, o )
 {
-  let self = this;
+  let context = this;
 
   let samples =
   {
@@ -149,14 +144,14 @@ function primitive1( test, o )
     currentLevel : 1
   }
 
-  self.converterTypesCheck( test, o, o2 )
+  context.converterTypesCheck( test, o, o2 )
 }
 
 //
 
 function primitive2( test, o )
 {
-  let self = this;
+  let context = this;
 
   let samples =
   {
@@ -173,14 +168,14 @@ function primitive2( test, o )
     currentLevel : 2
   }
 
-  self.converterTypesCheck( test, o, o2 )
+  context.converterTypesCheck( test, o, o2 )
 }
 
 //
 
 function primitive3( test, o )
 {
-  let self = this;
+  let context = this;
 
   let samples =
   {
@@ -200,14 +195,14 @@ function primitive3( test, o )
     currentLevel : 3
   }
 
-  self.converterTypesCheck( test, o, o2 )
+  context.converterTypesCheck( test, o, o2 )
 }
 
 //
 
 function regExp1( test, o )
 {
-  let self = this;
+  let context = this;
 
   let samples =
   {
@@ -225,14 +220,14 @@ function regExp1( test, o )
     currentLevel : 1
   }
 
-  self.converterTypesCheck( test, o, o2 )
+  context.converterTypesCheck( test, o, o2 )
 }
 
 //
 
 function regExp2( test, o )
 {
-  let self = this;
+  let context = this;
 
   let samples =
   {
@@ -253,14 +248,14 @@ function regExp2( test, o )
     currentLevel : 2
   }
 
-  self.converterTypesCheck( test, o, o2 )
+  context.converterTypesCheck( test, o, o2 )
 }
 
 //
 
 function buffer1( test, o )
 {
-  let self = this;
+  let context = this;
 
   let samples =
   {
@@ -279,14 +274,14 @@ function buffer1( test, o )
     atLeastOne : 1
   }
 
-  self.converterTypesCheck( test, o, o2 );
+  context.converterTypesCheck( test, o, o2 );
 }
 
 //
 
 function buffer2( test, o )
 {
-  let self = this;
+  let context = this;
 
   let samples =
   {
@@ -300,14 +295,14 @@ function buffer2( test, o )
     currentLevel : 2,
   }
 
-  self.converterTypesCheck( test, o, o2 );
+  context.converterTypesCheck( test, o, o2 );
 }
 
 //
 
 function buffer3( test, o )
 {
-  let self = this;
+  let context = this;
 
   let samples =
   {
@@ -325,14 +320,14 @@ function buffer3( test, o )
     currentLevel : 3,
   }
 
-  self.converterTypesCheck( test, o, o2 );
+  context.converterTypesCheck( test, o, o2 );
 }
 
 //
 
 function structure1( test, o )
 {
-  let self = this;
+  let context = this;
 
   let array =
   {
@@ -346,7 +341,7 @@ function structure1( test, o )
     string : 'a'
   }
 
-  //
+  /* */
 
   let samples =
   {
@@ -361,14 +356,14 @@ function structure1( test, o )
     currentLevel : 1,
   }
 
-  self.converterTypesCheck( test, o, o2 );
+  context.converterTypesCheck( test, o, o2 );
 }
 
 //
 
 function structure2( test, o )
 {
-  let self = this;
+  let context = this;
 
   let withNestedArray =
   {
@@ -386,7 +381,7 @@ function structure2( test, o )
     array : [ { a : '1', dir : { b : 2 }, c : [ 1, 2, 3 ] } ],
   }
 
-  //
+  /* */
 
   let samples =
   {
@@ -402,21 +397,21 @@ function structure2( test, o )
     currentLevel : 2,
   }
 
-  self.converterTypesCheck( test, o, o2 );
+  context.converterTypesCheck( test, o, o2 );
 }
 
 //
 
 function structure3( test, o )
 {
-  let self = this;
+  let context = this;
 
   let recursion =
   {
     map : { a : '1', dir : { b : 2 }, c : [ 1, 2, 3 ] },
     array : [ { a : '1', dir : { b : 2 }, c : [ 1, 2, 3 ] } ],
   }
-  recursion.self = recursion;
+  recursion.context = recursion;
 
   let samples =
   {
@@ -430,7 +425,7 @@ function structure3( test, o )
     currentLevel : 3,
   }
 
-  self.converterTypesCheck( test, o, o2 );
+  context.converterTypesCheck( test, o, o2 );
 }
 
 // --
@@ -439,56 +434,57 @@ function structure3( test, o )
 
 function supportedTypes( test )
 {
-  var self = this;
+  let context = this;
 
   let Converters =
   {
+
     'bson' :
     {
-      serialize : { in : 'structure', out : 'buffer.node', ext : 'bson' },
-      deserialize : { in : 'buffer.node', out : 'structure', ext : 'bson' }
+      serialize : { inFormat : 'structure', outFormat : 'buffer.node', ext : 'bson' },
+      deserialize : { inFormat : 'buffer.node', outFormat : 'structure', ext : 'bson' }
     },
 
     'json.fine' :
     {
-      serialize : { in : 'structure', out : 'string', ext : 'json.fine' },
-      deserialize : { in : 'string', out : 'structure', ext : 'json', default : 1 }
+      serialize : { inFormat : 'structure', outFormat : 'string', ext : 'json.fine' },
+      deserialize : { inFormat : 'string', outFormat : 'structure', ext : 'json' }
     },
 
     'json' :
     {
-      serialize : { in : 'structure', out : 'string', ext : 'json', default : 1 },
-      deserialize : { in : 'string', out : 'structure', ext : 'json', default : 1 }
+      serialize : { inFormat : 'structure', outFormat : 'string', ext : 'json' },
+      deserialize : { inFormat : 'string', outFormat : 'structure', ext : 'json' }
     },
 
     'cson' :
     {
-      serialize : { in : 'structure', out : 'string', ext : 'cson' },
-      deserialize : { in : 'string', out : 'structure', ext : 'cson' }
+      serialize : { inFormat : 'structure', outFormat : 'string', ext : 'cson' },
+      deserialize : { inFormat : 'string', outFormat : 'structure', ext : 'cson' }
     },
 
     'js' :
     {
-      serialize : { in : 'structure', out : 'string', ext : 'js' },
-      deserialize : { in : 'string', out : 'structure', ext : 'js' }
+      serialize : { inFormat : 'structure', outFormat : 'string', ext : 'js' },
+      deserialize : { inFormat : 'string', outFormat : 'structure', ext : 'js' }
     },
 
     'cbor' :
     {
-      serialize : { in : 'structure', out : 'buffer.node', ext : 'cbor' },
-      deserialize : { in : 'buffer.node', out : 'structure', ext : 'cbor' }
+      serialize : { inFormat : 'structure', outFormat : 'buffer.node', ext : 'cbor' },
+      deserialize : { inFormat : 'buffer.node', outFormat : 'structure', ext : 'cbor' }
     },
 
     'yml' :
     {
-      serialize : { in : 'structure', out : 'string', ext : 'yml' },
-      deserialize : { in : 'string', out : 'structure', ext : 'yml' }
+      serialize : { inFormat : 'structure', outFormat : 'string', ext : 'yml' },
+      deserialize : { inFormat : 'string', outFormat : 'structure', ext : 'yml' }
     },
 
     // 'msgpack.lite' : /* qqq : switch it on */
     // {
-    //   serialize : { in : 'structure', out : 'buffer.node', ext : 'msgpack.lite' },
-    //   deserialize : { in : 'buffer.node', out : 'structure', ext : 'msgpack.lite' }
+    //   serialize : { inFormat : 'structure', outFormat : 'buffer.node', ext : 'msgpack.lite' },
+    //   deserialize : { inFormat : 'buffer.node', outFormat : 'structure', ext : 'msgpack.lite' }
     // },
 
   }
@@ -503,11 +499,11 @@ function supportedTypes( test )
 
     test.case = 'select';
 
-    var serialize = _.gdf.select( converter.serialize );
+    var serialize = _.gdf.selectContext( converter.serialize );
     test.identical( serialize.length, 1 );
     serialize = serialize[ 0 ];
 
-    var deserialize = _.gdf.select( converter.deserialize );
+    var deserialize = _.gdf.selectContext( converter.deserialize );
     test.identical( deserialize.length, 1 );
     deserialize = deserialize[ 0 ];
 
@@ -525,17 +521,17 @@ function supportedTypes( test )
       checks : {}
     }
 
-    self.primitive1( test, options );
-    self.primitive2( test, options );
-    self.primitive3( test, options );
-    self.regExp1( test, options );
-    self.regExp2( test, options );
-    self.buffer1( test, options );
-    self.buffer2( test, options );
-    self.buffer3( test, options );
-    self.structure1( test, options );
-    self.structure2( test, options );
-    self.structure3( test, options );
+    context.primitive1( test, options );
+    context.primitive2( test, options );
+    context.primitive3( test, options );
+    context.regExp1( test, options );
+    context.regExp2( test, options );
+    context.buffer1( test, options );
+    context.buffer2( test, options );
+    context.buffer3( test, options );
+    context.structure1( test, options );
+    context.structure2( test, options );
+    context.structure3( test, options );
 
     test.contains( serialize.feature, options.result );
 
@@ -587,28 +583,50 @@ supportedTypes.timeOut = 20000;
 
 function trivial( test )
 {
-  var self = this;
+  let context = this;
 
   /* */
 
   test.case = 'select';
   var src = 'val : 13';
-  var converters = _.gdf.select({ in : 'string', out : 'structure', ext : 'cson', default : 1 });
+  var converters = _.gdf.selectContext({ inFormat : 'string', outFormat : 'structure', ext : 'cson' });
   test.identical( converters.length, 1 );
 
   /* */
 
   test.case = 'encode with format';
   var dst = converters[ 0 ].encode({ data : src, format : 'string' });
-  var expected = { data : { val : 13 }, format : 'structure' }
+  var expected =
+  {
+    'params' : {},
+    'err' : null,
+    'in' : { 'data' : 'val : 13', 'format' : 'string', 'filePath' : null, 'ext' : null },
+    'out' :
+    {
+      'data' : { 'val' : 13 },
+      'format' : 'structure'
+    },
+  }
   test.identical( dst, expected );
 
   /* */
 
   test.case = 'encode without format';
   var dst = converters[ 0 ].encode({ data : src });
-  var expected = { data : { val : 13 }, format : 'structure' }
+  var expected =
+  {
+    'params' : {},
+    'err' : null,
+    'in' : { 'data' : 'val : 13', 'format' : 'string', 'filePath' : null, 'ext' : null },
+    'out' :
+    {
+      'data' : { 'val' : 13 },
+      'format' : 'structure'
+    }
+  }
   test.identical( dst, expected );
+
+  /* */
 
 }
 
@@ -616,52 +634,70 @@ function trivial( test )
 
 function select( test )
 {
-  let self = this;
+  let context = this;
 
-  test.case = 'all'
-  var got = _.gdf.select({});
-  test.is( got.length === _.gdf.convertersArray.length );
+  /* */
 
-  test.case = 'in'
-  var got = _.gdf.select({ in : 'structure' });
+  test.case = 'all';
+  var got = _.gdf.selectContext({});
+  test.ge( got.length, 1 );
+  test.le( got.length, _.gdf.encodersArray.length );
+
+  /* */
+
+  test.case = 'all single : 1';
+  var got = _.gdf.selectContext({ single : 1 });
+  test.ge( got.length, 1 );
+  test.le( got.length, _.gdf.encodersArray.length );
+
+  /* */
+
+  test.case = 'all single : 0';
+  var got = _.gdf.selectContext({ single : 0 });
+  test.is( got.length === _.gdf.encodersArray.length );
+
+  /* */
+
+  test.case = 'inFormat';
+  var got = _.gdf.selectContext({ inFormat : 'structure' });
   test.ge( got.length, 1 );
 
-  test.case = 'out'
-  var got = _.gdf.select({ out : 'string' });
+  /* */
+
+  test.case = 'outFormat';
+  var got = _.gdf.selectContext({ outFormat : 'string' });
   test.ge( got.length, 1 );
+
+  /* */
 
   test.case = 'not existing'
 
-  var got = _.gdf.select({ in : 'not existing' });
+  var got = _.gdf.selectContext({ inFormat : 'not existing' });
   test.is( !got.length );
 
-  var got = _.gdf.select({ out : 'not existing' });
+  var got = _.gdf.selectContext({ outFormat : 'not existing' });
   test.is( !got.length );
 
-  var got = _.gdf.select({ ext : 'not existing' });
+  var got = _.gdf.selectContext({ ext : 'not existing' });
   test.is( !got.length );
 
   test.case = 'default';
 
-  var got = _.gdf.select({ in : 'structure', out : 'string' });
+  var got = _.gdf.selectContext({ inFormat : 'structure', outFormat : 'string' });
+  test.is( got.length === 1 );
+  var got = _.gdf.selectContext({ inFormat : 'structure', outFormat : 'string', single : 0 });
   test.is( got.length > 1 );
-  var got = _.gdf.select({ in : 'structure', out : 'string', default : 1 });
+  var got = _.gdf.selectContext({ inFormat : 'structure', outFormat : 'string', single : 1 });
   test.is( got.length === 1 );
   test.identical( got[ 0 ].shortName, 'json.min' );
-
-  // test.case = 'shortName';
-
-  // var got = _.gdf.select({ shortName : 'json.fine', out : 'string' });
-  // test.is( got.length === 1 );
-  // test.identical( got[ 0 ].shortName, 'json.fine' );
 
   if( !Config.debug )
   return;
 
   test.case = 'not feature value'
 
-  test.shouldThrowErrorSync( () => _.gdf.select() );
-  test.shouldThrowErrorSync( () => _.gdf.select({ ext : [ 'json.fine', 'json' ] }) );
+  test.shouldThrowErrorSync( () => _.gdf.selectContext() );
+  test.shouldThrowErrorSync( () => _.gdf.selectContext({ ext : [ 'json.fine', 'json' ] }) );
 
 }
 
@@ -669,13 +705,13 @@ function select( test )
 
 function registerAndFinit( test )
 {
-  let self = this;
+  let context = this;
 
   var converter =
   {
-    ext : [ 'ext' ],
-    in : [ 'string' ],
-    out : [ 'number' ],
+    ext : [ 'ext', 'ext.ext2' ],
+    inFormat : [ 'string.utf8', 'buffer.utf8', 'testformat1.testformat2' ],
+    outFormat : [ 'number.f32', 'number.f64' ],
     feature : {},
     onEncode : function( op )
     {
@@ -687,19 +723,55 @@ function registerAndFinit( test )
 
   converter = _.Gdf( converter );
 
-  test.is( _.longHas( _.gdf.convertersArray, converter ) );
-  test.is( _.longHas( _.gdf.inMap[ 'string' ], converter ) );
-  test.is( _.longHas( _.gdf.outMap[ 'number' ], converter ) );
-  test.is( _.longHas( _.gdf.extMap[ 'ext' ], converter ) );
-  test.is( _.longHas( _.gdf.inOutMap[ 'string-number' ], converter ) );
+  test.description = 'init';
+  test.identical( converter.name, 'ext:string.utf8->number.f32' );
+  test.identical( _.longCountElement( _.gdf.encodersArray, converter ), 1 );
+  test.identical( _.longCountElement( _.gdf.inMap[ 'string' ], converter ), 1 );
+  test.identical( _.longCountElement( _.gdf.inMap[ 'buffer' ], converter ), 1 );
+  test.identical( _.longCountElement( _.gdf.inMap[ 'utf8' ], converter ), 1 );
+  test.identical( _.longCountElement( _.gdf.inMap[ 'testformat1' ], converter ), 1 );
+  test.identical( _.longCountElement( _.gdf.inMap[ 'testformat2' ], converter ), 1 );
+  test.identical( _.longCountElement( _.gdf.outMap[ 'number' ], converter ), 1 );
+  test.identical( _.longCountElement( _.gdf.outMap[ 'f32' ], converter ), 1 );
+  test.identical( _.longCountElement( _.gdf.outMap[ 'f64' ], converter ), 1 );
+  test.identical( _.longCountElement( _.gdf.extMap[ 'ext' ], converter ), 1 );
+  test.identical( _.longCountElement( _.gdf.extMap[ 'ext.ext2' ], converter ), 1 );
+  test.identical( _.longCountElement( _.gdf.extMap[ 'ext2' ] || [], converter ), 0 );
+  test.identical( _.longCountElement( _.gdf.inOutMap[ 'string.utf8->number.f32' ], converter ), 1 );
 
+  /* */
+
+  test.description = 'select outFormat';
+  var got = _.gdf.selectContext({ outFormat : 'number' });
+  test.is( got[ 0 ].encoder === _.gdf.inOutMap[ 'string.utf8->number.f32' ][ 0 ] );
+  var got = _.gdf.selectContext({ outFormat : 'f32' });
+  test.is( got[ 0 ].encoder === _.gdf.inOutMap[ 'string.utf8->number.f32' ][ 0 ] );
+  var got = _.gdf.selectContext({ outFormat : 'f64' });
+  test.is( got[ 0 ].encoder === _.gdf.inOutMap[ 'string.utf8->number.f32' ][ 0 ] );
+
+  /* */
+
+  test.description = 'select inFormat';
+  var got = _.gdf.selectContext({ inFormat : 'testformat1' });
+  test.is( got[ 0 ].encoder === _.gdf.inOutMap[ 'string.utf8->number.f32' ][ 0 ] );
+  var got = _.gdf.selectContext({ inFormat : 'testformat2' });
+  test.is( got[ 0 ].encoder === _.gdf.inOutMap[ 'string.utf8->number.f32' ][ 0 ] );
+
+  /* */
+
+  test.description = 'finit';
   converter.finit();
 
-  test.is( !_.longHas( _.gdf.convertersArray, converter ) );
-  test.is( !_.longHas( _.gdf.inMap[ 'string' ], converter ) );
-  test.is( !_.longHas( _.gdf.outMap[ 'number' ], converter ) );
-  test.is( !_.longHas( _.gdf.extMap[ 'ext' ], converter ) );
-  test.is( !_.longHas( _.gdf.inOutMap[ 'string-number' ], converter ) );
+  test.identical( _.longCountElement( _.gdf.encodersArray, converter ), 0 );
+  test.identical( _.longCountElement( _.gdf.inMap[ 'string' ], converter ), 0 );
+  test.identical( _.longCountElement( _.gdf.inMap[ 'buffer' ], converter ), 0 );
+  test.identical( _.longCountElement( _.gdf.inMap[ 'utf8' ], converter ), 0 );
+  test.identical( _.longCountElement( _.gdf.outMap[ 'number' ], converter ), 0 );
+  test.identical( _.longCountElement( _.gdf.outMap[ 'f32' ], converter ), 0 );
+  test.identical( _.longCountElement( _.gdf.outMap[ 'f64' ], converter ), 0 );
+  test.identical( _.longCountElement( _.gdf.extMap[ 'ext' ], converter ), 0 );
+  test.identical( _.longCountElement( _.gdf.inOutMap[ 'string.utf8->number.f32' ], converter ), 0 );
+
 }
 
 // --
@@ -732,7 +804,6 @@ let Self =
   {
 
     supportedTypes,
-
     trivial,
     select,
     registerAndFinit,

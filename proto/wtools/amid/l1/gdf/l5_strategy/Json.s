@@ -23,8 +23,8 @@ let readJson =
 {
 
   ext : [ 'json' ],
-  in : [ 'string' ],
-  out : [ 'structure' ],
+  inFormat : [ 'string.utf8' ],
+  outFormat : [ 'structure' ],
 
   feature : _.mapExtend( null, jsonSupported, { default : 1 } ),
 
@@ -78,14 +78,14 @@ let writeJsonMin =
   // default : 1,
   ext : [ 'json.min', 'json' ],
   shortName : 'json.min',
-  in : [ 'structure' ],
-  out : [ 'string' ],
+  inFormat : [ 'structure' ],
+  outFormat : [ 'string.utf8' ],
   feature : _.mapExtend( null, jsonSupported, { default : 1 } ),
 
   onEncode : function( op )
   {
     op.out.data = JSON.stringify( op.in.data );
-    op.out.format = 'string';
+    op.out.format = 'string.utf8';
   }
 
 }
@@ -97,15 +97,15 @@ let writeJsonFine =
 
   shortName : 'json.fine',
   ext : [ 'json.fine', 'json' ],
-  in : [ 'structure' ],
-  out : [ 'string' ],
+  inFormat : [ 'structure' ],
+  outFormat : [ 'string.utf8' ],
   feature : _.mapExtend( null, jsonSupported ),
 
   onEncode : function( op )
   {
     op.out.data = _.cloneData({ src : op.in.data });
     op.out.data = _.toJson( op.out.data, { cloning : 0 } );
-    op.out.format = 'string';
+    op.out.format = 'string.utf8';
   }
 
 }

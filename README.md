@@ -16,7 +16,6 @@ node sample/Sample.s
 npm add 'wgdf@alpha'
 ```
 
-
 ## Usage:
 
 ##### Example #1

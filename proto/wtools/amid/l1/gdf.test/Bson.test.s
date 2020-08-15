@@ -20,7 +20,7 @@ _.assert( _testerGlobal_.wTools !== _global_.wTools );
 
 function bson( test )
 {
-  var self = this;
+  let context = this;
 
   let SamplesPrimitive =
   {
@@ -47,11 +47,11 @@ function bson( test )
 
   test.case = 'select';
 
-  var serialize = _.gdf.select({ in : 'structure', out : 'buffer.node', ext : 'bson' });
+  var serialize = _.gdf.selectContext({ inFormat : 'structure', outFormat : 'buffer.node', ext : 'bson' });
   test.identical( serialize.length, 1 );
   serialize = serialize[ 0 ];
 
-  var deserialize = _.gdf.select({ in : 'buffer.node', out : 'structure', ext : 'bson' });
+  var deserialize = _.gdf.selectContext({ inFormat : 'buffer.node', outFormat : 'structure', ext : 'bson' });
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
@@ -66,22 +66,22 @@ function bson( test )
     if( !_.mapIs( src ) )
     src = { [ s ] : src };
 
-    let serialized = serialize.encode({ data : src });
+    let serialized = serialize.encode({ data : src }).out;
     test.identical( serialized.format, 'buffer.node' );
     test.is( _.bufferNodeIs( serialized.data ) );
 
-    let deserialized = deserialize.encode({ data : serialized.data });
+    let deserialized = deserialize.encode({ data : serialized.data }).out;
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
   test.close( 'simple' );
 
   test.case = 'all simple together';
-  var serialized = serialize.encode({ data : SamplesSimple });
+  var serialized = serialize.encode({ data : SamplesSimple }).out;
   test.identical( serialized.format, 'buffer.node' );
   test.is( _.bufferNodeIs( serialized.data ) );
 
-  var deserialized = deserialize.encode({ data : serialized.data });
+  var deserialized = deserialize.encode({ data : serialized.data }).out;
   test.identical( deserialized.data, SamplesSimple );
   test.identical( deserialized.format, 'structure' );
 
@@ -96,21 +96,21 @@ function bson( test )
     if( !_.mapIs( src ) )
     src = { [ s ] : src };
 
-    let serialized = serialize.encode({ data : src });
+    let serialized = serialize.encode({ data : src }).out;
     test.identical( serialized.format, 'buffer.node' );
 
-    let deserialized = deserialize.encode({ data : serialized.data });
+    let deserialized = deserialize.encode({ data : serialized.data }).out;
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
   test.close( 'primitive' );
 
   test.case = 'all primitive together';
-  var serialized = serialize.encode({ data : SamplesPrimitive });
+  var serialized = serialize.encode({ data : SamplesPrimitive }).out;
   test.identical( serialized.format, 'buffer.node' );
   test.is( _.bufferNodeIs( serialized.data ) );
 
-  var deserialized = deserialize.encode({ data : serialized.data });
+  var deserialized = deserialize.encode({ data : serialized.data }).out;
   test.identical( deserialized.data, SamplesPrimitive );
   test.identical( deserialized.format, 'structure' );
 
@@ -125,21 +125,21 @@ function bson( test )
     if( !_.mapIs( src ) )
     src = { [ s ] : src };
 
-    let serialized = serialize.encode({ data : src });
+    let serialized = serialize.encode({ data : src }).out;
     test.identical( serialized.format, 'buffer.node' );
 
-    let deserialized = deserialize.encode({ data : serialized.data });
+    let deserialized = deserialize.encode({ data : serialized.data }).out;
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
   test.close( 'complicated' );
 
   test.case = 'all complicated together';
-  var serialized = serialize.encode({ data : SamplesComplicated });
+  var serialized = serialize.encode({ data : SamplesComplicated }).out;
   test.identical( serialized.format, 'buffer.node' );
   test.is( _.bufferNodeIs( serialized.data ) );
 
-  var deserialized = deserialize.encode({ data : serialized.data });
+  var deserialized = deserialize.encode({ data : serialized.data }).out;
   test.identical( deserialized.data, SamplesComplicated );
   test.identical( deserialized.format, 'structure' );
 

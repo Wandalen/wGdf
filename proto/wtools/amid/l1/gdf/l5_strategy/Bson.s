@@ -45,8 +45,8 @@ readBson =
 {
 
   ext : [ 'bson' ],
-  in : [ 'buffer.node' ],
-  out : [ 'structure' ],
+  inFormat : [ 'buffer.node' ],
+  outFormat : [ 'structure' ],
 
   feature : bsonSupported,
 
@@ -72,8 +72,8 @@ writeBson =
 {
 
   ext : [ 'bson' ],
-  in : [ 'structure' ],
-  out : [ 'buffer.node' ],
+  inFormat : [ 'structure' ],
+  outFormat : [ 'buffer.node' ],
 
   feature : bsonSupported,
 

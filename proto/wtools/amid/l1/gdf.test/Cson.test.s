@@ -20,7 +20,7 @@ _.assert( _testerGlobal_.wTools !== _global_.wTools );
 
 function cson( test )
 {
-  var self = this;
+  let context = this;
 
   let SamplesPrimitive =
   {
@@ -47,11 +47,11 @@ function cson( test )
 
   test.case = 'select';
 
-  var serialize = _.gdf.select({ in : 'structure', out : 'string', ext : 'cson' });
+  var serialize = _.gdf.selectContext({ inFormat : 'structure', outFormat : 'string', ext : 'cson' });
   test.identical( serialize.length, 1 );
   serialize = serialize[ 0 ];
 
-  var deserialize = _.gdf.select({ in : 'string', out : 'structure', ext : 'cson' });
+  var deserialize = _.gdf.selectContext({ inFormat : 'string', outFormat : 'structure', ext : 'cson' });
   test.identical( deserialize.length, 1 );
   deserialize = deserialize[ 0 ];
 
@@ -63,10 +63,10 @@ function cson( test )
     test.case = s;
     let src = SamplesSimple[ s ];
 
-    let serialized = serialize.encode({ data : src });
-    test.identical( serialized.format, 'string' );
+    let serialized = serialize.encode({ data : src }).out;
+    test.identical( serialized.format, 'string.utf8' );
 
-    let deserialized = deserialize.encode({ data : serialized.data });
+    let deserialized = deserialize.encode({ data : serialized.data }).out;
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
@@ -80,10 +80,10 @@ function cson( test )
     test.case = s;
     let src = SamplesPrimitive[ s ];
 
-    let serialized = serialize.encode({ data : src });
-    test.identical( serialized.format, 'string' );
+    let serialized = serialize.encode({ data : src }).out;
+    test.identical( serialized.format, 'string.utf8' );
 
-    let deserialized = deserialize.encode({ data : serialized.data });
+    let deserialized = deserialize.encode({ data : serialized.data }).out;
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }
@@ -97,10 +97,10 @@ function cson( test )
     test.case = s;
     let src = SamplesComplicated[ s ];
 
-    var serialized = serialize.encode({ data : src });
-    test.identical( serialized.format, 'string' );
+    var serialized = serialize.encode({ data : src }).out;
+    test.identical( serialized.format, 'string.utf8' );
 
-    var deserialized = deserialize.encode({ data : serialized.data });
+    var deserialized = deserialize.encode({ data : serialized.data }).out;
     test.identical( deserialized.data, src );
     test.identical( deserialized.format, 'structure' );
   }

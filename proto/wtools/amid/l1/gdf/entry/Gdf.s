@@ -18,10 +18,10 @@ if( typeof module !== 'undefined' )
 qqq : make it working
 qqq : use algorithms from wGraphBasic to find shortest path
 qqq : introduce field cost
-let encoder = _.gdf.select
+let encoder = _.gdf.selectContext
 ({
-  in : 'buffer.raw',
-  out : 'structure',
+  inFormat : 'buffer.raw',
+  outFormat : 'structure',
   ext : 'yml',
 })[ 0 ];
 let structure = encoder.encode( bufferRaw );

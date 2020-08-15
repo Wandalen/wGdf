@@ -10,9 +10,8 @@ if( typeof module !== 'undefined' )
   let _ = require( './Basic.s' );
 
   require( '../l1/Namespace.s' );
-
-  require( '../l3/Converter.s' );
-  require( '../l3/Current.s' );
+  require( '../l2/Encoder.s' );
+  require( '../l3/Context.s' );
 
   require( '../l5_strategy/Base64.s' );
   require( '../l5_strategy/Bson.s' );

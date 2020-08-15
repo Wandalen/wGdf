@@ -16,16 +16,17 @@ let base64ToBuffer =
 
   shortName : 'base64',
   ext : [],
-  in : [ 'string.base64' ],
-  out : [ 'buffer.bytes' ],
+  inFormat : [ 'string.base64' ],
+  outFormat : [ 'buffer.bytes' ],
   feature : {},
 
   onEncode : function( op )
   {
     _.assert( _.strIs( op.in.data ) );
-    op.out.data = _base64ToBuffer( op.in.data, op.secondary ? op.secondary.chunkSize : undefined )
+    op.out.data = _base64ToBuffer( op.in.data, op.params ? op.params.chunkSize : undefined )
     op.out.format = 'buffer.bytes';
   },
+
 }
 
 //
@@ -85,8 +86,8 @@ let base64FromBuffer =
 
   shortName : 'base64',
   ext : [],
-  in : [ 'buffer.bytes' ],
-  out : [ 'string.base64' ],
+  inFormat : [ 'buffer.bytes' ],
+  outFormat : [ 'string.base64' ],
   feature : {},
 
   onEncode : function( op )
@@ -167,15 +168,15 @@ let base64ToBlob =
 
   shortName : 'base64',
   ext : [],
-  in : [ 'string.base64' ],
-  out : [ 'blob' ],
+  inFormat : [ 'string.base64' ],
+  outFormat : [ 'buffer.blob' ],
   feature : {},
 
   onEncode : function( op )
   {
     _.assert( _.strIs( op.in.data ) );
-    op.out.data = _base64ToBlob( op.in.data, op.secondary ? op.secondary.mime : undefined )
-    op.out.format = 'blob';
+    op.out.data = _base64ToBlob( op.in.data, op.params ? op.params.mime : undefined )
+    op.out.format = 'buffer.blob';
   },
 }
 
@@ -194,8 +195,8 @@ function _base64ToBlob( base64Data, mime )
 // base64FromBlob =
 // {
 //   ext : [],
-//   in : [ 'blob' ],
-//   out : [ 'string.base64' ],
+//   inFormat : [ 'buffer.blob' ],
+//   outFormat : [ 'string.base64' ],
 
 //   onEncode : function( op )
 //   {
@@ -224,8 +225,8 @@ let base64FromUtf8Slow =
   shortName : 'base64FromUtf8Slow',
 
   ext : [],
-  in : [ 'string.utf8' ],
-  out : [ 'string.base64' ],
+  inFormat : [ 'string.utf8' ],
+  outFormat : [ 'string.base64' ],
   feature : {},
 
   onEncode : function( op )
@@ -252,8 +253,8 @@ let base64FromUtf8 =
   // default : 1,
 
   ext : [],
-  in : [ 'string.utf8' ],
-  out : [ 'string.base64' ],
+  inFormat : [ 'string.utf8' ],
+  outFormat : [ 'string.base64' ],
   feature : { default : 1 },
 
   onEncode : function( op )
@@ -280,8 +281,8 @@ let base64ToUtf8Slow =
 
   shortName : 'base64',
   ext : [],
-  in : [ 'string.base64' ],
-  out : [ 'string.utf8' ],
+  inFormat : [ 'string.base64' ],
+  outFormat : [ 'string.utf8' ],
   feature : {},
 
   onEncode : function( op )
@@ -308,8 +309,8 @@ let base64ToUtf8 =
   // default : 1,
 
   ext : [],
-  in : [ 'string.base64' ],
-  out : [ 'string.utf8' ],
+  inFormat : [ 'string.base64' ],
+  outFormat : [ 'string.utf8' ],
   feature : { default : 1 },
 
   onEncode : function( op )
@@ -334,8 +335,8 @@ let utf8FromBuffer =
 
   shortName : 'base64',
   ext : [],
-  in : [ 'buffer.bytes' ],
-  out : [ 'string.utf8' ],
+  inFormat : [ 'buffer.bytes' ],
+  outFormat : [ 'string.utf8' ],
   feature : {},
 
   onEncode : function( op )
@@ -390,8 +391,8 @@ let utf8ToBuffer =
 
   shortName : 'utf8',
   ext : [],
-  in : [ 'string.utf8' ],
-  out : [ 'buffer.bytes' ],
+  inFormat : [ 'string.utf8' ],
+  outFormat : [ 'buffer.bytes' ],
   feature : {},
 
   onEncode : function( op )
@@ -524,8 +525,6 @@ _.Gdf([ base64ToBuffer, base64FromBuffer ]);
 _.Gdf([ base64ToBlob ]);
 _.Gdf([ base64FromUtf8Slow, base64ToUtf8Slow, base64FromUtf8, base64ToUtf8 ]);
 _.Gdf([ utf8FromBuffer, utf8ToBuffer ]);
-
-/* xxx : string.utf8 -> string */
 
 // --
 // export

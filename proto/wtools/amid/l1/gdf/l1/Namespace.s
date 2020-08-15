@@ -18,76 +18,183 @@ let Self = _.gdf = _.gdf || Object.create( null );
  * @param {Object} selector a map with one or several rules that should be met by the converter
  *
  * Possible selector properties are :
- * @param {String} [selector.in] Input format of the converter
- * @param {String} [selector.out] Output format of the converter
+ * @param {String} [selector.inFormat] Input format of the converter
+ * @param {String} [selector.outFormat] Output format of the converter
  * @param {String} [selector.ext] File extension of the converter
- * @param {Boolean|Number} [selector.default] Selects default converter for provided in,out and ext
+ * @param {Boolean|Number} [selector.default] Selects default converter for provided inFormat, outFormat and ext
  *
  * @example
  * //returns converters that accept string as input
- * let converters = _.gdf.select({ in : 'string' });
+ * let converters = _.gdf.select({ inFormat : 'string.utf8' });
  * console.log( converters )
  *
  * @example
  * //returns converters that accept string and return structure( object )
- * let converters = _.gdf.select({ in : 'string', out : 'structure' });
+ * let converters = _.gdf.select({ inFormat : 'string.utf8', outFormat : 'structure' });
  * console.log( converters )
  *
  * * @example
  * //returns default json converter that encodes structure to string
- * let converters = _.gdf.select({ in : 'structure', out : 'string', ext : 'json', default : 1 });
+ * let converters = _.gdf.select({ inFormat : 'structure', outFormat : 'string.utf8', ext : 'json', default : 1 });
  * console.log( converters[ 0 ] )
  *
  * @returns {Array} Returns array with selected converters or empty array if nothing found.
  * @throws {Error} If more than one argument is provided
  * @throws {Error} If selector is not an Object
  * @throws {Error} If selector has unknown field
- * @method Select
+ * @method select
  * @class wGenericDataFormatConverter
  * @namespace Tools.gdf
  * @module Tools/mid/Gdf
  * @static
  */
 
-function select( selector )
+function select( o )
 {
+  let names = [ 'inFormat', 'outFormat', 'ext' ];
+  let result;
+
+  o = _.routineOptions( select, o );
   _.assert( arguments.length === 1 );
 
-  let result = _.filter( _.gdf.convertersArray, select );
-
-  if( result.length > 1 )
-  if( selector.default !== undefined )
+  if( o.inFormat === null && o.outFormat === null && o.ext === null )
   {
-    selector.default = !!selector.default;
-    result = result.filter( ( e ) => e.feature ? e.feature.default === selector.default : undefined );
+    if( o.filePath )
+    o.ext = _.path.ext( o.filePath );
   }
 
-  result = result.map( ( e ) => _.mapExtend( null, selector, { encoder : e } ) );
-  result = _.gdf.Current( result );
+  if( o.inFormat || o.outFormat || o.ext )
+  {
+    let name, val;
+    if( o.inFormat )
+    {
+      _.assert( _.strDefined( o.inFormat ) );
+      if( _.gdf.inMap[ o.inFormat ] )
+      result = _.gdf.inMap[ o.inFormat ].slice();
+      else
+      result = [];
+    }
+    else if( o.outFormat )
+    {
+      _.assert( _.strDefined( o.outFormat ) );
+      if( _.gdf.outMap[ o.outFormat ] )
+      result = _.gdf.outMap[ o.outFormat ].slice();
+      else
+      result = [];
+    }
+    else if( o.ext )
+    {
+      _.assert( _.strDefined( o.ext ) );
+      if( _.gdf.extMap[ o.ext ] )
+      result = _.gdf.extMap[ o.ext ].slice();
+      else
+      result = [];
+    }
+  }
+  else
+  {
+    result = _.gdf.encodersArray.slice();
+  }
+
+  // result = _.filter( result, converterSelect );
+
+  result = result.filter( ( encoder ) =>
+  {
+    let o2 = _.mapExtend( null, o );
+    delete o2.single;
+    return encoder.supports( o2 );
+  });
+
+  if( result.length > 1 )
+  if( o.single )
+  {
+    result = result.filter( ( e ) => e.feature ? e.feature.default : false );
+  }
+
+  // result = result.map( ( e ) => _.mapExtend( null, o, { encoder : e } ) );
+  // result = _.gdf.Context( result );
 
   return result;
 
   /* */
 
-  function select( converter )
-  {
-    for( let s in selector )
-    {
-      if( s === 'default' )
-      continue;
-      let sfield = selector[ s ];
-      let cfield = converter[ s ];
-      if( _.arrayIs( cfield ) )
-      {
-        _.assert( _.strIs( sfield ) );
-        if( !_.longHas( cfield, sfield ) )
-        return undefined;
-      }
-      else _.assert( 0, 'Unknown selector field ' + s );
-    }
-    return converter;
-  }
+  // function converterSelect( converter )
+  // {
+  //   for( let s in o )
+  //   {
+  //     if( o[ s ] === null )
+  //     continue;
+  //     if( !_.longHas( names, s) )
+  //     continue;
+  //     let sfield = o[ s ];
+  //     _.assert( _.strIs( sfield ) );
+  //     sfield = _.gdf.formatNameSplit( sfield );
+  //     let cfield = converter[ s ];
+  //     if( _.arrayIs( cfield ) )
+  //     {
+  //       // debugger;
+  //       if( _.none( cfield, ( e ) => _.longHasAll( formatNameSplit( e ), sfield ) ) )
+  //       return undefined
+  //       // cfield = formatNameSplit( cfield );
+  //       // if( !_.longHas( cfield, sfield ) )
+  //       // debugger;
+  //       // if( !_.longHasAll( cfield, sfield ) )
+  //       // return undefined;
+  //     }
+  //     else _.assert( 0, `Unknown field ${s}` );
+  //   }
+  //   return converter;
+  // }
 
+  /* */
+
+}
+
+select.defaults =
+{
+  data : null,
+  inFormat : null,
+  outFormat : null,
+  filePath : null,
+  ext : null,
+  single : 1,
+}
+
+//
+
+function selectContext( o )
+{
+  let result = this.select( o );
+  result = result.map( ( e ) => _.mapExtend( null, o, { encoder : e } ) );
+  result = _.gdf.Context( result );
+  return result;
+}
+
+selectContext.defaults =
+{
+  ... select.defaults,
+}
+
+//
+
+function selectSingleContext( o )
+{
+  let result = this.selectContext( o );
+  _.assert( result.length <= 1, () => `Found several ( ${result.length} ) encoders` );
+  _.assert( result.length > 0, () => `Found no encoder` );
+  return result[ 0 ];
+}
+
+selectSingleContext.defaults =
+{
+  ... select.defaults,
+}
+
+//
+
+function formatNameSplit( name )
+{
+  return name.split( '.' );
 }
 
 // --
@@ -96,7 +203,7 @@ function select( selector )
 
 /**
  * @summary Contains descriptors of registered converters.
- * @property {Object} convertersArray
+ * @property {Object} encodersArray
  * @static
  * @class wGenericDataFormatConverter
  * @namespace Tools.gdf
@@ -139,7 +246,7 @@ function select( selector )
  * @module Tools/mid/Gdf
  */
 
-let convertersArray = [];
+let encodersArray = [];
 let inMap = Object.create( null );
 let outMap = Object.create( null );
 let extMap = Object.create( null );
@@ -151,10 +258,13 @@ let Extension =
   // routine
 
   select,
+  selectContext,
+  selectSingleContext,
+  formatNameSplit,
 
   // field
 
-  convertersArray,
+  encodersArray,
   inMap,
   outMap,
   extMap,

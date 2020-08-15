@@ -34,8 +34,8 @@ readCbor =
 {
 
   ext : [ 'cbor' ],
-  in : [ 'buffer.node' ],
-  out : [ 'structure' ],
+  inFormat : [ 'buffer.node' ],
+  outFormat : [ 'structure' ],
   feature : cborSupported,
 
   onEncode : function( op )
@@ -59,8 +59,8 @@ writeCbor =
 {
 
   ext : [ 'cbor' ],
-  in : [ 'structure' ],
-  out : [ 'buffer.node' ],
+  inFormat : [ 'structure' ],
+  outFormat : [ 'buffer.node' ],
   feature : cborSupported,
 
   onEncode : function( op )
