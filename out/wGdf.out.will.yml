@@ -175,10 +175,10 @@ module:
           - ../proto/wtools/amid/l1/gdf/include/Mid.s
           - ../proto/wtools/amid/l1/gdf/l1
           - ../proto/wtools/amid/l1/gdf/l1/Namespace.s
+          - ../proto/wtools/amid/l1/gdf/l2
+          - ../proto/wtools/amid/l1/gdf/l2/Encoder.s
           - ../proto/wtools/amid/l1/gdf/l3
-          - ../proto/wtools/amid/l1/gdf/l3/-Formats.s
-          - ../proto/wtools/amid/l1/gdf/l3/Converter.s
-          - ../proto/wtools/amid/l1/gdf/l3/Current.s
+          - ../proto/wtools/amid/l1/gdf/l3/Context.s
           - ../proto/wtools/amid/l1/gdf/l5_strategy
           - ../proto/wtools/amid/l1/gdf/l5_strategy/Base64.s
           - ../proto/wtools/amid/l1/gdf/l5_strategy/Bson.s
@@ -1627,6 +1627,4 @@ module:
       ../.im.will.yml:
         hash: b27f59403074b134a9348495ecb71f27
         size: 6009
-      wGdf.out.will.yml:
-        hash: 3e783957b42f507aa4108cf5cc008cf8
-        size: 42695
+      wGdf.out.will.yml: *ref_0
