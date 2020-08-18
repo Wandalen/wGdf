@@ -3,16 +3,6 @@
 
 'use strict';
 
-// /**
-//  * //  */
-//
-// if( typeof module !== 'undefined' )
-// {
-//
-//   let _ = require( '../../../../wtools/Tools.s' );
-//
-// }
-
 let _global = _global_;
 let _ = _global_.wTools;
 let Self = _global_.wTools;
@@ -25,7 +15,6 @@ let Bson, BsonPath;
 try
 {
   BsonPath = require.resolve( 'bson' );
-  // Bson.setInternalBufferSize( 1 << 30 );
 }
 catch( err )
 {
@@ -52,14 +41,12 @@ readBson =
 
   onEncode : function( op )
   {
-
     if( !Bson )
     {
       Bson = require( BsonPath );
       Bson.setInternalBufferSize( 1 << 30 );
     }
-
-    _.assert( _.bufferNodeIs( op.in.data ) );
+    _.assert( _.bufferAnyIs( op.in.data ), 'Expects buffer' );
     op.out.data = Bson.deserialize( op.in.data );
     op.out.format = 'structure';
   },

@@ -4,20 +4,20 @@ let _ = wTools;
 
 /* select encoder */
 
-var serialize = _.gdf.select({ in : 'structure', ext : 'bson' });
-serialize = serialize[ 0 ];
+var serialize = _.gdf.select({ inFormat : 'structure', ext : 'bson' })[ 0 ];
 
 /* select decoder */
 
-var deserialize = _.gdf.select({ in : 'buffer.node', ext : 'bson' });
-deserialize = deserialize[ 0 ];
+var deserialize = _.gdf.select({ inFormat : 'buffer.node', ext : 'bson' })[ 0 ];
 
 /* encode */
 
 var structure = { field : 'value' };
+debugger;
 var serialized =  serialize.encode({ data : structure });
+debugger;
 
-console.log( serialized.data );
+console.log( serialized.out.data );
 
 //<Buffer 16 00 00 00 02 66 69 65 6c 64 00 06 00 00 00 76 61 6c 75 65 00 00>
 

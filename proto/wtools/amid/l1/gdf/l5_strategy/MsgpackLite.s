@@ -36,7 +36,8 @@ readMsgpackLite =
     if( !MsgpackLite )
     MsgpackLite = require( MsgpackLitePath );
 
-    _.assert( _.bufferNodeIs( op.in.data ) );
+    _.assert( _.bufferAnyIs( op.in.data ) );
+    op.in.data = _.bufferNodeFrom( op.in.data );
     op.out.data = MsgpackLite.decode( op.in.data );
     op.out.format = 'structure';
   },
@@ -90,7 +91,7 @@ writeMsgpackLite =
 //
 //   onEncode : function( op )
 //   {
-//     _.assert( _.bufferNodeIs( op.in.data ) );
+//     _.assert( _.bufferAnyIs( op.in.data ) );
 //
 //     if( !MsgpackWtp )
 //     {
