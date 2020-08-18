@@ -13,9 +13,7 @@ var deserialize = _.gdf.select({ inFormat : 'buffer.node', ext : 'bson' })[ 0 ];
 /* encode */
 
 var structure = { field : 'value' };
-debugger;
 var serialized =  serialize.encode({ data : structure });
-debugger;
 
 console.log( serialized.out.data );
 
@@ -23,8 +21,8 @@ console.log( serialized.out.data );
 
 /* decode */
 
-var deserialized = deserialize.encode({ data : serialized.data });
+var deserialized = deserialize.encode({ data : serialized.out.data });
 
-console.log( deserialized.data );
+console.log( deserialized.out.data );
 
 //{ field: 'value' }
