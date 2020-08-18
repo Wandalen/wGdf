@@ -44,7 +44,8 @@ readCbor =
     if( !Cbor )
     Cbor = require( CborPath );
 
-    _.assert( _.bufferAnyIs( op.in.data ) );
+    _.assert( _.bufferAnyIs( op.in.data ), 'Expects buffer' );
+    op.in.data = _.bufferNodeFrom( op.in.data );
     op.out.data = Cbor.decodeFirstSync( op.in.data, { bigint : true } );
     op.out.format = 'structure';
   },

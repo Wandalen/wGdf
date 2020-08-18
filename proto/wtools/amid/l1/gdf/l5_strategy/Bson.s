@@ -47,6 +47,7 @@ readBson =
       Bson.setInternalBufferSize( 1 << 30 );
     }
     _.assert( _.bufferAnyIs( op.in.data ), 'Expects buffer' );
+    op.in.data = _.bufferNodeFrom( op.in.data );
     op.out.data = Bson.deserialize( op.in.data );
     op.out.format = 'structure';
   },
