@@ -16,7 +16,7 @@ if( typeof module !== 'undefined' )
 
 /*
 qqq : make it working
-qqq : use algorithms from wGraphBasic to find shortest path
+qqq : use algorithms from wgraphbasic to find shortest path
 qqq : introduce field cost
 let encoder = _.gdf.selectContext
 ({
