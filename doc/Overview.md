@@ -1,6 +1,7 @@
 # Overview of types and dependencies
 
 | **Type** | **Dependency** |
+| -------- | -------------- |
 | *bson* | [bson](https://github.com/mongodb/js-bson) |
 | *json.fine* | - |
 | *json* | - |
