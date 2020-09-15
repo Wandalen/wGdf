@@ -483,11 +483,11 @@ function supportedTypes( test )
       deserializer : { inFormat : 'string', outFormat : 'structure', ext : 'yml' }
     },
 
-    // 'msgpack.lite' : /* qqq : switch it on */
-    // {
-    //   serializer : { inFormat : 'structure', outFormat : 'buffer.node', ext : 'msgpack.lite' },
-    //   deserializer : { inFormat : 'buffer.node', outFormat : 'structure', ext : 'msgpack.lite' }
-    // },
+    'msgpack.lite' : /* qqq : switch it on */
+    {
+      serializer : { inFormat : 'structure', outFormat : 'buffer.node', ext : 'msgpack.lite' },
+      deserializer : { inFormat : 'buffer.node', outFormat : 'structure', ext : 'msgpack.lite' }
+    },
 
   }
 
