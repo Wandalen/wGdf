@@ -853,7 +853,6 @@ let Self =
 
     supportedTypes,
     trivial,
-    select,
     selectWithFeature,
     select,
     registerAndFinit,

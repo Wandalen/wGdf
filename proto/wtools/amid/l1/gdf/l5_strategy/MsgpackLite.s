@@ -79,68 +79,68 @@ writeMsgpackLite =
 // Msgpack-wtp
 // --
 
-let MsgpackWtp, MsgpackWtpPath;
-try
-{
-  MsgpackWtpPath = require.resolve( 'what-the-pack' );
-}
-catch( err )
-{
-}
+// let MsgpackWtp, MsgpackWtpPath;
+// try
+// {
+//   MsgpackWtpPath = require.resolve( 'what-the-pack' );
+// }
+// catch( err )
+// {
+// }
 
-let readMsgpackWtp = null;
-if( MsgpackWtpPath )
-readMsgpackWtp =
-{
+// let readMsgpackWtp = null;
+// if( MsgpackWtpPath )
+// readMsgpackWtp =
+// {
 
-  ext : [ 'msgpack.wtp' ],
-  inFormat : [ 'buffer.node' ],
-  outFormat : [ 'structure' ],
+//   ext : [ 'msgpack.wtp' ],
+//   inFormat : [ 'buffer.node' ],
+//   outFormat : [ 'structure' ],
 
-  onEncode : function( op )
-  {
-    _.assert( _.bufferAnyIs( op.in.data ), 'Expects buffer' );
+//   onEncode : function( op )
+//   {
+//     _.assert( _.bufferAnyIs( op.in.data ), 'Expects buffer' );
 
-    if( !MsgpackWtp )
-    {
-      MsgpackWtp = require( MsgpackLitePath );
-      // if( !MsgpackWtp.decode )
-      MsgpackWtp = MsgpackWtp.initialize( 2**27 ); //134 MB
-    }
+//     if( !MsgpackWtp )
+//     {
+//       MsgpackWtp = require( MsgpackLitePath );
+//       // if( !MsgpackWtp.decode )
+//       MsgpackWtp = MsgpackWtp.initialize( 2**27 ); //134 MB
+//     }
 
-    op.out.data = MsgpackWtp.decode( op.in.data );
-    op.out.format = 'structure';
-  },
+//     op.out.data = MsgpackWtp.decode( op.in.data );
+//     op.out.format = 'structure';
+//   },
 
-}
+// }
 
-let writeMsgpackWtp = null;
-if( MsgpackWtpPath )
-writeMsgpackWtp =
-{
+// let writeMsgpackWtp = null;
+// if( MsgpackWtpPath )
+// writeMsgpackWtp =
+// {
 
-  ext : [ 'msgpack.wtp' ],
-  inFormat : [ 'structure' ],
-  outFormat : [ 'buffer.node' ],
+//   ext : [ 'msgpack.wtp' ],
+//   inFormat : [ 'structure' ],
+//   outFormat : [ 'buffer.node' ],
 
-  onEncode : function( op )
-  {
-    _.assert( _.mapIs( op.in.data ) );
+//   onEncode : function( op )
+//   {
+//     _.assert( _.mapIs( op.in.data ) );
 
-    if( !MsgpackWtp )
-    {
-      MsgpackWtp = require( MsgpackLitePath );
-      MsgpackWtp = MsgpackWtp.initialize( 2**27 ); //134 MB
-    }
+//     if( !MsgpackWtp )
+//     {
+//       MsgpackWtp = require( MsgpackLitePath );
+//       MsgpackWtp = MsgpackWtp.initialize( 2**27 ); //134 MB
+//     }
 
-    // if( !MsgpackWtp.encode )
-    // MsgpackWtp = MsgpackWtp.initialize( 2**27 ); //134 MB
+//     // if( !MsgpackWtp.encode )
+//     // MsgpackWtp = MsgpackWtp.initialize( 2**27 ); //134 MB
 
-    op.out.data = MsgpackWtp.encode( op.in.data );
-    op.out.format = 'buffer.node';
-  },
+//     op.out.data = MsgpackWtp.encode( op.in.data );
+//     op.out.format = 'buffer.node';
+//   },
 
-}
+// }
 
 // --
 // declare
