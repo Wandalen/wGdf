@@ -199,6 +199,7 @@ module:
           - ../proto/wtools/amid/l1/gdf.test/Json.test.s
           - ../proto/wtools/amid/l1/gdf.test/JsonFine.test.s
           - ../proto/wtools/amid/l1/gdf.test/JsonMin.test.s
+          - ../proto/wtools/amid/l1/gdf.test/MsgpackLite.test.s
           - ../proto/wtools/amid/l1/gdf.test/Utf8.test.s
           - ../proto/wtools/amid/l1/gdf.test/Yml.test.s
           - ../proto/wtools/atop
