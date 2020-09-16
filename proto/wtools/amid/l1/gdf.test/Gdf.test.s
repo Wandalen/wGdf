@@ -832,7 +832,7 @@ let Self =
   name : 'Tools.gdf',
   silencing : 1,
 
-  context :
+  context : 
   {
     converterTypesCheck,
     primitive1,
