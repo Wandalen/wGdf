@@ -405,7 +405,6 @@ let Self =
   context :
   {
 
-    suiteTempPath : null,
     results : null,
     converters,
 

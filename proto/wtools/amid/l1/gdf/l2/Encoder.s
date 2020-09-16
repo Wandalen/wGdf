@@ -334,8 +334,8 @@ function encode_body( o )
     let outFormat = op.out.format || encoder.outFormat;
     throw _.err
     (
-       err
-      ,`\nFailed to convert from "${op.in.format}" to "${outFormat}" by encoder ${encoder.name}`
+      err
+      , `\nFailed to convert from "${op.in.format}" to "${outFormat}" by encoder ${encoder.name}`
     );
   }
 
