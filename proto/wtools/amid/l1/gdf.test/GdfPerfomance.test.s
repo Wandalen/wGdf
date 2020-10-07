@@ -365,7 +365,7 @@ function perfomance( test )
     }
 
     // debugger;
-    let con = _.process.startNode( o );
+    let con = _.process.startNjs( o );
 
     o.process.send( converter );
 
