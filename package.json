@@ -19,7 +19,7 @@
     "msgpack-lite" : "0.1.26",
     "wCopyable" : "alpha",
     "wTools" : "alpha",
-    "wroutinebasic" : "alpha"
+    "wintrospectorbasic" : "alpha"
   },
   "devDependencies" : { "eslint" : "7.2.0", "wgdf" : "file:.", "wTesting" : "alpha" },
   "keywords" : [ "wTools", "gdf", "abstract data structure", "generic data format", "standardized abstract interface" ]

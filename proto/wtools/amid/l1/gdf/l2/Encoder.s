@@ -220,7 +220,7 @@ function form()
  * @module Tools/mid/Gdf
  */
 
-function encode_pre( routine, args )
+function encode_head( routine, args )
 {
   let encoder = this;
   let o = args[ 0 ];
@@ -354,7 +354,7 @@ encode_body.defaults =
   params : null,
 }
 
-let encode = _.routineFromPreAndBody( encode_pre, encode_body );
+let encode = _.routineUnite( encode_head, encode_body );
 
 //
 

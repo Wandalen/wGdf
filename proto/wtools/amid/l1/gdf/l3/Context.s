@@ -48,7 +48,7 @@ function encode_body( o )
 
 _.routineExtend( encode_body, _.Gdf.prototype.encode );
 
-let encode = _.routineFromPreAndBody( _.Gdf.prototype.encode.pre, encode_body );
+let encode = _.routineUnite( _.Gdf.prototype.encode.head, encode_body );
 
 // --
 // declare

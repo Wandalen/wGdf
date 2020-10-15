@@ -12,11 +12,11 @@ let Self = _global_.wTools;
 // --
 
 // let ProcessBasic;
-let RoutineBasic;
+let IntrospectorBasic;
 try
 {
   // ProcessBasic = _.include( 'wProcess' );
-  RoutineBasic = _.include( 'wRoutineBasic' );
+  IntrospectorBasic = _.include( 'wIntrospectorBasic' );
 }
 catch( err )
 {
@@ -31,7 +31,7 @@ let jsSupported =
 }
 
 let readJsStructure = null;
-if( RoutineBasic )
+if( IntrospectorBasic )
 readJsStructure =
 {
 

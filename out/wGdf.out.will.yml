@@ -212,8 +212,8 @@ module:
         path: 'npm:///wCopyable'
         autoExporting: 0
         enabled: 0
-      wRoutineBasic:
-        path: 'npm:///wroutinebasic'
+      wIntrospectorBasic:
+        path: 'npm:///wintrospectorbasic'
         autoExporting: 0
         enabled: 0
       wgdf:
@@ -1032,8 +1032,8 @@ module:
         path: 'npm:///wCopyable'
         autoExporting: 0
         enabled: 0
-      wRoutineBasic:
-        path: 'npm:///wroutinebasic'
+      wIntrospectorBasic:
+        path: 'npm:///wintrospectorbasic'
         autoExporting: 0
         enabled: 0
       wgdf:
