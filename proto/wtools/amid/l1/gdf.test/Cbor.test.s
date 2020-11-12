@@ -12,7 +12,7 @@ if( typeof module !== 'undefined' )
 let _global = _global_;
 let _ = _global_.wTools;
 
-_.assert( _testerGlobal_.wTools !== _global_.wTools );
+_.assert( _globals_.testing.wTools !== _global_.wTools );
 
 // --
 // test
