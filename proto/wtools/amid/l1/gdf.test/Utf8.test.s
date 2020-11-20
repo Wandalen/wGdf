@@ -38,11 +38,11 @@ function utf8( test )
 
   var converted = utf8FromBuffer.encode({ data : buffer }).out;
   test.identical( converted.format, 'string.utf8' );
-  test.is( _.strIs( converted.data ) );
+  test.true( _.strIs( converted.data ) );
 
   var converted = utf8ToBuffer.encode({ data : converted.data }).out;
   test.identical( converted.format, 'buffer.bytes' );
-  test.is( _.bufferBytesIs( converted.data ) );
+  test.true( _.bufferBytesIs( converted.data ) );
   test.identical( converted.data, buffer );
 }
 

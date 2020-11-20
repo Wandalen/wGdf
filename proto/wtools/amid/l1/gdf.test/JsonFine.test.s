@@ -98,42 +98,42 @@ function jsonFine( test )
   test.case = 'all complicated together';
   var serialized = serialize.encode({ data : SamplesComplicated }).out;
   test.identical( serialized.format, 'string.utf8' );
-  test.is( _.strIs( serialized.data ) );
+  test.true( _.strIs( serialized.data ) );
   test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) ).out;
 
   test.case = 'typed array';
   var src = { typed :  new U16x( [ 1, 2, 3 ] ) }
   var serialized = serialize.encode({ data : src }).out;
   test.identical( serialized.format, 'string.utf8' );
-  test.is( _.strIs( serialized.data ) );
+  test.true( _.strIs( serialized.data ) );
   test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) ).out;
 
   test.case = 'regexp';
   var src = { regexp :  /.regexp/g }
   var serialized = serialize.encode({ data : src }).out;
   test.identical( serialized.format, 'string.utf8' );
-  test.is( _.strIs( serialized.data ) );
+  test.true( _.strIs( serialized.data ) );
   test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) ).out;
 
   test.case = 'infinity';
   var src = { infinity : -Infinity }
   var serialized = serialize.encode({ data : src }).out;
   test.identical( serialized.format, 'string.utf8' );
-  test.is( _.strIs( serialized.data ) );
+  test.true( _.strIs( serialized.data ) );
   test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) ).out;
 
   test.case = 'NaN';
   var src = { nan : NaN }
   var serialized = serialize.encode({ data : src }).out;
   test.identical( serialized.format, 'string.utf8' );
-  test.is( _.strIs( serialized.data ) );
+  test.true( _.strIs( serialized.data ) );
   test.shouldThrowErrorSync( () => deserialize.encode({ data : serialized.data }) ).out;
 
   test.case = 'date';
   var src = { date : new Date() }
   var serialized = serialize.encode({ data : src }).out;
   test.identical( serialized.format, 'string.utf8' );
-  test.is( _.strIs( serialized.data ) );
+  test.true( _.strIs( serialized.data ) );
   var deserialized = deserialize.encode({ data : serialized.data }).out;
   var expected = { date : src.date.toJSON() }
   test.identical( deserialized.data, expected );

@@ -86,7 +86,7 @@ function converterTypesCheck( test, o, o2 )
     if( expectedLevel >= currentLevel )
     {
       test.will = 'type should be feature';
-      test.is( results[ k ] );
+      test.true( results[ k ] );
     }
   }
 
@@ -111,12 +111,12 @@ function converterTypesCheck( test, o, o2 )
   if( expectedLevel >= currentLevel )
   {
     test.will = name + currentLevel +' must be feature';
-    test.is( o.feature );
+    test.true( o.feature );
   }
   else
   {
     test.will = name + currentLevel +' must not be feature'
-    test.is( !o.feature )
+    test.true( !o.feature )
   }
 
   o.checks[ name + currentLevel ] = results;
@@ -658,7 +658,7 @@ function select( test )
 
   test.case = 'all single : 0';
   var got = _.gdf.selectContext({ single : 0 });
-  test.is( got.length === _.gdf.encodersArray.length );
+  test.true( got.length === _.gdf.encodersArray.length );
 
   /* */
 
@@ -677,22 +677,22 @@ function select( test )
   test.case = 'not existing'
 
   var got = _.gdf.selectContext({ inFormat : 'not existing' });
-  test.is( !got.length );
+  test.true( !got.length );
 
   var got = _.gdf.selectContext({ outFormat : 'not existing' });
-  test.is( !got.length );
+  test.true( !got.length );
 
   var got = _.gdf.selectContext({ ext : 'not existing' });
-  test.is( !got.length );
+  test.true( !got.length );
 
   test.case = 'default';
 
   var got = _.gdf.selectContext({ inFormat : 'structure', outFormat : 'string' });
-  test.is( got.length === 1 );
+  test.true( got.length === 1 );
   var got = _.gdf.selectContext({ inFormat : 'structure', outFormat : 'string', single : 0 });
-  test.is( got.length > 1 );
+  test.true( got.length > 1 );
   var got = _.gdf.selectContext({ inFormat : 'structure', outFormat : 'string', single : 1 });
-  test.is( got.length === 1 );
+  test.true( got.length === 1 );
   test.identical( got[ 0 ].shortName, 'json.min' );
 
   if( !Config.debug )
@@ -791,19 +791,19 @@ function registerAndFinit( test )
 
   test.description = 'select outFormat';
   var got = _.gdf.selectContext({ outFormat : 'number' });
-  test.is( got[ 0 ].encoder === _.gdf.inOutMap[ 'string.utf8->number.f32' ][ 0 ] );
+  test.true( got[ 0 ].encoder === _.gdf.inOutMap[ 'string.utf8->number.f32' ][ 0 ] );
   var got = _.gdf.selectContext({ outFormat : 'f32' });
-  test.is( got[ 0 ].encoder === _.gdf.inOutMap[ 'string.utf8->number.f32' ][ 0 ] );
+  test.true( got[ 0 ].encoder === _.gdf.inOutMap[ 'string.utf8->number.f32' ][ 0 ] );
   var got = _.gdf.selectContext({ outFormat : 'f64' });
-  test.is( got[ 0 ].encoder === _.gdf.inOutMap[ 'string.utf8->number.f32' ][ 0 ] );
+  test.true( got[ 0 ].encoder === _.gdf.inOutMap[ 'string.utf8->number.f32' ][ 0 ] );
 
   /* */
 
   test.description = 'select inFormat';
   var got = _.gdf.selectContext({ inFormat : 'testformat1' });
-  test.is( got[ 0 ].encoder === _.gdf.inOutMap[ 'string.utf8->number.f32' ][ 0 ] );
+  test.true( got[ 0 ].encoder === _.gdf.inOutMap[ 'string.utf8->number.f32' ][ 0 ] );
   var got = _.gdf.selectContext({ inFormat : 'testformat2' });
-  test.is( got[ 0 ].encoder === _.gdf.inOutMap[ 'string.utf8->number.f32' ][ 0 ] );
+  test.true( got[ 0 ].encoder === _.gdf.inOutMap[ 'string.utf8->number.f32' ][ 0 ] );
 
   /* */
 

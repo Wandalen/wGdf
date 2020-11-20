@@ -376,7 +376,7 @@ function perfomance( test )
 
     con.finally( ( err, got ) =>
     {
-      test.is( !err )
+      test.true( !err )
       return null;
     })
 

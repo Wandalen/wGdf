@@ -37,11 +37,11 @@ function base64( test )
 
   var converted = base64FromBuffer.encode({ data : buffer });
   test.identical( converted.out.format, 'string.base64' );
-  test.is( _.strIs( converted.out.data ) );
+  test.true( _.strIs( converted.out.data ) );
 
   var converted = base64ToBuffer.encode({ data : converted.out.data });
   test.identical( converted.out.format, 'buffer.bytes' );
-  test.is( _.bufferBytesIs( converted.out.data ) );
+  test.true( _.bufferBytesIs( converted.out.data ) );
   test.identical( converted.out.data, buffer );
 
   test.case = 'string.utf8 <-> string.base64';
@@ -58,11 +58,11 @@ function base64( test )
 
   var converted = base64FromUtf8.encode({ data : utf8 });
   test.identical( converted.out.format, 'string.base64' );
-  test.is( _.strIs( converted.out.data ) );
+  test.true( _.strIs( converted.out.data ) );
 
   var converted = base64ToUtf8.encode({ data : converted.out.data });
   test.identical( converted.out.format, 'string.utf8' );
-  test.is( _.strIs( converted.out.data ) );
+  test.true( _.strIs( converted.out.data ) );
   test.identical( converted.out.data, utf8 );
 
 }

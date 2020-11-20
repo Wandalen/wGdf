@@ -68,7 +68,7 @@ function msgpackLite( test )
 
     let serialized = serialize.encode({ data : src }).out;
     test.identical( serialized.format, 'buffer.node' );
-    test.is( _.bufferNodeIs( serialized.data ) );
+    test.true( _.bufferNodeIs( serialized.data ) );
 
     let deserialized = deserialize.encode({ data : serialized.data }).out;
     test.identical( deserialized.data, src );
@@ -79,7 +79,7 @@ function msgpackLite( test )
   test.case = 'all simple together';
   var serialized = serialize.encode({ data : SamplesSimple }).out;
   test.identical( serialized.format, 'buffer.node' );
-  test.is( _.bufferNodeIs( serialized.data ) );
+  test.true( _.bufferNodeIs( serialized.data ) );
 
   var deserialized = deserialize.encode({ data : serialized.data }).out;
   test.identical( deserialized.data, SamplesSimple );
@@ -108,7 +108,7 @@ function msgpackLite( test )
   test.case = 'all primitive together';
   var serialized = serialize.encode({ data : SamplesPrimitive }).out;
   test.identical( serialized.format, 'buffer.node' );
-  test.is( _.bufferNodeIs( serialized.data ) );
+  test.true( _.bufferNodeIs( serialized.data ) );
 
   var deserialized = deserialize.encode({ data : serialized.data }).out;
   test.identical( deserialized.data, SamplesPrimitive );
@@ -137,7 +137,7 @@ function msgpackLite( test )
   test.case = 'all complicated together';
   var serialized = serialize.encode({ data : SamplesComplicated }).out;
   test.identical( serialized.format, 'buffer.node' );
-  test.is( _.bufferNodeIs( serialized.data ) );
+  test.true( _.bufferNodeIs( serialized.data ) );
 
   var deserialized = deserialize.encode({ data : serialized.data }).out;
   test.identical( deserialized.data, SamplesComplicated );
