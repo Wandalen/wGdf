@@ -367,9 +367,9 @@ function perfomance( test )
     // debugger;
     let con = _.process.startNjs( o );
 
-    o.process.send( converter );
+    o.pnd.send( converter );
 
-    o.process.on( 'message', ( data ) =>
+    o.pnd.on( 'message', ( data ) =>
     {
       context.results[ data.converter ] = data.results;
     })
