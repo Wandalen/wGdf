@@ -34,8 +34,7 @@
     "wroutinebasic": ""
   },
   "devDependencies": {
-    "wTesting": "",
-    "cli-table2": ""
+    "wTesting": ""
   },
   "keywords": [
     "wTools"

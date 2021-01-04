@@ -1,15 +1,8 @@
-
-.*
 -*
 *.log
 *.db
-*.sh
-*.bat
 *.tmp
 *.special
 *.out
-build
-builder
-html.build.coffee
 node_modules
 package-lock.json
