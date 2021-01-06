@@ -5,7 +5,7 @@
       ├────────────────────┼────────────────────┼────────────────────┼────────────────────┼────────────────────┤
       │        bson        │         2          │         2          │         0          │         2          │
       │     json.fine      │         1          │         0          │         0          │         2          │
-      │        json        │         1          │         0          │         0          │         2          │
+      │        json        │         3          │         2          │         3          │         2          │
       │        cson        │         1          │         2          │         3          │         2          │
       │         js         │         3          │         2          │         3          │         2          │
       │        cbor        │         3          │         1          │         1          │         2          │
@@ -31,3 +31,4 @@ Complex:
 *   1 - simple maps and arrays
 *   2 - multilevel maps and arrays
 *   3 - recursion in maps
+
