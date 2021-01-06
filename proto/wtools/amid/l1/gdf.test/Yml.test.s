@@ -149,7 +149,7 @@ function yml( test )
 
 //
 
-function deserializeCustomTags( test )
+function deserializeUnsafeTags( test )
 {
   const context = this;
 
@@ -205,7 +205,7 @@ let Self =
   tests :
   {
     yml,
-    deserializeCustomTags,
+    deserializeUnsafeTags,
   },
 
 };
