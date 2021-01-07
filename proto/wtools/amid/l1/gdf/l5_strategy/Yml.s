@@ -57,7 +57,7 @@ readYml =
     {
       Yaml = require( YamlPath );
       const schemaUnsafe = require( 'js-yaml-js-types' ).all;
-      Yaml.Yaml.userUnsafeSchema = Yaml.DEFAULT_SCHEMA.extend( schemaUnsafe );
+      Yaml.userUnsafeSchema = Yaml.DEFAULT_SCHEMA.extend( schemaUnsafe );
     }
 
     o.schema = Yaml.userUnsafeSchema;
