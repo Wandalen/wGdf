@@ -385,7 +385,7 @@ function perfomance( test )
 }
 
 perfomance.experimental = 1;
-perfomance.timeOut = _.mapOwnKeys( converters ).length * 6 * 60000;
+perfomance.timeOut = _.mapOnlyOwnKeys( converters ).length * 6 * 60000;
 perfomance.rapidity = -4;
 
 // --
