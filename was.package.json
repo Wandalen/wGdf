@@ -14,14 +14,13 @@
     "bson" : "4.0.4",
     "cbor" : "5.0.2",
     "coffeescript" : "2.5.1",
-    "js-yaml" : "4.0.0",
-    "js-yaml-js-types" : "1.0.0",
+    "js-yaml" : "3.14.0",
     "js2coffee" : "2.2.0",
     "msgpack-lite" : "0.1.26",
     "wCopyable" : "",
     "wTools" : "",
     "wintrospectorbasic" : ""
   },
-  "devDependencies" : { "wTesting" : "", "eslint" : "7.2.0", "wgdf" : "file:." },
+  "devDependencies" : { "wTesting" : "", "eslint" : "7.1.0", "wgdf" : "file:." },
   "keywords" : [ "wTools", "gdf", "abstract data structure", "generic data format", "standardized abstract interface" ]
 }

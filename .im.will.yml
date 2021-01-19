@@ -37,12 +37,7 @@ submodule :
     criterion :
       external : 1
   js-yaml :
-    path : npm:///js-yaml#4.0.0
-    enabled : 0 # submodule
-    criterion :
-      external : 1
-  js-yaml-js-types :
-    path : npm:///js-yaml-js-types#1.0.0
+    path : npm:///js-yaml#3.14.0
     enabled : 0 # submodule
     criterion :
       external : 1
