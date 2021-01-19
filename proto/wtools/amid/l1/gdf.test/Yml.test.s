@@ -147,6 +147,47 @@ function yml( test )
 
 }
 
+//
+
+// function deserializeUnsafeTags( test )
+// {
+//   const context = this;
+//
+//   let deserializer = _.gdf.selectContext({ inFormat : 'string', outFormat : 'structure', ext : 'yml' });
+//   test.identical( deserializer.length, 1 );
+//   deserializer = deserializer[ 0 ];
+//
+//   /* */
+//
+//   test.case = 'regexp in string';
+//   var data = '!!js/regexp \'/\\.two$/\'';
+//   var got = deserializer.encode({ data }).out;
+//   test.identical( got.data, /\.two$/ );
+//
+//   test.case = 'undefined in string';
+//   var data = '!!js/undefined \'\'';
+//   var got = deserializer.encode({ data }).out;
+//   test.identical( got.data, undefined );
+//
+//   test.case = 'function in string';
+//   var data = '!!js/function \'function () { return true }\'';
+//   var got = deserializer.encode({ data }).out;
+//   test.true( _.routineIs( got.data ) );
+//
+//   test.case = 'array of tags';
+//   var data =
+// `
+// - !!js/regexp '/\\.two$/'
+// - !!js/undefined ''
+// - !!js/function 'function () { return true }'
+// `;
+//   var got = deserializer.encode({ data }).out;
+//   test.true( _.arrayIs( got.data ) );
+//   test.identical( got.data[ 0 ], /\.two$/ );
+//   test.identical( got.data[ 1 ], undefined );
+//   test.true( _.routineIs( got.data[ 2 ] ) );
+// }
+
 // --
 // declare
 // --
@@ -164,6 +205,7 @@ let Self =
   tests :
   {
     yml,
+    // deserializeUnsafeTags, /* uncomment when js-yaml will be updated to v4.0.0 or higher */
   },
 
 };

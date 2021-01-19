@@ -65,6 +65,38 @@ readYml =
 
 }
 
+/* uncomment when js-yaml will be updated to v4.0.0 or higher */
+// readYml =
+// {
+//
+//   ext : [ 'yaml', 'yml' ],
+//   inFormat : [ 'string.utf8' ],
+//   outFormat : [ 'structure' ],
+//
+//   feature : ymlSupported,
+//
+//   onEncode : function( op )
+//   {
+//     const o = Object.create( null );
+//
+//     if( !Yaml )
+//     {
+//       Yaml = require( YamlPath );
+//       const schemaUnsafe = require( 'js-yaml-js-types' ).all;
+//       Yaml.userUnsafeSchema = Yaml.DEFAULT_SCHEMA.extend( schemaUnsafe );
+//     }
+//
+//     o.schema = Yaml.userUnsafeSchema;
+//
+//     if( op.filePath )
+//     o.filename = _.fileProvider.path.nativize( op.filePath );
+//
+//     op.out.data = Yaml.load( op.in.data, o );
+//     op.out.format = 'structure';
+//   },
+//
+// }
+
 let writeYml = null;
 if( YamlPath )
 writeYml =
@@ -87,6 +119,32 @@ writeYml =
   },
 
 }
+
+/* uncomment when js-yaml will be updated to v4.0.0 or higher */
+// writeYml =
+// {
+//
+//   ext : [ 'yaml', 'yml' ],
+//   inFormat : [ 'structure' ],
+//   outFormat : [ 'string.utf8' ],
+//
+//   feature : ymlSupported,
+//
+//   onEncode : function( op )
+//   {
+//
+//     if( !Yaml )
+//     {
+//       Yaml = require( YamlPath );
+//       const schemaUnsafe = require( 'js-yaml-js-types' ).all;
+//       Yaml.userUnsafeSchema = Yaml.DEFAULT_SCHEMA.extend( schemaUnsafe );
+//     }
+//
+//     op.out.data = Yaml.dump( op.in.data, { schema : Yaml.userUnsafeSchema } );
+//     op.out.format = 'string.utf8';
+//   },
+//
+// }
 
 // --
 // declare
