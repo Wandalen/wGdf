@@ -2,15 +2,12 @@ format: outwillfile-2.0
 root:
   - wGdf.out
 consistency:
-  wGdf.out.will.yml: &ref_0
-    hash: 33e71e2eb8d9d47651e3041a1d73518f
-    size: 42807
-  ../.ex.will.yml: &ref_1
+  ../.ex.will.yml: &ref_0
     hash: e275e8471a7a8ff3a0e7e1fb7c979868
     size: 2080
-  ../.im.will.yml: &ref_2
-    hash: 1fa1ce39fad4086cedcee1e3def57813
-    size: 6143
+  ../.im.will.yml: &ref_1
+    hash: 010e7246decdaff59427a23cb25f0543
+    size: 6019
 module:
   wGdf.out:
     about:
@@ -26,18 +23,18 @@ module:
         is applicable to any kind of data.
       enabled: 1
       version: 0.4.0
-      interpreters:
+      interpreters: &ref_2
         - njs >= 10.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords:
+      keywords: &ref_3
         - wTools
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors:
+      contributors: &ref_4
         - Kostiantyn Wandalen <wanalen@01.school>
       npm.name: wgdf
-      npm.scripts:
+      npm.scripts: &ref_5
         test: wtest .run proto/**
         docgen: wdocgen .build proto
     path:
@@ -247,13 +244,7 @@ module:
         criterion:
           external: 1
       js-yaml:
-        path: npm:///js-yaml#4.0.0
-        autoExporting: 0
-        enabled: 0
-        criterion:
-          external: 1
-      js-yaml-js-types:
-        path: npm:///js-yaml-js-types#1.0.0
+        path: npm:///js-yaml#3.14.0
         autoExporting: 0
         enabled: 0
         criterion:
@@ -784,24 +775,6 @@ module:
           content: prime
         inherit:
           - files.transpile
-      exported.proto.export:
-        opts:
-          filePath: reflector::exported.proto.export
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
-      exported.files.proto.export:
-        opts:
-          filePath: reflector::exported.files.proto.export
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
     build:
       proto.export:
         steps:
@@ -890,9 +863,8 @@ module:
           content: proto
           export: 1
     consistency:
-      wGdf.out.will.yml: *ref_0
-      ../.ex.will.yml: *ref_1
-      ../.im.will.yml: *ref_2
+      ../.ex.will.yml: *ref_0
+      ../.im.will.yml: *ref_1
   ../:
     about:
       name: wGdf
@@ -907,20 +879,13 @@ module:
         is applicable to any kind of data.
       enabled: 1
       version: 0.4.0
-      interpreters:
-        - njs >= 10.0.0
-        - chrome >= 60.0.0
-        - firefox >= 60.0.0
-      keywords:
-        - wTools
+      interpreters: *ref_2
+      keywords: *ref_3
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors:
-        - Kostiantyn Wandalen <wanalen@01.school>
+      contributors: *ref_4
       npm.name: wgdf
-      npm.scripts:
-        test: wtest .run proto/**
-        docgen: wdocgen .build proto
+      npm.scripts: *ref_5
     path:
       module.willfiles:
         criterion:
@@ -1073,13 +1038,7 @@ module:
         criterion:
           external: 1
       js-yaml:
-        path: npm:///js-yaml#4.0.0
-        autoExporting: 0
-        enabled: 0
-        criterion:
-          external: 1
-      js-yaml-js-types:
-        path: npm:///js-yaml-js-types#1.0.0
+        path: npm:///js-yaml#3.14.0
         autoExporting: 0
         enabled: 0
         criterion:
@@ -1638,6 +1597,5 @@ module:
         hash: e275e8471a7a8ff3a0e7e1fb7c979868
         size: 2080
       ../.im.will.yml:
-        hash: 1fa1ce39fad4086cedcee1e3def57813
-        size: 6143
-      wGdf.out.will.yml: *ref_0
+        hash: 010e7246decdaff59427a23cb25f0543
+        size: 6019
