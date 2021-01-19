@@ -65,7 +65,7 @@ readYml =
 
 }
 
-/* uncomment when js-yaml will be updated to v4.0.0 or higher */
+/* qqq xxx : uncomment when js-yaml will be updated to v4.0.0 or higher */
 // readYml =
 // {
 //
@@ -120,7 +120,7 @@ writeYml =
 
 }
 
-/* uncomment when js-yaml will be updated to v4.0.0 or higher */
+/* qqq xxx : uncomment when js-yaml will be updated to v4.0.0 or higher */
 // writeYml =
 // {
 //

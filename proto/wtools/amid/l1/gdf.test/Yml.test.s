@@ -205,7 +205,7 @@ let Self =
   tests :
   {
     yml,
-    // deserializeUnsafeTags, /* uncomment when js-yaml will be updated to v4.0.0 or higher */
+    // deserializeUnsafeTags, /* qqq xxx : uncomment when js-yaml will be updated to v4.0.0 or higher */
   },
 
 };
