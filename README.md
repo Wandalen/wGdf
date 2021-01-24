@@ -8,7 +8,7 @@ Standardized abstract interface and collection of strategies to convert complex 
 git clone https://github.com/Wandalen/wGdf
 cd wGdf
 npm install
-node sample/Sample.s
+node sample/trivial/Sample.s
 ```
 
 ## To add to your project
