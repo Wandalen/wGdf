@@ -395,10 +395,10 @@ function supports( o )
   {
     debugger;
     for( let f in o.feature )
-    if( o.feature[ f ] !== encoder.feature[ f ] )
-    return false;
-    else
+    if( o.feature[ f ] === encoder.feature[ f ] )
     o.counter += 1;
+    else
+    return false;
   }
 
   return encoder._supports( o );
