@@ -161,9 +161,9 @@ function testApp()
 
   let srcs =
   {
-    '1Kb' : o1.structure,
-    '1Mb' : o2.structure,
-    '100Mb' : o3.structure
+    '1Kb' : o1.result,
+    '1Mb' : o2.result,
+    '100Mb' : o3.result
   };
 
   let results = {};
