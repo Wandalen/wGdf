@@ -104,7 +104,7 @@ let writeJsonFine =
   onEncode : function( op )
   {
     op.out.data = _.cloneData({ src : op.in.data });
-    op.out.data = _.toJson( op.out.data, { cloning : 0 } );
+    op.out.data = _.entity.exportJson( op.out.data, { cloning : 0 } );
     op.out.format = 'string.utf8';
   }
 

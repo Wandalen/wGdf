@@ -123,7 +123,7 @@ let writeJsStrcuture =
 
   onEncode : function( op )
   {
-    op.out.data = _.toJs( op.in.data );
+    op.out.data = _.entity.exportJs( op.in.data );
     op.out.format = 'string.utf8';
   }
 

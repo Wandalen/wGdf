@@ -99,7 +99,7 @@ function json( test )
       }
     }
   }
-  var data = _.toStr( src, { jsonLike : 1 })
+  var data = _.entity.exportString( src, { jsonLike : 1 })
   var deserialized = deserialize.encode({ data }).out;
   test.identical( deserialized.data, src );
 
@@ -119,7 +119,7 @@ function json( test )
       }
     }
   }
-  var data = _.toStr( src, { jsonLike : 1 })
+  var data = _.entity.exportString( src, { jsonLike : 1 })
   var deserialized = deserialize.encode({ data }).out;
   test.identical( deserialized.data, src );
 
@@ -135,12 +135,12 @@ function json( test )
       ]
     ]
   ]
-  var data = _.toStr( src, { jsonLike : 1 })
+  var data = _.entity.exportString( src, { jsonLike : 1 })
   var deserialized = deserialize.encode({ data }).out;
   test.identical( deserialized.data, src );
 
   test.case = 'complicated map with unsupported type';
-  var data = _.toStr( SamplesComplicated, { jsonLike : 1 });
+  var data = _.entity.exportString( SamplesComplicated, { jsonLike : 1 });
   test.shouldThrowErrorSync( () => deserialize.encode({ data }) ).out;
 
   test.case = 'complicated map, written by json.fine'

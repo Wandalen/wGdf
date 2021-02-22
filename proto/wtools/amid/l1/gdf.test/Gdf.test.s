@@ -90,7 +90,7 @@ function converterTypesCheck( test, o, o2 )
     }
   }
 
-  console.log( prefix + ' / results: ', _.toStr( results, { levels : 99, multiline : 1 }) )
+  console.log( prefix + ' / results: ', _.entity.exportString( results, { levels : 99, multiline : 1 }) )
 
   o.feature = 1;
 

@@ -93,7 +93,7 @@ writeCoffee =
     if( !Js2coffee )
     Js2coffee = require( Js2coffeePath );
 
-    let data = _.toStr( op.in.data, { jsLike : 1, keyWrapper : '', stringWrapper : `'` } );
+    let data = _.entity.exportString( op.in.data, { jsLike : 1, keyWrapper : '', stringWrapper : `'` } );
     if( _.mapIs( op.in.data ) )
     data = '(' + data + ')';
     op.out.data = Js2coffee( data );
