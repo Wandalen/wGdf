@@ -46,9 +46,10 @@ function encode_body( o )
   return result;
 }
 
-_.routineExtend( encode_body, _.Gdf.prototype.encode );
+_.routineExtend( encode_body, _.Gdf.prototype.encode.body );
+// _.routineExtend( encode_body, _.Gdf.prototype.encode );
 
-let encode = _.routineUnite( _.Gdf.prototype.encode.head, encode_body );
+let encode = _.routine.uniteCloning_( _.Gdf.prototype.encode.head, encode_body );
 
 // --
 // declare

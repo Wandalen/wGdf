@@ -354,7 +354,7 @@ encode_body.defaults =
   params : null,
 }
 
-let encode = _.routineUnite( encode_head, encode_body );
+let encode = _.routine.uniteCloning_( encode_head, encode_body );
 
 //
 
