@@ -393,7 +393,6 @@ function supports( o )
 
   if( o.feature )
   {
-    debugger;
     for( let f in o.feature )
     if( o.feature[ f ] === encoder.feature[ f ] )
     o.counter += 1;

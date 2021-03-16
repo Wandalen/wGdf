@@ -123,7 +123,6 @@ function onSuiteEnd()
 
 function testApp()
 {
-  // debugger;
   // let _ = require( '../../../Tools.s' );
   let _ = require( toolsPath );
   _.include( 'wGdf' );
@@ -154,7 +153,6 @@ function testApp()
   // var o2 = _.mapExtend( { depth : 20 }, commonTypes );
   // var o3 = _.mapExtend( { depth : 150 }, commonTypes );
 
-  debugger;
   _.diagnosticStructureGenerate( o1 );
   _.diagnosticStructureGenerate( o2 );
   _.diagnosticStructureGenerate( o3 );
@@ -321,7 +319,6 @@ function perfomance( test )
   let a = test.assetFor( false );
   // let toolsPath = a.path.nativize( _.module.toolsPathGet() );
   // let locals = { toolsPath,  };
-  // debugger;
 
   var programPath = a.program( testApp );
 
@@ -331,7 +328,6 @@ function perfomance( test )
   // var testAppPath = _.fileProvider.path.nativize( _.path.join( routinePath, 'testApp.js' ) );
   // var testAppCode = testApp.toString() + '\ntestApp();';
   // let program = _.program.write( testApp );
-  // debugger;
   // _.fileProvider.fileWrite( testAppPath, testAppCode );
 
   // let o2 = _.program.write
@@ -364,7 +360,6 @@ function perfomance( test )
       outputPiping : 1,
     }
 
-    // debugger;
     let con = _.process.startNjs( o );
 
     o.pnd.send( converter );
