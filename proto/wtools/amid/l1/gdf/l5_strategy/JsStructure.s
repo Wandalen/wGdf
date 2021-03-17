@@ -49,7 +49,6 @@ readJsStructure =
 
   onEncode : function( op )
   {
-    // debugger;
     // _.assert( _.strDefined( op.filePath ) );
     op.out.data = _.exec({ code : op.in.data, filePath : op.filePath, prependingReturn : 1 }); /* yyy */
     // op.out.data = _.exec({ code : op.in.data, filePath : op.filePath, prependingReturn : 0 });
