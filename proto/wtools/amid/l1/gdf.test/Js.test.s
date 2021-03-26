@@ -9,8 +9,8 @@ if( typeof module !== 'undefined' )
   _.include( 'wTesting' );
 }
 
-let _global = _global_;
-let _ = _global_.wTools;
+const _global = _global_;
+const _ = _global_.wTools;
 
 _.assert( _globals_.testing.wTools !== _global_.wTools );
 
@@ -113,7 +113,7 @@ function js( test )
 // declare
 // --
 
-let Self =
+const Proto =
 {
 
   name : 'Tools.js.gdf',
@@ -130,7 +130,7 @@ let Self =
 
 };
 
-Self = wTestSuite( Self );
+const Self = wTestSuite( Proto );
 if( typeof module !== 'undefined' && !module.parent )
 wTester.test( Self.name );
 

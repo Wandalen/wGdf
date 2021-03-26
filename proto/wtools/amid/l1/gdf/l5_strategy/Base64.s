@@ -3,9 +3,9 @@
 
 'use strict';
 
-let _global = _global_;
-let _ = _global_.wTools;
-let Self = _global_.wTools;
+const _global = _global_;
+const _ = _global_.wTools;
+const Self = _.encode = _.encode || Object.create( null );
 
 // --
 // base64
@@ -514,7 +514,6 @@ var Extension =
   utf8ToBuffer : _utf8ToBuffer,
 }
 
-Self = _.encode = _.encode || Object.create( null );
 _.mapExtend( _.encode, Extension );
 
 // --
@@ -525,12 +524,5 @@ _.Gdf([ base64ToBuffer, base64FromBuffer ]);
 _.Gdf([ base64ToBlob ]);
 _.Gdf([ base64FromUtf8Slow, base64ToUtf8Slow, base64FromUtf8, base64ToUtf8 ]);
 _.Gdf([ utf8FromBuffer, utf8ToBuffer ]);
-
-// --
-// export
-// --
-
-if( typeof module !== 'undefined' )
-module[ 'exports' ] = Self;
 
 } )();

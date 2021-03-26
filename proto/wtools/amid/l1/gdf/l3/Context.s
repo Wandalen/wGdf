@@ -3,10 +3,10 @@
 
 'use strict';
 
-let _global = _global_;
-let _ = _global_.wTools;
+const _global = _global_;
+const _ = _global_.wTools;
 let Parent = null;
-let Self = wGenericDataFormatContext;
+const Self = wGenericDataFormatContext;
 function wGenericDataFormatContext( o )
 {
   return _.workpiece.construct( Self, this, arguments );
@@ -78,6 +78,6 @@ _.classDeclare
 
 _.gdf[ Self.shortName ] = Self;
 if( typeof module !== 'undefined' && module !== null )
-module[ 'exports' ] = Self;
+module[ 'exports' ] = _;
 
 })();

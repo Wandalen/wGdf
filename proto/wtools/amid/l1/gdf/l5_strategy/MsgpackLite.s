@@ -3,9 +3,9 @@
 
 'use strict';
 
-let _global = _global_;
-let _ = _global_.wTools;
-let Self = _global_.wTools;
+const _global = _global_;
+const _ = _global_.wTools;
+const Self = _.encode = _.encode || Object.create( null );
 
 // --
 // Msgpack-lite
@@ -152,7 +152,6 @@ var Extension =
   writeMsgpackLite
 }
 
-Self = _.encode = _.encode || Object.create( null );
 _.mapExtend( _.encode, Extension );
 
 // --
@@ -162,12 +161,5 @@ _.mapExtend( _.encode, Extension );
 _.Gdf([ readMsgpackLite, writeMsgpackLite ]);
 
 // _.Gdf([ readMsgpackLite, writeMsgpackLite, readMsgpackWtp, writeMsgpackWtp ]);
-
-// --
-// export
-// --
-
-if( typeof module !== 'undefined' )
-module[ 'exports' ] = Self;
 
 } )();

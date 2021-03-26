@@ -10,10 +10,10 @@
  * @module Tools/mid/Gdf
  */
 
-let _global = _global_;
-let _ = _global_.wTools;
+const _global = _global_;
+const _ = _global_.wTools;
 let Parent = null;
-let Self = wGenericDataFormatEncoder;
+const Self = wGenericDataFormatEncoder;
 function wGenericDataFormatEncoder( o )
 {
   return _.workpiece.construct( Self, this, arguments );
@@ -567,6 +567,6 @@ _.Copyable.mixin( Self );
 _.Gdf = Self;
 _.gdf.Encoder = Self;
 if( typeof module !== 'undefined' )
-module[ 'exports' ] = Self;
+module[ 'exports' ] = _;
 
 })();

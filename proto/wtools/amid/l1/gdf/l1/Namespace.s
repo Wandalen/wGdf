@@ -3,8 +3,8 @@
 
 'use strict';
 
-let _ = _global_.wTools;
-let Self = _.gdf = _.gdf || Object.create( null );
+const _ = _global_.wTools;
+const Self = _.gdf = _.gdf || Object.create( null );
 
 // --
 // implement
