@@ -68,6 +68,7 @@ module:
       download:
         criterion:
           predefined: 1
+        path: ../
       repository:
         path: 'git+https:///github.com/Wandalen/wGdf.git'
       origins:
@@ -943,6 +944,7 @@ module:
       download:
         criterion:
           predefined: 1
+        path: ./
       repository:
         path: 'git+https:///github.com/Wandalen/wGdf.git'
       origins:
