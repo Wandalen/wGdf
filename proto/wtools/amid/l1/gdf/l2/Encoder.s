@@ -433,7 +433,7 @@ function inFormatSupports( inFormat )
 {
   let encoder = this;
   _.assert( _.strDefined( inFormat ) );
-  return _.any( encoder.inFormat, ( encoderInFormat ) =>
+  return !!_.any( encoder.inFormat, ( encoderInFormat ) =>
   {
     return _.longHasAll( _.gdf.formatNameSplit( encoderInFormat ), _.gdf.formatNameSplit( inFormat ) );
   });
@@ -445,7 +445,7 @@ function outFormatSupports( outFormat )
 {
   let encoder = this;
   _.assert( _.strDefined( outFormat ) );
-  return _.any( encoder.outFormat, ( encoderOutFormat ) =>
+  return !!_.any( encoder.outFormat, ( encoderOutFormat ) =>
   {
     return _.longHasAll( _.gdf.formatNameSplit( encoderOutFormat ), _.gdf.formatNameSplit( outFormat ) );
   });
