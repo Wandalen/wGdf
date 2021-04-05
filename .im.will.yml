@@ -114,8 +114,8 @@ path:
       raw: compiled
       content: prime
   npm.proto.entry:
-    - /pro/module/wGdf/proto/wtools/amid/l1/gdf/entry/Gdf.s
-    - /pro/module/wGdf/proto/node_modules/wgdf
+    - proto/wtools/amid/l1/gdf/entry/Gdf.s
+    - proto/node_modules/wgdf
 reflector:
   reflect.proto:
     inherit: predefined.*
