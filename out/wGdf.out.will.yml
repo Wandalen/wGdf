@@ -2,15 +2,12 @@ format: outwillfile-2.0
 root:
   - wGdf.out
 consistency:
-  wGdf.out.will.yml: &ref_0
-    hash: 49f60753801a03a52b7644807d84ea0a
-    size: 43123
-  ../.ex.will.yml: &ref_1
+  ../.ex.will.yml: &ref_0
     hash: e275e8471a7a8ff3a0e7e1fb7c979868
     size: 2080
-  ../.im.will.yml: &ref_2
-    hash: 073d4ee8c6cd14bd5151f3b04325042b
-    size: 5716
+  ../.im.will.yml: &ref_1
+    hash: b9824563a54498898f3dd4682bc59b38
+    size: 5682
 module:
   wGdf.out:
     about:
@@ -26,18 +23,18 @@ module:
         is applicable to any kind of data.
       enabled: 1
       version: 0.4.0
-      interpreters:
+      interpreters: &ref_2
         - njs >= 10.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords:
+      keywords: &ref_3
         - wTools
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors:
+      contributors: &ref_4
         - Kostiantyn Wandalen <wanalen@01.school>
       npm.name: wgdf
-      npm.scripts:
+      npm.scripts: &ref_5
         test: wtest .run proto/**
         docgen: wdocgen .build proto
     path:
@@ -785,24 +782,6 @@ module:
           content: prime
         inherit:
           - files.transpile
-      exported.proto.export:
-        opts:
-          filePath: 'reflector::exported.proto.export'
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
-      exported.files.proto.export:
-        opts:
-          filePath: 'reflector::exported.files.proto.export'
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
     build:
       proto.export:
         steps:
@@ -891,9 +870,8 @@ module:
           content: proto
           export: 1
     consistency:
-      wGdf.out.will.yml: *ref_0
-      ../.ex.will.yml: *ref_1
-      ../.im.will.yml: *ref_2
+      ../.ex.will.yml: *ref_0
+      ../.im.will.yml: *ref_1
   ../:
     about:
       name: wGdf
@@ -908,20 +886,13 @@ module:
         is applicable to any kind of data.
       enabled: 1
       version: 0.4.0
-      interpreters:
-        - njs >= 10.0.0
-        - chrome >= 60.0.0
-        - firefox >= 60.0.0
-      keywords:
-        - wTools
+      interpreters: *ref_2
+      keywords: *ref_3
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors:
-        - Kostiantyn Wandalen <wanalen@01.school>
+      contributors: *ref_4
       npm.name: wgdf
-      npm.scripts:
-        test: wtest .run proto/**
-        docgen: wdocgen .build proto
+      npm.scripts: *ref_5
     path:
       module.willfiles:
         criterion:
@@ -1638,6 +1609,5 @@ module:
         hash: e275e8471a7a8ff3a0e7e1fb7c979868
         size: 2080
       ../.im.will.yml:
-        hash: 073d4ee8c6cd14bd5151f3b04325042b
-        size: 5716
-      wGdf.out.will.yml: *ref_0
+        hash: b9824563a54498898f3dd4682bc59b38
+        size: 5682
