@@ -5,7 +5,7 @@
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( '../../../../node_modules/Tools' );
+  const _ = require( '../../../../node_modules/Tools' );
   require( '../gdf/entry/Gdf.s' );
   _.include( 'wTesting' );
   _.include( 'wFiles' );
@@ -123,8 +123,8 @@ function onSuiteEnd()
 
 function testApp()
 {
-  // let _ = require( '../../../Tools.s' );
-  let _ = require( toolsPath );
+  // const _ = require( '../../../Tools.s' );
+  const _ = require( toolsPath );
   _.include( 'wGdf' );
   // require( '../../../abase/l8/Converter.s' );
 
