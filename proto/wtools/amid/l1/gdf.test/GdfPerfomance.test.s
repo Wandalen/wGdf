@@ -123,7 +123,7 @@ function onSuiteEnd()
 
 function testApp()
 {
-  // const _ = require( '../../../Tools.s' );
+  // const _ = require( 'Tools' );
   const _ = require( toolsPath );
   _.include( 'wGdf' );
   // require( '../../../abase/l8/Converter.s' );
