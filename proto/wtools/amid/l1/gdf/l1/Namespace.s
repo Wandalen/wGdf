@@ -54,7 +54,7 @@ function select( o )
   let names = [ 'inFormat', 'outFormat', 'ext' ];
   let result;
 
-  o = _.routineOptions( select, o );
+  o = _.routine.options_( select, o );
   _.assert( arguments.length === 1 );
 
   if( o.inFormat === null && o.outFormat === null && o.ext === null )
@@ -98,7 +98,7 @@ function select( o )
 
   result = result.filter( ( encoder ) =>
   {
-    let o2 = _.mapExtend( null, o );
+    let o2 = _.props.extend( null, o );
     delete o2.single;
     return encoder.supports( o2 );
   });
@@ -128,7 +128,7 @@ select.defaults =
 function selectContext( o )
 {
   let result = this.select( o );
-  result = result.map( ( e ) => _.mapExtend( null, o, { encoder : e } ) );
+  result = result.map( ( e ) => _.props.extend( null, o, { encoder : e } ) );
   result = _.gdf.Context( result );
   return result;
 }
@@ -235,7 +235,7 @@ let Extension =
 
 }
 
-_.mapExtend( Self, Extension );
+_.props.extend( Self, Extension );
 
 //
 

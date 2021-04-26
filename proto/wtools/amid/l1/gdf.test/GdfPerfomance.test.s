@@ -141,17 +141,17 @@ function testApp()
     // arrayComplex : 1
   }
 
-  // var o1 = _.mapExtend( { depth : 1, breadth : 1 }, commonTypes );
-  // var o2 = _.mapExtend( { depth : 20, breadth : 90 }, commonTypes );
-  // var o3 = _.mapExtend( { depth : 150, breadth : 1100 }, commonTypes );
+  // var o1 = _.props.extend( { depth : 1, breadth : 1 }, commonTypes );
+  // var o2 = _.props.extend( { depth : 20, breadth : 90 }, commonTypes );
+  // var o3 = _.props.extend( { depth : 150, breadth : 1100 }, commonTypes );
 
-  var o1 = _.mapExtend( { depth : 1 }, commonTypes );
-  var o2 = _.mapExtend( { depth : 1 }, commonTypes );
-  var o3 = _.mapExtend( { depth : 1 }, commonTypes );
+  var o1 = _.props.extend( { depth : 1 }, commonTypes );
+  var o2 = _.props.extend( { depth : 1 }, commonTypes );
+  var o3 = _.props.extend( { depth : 1 }, commonTypes );
 
-  // var o1 = _.mapExtend( { depth : 1 }, commonTypes );
-  // var o2 = _.mapExtend( { depth : 20 }, commonTypes );
-  // var o3 = _.mapExtend( { depth : 150 }, commonTypes );
+  // var o1 = _.props.extend( { depth : 1 }, commonTypes );
+  // var o2 = _.props.extend( { depth : 20 }, commonTypes );
+  // var o3 = _.props.extend( { depth : 150 }, commonTypes );
 
   _.diagnosticStructureGenerate( o1 );
   _.diagnosticStructureGenerate( o2 );
@@ -380,7 +380,7 @@ function perfomance( test )
 }
 
 perfomance.experimental = 1;
-perfomance.timeOut = _.mapOnlyOwnKeys( converters ).length * 6 * 60000;
+perfomance.timeOut = _.props.onlyOwnKeys( converters ).length * 6 * 60000;
 perfomance.rapidity = -4;
 
 // --

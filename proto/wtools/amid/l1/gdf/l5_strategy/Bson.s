@@ -90,7 +90,7 @@ var Extension =
 
 }
 
-_.mapExtend( _.encode, Extension );
+_.props.extend( _.encode, Extension );
 
 // --
 // register

@@ -15,14 +15,14 @@ function wGenericDataFormatContext( o )
 Self.shortName = 'Context';
 
 // --
-// routines
+// implementation
 // --
 
 function init( o )
 {
   let context = this;
   _.assert( arguments.length <= 1 );
-  _.mapExtend( context, o )
+  _.props.extend( context, o )
   delete context.default;
   Object.preventExtensions( context );
   _.assert( context.encoder instanceof _.Gdf );
@@ -36,7 +36,7 @@ function encode_body( o )
 {
   let context = this;
 
-  _.assertRoutineOptions( encode, arguments );
+  _.routine.assertOptions( encode, arguments );
 
   if( o.format === null )
   o.format = context.inFormat;
@@ -49,7 +49,7 @@ function encode_body( o )
 _.routineExtend( encode_body, _.Gdf.prototype.encode.body );
 // _.routineExtend( encode_body, _.Gdf.prototype.encode );
 
-let encode = _.routine.uniteCloning_( _.Gdf.prototype.encode.head, encode_body );
+let encode = _.routine.uniteCloning_replaceByUnite( _.Gdf.prototype.encode.head, encode_body );
 
 // --
 // declare

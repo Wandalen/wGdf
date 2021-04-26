@@ -514,7 +514,7 @@ var Extension =
   utf8ToBuffer : _utf8ToBuffer,
 }
 
-_.mapExtend( _.encode, Extension );
+_.props.extend( _.encode, Extension );
 
 // --
 // register

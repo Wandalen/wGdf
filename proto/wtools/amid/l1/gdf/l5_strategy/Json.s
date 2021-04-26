@@ -26,7 +26,7 @@ let readJson =
   inFormat : [ 'string.utf8' ],
   outFormat : [ 'structure' ],
 
-  feature : _.mapExtend( null, jsonSupported, { default : 1 } ),
+  feature : _.props.extend( null, jsonSupported, { default : 1 } ),
 
   onEncode : function( op )
   {
@@ -80,7 +80,7 @@ let writeJsonMin =
   shortName : 'json.min',
   inFormat : [ 'structure' ],
   outFormat : [ 'string.utf8' ],
-  feature : _.mapExtend( null, jsonSupported, { default : 1, fine : 0, min : 1 } ),
+  feature : _.props.extend( null, jsonSupported, { default : 1, fine : 0, min : 1 } ),
 
   onEncode : function( op )
   {
@@ -99,7 +99,7 @@ let writeJsonFine =
   ext : [ 'json.fine', 'json' ],
   inFormat : [ 'structure' ],
   outFormat : [ 'string.utf8' ],
-  feature : _.mapExtend( null, jsonSupported, { default : 0, fine : 1, min : 0 } ),
+  feature : _.props.extend( null, jsonSupported, { default : 0, fine : 1, min : 0 } ),
 
   onEncode : function( op )
   {
@@ -119,7 +119,7 @@ var Extension =
 
 }
 
-_.mapExtend( _.encode, Extension );
+_.props.extend( _.encode, Extension );
 
 // --
 // register

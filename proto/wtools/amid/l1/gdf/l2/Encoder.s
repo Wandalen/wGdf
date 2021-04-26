@@ -226,7 +226,7 @@ function encode_head( routine, args )
   let o = args[ 0 ];
 
   _.assert( arguments.length === 2 );
-  _.routineOptions( routine, o );
+  _.routine.options_( routine, o );
 
   return o;
 }
@@ -238,7 +238,7 @@ function _encode( op )
   let encoder = this;
 
   _.assert( arguments.length === 1 );
-  _.assertRoutineOptions( _encode, arguments );
+  _.routine.assertOptions( _encode, arguments );
 
   return encoder.onEncode( op );
 }
@@ -260,7 +260,7 @@ function encode_body( o )
   let result;
 
   _.assert( arguments.length === 1 );
-  _.routineOptions( encode_body, arguments );
+  _.routine.options_( encode_body, arguments );
 
   if( !o.filePath )
   if( o.params && _.strIs( o.params.filePath ) )
@@ -324,7 +324,7 @@ function encode_body( o )
 
     _.assert( _.strIs( op.out.format ), 'Output should have format' );
     _.assert( _.longHas( encoder.outFormat, op.out.format ), () => 'Strange output format ' + o.out.format );
-    _.assertRoutineOptions( encoder._encode, op );
+    _.routine.assertOptions( encoder._encode, op );
     _.assert( result === op || _.consequenceIs( result ) );
     // _.assert( op.params.sync === undefined );
 
@@ -354,7 +354,7 @@ encode_body.defaults =
   params : null,
 }
 
-let encode = _.routine.uniteCloning_( encode_head, encode_body );
+let encode = _.routine.uniteCloning_replaceByUnite( encode_head, encode_body );
 
 //
 
@@ -363,7 +363,7 @@ function supports( o )
   let encoder = this;
   let counter = 0;
 
-  o = _.routineOptions( supports, arguments );
+  o = _.routine.options_( supports, arguments );
 
   if( !o.ext )
   if( o.filePath )
