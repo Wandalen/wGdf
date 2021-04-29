@@ -302,7 +302,7 @@ function encode_body( o )
   try
   {
 
-    _.assert( _.objectIs( op.params ) );
+    _.assert( _.object.isBasic( op.params ) );
     _.assert( op.in.format === null || _.strIs( op.in.format ), 'Not clear which input format is' );
     _.assert( op.in.format === null || encoder.inFormatSupports( op.in.format ), () => `Unknown format ${op.in.format}` );
 
