@@ -169,7 +169,7 @@ function form()
     _.gdf.extMap[ e ] = _.arrayAppendOnceStrictly( _.gdf.extMap[ e ] || null, encoder );
   });
 
-  let inOut = _.eachSample_([ encoder.inFormat, encoder.outFormat ]);
+  let inOut = _.permutation.eachSample([ encoder.inFormat, encoder.outFormat ]);
   encoder.inOut = [];
   inOut.forEach( ( inOut ) =>
   {
