@@ -202,7 +202,7 @@ function testApp()
         let t0 = _.time.now();
         serialized = serialize.encode({ data : src }).out;
         let spent = _.time.spent( t0 );
-        let size =  _.strMetricFormatBytes( _.entitySize( serialized.data ) );
+        let size =  _.strMetricFormatBytes( _.entity.sizeOf( serialized.data ) );
 
         console.log( 'write: ', spent );
         console.log( serialize.ext, 'out size:', size );
