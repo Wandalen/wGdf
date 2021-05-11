@@ -1,5 +1,5 @@
 
-# module::Gdf  [![status](https://github.com/Wandalen/wGdf/workflows/publish/badge.svg)](https://github.com/Wandalen/wGdf/actions?query=workflow%3Apublish) [![stable](https://img.shields.io/badge/stability-stable-brightgreen.svg)](https://github.com/emersion/stability-badges#stable)
+# module::Gdf  [![status](https://github.com/Wandalen/wGdf/actions/workflows/StandardPublish.yml/badge.svg)](https://github.com/Wandalen/wGdf/actions/workflows/StandardPublish.yml) [![stable](https://img.shields.io/badge/stability-stable-brightgreen.svg)](https://github.com/emersion/stability-badges#stable)
 
 Standardized abstract interface and collection of strategies to convert complex data structures from one generic data format ( GDF ) to another generic data format. You may use the module to serialize complex data structure to string or deserialize string back to the original data structure. Generic data format ( GDF ) is a format of data structure designed with taking into account none unique feature of data so that it is applicable to any kind of data.
 
@@ -11,7 +11,7 @@ npm install
 node sample/trivial/Sample.s
 ```
 
-## To add to your project
+### To add to your project
 ```
 npm add 'wgdf@alpha'
 ```
