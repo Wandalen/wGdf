@@ -2,12 +2,9 @@ format: outwillfile-2.0
 root:
   - wGdf.out
 consistency:
-  ../.ex.will.yml: &ref_0
-    hash: e275e8471a7a8ff3a0e7e1fb7c979868
-    size: 2080
-  ../.im.will.yml: &ref_1
-    hash: b9824563a54498898f3dd4682bc59b38
-    size: 5682
+  ../will.yml: &ref_0
+    hash: 9e33de10fa5a38f34539bc3a50ee62a2
+    size: 7552
 module:
   wGdf.out:
     about:
@@ -23,18 +20,18 @@ module:
         is applicable to any kind of data.
       enabled: 1
       version: 0.4.0
-      interpreters: &ref_2
+      license: MIT
+      npm.name: wgdf
+      author: Kostiantyn Wandalen <wanalen@01.school>
+      keywords: &ref_1
+        - wTools
+      contributors: &ref_2
+        - Kostiantyn Wandalen <wanalen@01.school>
+      interpreters: &ref_3
         - njs >= 10.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords: &ref_3
-        - wTools
-      license: MIT
-      author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: &ref_4
-        - Kostiantyn Wandalen <wanalen@01.school>
-      npm.name: wgdf
-      npm.scripts: &ref_5
+      npm.scripts: &ref_4
         test: wtest .run proto/**
         docgen: wdocgen .build proto
     path:
@@ -49,15 +46,11 @@ module:
       module.original.willfiles:
         criterion:
           predefined: 1
-        path:
-          - ../.ex.will.yml
-          - ../.im.will.yml
+        path: ../will.yml
       module.peer.willfiles:
         criterion:
           predefined: 1
-        path:
-          - ../.ex.will.yml
-          - ../.im.will.yml
+        path: ../will.yml
       module.peer.in:
         criterion:
           predefined: 1
@@ -216,7 +209,7 @@ module:
         path: 'npm:///wCopyable'
         autoExporting: 0
         enabled: 0
-      wIntrospectorBasic:
+      wintrospectorbasic:
         path: 'npm:///wintrospectorbasic'
         autoExporting: 0
         enabled: 0
@@ -273,8 +266,8 @@ module:
         autoExporting: 0
         enabled: 0
         criterion:
-          debug: 1
           external: 1
+          development: 1
     reflector:
       reflect.proto.debug.raw:
         src:
@@ -870,8 +863,7 @@ module:
           content: proto
           export: 1
     consistency:
-      ../.ex.will.yml: *ref_0
-      ../.im.will.yml: *ref_1
+      ../will.yml: *ref_0
   ../:
     about:
       name: wGdf
@@ -886,26 +878,22 @@ module:
         is applicable to any kind of data.
       enabled: 1
       version: 0.4.0
-      interpreters: *ref_2
-      keywords: *ref_3
       license: MIT
-      author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: *ref_4
       npm.name: wgdf
-      npm.scripts: *ref_5
+      author: Kostiantyn Wandalen <wanalen@01.school>
+      keywords: *ref_1
+      contributors: *ref_2
+      interpreters: *ref_3
+      npm.scripts: *ref_4
     path:
       module.willfiles:
         criterion:
           predefined: 1
-        path:
-          - .ex.will.yml
-          - .im.will.yml
+        path: will.yml
       module.original.willfiles:
         criterion:
           predefined: 1
-        path:
-          - .ex.will.yml
-          - .im.will.yml
+        path: will.yml
       module.peer.willfiles:
         criterion:
           predefined: 1
@@ -1015,7 +1003,7 @@ module:
         path: 'npm:///wCopyable'
         autoExporting: 0
         enabled: 0
-      wIntrospectorBasic:
+      wintrospectorbasic:
         path: 'npm:///wintrospectorbasic'
         autoExporting: 0
         enabled: 0
@@ -1072,8 +1060,8 @@ module:
         autoExporting: 0
         enabled: 0
         criterion:
-          debug: 1
           external: 1
+          development: 1
     reflector:
       reflect.proto.debug.raw:
         src:
@@ -1605,9 +1593,6 @@ module:
           - 'build::release'
           - 'build::npm'
     consistency:
-      ../.ex.will.yml:
-        hash: e275e8471a7a8ff3a0e7e1fb7c979868
-        size: 2080
-      ../.im.will.yml:
-        hash: b9824563a54498898f3dd4682bc59b38
-        size: 5682
+      ../will.yml:
+        hash: 9e33de10fa5a38f34539bc3a50ee62a2
+        size: 7552
