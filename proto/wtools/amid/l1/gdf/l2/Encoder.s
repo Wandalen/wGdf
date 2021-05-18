@@ -115,9 +115,9 @@ function form()
   if( encoder.feature.default !== undefined )
   encoder.feature.default = !!encoder.feature.default;
 
-  encoder.inFormat = _.arrayAs( encoder.inFormat );
-  encoder.outFormat = _.arrayAs( encoder.outFormat );
-  encoder.ext = _.arrayAs( encoder.ext );
+  encoder.inFormat = _.array.as( encoder.inFormat );
+  encoder.outFormat = _.array.as( encoder.outFormat );
+  encoder.ext = _.array.as( encoder.ext );
 
   if( encoder.shortName === null && encoder.ext[ 0 ] )
   encoder.shortName = encoder.ext[ 0 ];
