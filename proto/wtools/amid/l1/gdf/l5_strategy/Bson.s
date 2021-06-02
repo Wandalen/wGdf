@@ -90,7 +90,7 @@ var Extension =
 
 }
 
-_.props.extend( _.encode, Extension );
+/* _.props.extend */Object.assign( _.encode, Extension );
 
 // --
 // register

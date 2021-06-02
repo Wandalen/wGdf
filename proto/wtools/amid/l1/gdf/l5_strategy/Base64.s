@@ -514,7 +514,7 @@ var Extension =
   utf8ToBuffer : _utf8ToBuffer,
 }
 
-_.props.extend( _.encode, Extension );
+/* _.props.extend */Object.assign( _.encode, Extension );
 
 // --
 // register

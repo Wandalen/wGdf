@@ -4,7 +4,7 @@
 'use strict';
 
 const _ = _global_.wTools;
-const Self = _.gdf = _.gdf || Object.create( null );
+_.gdf = _.gdf || Object.create( null );
 
 // --
 // implement
@@ -235,11 +235,6 @@ let Extension =
 
 }
 
-_.props.extend( Self, Extension );
-
-//
-
-if( typeof module !== 'undefined' )
-module[ 'exports' ] = _global_.wTools;
+/* _.props.extend */Object.assign( _.gdf, Extension );
 
 } )();
