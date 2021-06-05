@@ -57,7 +57,7 @@ function unform()
   let encoder = this;
 
   debugger;
-  _.gdf.eventGive( 'gdf.unform', { gdf : encoder } );
+  _.gdf.eventGive({ event : 'gdf.unform', gdf : encoder });
 
   encoder.formed = 0;
 
