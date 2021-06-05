@@ -320,17 +320,17 @@ function perfomance( test )
   // let toolsPath = a.path.nativize( _.module.toolsPathGet() );
   // let locals = { toolsPath,  };
 
-  var programPath = a.program( testApp );
+  var programPath = a.program( testApp ).programPath;
 
   // a.appStartNonThrowing({ execPath : programPath })
 
   // var routinePath = _.path.join( context.suiteTempPath, test.name );
   // var testAppPath = _.fileProvider.path.nativize( _.path.join( routinePath, 'testApp.js' ) );
   // var testAppCode = testApp.toString() + '\ntestApp();';
-  // let program = _.program.write( testApp );
+  // let program = _.program.make( testApp );
   // _.fileProvider.fileWrite( testAppPath, testAppCode );
 
-  // let o2 = _.program.write
+  // let o2 = _.program.make
   // ({
   //   routine : o.routine,
   //   locals : o.locals,

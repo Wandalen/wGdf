@@ -145,12 +145,13 @@ var Extension =
 
 }
 
-/* _.props.extend */Object.assign( _.encode, Extension );
+Object.assign( _.encode, Extension );
 
 // --
 // register
 // --
 
 _.Gdf([ readYml, writeYml ]);
+_.assert( _.longHas( _.gdf.outMap[ 'structure' ].map( ( e ) => e.shortName ), 'yaml' ) );
 
 } )();

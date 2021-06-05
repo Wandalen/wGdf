@@ -90,12 +90,13 @@ var Extension =
 
 }
 
-/* _.props.extend */Object.assign( _.encode, Extension );
+Object.assign( _.encode, Extension );
 
 // --
 // register
 // --
 
+// debugger;
 _.Gdf([ readBson, writeBson ]);
 
 } )();

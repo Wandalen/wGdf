@@ -56,6 +56,11 @@ function unform()
 {
   let encoder = this;
 
+  debugger;
+  _.gdf.eventGive( 'gdf.unform', { gdf : encoder } );
+
+  encoder.formed = 0;
+
   _.arrayRemoveOnceStrictly( _.gdf.encodersArray, encoder );
 
   encoder.inFormat.forEach( ( e, k ) =>
@@ -84,7 +89,6 @@ function unform()
     _.arrayRemoveOnceStrictly( _.gdf.inOutMap[ e ], encoder );
   });
 
-  encoder.formed = 0;
   return encoder;
 }
 
@@ -109,6 +113,8 @@ function form()
   _.assert( _.mapIs( encoder.feature ), `Expects map {- feature -}` );
   _.assert( encoder.name === null );
   _.assert( encoder.formed === 0 );
+
+  encoder.formed = 1;
 
   if( encoder.feature.config === undefined )
   encoder.feature.config = true;
@@ -189,7 +195,10 @@ function form()
   _.assert( encoder.ext.length >= 0 );
   _.assert( _.routineIs( encoder.onEncode ) );
 
-  encoder.formed = 1;
+  // if( _.longHas( encoder.ext, 'yaml' ) )
+  // debugger;
+  _.gdf.eventGive({ event : 'gdf.form', gdf : encoder });
+
   return encoder;
 }
 

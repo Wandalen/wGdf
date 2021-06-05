@@ -7,7 +7,77 @@ const _ = _global_.wTools;
 _.gdf = _.gdf || Object.create( null );
 
 // --
-// implement
+// event
+// --
+
+function on( o )
+{
+  o = _.event.onHead( on, arguments );
+  return _.event.on( this._edispatcher, o );
+}
+
+on.defaults =
+{
+  callbackMap : null,
+};
+
+//
+
+function once( o )
+{
+  o = _.event.once.head( once, arguments );
+  return _.event.once( this._edispatcher, o );
+}
+
+once.defaults =
+{
+  callbackMap : null,
+};
+
+//
+
+function off( o )
+{
+  o = _.event.offHead( off, arguments );
+  return _.event.off( this._edispatcher, o );
+}
+
+off.defaults =
+{
+  callbackMap : null,
+};
+
+//
+
+function eventHasHandler( o )
+{
+  o = _.event.eventHasHandlerHead( eventHasHandler, arguments );
+  return _.event.eventHasHandler( this._edispatcher, o );
+}
+
+eventHasHandler.defaults =
+{
+  eventName : null,
+  eventHandler : null,
+}
+
+//
+
+function eventGive()
+{
+  let o = _.event.eventGiveHead( this._edispatcher, eventGive, arguments );
+  return _.event.eventGive( this._edispatcher, o );
+  // return _.event.eventGive( this._edispatcher, ... arguments );
+}
+
+eventGive.defaults =
+{
+  ... _.event.eventGive.defaults,
+  gdf : null,
+}
+
+// --
+//
 // --
 
 /**
@@ -215,8 +285,27 @@ let outMap = Object.create( null );
 let extMap = Object.create( null );
 let inOutMap = Object.create( null );
 
+let events =
+{
+  'gdf.form' : [],
+  'gdf.unform' : [],
+}
+
+let _edispatcher =
+{
+  events,
+}
+
 let Extension =
 {
+
+  // event
+
+  on,
+  once,
+  off,
+  eventHasHandler,
+  eventGive,
 
   // routine
 
@@ -227,6 +316,7 @@ let Extension =
 
   // field
 
+  _edispatcher,
   encodersArray,
   inMap,
   outMap,
