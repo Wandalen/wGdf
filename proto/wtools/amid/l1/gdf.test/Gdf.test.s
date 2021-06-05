@@ -52,7 +52,8 @@ function converterTypesCheck( test, o, o2 )
   let samples = o2.samples;
   let currentLevel = o2.currentLevel;
   let name = o2.name;
-  _.assert( o.serializer.encoder.feature, `${o.serializer.ext} is not feature` );
+  _.assert( _.aux.is( o.serializer.encoder.feature ), `${o.serializer.ext} is not feature` );
+  // _.assert( o.serializer.encoder.feature, `${o.serializer.ext} is not feature` );
   let expectedLevel = o.serializer.encoder.feature[ name ];
 
   let prefix = o.serializer.ext + ' / ' + name + currentLevel;
