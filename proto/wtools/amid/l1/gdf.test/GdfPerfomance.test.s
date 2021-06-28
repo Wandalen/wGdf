@@ -320,9 +320,9 @@ function perfomance( test )
   // let toolsPath = a.path.nativize( _.module.toolsPathGet() );
   // let locals = { toolsPath,  };
 
-  var programPath = a.program( testApp ).programPath;
+  var filePath/*programPath*/ = a.program( testApp ).filePath/*programPath*/;
 
-  // a.appStartNonThrowing({ execPath : programPath })
+  // a.appStartNonThrowing({ execPath : filePath/*programPath*/ })
 
   // var routinePath = _.path.join( context.suiteTempPath, test.name );
   // var testAppPath = _.fileProvider.path.nativize( _.path.join( routinePath, 'testApp.js' ) );
@@ -351,7 +351,7 @@ function perfomance( test )
     let o =
     {
       // execPath : _.path.nativize( testAppPath ),
-      execPath : programPath,
+      execPath : filePath/*programPath*/,
       maximumMemory : 1,
       mode : 'spawn',
       ipc : 1,
