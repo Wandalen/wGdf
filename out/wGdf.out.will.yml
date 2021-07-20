@@ -3,8 +3,8 @@ root:
   - wGdf.out
 consistency:
   ../will.yml: &ref_0
-    hash: 9e33de10fa5a38f34539bc3a50ee62a2
-    size: 7552
+    hash: f57ea7f55d17bb641af3b9ef673e6b4a
+    size: 7477
 module:
   wGdf.out:
     about:
@@ -209,22 +209,6 @@ module:
         path: 'npm:///wCopyable'
         autoExporting: 0
         enabled: 0
-      wintrospectorbasic:
-        path: 'npm:///wintrospectorbasic'
-        autoExporting: 0
-        enabled: 0
-      wgdf:
-        path: 'hd://..'
-        autoExporting: 0
-        enabled: 0
-        criterion:
-          development: 1
-      wTesting:
-        path: 'npm:///wTesting'
-        autoExporting: 0
-        enabled: 0
-        criterion:
-          development: 1
       bson:
         path: 'npm:///bson#4.0.4'
         autoExporting: 0
@@ -261,6 +245,18 @@ module:
         enabled: 0
         criterion:
           external: 1
+      wgdf:
+        path: 'hd://..'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          development: 1
+      wTesting:
+        path: 'npm:///wTesting'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          development: 1
       eslint:
         path: 'npm:///eslint#7.1.0'
         autoExporting: 0
@@ -1003,22 +999,6 @@ module:
         path: 'npm:///wCopyable'
         autoExporting: 0
         enabled: 0
-      wintrospectorbasic:
-        path: 'npm:///wintrospectorbasic'
-        autoExporting: 0
-        enabled: 0
-      wgdf:
-        path: 'hd://.'
-        autoExporting: 0
-        enabled: 0
-        criterion:
-          development: 1
-      wTesting:
-        path: 'npm:///wTesting'
-        autoExporting: 0
-        enabled: 0
-        criterion:
-          development: 1
       bson:
         path: 'npm:///bson#4.0.4'
         autoExporting: 0
@@ -1055,6 +1035,18 @@ module:
         enabled: 0
         criterion:
           external: 1
+      wgdf:
+        path: 'hd://.'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          development: 1
+      wTesting:
+        path: 'npm:///wTesting'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          development: 1
       eslint:
         path: 'npm:///eslint#7.1.0'
         autoExporting: 0
@@ -1594,5 +1586,5 @@ module:
           - 'build::npm'
     consistency:
       ../will.yml:
-        hash: 9e33de10fa5a38f34539bc3a50ee62a2
-        size: 7552
+        hash: f57ea7f55d17bb641af3b9ef673e6b4a
+        size: 7477
