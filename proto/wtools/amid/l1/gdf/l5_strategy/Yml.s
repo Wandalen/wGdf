@@ -152,6 +152,6 @@ Object.assign( _.encode, Extension );
 // --
 
 _.Gdf([ readYml, writeYml ]);
-_.assert( _.longHas( _.gdf.outMap[ 'structure' ].map( ( e ) => e.shortName ), 'yaml' ) );
+_.assert( Config.interpreter === 'browser' || _.longHas( _.gdf.outMap[ 'structure' ].map( ( e ) => e.shortName ), 'yaml' ) );
 
 } )();
