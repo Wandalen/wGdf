@@ -111,7 +111,7 @@ readJsStructure =
 
 //
 
-let writeJsStrcuture =
+let writeJsStructure =
 {
 
   ext : [ 'js.structure', 'js', 's', 'ss', 'jstruct', 'jslike' ],
@@ -128,6 +128,25 @@ let writeJsStrcuture =
 
 }
 
+//
+
+let writeJsStructureExported =
+{
+
+  shortName : 'js.structure.exported',
+  ext : [],
+  inFormat : [ 'structure' ],
+  outFormat : [ 'string.utf8' ],
+  feature : jsSupported,
+
+  onEncode : function( op )
+  {
+    op.out.data = `module.exports = ` + _.entity.exportJs( op.in.data );
+    op.out.format = 'string.utf8';
+  }
+
+}
+
 // --
 // declare
 // --
@@ -137,12 +156,12 @@ var Extension =
 
 }
 
-/* _.props.extend */Object.assign( _.encode, Extension );
+Object.assign( _.encode, Extension );
 
 // --
 // register
 // --
 
-_.Gdf([ readJsStructure, /*readJsNode, readJsSmart, */ writeJsStrcuture ]);
+_.Gdf([ readJsStructure, writeJsStructure, writeJsStructureExported ]);
 
 } )();

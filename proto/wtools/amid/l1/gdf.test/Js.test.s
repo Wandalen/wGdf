@@ -109,6 +109,48 @@ function js( test )
   /* */
 
 }
+
+//
+
+function jsStructExported( test )
+{
+  let context = this;
+
+  let SamplesPrimitive =
+  {
+    null : null,
+    number : 13,
+    string : 'something',
+  }
+
+  let SamplesSimple =
+  {
+    map : { a : '1', dir : { b : 2 }, c : [ 1, 2, 3 ] },
+    array : [ { a : '1', dir : { b : 2 }, c : [ 1, 2, 3 ] } ],
+  }
+
+  let SamplesComplicated =
+  {
+    regexp : /.regexp/g,
+    infinity : -Infinity,
+    nan : NaN,
+    date : new Date(),
+  }
+
+  /* */
+
+  test.case = 'select';
+
+  debugger;
+  var serialize = _.gdf.selectContext({ encoderName : 'js.structure.exported' });
+  debugger;
+  test.identical( serialize.length, 1 );
+  serialize = serialize[ 0 ];
+
+  /* */
+
+}
+
 // --
 // declare
 // --
@@ -125,7 +167,8 @@ const Proto =
 
   tests :
   {
-    js
+    js,
+    jsStructExported,
   },
 
 };

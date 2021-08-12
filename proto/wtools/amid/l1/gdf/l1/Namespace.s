@@ -170,8 +170,15 @@ function select( o )
   {
     let o2 = _.props.extend( null, o );
     delete o2.single;
+    delete o2.encoderName;
     return encoder.supports( o2 );
   });
+
+  if( o.encoderName !== null && o.encoderName !== undefined )
+  {
+    result = result.filter( ( e ) => e.shortName === o );
+    debugger;
+  }
 
   if( result.length > 1 )
   if( o.single )
@@ -187,6 +194,7 @@ select.defaults =
   data : null,
   inFormat : null,
   outFormat : null,
+  encoderName : null,
   filePath : null,
   ext : null,
   single : 1,

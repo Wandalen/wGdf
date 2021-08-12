@@ -47,7 +47,6 @@ function encode_body( o )
 }
 
 _.routineExtend( encode_body, _.Gdf.prototype.encode.body );
-// _.routineExtend( encode_body, _.Gdf.prototype.encode );
 
 let encode = _.routine.uniteCloning_replaceByUnite( _.Gdf.prototype.encode.head, encode_body );
 
