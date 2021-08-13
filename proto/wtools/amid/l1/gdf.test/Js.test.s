@@ -123,20 +123,6 @@ function jsStructExported( test )
     string : 'something',
   }
 
-  let SamplesSimple =
-  {
-    map : { a : '1', dir : { b : 2 }, c : [ 1, 2, 3 ] },
-    array : [ { a : '1', dir : { b : 2 }, c : [ 1, 2, 3 ] } ],
-  }
-
-  let SamplesComplicated =
-  {
-    regexp : /.regexp/g,
-    infinity : -Infinity,
-    nan : NaN,
-    date : new Date(),
-  }
-
   /* */
 
   test.case = 'select';
@@ -146,6 +132,15 @@ function jsStructExported( test )
   debugger;
   test.identical( serialize.length, 1 );
   serialize = serialize[ 0 ];
+
+  var src = SamplesPrimitive;
+  var serialized = serialize.encode({ data : src }).out;
+  var exp =
+  {
+    'data' : 'module.exports = { "null" : null, "number" : 13, "string" : `something` }',
+    'format' : 'string.utf8',
+  }
+  test.identical( serialized, exp );
 
   /* */
 

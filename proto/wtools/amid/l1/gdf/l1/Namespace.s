@@ -176,8 +176,7 @@ function select( o )
 
   if( o.encoderName !== null && o.encoderName !== undefined )
   {
-    result = result.filter( ( e ) => e.shortName === o );
-    debugger;
+    result = result.filter( ( e ) => e.shortName === o.encoderName || e.name === o.encoderName );
   }
 
   if( result.length > 1 )
