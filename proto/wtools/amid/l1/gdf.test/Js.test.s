@@ -127,9 +127,7 @@ function jsStructExported( test )
 
   test.case = 'select';
 
-  debugger;
   var serialize = _.gdf.selectContext({ encoderName : 'js.structure.exported' });
-  debugger;
   test.identical( serialize.length, 1 );
   serialize = serialize[ 0 ];
 
