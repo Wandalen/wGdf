@@ -3,8 +3,8 @@ root:
   - wGdf.out
 consistency:
   ../will.yml: &ref_0
-    hash: f57ea7f55d17bb641af3b9ef673e6b4a
-    size: 7477
+    hash: abc0d5cfa96a6e11ca38db1cd22642c6
+    size: 7336
 module:
   wGdf.out:
     about:
@@ -445,9 +445,6 @@ module:
           content: npm
         inherit:
           - module.export
-      npm.publish:
-        opts:
-          shell: npm publish
       npm.generate.debug.raw:
         opts:
           entryPath: 'path::entry.out.*=1'
@@ -783,12 +780,6 @@ module:
           - 'step::doc.export'
         criterion:
           content: doc
-          export: 1
-      npm.export:
-        steps:
-          - 'step::npm.publish'
-        criterion:
-          content: npm
           export: 1
       export:
         steps:
@@ -1184,9 +1175,6 @@ module:
           content: npm
         inherit:
           - module.export
-      npm.publish:
-        opts:
-          shell: npm publish
       npm.generate.debug.raw:
         opts:
           entryPath: 'path::entry.out.*=1'
@@ -1523,12 +1511,6 @@ module:
         criterion:
           content: doc
           export: 1
-      npm.export:
-        steps:
-          - 'step::npm.publish'
-        criterion:
-          content: npm
-          export: 1
       export:
         steps:
           - 'build::proto.export'
@@ -1586,5 +1568,5 @@ module:
           - 'build::npm'
     consistency:
       ../will.yml:
-        hash: f57ea7f55d17bb641af3b9ef673e6b4a
-        size: 7477
+        hash: abc0d5cfa96a6e11ca38db1cd22642c6
+        size: 7336
