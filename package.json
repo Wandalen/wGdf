@@ -1,6 +1,6 @@
 {
   "name": "wgdf",
-  "version": "0.3.318",
+  "version": "0.3.319",
   "description": "Standardized abstract interface and collection of strategies to convert complex data structures from one generic data format ( GDF ) to another generic data format. You may use the module to serialize complex data structure to string or deserialize string back to the original data structure. Generic data format ( GDF ) is a format of data structure designed with taking into account none unique feature of data so that it is applicable to any kind of data.",
   "author": "Kostiantyn Wandalen <wanalen@01.school>",
   "license": "MIT",
@@ -24,8 +24,8 @@
     "url": "https://github.com/Wandalen/wGdf/issues"
   },
   "dependencies": {
-    "wTools": "latest",
-    "wCopyable": "latest",
+    "wTools": "alpha",
+    "wCopyable": "alpha",
     "msgpack-lite": "0.1.26",
     "js2coffee": "2.2.0",
     "js-yaml": "3.14.0",
@@ -34,7 +34,7 @@
     "bson": "4.0.4"
   },
   "devDependencies": {
-    "wTesting": "latest",
+    "wTesting": "alpha",
     "eslint": "7.32.0"
   },
   "keywords": [
