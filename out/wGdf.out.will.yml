@@ -3,8 +3,8 @@ root:
   - wGdf.out
 consistency:
   ../will.yml: &ref_0
-    hash: abc0d5cfa96a6e11ca38db1cd22642c6
-    size: 7336
+    hash: 044c716c5c9e7438ebe0b5b113b74d28
+    size: 7344
 module:
   wGdf.out:
     about:
@@ -1568,5 +1568,5 @@ module:
           - 'build::npm'
     consistency:
       ../will.yml:
-        hash: abc0d5cfa96a6e11ca38db1cd22642c6
-        size: 7336
+        hash: 044c716c5c9e7438ebe0b5b113b74d28
+        size: 7344
