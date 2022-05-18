@@ -580,7 +580,7 @@ function supportedTypes( test )
 
 }
 
-supportedTypes.timeOut = 20000;
+supportedTypes.timeOut = 40000;
 
 //
 
